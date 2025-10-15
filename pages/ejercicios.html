@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejercicios Resueltos - Probabilidad y Estadística</title>
+  <link rel="stylesheet" href="./css/base.css">
+  <style>
+    /* ===== Estilos generales ===== */
+    .exercises-container {
+      min-height: 100vh;
+      padding: 120px 40px 60px;
+    }
+
+    .exercises-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .exercises-title {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 300;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercises-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 300;
+    }
+
+    /* ===== Secciones por capítulo ===== */
+    .unit-section {
+      max-width: 1200px;
+      margin: 0 auto 80px;
+    }
+
+    .unit-title {
+      font-size: 2rem;
+      font-weight: 400;
+      color: #ffffff;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .ex-grid {
+      display: grid;
+      gap: 30px;
+    }
+
+    /* ===== Tarjetas ===== */
+    .exercise-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .exercise-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .exercise-card:hover::before {
+      left: 100%;
+    }
+
+    .exercise-card:hover {
+      transform: translateX(10px);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1);
+    }
+
+    .exercise-info {
+      flex: 1;
+    }
+
+    .exercise-title {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .exercise-desc {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 1rem;
+      line-height: 1.6;
+      max-width: 800px;
+    }
+
+    .exercise-btn {
+      padding: 10px 25px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      transition: all 0.3s ease;
+    }
+
+    .exercise-btn:hover {
+      background: linear-gradient(135deg, #ffffff, #e0e0e0);
+      color: #000000;
+      border: none;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .exercises-container { padding: 100px 20px 40px; }
+      .exercise-card { flex-direction: column; text-align: center; gap: 15px; }
+      .exercise-btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="./../index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a href="./../index.html" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercises-container">
+    <div class="exercises-header">
+      <h1 class="exercises-title">Ejercicios Resueltos</h1>
+      <p class="exercises-subtitle">Explorá ejemplos prácticos ordenados por unidad temática</p>
+    </div>
+
+    <!-- Unidad 1 -->
+    <section class="unit-section">
+      <h2 class="unit-title">Unidad 1 – Conceptos Fundamentales</h2>
+      <div class="ex-grid">
+        <div class="exercise-card">
+          <div class="exercise-info">
+            <h3 class="exercise-title">🎲 Ejercicio 1 – Dado justo (1 tiro)</h3>
+            <p class="exercise-desc">
+              Análisis de eventos simples en un espacio muestral discreto.  
+              Se calculan probabilidades, intersecciones, uniones e independencia.
+            </p>
+          </div>
+          <a href="./ejerciciosResueltos/ej_1_cap1.html" class="exercise-btn">Ver ejercicio</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Unidad 2 -->
+    <section class="unit-section">
+      <h2 class="unit-title">Unidad 2 – Distribuciones de Probabilidad</h2>
+      <div class="ex-grid">
+        <div class="exercise-card" style="opacity:0.5; cursor:not-allowed;">
+          <div class="exercise-info">
+            <h3 class="exercise-title">📈 Próximamente</h3>
+            <p class="exercise-desc">
+              Ejercicios sobre distribuciones discretas y continuas (binomial, Poisson, normal...).
+            </p>
+          </div>
+          <span class="exercise-btn" style="pointer-events:none;">Bloqueado</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Unidad 3 -->
+    <section class="unit-section">
+      <h2 class="unit-title">Unidad 3 – Estadística Descriptiva</h2>
+      <div class="ex-grid">
+        <div class="exercise-card" style="opacity:0.5; cursor:not-allowed;">
+          <div class="exercise-info">
+            <h3 class="exercise-title">📊 Próximamente</h3>
+            <p class="exercise-desc">
+              Cálculo de medidas de tendencia central, dispersión y gráficos descriptivos.
+            </p>
+          </div>
+          <span class="exercise-btn" style="pointer-events:none;">Bloqueado</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Unidad 4 -->
+    <section class="unit-section">
+      <h2 class="unit-title">Unidad 4 – Inferencia Estadística</h2>
+      <div class="ex-grid">
+        <div class="exercise-card" style="opacity:0.5; cursor:not-allowed;">
+          <div class="exercise-info">
+            <h3 class="exercise-title">📐 Próximamente</h3>
+            <p class="exercise-desc">
+              Ejercicios de estimación, intervalos de confianza y pruebas de hipótesis.
+            </p>
+          </div>
+          <span class="exercise-btn" style="pointer-events:none;">Bloqueado</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</body>
+</html>

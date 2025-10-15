@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Herramientas - Probabilidad y Estadística</title>
+  <link rel="stylesheet" href="./css/base.css">
+  <style>
+    /* ===== Estilos específicos de la página de herramientas ===== */
+    .tools-container {
+      min-height: 100vh;
+      padding: 120px 40px 60px;
+    }
+
+    .tools-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .tools-title {
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 300;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tools-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 300;
+    }
+
+    .tools-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 30px;
+    }
+
+    .tool-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 40px;
+      backdrop-filter: blur(10px);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .tool-card:hover::before {
+      left: 100%;
+    }
+
+    .tool-card.active:hover {
+      transform: translateX(10px);
+      border-color: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1);
+    }
+
+    .tool-card.disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .tool-icon {
+      font-size: 3.5rem;
+      font-weight: 100;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tool-info h2 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      color: #ffffff;
+      font-weight: 400;
+    }
+
+    .tool-description {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .tool-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 15px;
+    }
+
+    .tool-tag {
+      font-size: 0.85rem;
+      padding: 6px 14px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tool-action {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tool-btn {
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+      background: transparent;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+    }
+
+    .tool-card.active .tool-btn {
+      background: linear-gradient(135deg, #ffffff, #e0e0e0);
+      color: #000000;
+      border: none;
+    }
+
+    .tool-card.active .tool-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .tool-card.disabled .tool-btn {
+      border-color: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.3);
+      cursor: not-allowed;
+    }
+
+    .status-badge {
+      font-size: 0.8rem;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    .status-badge.available {
+      background: rgba(120, 255, 120, 0.2);
+      color: rgb(120, 255, 120);
+      border: 1px solid rgba(120, 255, 120, 0.3);
+    }
+
+    .status-badge.coming-soon {
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 968px) {
+      .tool-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 20px;
+      }
+      .tool-icon { font-size: 3rem; }
+      .tool-action { flex-direction: row; justify-content: center; }
+    }
+
+    @media (max-width: 768px) {
+      .tools-container { padding: 100px 20px 40px; }
+      .tools-header { margin-bottom: 50px; }
+      .tool-card { padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Animated Background -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="./../index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a href="./../index.html" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="tools-container">
+    <div class="tools-header">
+      <h1 class="tools-title">Herramientas Interactivas</h1>
+      <p class="tools-subtitle">Simuladores, calculadoras y recursos visuales</p>
+    </div>
+
+    <div class="tools-grid">
+      <!-- Herramienta 1 -->
+      <div class="tool-card active">
+        <div class="tool-icon">🪙</div>
+        <div class="tool-info">
+          <h2>Simulador de Monedas y Dados</h2>
+          <p class="tool-description">
+            Experimentá con la ley de los grandes números lanzando monedas o dados y observá cómo
+            las frecuencias relativas se acercan a las probabilidades teóricas.
+          </p>
+          <div class="tool-tags">
+            <span class="tool-tag">Ley de los grandes números</span>
+            <span class="tool-tag">Simulación</span>
+            <span class="tool-tag">Visualización</span>
+          </div>
+        </div>
+        <div class="tool-action">
+          <span class="status-badge available">Disponible</span>
+          <a href="./ejerciciosLudicos/ejercicioLudico_1_cap1.html" class="tool-btn">Abrir herramienta</a>
+        </div>
+      </div>
+
+      <!-- Herramienta 2 -->
+      <div class="tool-card disabled">
+        <div class="tool-icon">📈</div>
+        <div class="tool-info">
+          <h2>Visualizador de Distribuciones</h2>
+          <p class="tool-description">
+            Explora cómo cambian las formas de distintas distribuciones de probabilidad modificando
+            sus parámetros en tiempo real.
+          </p>
+          <div class="tool-tags">
+            <span class="tool-tag">Binomial</span>
+            <span class="tool-tag">Normal</span>
+            <span class="tool-tag">Poisson</span>
+          </div>
+        </div>
+        <div class="tool-action">
+          <span class="status-badge coming-soon">Próximamente</span>
+          <button class="tool-btn" disabled>Bloqueado</button>
+        </div>
+      </div>
+
+      <!-- Herramienta 3 -->
+      <div class="tool-card disabled">
+        <div class="tool-icon">🧮</div>
+        <div class="tool-info">
+          <h2>Calculadora de Probabilidad Condicional</h2>
+          <p class="tool-description">
+            Ingresá tus valores y visualizá paso a paso cómo se aplica el Teorema de Bayes.
+          </p>
+          <div class="tool-tags">
+            <span class="tool-tag">Bayes</span>
+            <span class="tool-tag">Condicional</span>
+          </div>
+        </div>
+        <div class="tool-action">
+          <span class="status-badge coming-soon">Próximamente</span>
+          <button class="tool-btn" disabled>Bloqueado</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>

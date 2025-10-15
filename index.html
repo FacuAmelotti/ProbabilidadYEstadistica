@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Probabilidad y Estadística</title>
+    <link rel="stylesheet" href="./pages/css/base.css">
+    <style>
+        /* Estilos específicos del index */
+        .hero-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-content {
+            text-align: center;
+            padding: 0 40px;
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 8rem);
+            font-weight: 100;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 40px;
+            font-weight: 300;
+            animation: fadeInUp 1s ease-out 0.7s both;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.5);
+            max-width: 750px;
+            margin: 0 auto 60px;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 1.1s both;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 100px 40px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 100;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 80px 40px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 60px auto 0;
+        }
+
+        .stat-item {
+            padding: 30px;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 100;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* ===== FOOTER ===== */
+.site-footer {
+    background: rgba(0, 0, 0, 0.4);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px 20px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(8px);
+    font-weight: 300;
+}
+
+.footer-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+.footer-author,
+.footer-university {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.footer-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.footer-logo {
+    width: 70px;
+    height: auto;
+    filter: brightness(0.9);
+}
+
+.footer-year {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 6px;
+}
+
+.footer-author p,
+.footer-university p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.footer-author strong,
+.footer-university strong {
+    color: #fff;
+    font-weight: 500;
+}
+
+
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 0 20px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .feature-card {
+                padding: 30px 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    <div class="floating-elements">
+        <div class="floating-dot"></div>
+        <div class="floating-dot"></div>
+        <div class="floating-dot"></div>
+        <div class="floating-dot"></div>
+        <div class="floating-dot"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">PyE</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="./pages/temario.html" class="nav-link">Temario</a></li>
+                <li><a href="#about" class="nav-link">Acerca</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Probabilidad y Estadística</h1>
+            <p class="hero-description">
+                Explora conceptos fundamentales, resuelve ejercicios y domina las herramientas 
+                esenciales de probabilidad y estadística a través de una experiencia de aprendizaje moderna.
+            </p>
+            <div class="cta-buttons">
+                <a href="./pages/temario.html" class="btn btn-primary">Explorar Temario</a>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <h2 class="section-title">¿Qué encontrarás?</h2>
+        <div class="features-grid">
+            <div class="feature-card" id="feature-teoria">
+                <div class="feature-icon">∫</div>
+                <h3 class="feature-title">Teoría Completa</h3>
+                <p class="feature-description">
+                    Conceptos explicados de forma clara y concisa, con ejemplos prácticos
+                </p>
+            </div>
+
+            <div class="feature-card" id="feature-ejercicios">
+                <div class="feature-icon">∑</div>
+                <h3 class="feature-title">Ejercicios Resueltos</h3>
+                <p class="feature-description">
+                    Problemas paso a paso con soluciones detalladas
+                </p>
+            </div>
+
+            <div class="feature-card" id="feature-herramientas">
+                <div class="feature-icon">σ</div>
+                <h3 class="feature-title">Herramientas Interactivas</h3>
+                <p class="feature-description">
+                    Calculadoras y simuladores para experimentar con los conceptos
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="about" class="stats-section">
+        <h2 class="section-title">Aprendizaje Estructurado</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">+12</div>
+                <div class="stat-label">Capítulos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">+50</div>
+                <div class="stat-label">Ejercicios</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Interactivo</div>
+            </div>
+        </div>
+    </section>
+
+        <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-author">
+                <img src="./src/img/Facu2.png" alt="Facundo Amelotti" class="footer-photo">
+                <a style="text-decoration: none; color: rgb(138, 138, 138);" href="https://www.linkedin.com/in/facundoamelotti/">Desarrollado por <strong>Facundo Ezequiel Amelotti</strong></a>
+            </div>
+            <div class="footer-university">
+                <img src="./src/img/ucalp.jpg" alt="Universidad Católica de La Plata" class="footer-photo">
+                 <a style="text-decoration: none; color: rgb(138, 138, 138);" href="https://www.ucalp.edu.ar/">Para la asignatura <strong>Probabilidad y Estadística</strong><br>
+                   <span>Universidad Católica de La Plata</span>
+                 </a>
+            </div>
+            <div class="footer-year">
+                © 2025
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer para animaciones de secciones
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+    <script>
+  // Redirecciones de las tarjetas
+  document.getElementById("feature-teoria").addEventListener("click", () => {
+    window.location.href = "./pages/temario.html";
+  });
+
+  document.getElementById("feature-ejercicios").addEventListener("click", () => {
+    window.location.href = "./pages/ejercicios.html";
+  });
+
+  document.getElementById("feature-herramientas").addEventListener("click", () => {
+    window.location.href = "./pages/herramientas.html";
+  });
+</script>
+
+</body>
+</html>

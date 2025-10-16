@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ejercicio Resuelto 1 - Dado Justo</title>
+  <title>Ejercicio Resuelto 2 - Dos Monedas</title>
   <link rel="stylesheet" href="../css/base.css" />
   <style>
     .exercise-container {
@@ -167,13 +167,8 @@
       font-size: 1.1rem;
     }
 
-    .correct {
-      color: #8fffa0;
-    }
-
-    .incorrect {
-      color: #ff8f8f;
-    }
+    .correct { color: #8fffa0; }
+    .incorrect { color: #ff8f8f; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
@@ -181,17 +176,11 @@
     }
 
     @media (max-width: 768px) {
-      .exercise-container {
-        padding: 100px 20px 40px;
-      }
-
-      .step-header {
-        font-size: 1rem;
-      }
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
-
 </head>
 <body>
   <!-- Fondo animado -->
@@ -216,44 +205,30 @@
   <!-- Contenido principal -->
   <div class="exercise-container">
     <div class="exercise-header">
-      <h1 class="exercise-title">Ejercicio Resuelto 1</h1>
-      <p class="exercise-subtitle">Dado justo (1 tiro)</p>
+      <h1 class="exercise-title">Ejercicio Resuelto 2</h1>
+      <p class="exercise-subtitle">Dos monedas (2 lanzamientos simultáneos)</p>
     </div>
 
     <!-- Contexto y enunciado -->
     <div class="context-box">
       <h3>🎯 Contexto</h3>
-      <p>Se lanza <strong>un dado justo</strong> (caras 1 a 6, todas equiprobables).</p>
+      <p>Lanzamos <strong>dos monedas ideales</strong> al mismo tiempo. Cada moneda puede dar <strong>Cara (C)</strong> o <strong>Cruz (X)</strong> con probabilidad 1/2.</p>
 
       <h3>📘 Tareas</h3>
       <ul>
-        <li>1️⃣ <strong>Espacio muestral:</strong> escribí Ω.</li>
-        <li>2️⃣ <strong>Eventos:</strong> 
+        <li>1️⃣ <strong>Espacio muestral:</strong> escribí Ω con todos los pares ordenados (Moneda1, Moneda2).</li>
+        <li>2️⃣ <strong>Eventos:</strong>
           <ul>
-            <li>A: “sale número <strong>par</strong>”.</li>
-            <li>B: “sale número <strong>mayor que 4</strong>”.</li>
+            <li><strong>C:</strong> “exactamente una cara”.</li>
+            <li><strong>D:</strong> “al menos una cara”.</li>
           </ul>
         </li>
-        <li>3️⃣ <strong>Probabilidades:</strong> calculá 
-          <ul>
-            <li>P(A)</li>
-            <li>P(B)</li>
-            <li>P(A∩B)</li>
-            <li>P(A∪B)</li>
-            <li>P(Aᶜ)</li>
-          </ul>
-        </li>
-        <li>4️⃣ <strong>Chequeo de inclusión–exclusión:</strong> verificá que 
-          <span class="math">P(A∪B) = P(A) + P(B) − P(A∩B)</span>.
-        </li>
-        <li>5️⃣ <strong>Independencia:</strong> ¿Son A y B independientes? 
-          Justificá usando <span class="math">P(A∩B) =? P(A)·P(B)</span>.
-        </li>
+        <li>3️⃣ <strong>Probabilidades:</strong> calculá P(C), P(D), P(C∩D), P(C∪D).</li>
+        <li>4️⃣ <strong>Independencia (extra):</strong> ¿C y D son independientes? Verificá si <span class="math">P(C∩D) = P(C)·P(D)</span>.</li>
       </ul>
 
       <div class="hint-box">
-        💡 <strong>Cómo resolver:</strong> usá la regla de “casos favorables / casos posibles” 
-        y contá los elementos del conjunto correspondiente.
+        💡 <strong>Tip:</strong> usá “casos favorables / casos posibles” sobre el conjunto adecuado.
       </div>
     </div>
 
@@ -261,8 +236,8 @@
     <div class="step">
       <div class="step-header">1️⃣ Espacio muestral Ω</div>
       <div class="step-content">
-        <p><strong>Experimento:</strong> lanzar un dado justo (1 a 6).</p>
-        <p><span class="math">Ω = {1, 2, 3, 4, 5, 6}</span></p>
+        <p><strong>Experimento:</strong> dos monedas, resultados equiprobables.</p>
+        <p><span class="math">Ω = {CC, CX, XC, XX}</span> → 4 resultados posibles.</p>
       </div>
     </div>
 
@@ -271,9 +246,10 @@
       <div class="step-header">2️⃣ Definición de eventos</div>
       <div class="step-content">
         <ul>
-          <li><strong>A:</strong> sale número par → <span class="math">{2, 4, 6}</span></li>
-          <li><strong>B:</strong> sale número mayor que 4 → <span class="math">{5, 6}</span></li>
+          <li><strong>C:</strong> exactamente una cara → <span class="math">{CX, XC}</span></li>
+          <li><strong>D:</strong> al menos una cara → <span class="math">{CC, CX, XC}</span></li>
         </ul>
+        <p>Notá que <span class="math">C ⊂ D</span> (si hubo exactamente una cara, entonces hubo al menos una).</p>
       </div>
     </div>
 
@@ -281,29 +257,28 @@
     <div class="step">
       <div class="step-header">3️⃣ Cálculo de probabilidades</div>
       <div class="step-content">
-        <p>P(A) = 3/6 = 1/2 = 0,5</p>
-        <p>P(B) = 2/6 = 1/3 ≈ 0,333</p>
-        <p>P(A ∩ B) = {6} → 1/6 ≈ 0,166</p>
-        <p>P(A ∪ B) = {2,4,5,6} → 4/6 = 2/3 ≈ 0,666</p>
-        <p>P(Aᶜ) = 1 − P(A) = 1/2</p>
+        <p>P(C) = |{CX, XC}| / 4 = 2/4 = <strong>1/2</strong> = 0,5</p>
+        <p>P(D) = |{CC, CX, XC}| / 4 = 3/4 = <strong>0,75</strong></p>
+        <p>P(C ∩ D) = {CX, XC} (porque C ⊂ D) → 2/4 = <strong>1/2</strong> = 0,5</p>
+        <p>P(C ∪ D) = {CC, CX, XC} → 3/4 = <strong>0,75</strong></p>
       </div>
     </div>
 
-    <!-- Paso 4 -->
+    <!-- Paso 4 (chequeo inclusión-exclusión) -->
     <div class="step">
       <div class="step-header">4️⃣ Chequeo de inclusión-exclusión</div>
       <div class="step-content">
-        <p>P(A ∪ B) = P(A) + P(B) − P(A ∩ B)</p>
-        <p>→ 1/2 + 1/3 − 1/6 = 4/6 ✔️</p>
+        <p><span class="math">P(C ∪ D) = P(C) + P(D) − P(C ∩ D)</span></p>
+        <p>→ 1/2 + 3/4 − 1/2 = 3/4 ✔️</p>
 
         <div class="check-panel">
           <h3>Verificalo vos mismo 🧮</h3>
           <p>
-            P(A) = <input type="number" id="pA" value="0.5" step="0.01"> 
-            P(B) = <input type="number" id="pB" value="0.33" step="0.01"> 
-            P(A∩B) = <input type="number" id="pAB" value="0.17" step="0.01">
+            P(C) = <input type="number" id="pC" value="0.50" step="0.01">
+            P(D) = <input type="number" id="pD" value="0.75" step="0.01">
+            P(C∩D) = <input type="number" id="pCD" value="0.50" step="0.01">
           </p>
-          <button class="check-btn" onclick="checkInclusion()">Comprobar</button>
+          <button class="check-btn" onclick="checkInclusion()">Comprobar inclusión–exclusión</button>
           <div id="checkResult" class="result"></div>
         </div>
       </div>
@@ -313,9 +288,20 @@
     <div class="step">
       <div class="step-header">5️⃣ Independencia de eventos</div>
       <div class="step-content">
-        <p>P(A∩B) = 1/6</p>
-        <p>P(A)·P(B) = (1/2)·(1/3) = 1/6</p>
-        <p>Como P(A∩B) = P(A)·P(B), los eventos son <strong>independientes ✔️</strong></p>
+        <p>P(C∩D) = 0,5</p>
+        <p>P(C)·P(D) = (0,5)·(0,75) = 0,375</p>
+        <p>Como <strong>0,5 ≠ 0,375</strong>, los eventos <strong>no</strong> son independientes. ❌</p>
+
+        <div class="check-panel" style="margin-top:20px;">
+          <h3>Probá la independencia ✍️</h3>
+          <p>
+            P(C∩D) = <input type="number" id="pCD2" value="0.50" step="0.01">
+            P(C) = <input type="number" id="pC2" value="0.50" step="0.01">
+            P(D) = <input type="number" id="pD2" value="0.75" step="0.01">
+          </p>
+          <button class="check-btn" onclick="checkIndependence()">¿Son independientes?</button>
+          <div id="indepResult" class="result"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -331,16 +317,32 @@
 
     // Verificación de inclusión-exclusión
     function checkInclusion() {
-      const pA = parseFloat(document.getElementById('pA').value);
-      const pB = parseFloat(document.getElementById('pB').value);
-      const pAB = parseFloat(document.getElementById('pAB').value);
-      const calc = (pA + pB - pAB).toFixed(2);
+      const pC = parseFloat(document.getElementById('pC').value);
+      const pD = parseFloat(document.getElementById('pD').value);
+      const pCD = parseFloat(document.getElementById('pCD').value);
+      const calc = +(pC + pD - pCD).toFixed(2);
       const resultDiv = document.getElementById('checkResult');
 
-      if (Math.abs(calc - 0.67) < 0.03) {
-        resultDiv.innerHTML = `✅ <span class="correct">¡Correcto!</span> P(A ∪ B) ≈ ${calc}`;
+      if (Math.abs(calc - 0.75) < 0.03) {
+        resultDiv.innerHTML = `✅ <span class="correct">¡Correcto!</span> P(C ∪ D) ≈ ${calc}`;
       } else {
-        resultDiv.innerHTML = `❌ <span class="incorrect">Revisá tus valores.</span> P(A ∪ B) = ${calc}`;
+        resultDiv.innerHTML = `❌ <span class="incorrect">Revisá tus valores.</span> P(C ∪ D) = ${calc}`;
+      }
+    }
+
+    // Chequeo de independencia
+    function checkIndependence() {
+      const pCD = parseFloat(document.getElementById('pCD2').value);
+      const pC  = parseFloat(document.getElementById('pC2').value);
+      const pD  = parseFloat(document.getElementById('pD2').value);
+      const prod = +(pC * pD).toFixed(2);
+      const lhs  = +pCD.toFixed(2);
+      const resultDiv = document.getElementById('indepResult');
+
+      if (Math.abs(lhs - prod) < 0.03) {
+        resultDiv.innerHTML = `✅ <span class="correct">Independientes</span> porque P(C∩D) ≈ P(C)·P(D) (${lhs} ≈ ${prod}).`;
+      } else {
+        resultDiv.innerHTML = `⚠️ <span class="incorrect">No independientes</span>: P(C∩D) = ${lhs} y P(C)·P(D) = ${prod}.`;
       }
     }
   </script>

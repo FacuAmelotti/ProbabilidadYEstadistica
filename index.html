@@ -249,48 +249,153 @@
             }
         }
     </style>
+
+    <style>
+        /* Efecto de gradientes animados de fondo */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 25% 25%, rgba(120,119,198,0.15), transparent 50%),
+              radial-gradient(circle at 80% 60%, rgba(255,255,255,0.08), transparent 50%);
+  background-size: 300% 300%;
+  animation: moveGradient 20s ease-in-out infinite;
+  z-index: -2;
+}
+@keyframes moveGradient {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
+
+
+
+.feature-card {
+  transform: perspective(600px) rotateX(0) rotateY(0);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.feature-card:hover {
+  transform: perspective(600px) rotateX(4deg) rotateY(4deg) translateY(-8px);
+  box-shadow: 0 25px 50px rgba(255,255,255,0.08);
+}
+
+.section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.4), transparent 60%);
+  transform: scale(0);
+  transition: transform 0.4s ease;
+  z-index: 0;
+}
+.btn-primary:hover::before {
+  transform: scale(1);
+}
+.stat-number {
+  text-shadow: 0 0 8px rgba(255,255,255,0.3);
+  transition: text-shadow 0.3s ease;
+}
+.stat-number:hover {
+  text-shadow: 0 0 15px rgba(255,255,255,0.6);
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Sora:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+
+    </style>
+
+    
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+
+
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="animated-bg"></div>
-    <div class="floating-elements">
-        <div class="floating-dot"></div>
-        <div class="floating-dot"></div>
-        <div class="floating-dot"></div>
-        <div class="floating-dot"></div>
-        <div class="floating-dot"></div>
+  <!-- Animated Background -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a href="./pages/temario.html" class="nav-link">Temario</a></li>
+        <li><a href="#about" class="nav-link">Acerca</a></li>
+      </ul>
     </div>
+  </nav>
 
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">PyE</a>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Inicio</a></li>
-                <li><a href="./pages/temario.html" class="nav-link">Temario</a></li>
-                <li><a href="#about" class="nav-link">Acerca</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <div class="hero-container">
-        <div class="hero-content">
-            <h1 class="hero-title">Probabilidad y Estadística</h1>
-            <p class="hero-description">
-                Explora conceptos fundamentales, resuelve ejercicios y domina las herramientas 
-                esenciales de probabilidad y estadística a través de una experiencia de aprendizaje moderna.
-            </p>
-            <div class="cta-buttons">
-                <a href="./pages/temario.html" class="btn btn-primary">Explorar Temario</a>
-
-            </div>
-        </div>
+  <!-- Hero Section -->
+  <div class="hero-container">
+    <div class="hero-content">
+      <h1 class="hero-title">Probabilidad y Estadística</h1>
+      <p class="hero-subtitle">Comprendé el azar, dominá los datos y aprendé a pensar con lógica.</p>
+      <p class="hero-description">
+        Este espacio fue creado para acompañarte paso a paso en el fascinante mundo de la probabilidad y la estadística.  
+        Desde las bases del pensamiento aleatorio hasta la interpretación de resultados en situaciones reales, aprenderás a analizar, razonar y tomar decisiones basadas en evidencia.
+      </p>
+      <div class="cta-buttons">
+        <a href="./pages/temario.html" class="btn btn-primary">Comenzar el recorrido</a>
+      </div>
     </div>
+  </div>
+
+  <!-- Introducción Teórica -->
+  <section class="section" id="intro">
+    <div class="content text-center">
+      <h2 class="section-title">¿Por qué estudiar Probabilidad y Estadística?</h2>
+      <p style="max-width: 900px; margin: 0 auto; color: rgba(255,255,255,0.7); line-height:1.8;">
+        La probabilidad y la estadística son herramientas esenciales para comprender el mundo que nos rodea.  
+        Nos permiten estimar, predecir, analizar y tomar decisiones informadas en presencia de incertidumbre.  
+        Desde la inteligencia artificial hasta la medicina, desde los negocios hasta la ingeniería, el pensamiento estadístico está en el centro de la innovación moderna.
+      </p>
+      <br>
+      <p style="max-width: 850px; margin: 0 auto; color: rgba(255,255,255,0.6); line-height:1.8;">
+        Aprender estas disciplinas no es solo aprender fórmulas: es desarrollar una forma de razonar, cuestionar y validar información.  
+        En esta plataforma encontrarás explicaciones accesibles, ejercicios interactivos y herramientas que te ayudarán a construir tu propio entendimiento paso a paso.
+      </p>
+    </div>
+  </section>
 
     <!-- Features Section -->
     <section id="features" class="features-section">
-        <h2 class="section-title">¿Qué encontrarás?</h2>
+        <h2 class="section-title">¿Qué encontrarás aqui?</h2>
         <div class="features-grid">
             <div class="feature-card" id="feature-teoria">
                 <div class="feature-icon">∫</div>
@@ -318,77 +423,76 @@
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section id="about" class="stats-section">
-        <h2 class="section-title">Aprendizaje Estructurado</h2>
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-number">+12</div>
-                <div class="stat-label">Capítulos</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">+50</div>
-                <div class="stat-label">Ejercicios</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Interactivo</div>
-            </div>
-        </div>
-    </section>
 
-        <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-container">
-            <div class="footer-author">
-                <img src="./src/img/Facu2.png" alt="Facundo Amelotti" class="footer-photo">
-                <a style="text-decoration: none; color: rgb(138, 138, 138);" href="https://www.linkedin.com/in/facundoamelotti/">Desarrollado por <strong>Facundo Ezequiel Amelotti</strong></a>
-            </div>
-            <div class="footer-university">
-                <img src="./src/img/ucalp.jpg" alt="Universidad Católica de La Plata" class="footer-photo">
-                 <a style="text-decoration: none; color: rgb(138, 138, 138);" href="https://www.ucalp.edu.ar/">Para la asignatura <strong>Probabilidad y Estadística</strong><br>
-                   <span>Universidad Católica de La Plata</span>
-                 </a>
-            </div>
-            <div class="footer-year">
-                © 2025
-            </div>
-        </div>
-    </footer>
+  <!-- Stats Section -->
+  <section id="about" class="stats-section">
+    <h2 class="section-title">Aprendizaje Estructurado</h2>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-number">+1</div>
+        <div class="stat-label">Capítulos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">+3</div>
+        <div class="stat-label">Ejercicios Resueltos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Interactivo</div>
+      </div>
+    </div>
+  </section>
 
-    <script>
-        // Intersection Observer para animaciones de secciones
-        const observerOptions = {
-            threshold: 0.2,
-            rootMargin: '0px 0px -100px 0px'
-        };
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-author">
+        <img src="./src/img/Facu2.png" alt="Facundo Amelotti" class="footer-photo">
+        <a style="text-decoration: none; color: rgb(138, 138, 138);" href="https://www.linkedin.com/in/facundoamelotti/">
+          Desarrollado por <strong>Facundo Ezequiel Amelotti</strong>
+        </a>
+      </div>
+      <div class="footer-university">
+        <img src="./src/img/ucalp.jpg" alt="Universidad Católica de La Plata" class="footer-photo">
+        <a style="text-decoration: none; color: rgb(138, 138, 138);" href="https://www.ucalp.edu.ar/">
+          Para la asignatura <strong>Probabilidad y Estadística</strong><br>
+          <span>Universidad Católica de La Plata</span>
+        </a>
+      </div>
+      <div class="footer-year">
+        © 2025
+      </div>
+    </div>
+  </footer>
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
+  <!-- Scripts -->
+  <script>
+    // Animación sutil del hero (parallax)
+    document.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 10;
+      const y = (e.clientY / window.innerHeight - 0.5) * 10;
+      document.querySelector(".hero-content").style.transform = `translate(${x}px, ${y}px)`;
+    });
 
-        document.querySelectorAll('.section').forEach(section => {
-            observer.observe(section);
-        });
-    </script>
-    <script>
-  // Redirecciones de las tarjetas
-  document.getElementById("feature-teoria").addEventListener("click", () => {
-    window.location.href = "./pages/temario.html";
-  });
+    // Tarjetas clickeables
+    document.getElementById("feature-teoria").addEventListener("click", () => {
+      window.location.href = "./pages/temario.html";
+    });
+    document.getElementById("feature-ejercicios").addEventListener("click", () => {
+      window.location.href = "./pages/ejercicios.html";
+    });
+    document.getElementById("feature-herramientas").addEventListener("click", () => {
+      window.location.href = "./pages/herramientas.html";
+    });
 
-  document.getElementById("feature-ejercicios").addEventListener("click", () => {
-    window.location.href = "./pages/ejercicios.html";
-  });
-
-  document.getElementById("feature-herramientas").addEventListener("click", () => {
-    window.location.href = "./pages/herramientas.html";
-  });
-</script>
-
+    // Animación de aparición al hacer scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
+  </script>
 </body>
+
 </html>

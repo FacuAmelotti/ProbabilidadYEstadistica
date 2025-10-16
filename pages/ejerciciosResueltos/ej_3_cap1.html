@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ejercicio Resuelto 1 - Dado Justo</title>
+  <title>Ejercicio Resuelto 3 - Urna simple</title>
   <link rel="stylesheet" href="../css/base.css" />
   <style>
     .exercise-container {
@@ -167,13 +167,8 @@
       font-size: 1.1rem;
     }
 
-    .correct {
-      color: #8fffa0;
-    }
-
-    .incorrect {
-      color: #ff8f8f;
-    }
+    .correct { color: #8fffa0; }
+    .incorrect { color: #ff8f8f; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
@@ -181,17 +176,11 @@
     }
 
     @media (max-width: 768px) {
-      .exercise-container {
-        padding: 100px 20px 40px;
-      }
-
-      .step-header {
-        font-size: 1rem;
-      }
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
     }
   </style>
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
-
 </head>
 <body>
   <!-- Fondo animado -->
@@ -216,44 +205,35 @@
   <!-- Contenido principal -->
   <div class="exercise-container">
     <div class="exercise-header">
-      <h1 class="exercise-title">Ejercicio Resuelto 1</h1>
-      <p class="exercise-subtitle">Dado justo (1 tiro)</p>
+      <h1 class="exercise-title">Ejercicio Resuelto 3</h1>
+      <p class="exercise-subtitle">Urna simple</p>
     </div>
 
-    <!-- Contexto y enunciado -->
     <div class="context-box">
       <h3>🎯 Contexto</h3>
-      <p>Se lanza <strong>un dado justo</strong> (caras 1 a 6, todas equiprobables).</p>
+      <p>En una <strong>urna</strong> hay <strong>3 bolas rojas (R)</strong> y <strong>2 bolas azules (A)</strong>. Se extrae <strong>una bola al azar</strong>.</p>
 
       <h3>📘 Tareas</h3>
       <ul>
-        <li>1️⃣ <strong>Espacio muestral:</strong> escribí Ω.</li>
-        <li>2️⃣ <strong>Eventos:</strong> 
+        <li>1️⃣ <strong>Espacio muestral:</strong> escribí todos los posibles resultados.</li>
+        <li>2️⃣ <strong>Eventos:</strong>
           <ul>
-            <li>A: “sale número <strong>par</strong>”.</li>
-            <li>B: “sale número <strong>mayor que 4</strong>”.</li>
+            <li>A: “sale una bola roja”.</li>
+            <li>B: “sale una bola azul”.</li>
           </ul>
         </li>
-        <li>3️⃣ <strong>Probabilidades:</strong> calculá 
+        <li>3️⃣ <strong>Probabilidades:</strong>
           <ul>
-            <li>P(A)</li>
-            <li>P(B)</li>
-            <li>P(A∩B)</li>
-            <li>P(A∪B)</li>
-            <li>P(Aᶜ)</li>
+            <li>Calculá P(A) y P(B).</li>
+            <li>Verificá si A y B son <strong>excluyentes</strong>.</li>
+            <li>Verificá si A y B son <strong>exhaustivos</strong>.</li>
           </ul>
         </li>
-        <li>4️⃣ <strong>Chequeo de inclusión–exclusión:</strong> verificá que 
-          <span class="math">P(A∪B) = P(A) + P(B) − P(A∩B)</span>.
-        </li>
-        <li>5️⃣ <strong>Independencia:</strong> ¿Son A y B independientes? 
-          Justificá usando <span class="math">P(A∩B) =? P(A)·P(B)</span>.
-        </li>
+        <li>4️⃣ <strong>Complemento:</strong> escribí Aᶜ y su probabilidad.</li>
       </ul>
 
       <div class="hint-box">
-        💡 <strong>Cómo resolver:</strong> usá la regla de “casos favorables / casos posibles” 
-        y contá los elementos del conjunto correspondiente.
+        💡 <strong>Tip:</strong> “Casos favorables / casos posibles” y observar la relación entre eventos.
       </div>
     </div>
 
@@ -261,8 +241,8 @@
     <div class="step">
       <div class="step-header">1️⃣ Espacio muestral Ω</div>
       <div class="step-content">
-        <p><strong>Experimento:</strong> lanzar un dado justo (1 a 6).</p>
-        <p><span class="math">Ω = {1, 2, 3, 4, 5, 6}</span></p>
+        <p>En la urna hay 3 bolas rojas y 2 azules.</p>
+        <p><span class="math">Ω = {R₁, R₂, R₃, A₁, A₂}</span> → 5 resultados posibles.</p>
       </div>
     </div>
 
@@ -271,51 +251,38 @@
       <div class="step-header">2️⃣ Definición de eventos</div>
       <div class="step-content">
         <ul>
-          <li><strong>A:</strong> sale número par → <span class="math">{2, 4, 6}</span></li>
-          <li><strong>B:</strong> sale número mayor que 4 → <span class="math">{5, 6}</span></li>
+          <li><strong>A:</strong> sale una bola roja → <span class="math">{R₁, R₂, R₃}</span></li>
+          <li><strong>B:</strong> sale una bola azul → <span class="math">{A₁, A₂}</span></li>
         </ul>
       </div>
     </div>
 
     <!-- Paso 3 -->
     <div class="step">
-      <div class="step-header">3️⃣ Cálculo de probabilidades</div>
+      <div class="step-header">3️⃣ Cálculo y análisis de probabilidades</div>
       <div class="step-content">
-        <p>P(A) = 3/6 = 1/2 = 0,5</p>
-        <p>P(B) = 2/6 = 1/3 ≈ 0,333</p>
-        <p>P(A ∩ B) = {6} → 1/6 ≈ 0,166</p>
-        <p>P(A ∪ B) = {2,4,5,6} → 4/6 = 2/3 ≈ 0,666</p>
-        <p>P(Aᶜ) = 1 − P(A) = 1/2</p>
+        <p>P(A) = 3/5 = 0.6 = 60%</p>
+        <p>P(B) = 2/5 = 0.4 = 40%</p>
+        <p>⚖️ <strong>¿Son excluyentes?</strong> Sí, no pueden ocurrir al mismo tiempo (no se puede sacar una bola que sea roja y azul a la vez).</p>
+        <p>✅ <strong>¿Son exhaustivos?</strong> Sí, entre A y B cubren todos los resultados posibles del experimento.</p>
       </div>
     </div>
 
     <!-- Paso 4 -->
     <div class="step">
-      <div class="step-header">4️⃣ Chequeo de inclusión-exclusión</div>
+      <div class="step-header">4️⃣ Complemento del evento A</div>
       <div class="step-content">
-        <p>P(A ∪ B) = P(A) + P(B) − P(A ∩ B)</p>
-        <p>→ 1/2 + 1/3 − 1/6 = 4/6 ✔️</p>
+        <p><span class="math">Aᶜ</span> = “no sale roja” = “sale azul” = evento B.</p>
+        <p>P(Aᶜ) = 1 − P(A) = 0.4 = 40%</p>
 
         <div class="check-panel">
-          <h3>Verificalo vos mismo 🧮</h3>
+          <h3>Comprobá el complemento 🧮</h3>
           <p>
-            P(A) = <input type="number" id="pA" value="0.5" step="0.01"> 
-            P(B) = <input type="number" id="pB" value="0.33" step="0.01"> 
-            P(A∩B) = <input type="number" id="pAB" value="0.17" step="0.01">
+            P(A) = <input type="number" id="pA" value="0.6" step="0.01">
           </p>
-          <button class="check-btn" onclick="checkInclusion()">Comprobar</button>
+          <button class="check-btn" onclick="checkComplement()">Calcular P(Aᶜ)</button>
           <div id="checkResult" class="result"></div>
         </div>
-      </div>
-    </div>
-
-    <!-- Paso 5 -->
-    <div class="step">
-      <div class="step-header">5️⃣ Independencia de eventos</div>
-      <div class="step-content">
-        <p>P(A∩B) = 1/6</p>
-        <p>P(A)·P(B) = (1/2)·(1/3) = 1/6</p>
-        <p>Como P(A∩B) = P(A)·P(B), los eventos son <strong>independientes ✔️</strong></p>
       </div>
     </div>
   </div>
@@ -329,18 +296,16 @@
       });
     });
 
-    // Verificación de inclusión-exclusión
-    function checkInclusion() {
+    // Comprobación del complemento
+    function checkComplement() {
       const pA = parseFloat(document.getElementById('pA').value);
-      const pB = parseFloat(document.getElementById('pB').value);
-      const pAB = parseFloat(document.getElementById('pAB').value);
-      const calc = (pA + pB - pAB).toFixed(2);
+      const complement = +(1 - pA).toFixed(2);
       const resultDiv = document.getElementById('checkResult');
 
-      if (Math.abs(calc - 0.67) < 0.03) {
-        resultDiv.innerHTML = `✅ <span class="correct">¡Correcto!</span> P(A ∪ B) ≈ ${calc}`;
+      if (Math.abs(complement - 0.4) < 0.03) {
+        resultDiv.innerHTML = `✅ <span class="correct">Correcto:</span> P(Aᶜ) = ${complement}`;
       } else {
-        resultDiv.innerHTML = `❌ <span class="incorrect">Revisá tus valores.</span> P(A ∪ B) = ${calc}`;
+        resultDiv.innerHTML = `❌ <span class="incorrect">Revisá tus valores.</span> P(Aᶜ) = ${complement}`;
       }
     }
   </script>

@@ -5,195 +5,235 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Herramientas - Probabilidad y Estadística</title>
   <link rel="stylesheet" href="./css/base.css">
-  <style>
-    /* ===== Estilos específicos de la página de herramientas ===== */
-    .tools-container {
-      min-height: 100vh;
-      padding: 120px 40px 60px;
-    }
+<style>
+/* === CONFIGURACIÓN GLOBAL === */
+.tools-container {
+  min-height: 100vh;
+  padding: 120px 40px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
 
-    .tools-header {
-      text-align: center;
-      margin-bottom: 80px;
-    }
+.tools-header {
+  text-align: center;
+  margin-bottom: 100px;
+}
 
-    .tools-title {
-      font-size: clamp(3rem, 6vw, 5rem);
-      font-weight: 300;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #ffffff, #a0a0a0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+.tools-title {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 300;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #ffffff, #a8b5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(170, 180, 255, 0.3);
+}
 
-    .tools-subtitle {
-      font-size: 1.2rem;
-      color: rgba(255, 255, 255, 0.6);
-      font-weight: 300;
-    }
+.tools-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
 
-    .tools-grid {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      gap: 30px;
-    }
+/* === GRID === */
+.tools-grid {
+  display: grid;
+  gap: 45px;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  align-items: stretch;
+}
 
-    .tool-card {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      padding: 40px;
-      backdrop-filter: blur(10px);
-      transition: all 0.4s ease;
-      position: relative;
-      overflow: hidden;
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 30px;
-      align-items: center;
-    }
+/* === TARJETAS DE HERRAMIENTAS === */
+.tool-card {
+  position: relative;
+  border-radius: 28px;
+  padding: 50px 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
 
-    .tool-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-      transition: left 0.6s ease;
-    }
+.tool-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
 
-    .tool-card:hover::before {
-      left: 100%;
-    }
+.tool-card.active:hover::before {
+  opacity: 1;
+}
 
-    .tool-card.active:hover {
-      transform: translateX(10px);
-      border-color: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1);
-    }
+.tool-card.active:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 15px 55px rgba(170, 180, 255, 0.25);
+}
 
-    .tool-card.disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
+.tool-card.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-style: dashed;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+  transition: none;
+}
 
-    .tool-icon {
-      font-size: 3.5rem;
-      font-weight: 100;
-      background: linear-gradient(135deg, #ffffff, #a0a0a0);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+/* === ICONO === */
+.tool-icon {
+  font-size: 3.5rem;
+  background: linear-gradient(135deg, #ffffff, #c3d0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin-bottom: 25px;
+}
 
-    .tool-info h2 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      color: #ffffff;
-      font-weight: 400;
-    }
+/* === INFO === */
+.tool-info {
+  flex: 1;
+  text-align: center;
+}
 
-    .tool-description {
-      font-size: 1rem;
-      color: rgba(255, 255, 255, 0.6);
-      line-height: 1.6;
-      margin-bottom: 15px;
-    }
+.tool-info h2 {
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  color: #ffffff;
+  font-weight: 400;
+}
 
-    .tool-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 15px;
-    }
+.tool-description {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
 
-    .tool-tag {
-      font-size: 0.85rem;
-      padding: 6px 14px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      color: rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
+/* === TAGS === */
+.tool-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
 
-    .tool-action {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 10px;
-    }
+.tool-tag {
+  font-size: 0.85rem;
+  padding: 7px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: background 0.3s ease;
+}
 
-    .tool-btn {
-      padding: 12px 30px;
-      border-radius: 50px;
-      font-size: 0.95rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: inline-block;
-      background: transparent;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      color: #ffffff;
-    }
+.tool-tag:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
 
-    .tool-card.active .tool-btn {
-      background: linear-gradient(135deg, #ffffff, #e0e0e0);
-      color: #000000;
-      border: none;
-    }
+/* === ACCIONES === */
+.tool-action {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  margin-top: 20px;
+}
 
-    .tool-card.active .tool-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
-    }
+.tool-btn {
+  padding: 12px 36px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(135deg, #ffffff, #bfc3ff);
+  color: #000;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(180, 180, 255, 0.25);
+}
 
-    .tool-card.disabled .tool-btn {
-      border-color: rgba(255, 255, 255, 0.1);
-      color: rgba(255, 255, 255, 0.3);
-      cursor: not-allowed;
-    }
+.tool-btn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #ffffff, #9ea8ff);
+  box-shadow: 0 10px 35px rgba(150, 160, 255, 0.35);
+}
 
-    .status-badge {
-      font-size: 0.8rem;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
+.tool-card.disabled .tool-btn {
+  pointer-events: none;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.4);
+  box-shadow: none;
+}
 
-    .status-badge.available {
-      background: rgba(120, 255, 120, 0.2);
-      color: rgb(120, 255, 120);
-      border: 1px solid rgba(120, 255, 120, 0.3);
-    }
+/* === ESTADOS === */
+.status-badge {
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
 
-    .status-badge.coming-soon {
-      background: rgba(255, 255, 255, 0.05);
-      color: rgba(255, 255, 255, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
+.status-badge.available {
+  background: rgba(120, 255, 120, 0.15);
+  color: rgb(120, 255, 120);
+  border: 1px solid rgba(120, 255, 120, 0.3);
+}
 
-    @media (max-width: 968px) {
-      .tool-card {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 20px;
-      }
-      .tool-icon { font-size: 3rem; }
-      .tool-action { flex-direction: row; justify-content: center; }
-    }
+.status-badge.coming-soon {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-    @media (max-width: 768px) {
-      .tools-container { padding: 100px 20px 40px; }
-      .tools-header { margin-bottom: 50px; }
-      .tool-card { padding: 30px 20px; }
-    }
-  </style>
+/* === ANIMACIÓN DE ENTRADA === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tool-card {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+}
+.tool-card:nth-child(1) { animation-delay: 0.1s; }
+.tool-card:nth-child(2) { animation-delay: 0.25s; }
+.tool-card:nth-child(3) { animation-delay: 0.4s; }
+
+/* === RESPONSIVE === */
+@media (max-width: 900px) {
+  .tools-container { padding: 100px 25px 60px; }
+  .tool-card { padding: 40px 25px; }
+}
+
+@media (max-width: 600px) {
+  .tools-title { font-size: 2.8rem; }
+  .tools-grid { gap: 30px; }
+  .tool-btn { width: 100%; text-align: center; }
+}
+</style>
+
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
 
 </head>
@@ -211,7 +251,9 @@
   <!-- Navigation -->
   <nav class="navbar">
     <div class="nav-container">
-      <a href="./../index.html" class="logo">PyE</a>
+                       <a href="../index.html" class="logo">
+        <img src="../src/img/logo.png" alt="PyE Logo">PyE
+      </a>
       <ul class="nav-menu">
         <li><a href="./../pages/temario.html" class="nav-link">Temario</a></li>
       </ul>
@@ -248,7 +290,6 @@
 
       <!-- Herramienta 2 -->
       <div class="tool-card disabled">
-        <div class="tool-icon">📈</div>
         <div class="tool-info">
           <h2>Visualizador de Distribuciones</h2>
           <p class="tool-description">
@@ -269,7 +310,6 @@
 
       <!-- Herramienta 3 -->
       <div class="tool-card disabled">
-        <div class="tool-icon">🧮</div>
         <div class="tool-info">
           <h2>Calculadora de Probabilidad Condicional</h2>
           <p class="tool-description">

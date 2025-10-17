@@ -5,241 +5,228 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Temario - Probabilidad y Estadística</title>
     <link rel="stylesheet" href="./css/base.css">
-    <style>
-        /* Estilos específicos del temario */
-        .temario-container {
-            min-height: 100vh;
-            padding: 120px 40px 60px;
-        }
-
-        .temario-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .temario-title {
-            font-size: clamp(3rem, 6vw, 5rem);
-            font-weight: 300;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ffffff, #a0a0a0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .temario-subtitle {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 300;
-        }
-
-        .chapters-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            gap: 30px;
-        }
-
-        .chapter-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .chapter-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .chapter-card:hover::before {
-            left: 100%;
-        }
-
-        .chapter-card.active:hover {
-            transform: translateX(10px);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 60px rgba(255, 255, 255, 0.1);
-        }
-
-        .chapter-card.disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .chapter-card.disabled:hover {
-            transform: none;
-            border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .chapter-number {
-            font-size: 4rem;
-            font-weight: 100;
-            background: linear-gradient(135deg, #ffffff, #a0a0a0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-family: 'Space Grotesk', sans-serif;
-            line-height: 1;
-        }
-
-        .chapter-info {
-            flex: 1;
-        }
-
-        .chapter-title {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-            color: #ffffff;
-            font-weight: 400;
-        }
-
-        .chapter-description {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .chapter-topics {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 15px;
-        }
-
-        .topic-tag {
-            font-size: 0.75rem;
-            padding: 6px 14px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            color: rgba(255, 255, 255, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .chapter-action {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .chapter-btn {
-            padding: 12px 30px;
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            color: #ffffff;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .chapter-card.active .chapter-btn {
-            background: linear-gradient(135deg, #ffffff, #e0e0e0);
-            color: #000000;
-            border: none;
-        }
-
-        .chapter-card.active .chapter-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .chapter-card.disabled .chapter-btn {
-            border-color: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.3);
-            cursor: not-allowed;
-        }
-
-        .status-badge {
-            font-size: 0.8rem;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        .status-badge.available {
-            background: rgba(120, 255, 120, 0.2);
-            color: rgb(120, 255, 120);
-            border: 1px solid rgba(120, 255, 120, 0.3);
-        }
-
-        .status-badge.coming-soon {
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Herramientas relacionadas */
-.related-tools {
-    margin-top: 25px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+<style>
+/* === CONTENEDOR GENERAL === */
+.temario-container {
+  min-height: 100vh;
+  padding: 120px 40px 80px;
+  max-width: 1300px;
+  margin: 0 auto;
 }
 
-.related-title {
-    font-size: 0.95rem;
-    color: rgba(255, 255, 255, 0.7);
-    margin-bottom: 10px;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
+.temario-header {
+  text-align: center;
+  margin-bottom: 100px;
 }
 
-.related-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+.temario-title {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 300;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #ffffff, #a8b5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(170, 180, 255, 0.3);
 }
 
-.related-item {
-    background: rgba(120, 119, 198, 0.15);
-    border: 1px solid rgba(120, 119, 198, 0.3);
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 0.9rem;
-    padding: 8px 16px;
-    border-radius: 20px;
-    text-decoration: none;
-    transition: all 0.3s ease;
+.temario-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 300;
+  letter-spacing: 0.5px;
 }
 
-.related-item:hover {
-    background: rgba(120, 119, 198, 0.3);
-    border-color: rgba(120, 119, 198, 0.6);
-    color: #ffffff;
-    transform: translateY(-2px);
+/* === GRID DE UNIDADES === */
+.chapters-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  position: relative;
 }
 
-/* Secciones de recursos relacionados (ejercicios / herramientas) */
+/* Línea vertical decorativa (timeline) */
+.chapters-grid::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 40px;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0));
+}
+
+@media (max-width: 900px) {
+  .chapters-grid::before {
+    display: none;
+  }
+}
+
+/* === TARJETAS === */
+.chapter-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px 50px;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  animation: fadeInUp 0.8s ease forwards;
+  opacity: 0;
+}
+
+.chapter-card:nth-child(1) { animation-delay: 0.1s; }
+.chapter-card:nth-child(2) { animation-delay: 0.2s; }
+.chapter-card:nth-child(3) { animation-delay: 0.3s; }
+.chapter-card:nth-child(4) { animation-delay: 0.4s; }
+.chapter-card:nth-child(5) { animation-delay: 0.5s; }
+.chapter-card:nth-child(6) { animation-delay: 0.6s; }
+.chapter-card:nth-child(7) { animation-delay: 0.7s; }
+.chapter-card:nth-child(8) { animation-delay: 0.8s; }
+.chapter-card:nth-child(9) { animation-delay: 0.9s; }
+
+.chapter-card.active:hover {
+  transform: translateX(10px);
+  border-color: rgba(255,255,255,0.25);
+  box-shadow: 0 15px 45px rgba(160,170,255,0.25);
+}
+
+.chapter-card.disabled {
+  opacity: 0.4;
+  border-style: dashed;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* === NÚMERO DE UNIDAD === */
+.chapter-number {
+  position: absolute;
+  left: 0;
+  top: 40px;
+  transform: translateX(-90%);
+  font-size: 2.2rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #ffffff, #a8b5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.8;
+}
+
+@media (max-width: 900px) {
+  .chapter-number { display: none; }
+}
+
+/* === CONTENIDO DE UNIDAD === */
+.chapter-title {
+  font-size: 1.8rem;
+  color: #ffffff;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.chapter-description {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.75);
+  line-height: 1.7;
+  max-width: 900px;
+}
+
+/* === TAGS DE TEMAS === */
+.chapter-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.topic-tag {
+  font-size: 0.85rem;
+  padding: 7px 16px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 20px;
+  color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.12);
+  transition: background 0.3s ease;
+}
+
+.topic-tag:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+/* === ACCIONES (BOTONES / ESTADO) === */
+.chapter-action {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.chapter-btn {
+  padding: 12px 36px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: linear-gradient(135deg, #ffffff, #bfc3ff);
+  color: #000;
+  box-shadow: 0 6px 20px rgba(180,180,255,0.25);
+  transition: all 0.3s ease;
+}
+
+.chapter-btn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #ffffff, #9ea8ff);
+  box-shadow: 0 12px 35px rgba(150,160,255,0.35);
+}
+
+.chapter-card.disabled .chapter-btn {
+  pointer-events: none;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.4);
+}
+
+/* === ESTADO / BADGES === */
+.status-badge {
+  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.status-badge.available {
+  background: rgba(120,255,120,0.15);
+  color: rgb(120,255,120);
+  border: 1px solid rgba(120,255,120,0.3);
+}
+
+.status-badge.coming-soon {
+  background: rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.45);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* === RELACIONADOS === */
 .related-section {
   margin-top: 25px;
   padding-top: 15px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
 
 .related-title {
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 10px;
-  letter-spacing: 0.5px;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.7);
   text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
 }
 
 .related-list {
@@ -248,69 +235,100 @@
   gap: 10px;
 }
 
-.related-item {
-  background: rgba(120, 119, 198, 0.15);
-  border: 1px solid rgba(120, 119, 198, 0.3);
-  color: rgba(255, 255, 255, 0.9);
-  font-size: 0.9rem;
+.related-item, .tool-item {
+  background: rgba(80,100,255,0.15);
+  border: 1px solid rgba(120,119,198,0.3);
+  color: rgba(255,255,255,0.9);
+  font-size: 0.85rem;
   padding: 8px 16px;
   border-radius: 20px;
   text-decoration: none;
   transition: all 0.3s ease;
 }
 
-.related-item:hover {
-  background: rgba(120, 119, 198, 0.3);
-  border-color: rgba(120, 119, 198, 0.6);
+.related-item:hover, .tool-item:hover {
+  background: rgba(100,110,255,0.3);
+  border-color: rgba(120,119,198,0.6);
   color: #ffffff;
   transform: translateY(-2px);
 }
 
+/* === ANIMACIÓN ENTRADA === */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .temario-container { padding: 100px 20px 60px; }
+  .chapter-card { padding: 30px 25px; }
+  .chapter-title { font-size: 1.5rem; }
+  .chapter-btn { width: 100%; text-align: center; }
+}
+</style>
+<style>
+  .nav-menu {
+  display: flex;
+  list-style: none;
+  gap: 22px;
+}
 
 
-        @media (max-width: 968px) {
-            .chapter-card {
-                grid-template-columns: 1fr;
-                gap: 20px;
-                text-align: center;
-            }
+.nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-weight: 400;
+  transition: color 0.3s ease;
+  bottom: 8px;
+}
 
-            .chapter-number {
-                font-size: 3rem;
-            }
+.nav-link:hover {
+  color: #fff;
+}
 
-            .chapter-action {
-                flex-direction: column;
-                width: 100%;
-            }
+.logo {
+    margin-bottom: 8px;
+}
 
-            .chapter-btn {
-                width: 100%;
-            }
+.nav-subbar {
+  display: flex;
+  justify-content: center;             /* todo centrado */
+  align-items: center;
+  background: transparent !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 2px;
+}
 
-            .chapter-topics {
-                justify-content: center;
-            }
-        }
+.sub-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
 
-        @media (max-width: 768px) {
-            .temario-container {
-                padding: 100px 20px 40px;
-            }
+.sub-links a {
+  font-size: 0.58rem;
+  padding: 2px 2px;
+  
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.2px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
 
-            .temario-header {
-                margin-bottom: 50px;
-            }
+.sub-links a:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  text-shadow: 0 0 3px rgba(180, 190, 255, 0.5);
+  transform: translateY(-1px);
+}
 
-            .chapter-card {
-                padding: 30px 20px;
-            }
-
-            .chapter-title {
-                font-size: 1.4rem;
-            }
-        }
-    </style>
+</style>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
 
 </head>
@@ -326,15 +344,36 @@
     </div>
 
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="./../index.html" class="logo">PyE</a>
-            <ul class="nav-menu">
-                 <li><a href="./../pages/ejercicios.html" class="nav-link">Ejercicios resueltos</a></li>
-                  <li><a href="./../pages/herramientas.html" class="nav-link">Herramientas</a></li>
-            </ul>
-        </div>
-    </nav>
+<nav class="navbar">
+
+  <div class="nav-container">
+<a href="../index.html" class="logo">
+        <img src="../src/img/logo.png" alt="PyE Logo">PyE
+      </a>
+    <ul class="nav-menu">
+      <li><a href="./../pages/ejercicios.html" class="nav-link">Ejercicios resueltos</a></li>
+      <li><a href="./../pages/herramientas.html" class="nav-link">Herramientas</a></li>
+      <li><a href="./../pages/pregs.html" class="nav-link">Evaluador</a></li>
+      <li><a href="./../pages/randomPreg.html" class="nav-link">RandomPreg</a></li>
+            <li><a href="./../pages/pizarra.html" class="nav-link">Pizarra</a></li>
+    </ul>
+  </div>
+
+  <!-- 🔹 Mini-nav integrada -->
+  <div class="nav-subbar">
+    <div class="sub-links">
+      <a href="#unidad1">1) Fundamentos de Probabilidad</a>
+      <a href="#unidad2">2) Interpretación de Datos Observados</a>
+      <a href="#unidad3">3) Modelos de Probabilidad Discreta</a>
+      <a href="#unidad4">4) Modelos de Probabilidad Continua</a>
+      <a href="#unidad5">5) Estimación de Parámetros</a>
+      <a href="#unidad6">6) Pruebas de Hipótesis</a>
+      <a href="#unidad7">7) Regresión Lineal Simple</a>
+    </div>
+  </div>
+
+</nav>
+
 
     <!-- Main Content -->
     <div class="temario-container">
@@ -343,125 +382,240 @@
             <p class="temario-subtitle">Explora cada unidad a tu ritmo</p>
         </div>
 
-        <div class="chapters-grid">
-            <!-- Capítulo 1 - ACTIVO -->
-            <div class="chapter-card active">
-                <div class="chapter-info">
-                    <h2 class="chapter-title">1) Conceptos Fundamentales</h2>
-                    <p class="chapter-description">
-                        Fundamentos de probabilidad: experimentos aleatorios, espacios muestrales, 
-                        eventos y las reglas básicas de probabilidad.
-                    </p>
-                    <div class="chapter-topics">
-                        <span class="topic-tag">Experimento aleatorio</span>
-                        <span class="topic-tag">Espacio muestral</span>
-                        <span class="topic-tag">Probabilidad condicional</span>
-                        <span class="topic-tag">Teorema de Bayes</span>
-                        <span class="topic-tag">Variables aleatorias</span>
-                    </div>
-                    <!-- Ejercicios resueltos -->
-                    <div class="related-section">
-                    <h4 class="related-title">Ejercicios resueltos</h4>
-                    <div class="related-list">
-                        <a href="./ejerciciosResueltos/ej_1_cap1.html" class="related-item">
-                        1) Lanzamiento de 1 dado justo
-                        </a>
-                        <a href="./ejerciciosResueltos/ej_2_cap1.html" class="related-item">
-                        2) Lanzamiento de 2 monedas
-                        </a>
-                        <a href="./ejerciciosResueltos/ej_3_cap1.html" class="related-item">
-                        3) Urna simple
-                        </a>
-                    </div>
-                    </div>
-                    <!-- Herramientas -->
-                    <div class="related-tools">
-                        <h4 class="related-title">Herramientas relacionadas</h4>
-                        <div class="related-list">
-                            <a href="./ejerciciosLudicos/ejercicioLudico_1_cap1.html" class="related-item">
-                                Simulador de Monedas y Dados
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="chapter-action">
-                    <span class="status-badge available">Disponible</span>
-                    <a href="./capitulos/cap1.html" class="chapter-btn">Estudiar</a>
-                </div>
-            </div>
+<div class="chapters-grid">
 
-            <!-- Capítulo 2 - PRÓXIMAMENTE -->
-            <div class="chapter-card disabled">
-                <div class="chapter-info">
-                    <h2 class="chapter-title">2) Distribuciones de Probabilidad</h2>
-                    <p class="chapter-description">
-                        Distribuciones discretas y continuas más importantes: binomial, Poisson, 
-                        normal y sus aplicaciones.
-                    </p>
-                    <div class="chapter-topics">
-                        <span class="topic-tag">Binomial</span>
-                        <span class="topic-tag">Poisson</span>
-                        <span class="topic-tag">Normal</span>
-                        <span class="topic-tag">Uniforme</span>
-                    </div>
-                </div>
-                <div class="chapter-action">
-                    <span class="status-badge coming-soon">Próximamente</span>
-                    <button class="chapter-btn" disabled>Bloqueado</button>
-                </div>
-            </div>
-
-            <!-- Capítulo 3 - PRÓXIMAMENTE -->
-            <div class="chapter-card disabled">
-                <div class="chapter-info">
-                    <h2 class="chapter-title">3) Estadística Descriptiva</h2>
-                    <p class="chapter-description">
-                        Medidas de tendencia central, dispersión y representación gráfica de datos.
-                    </p>
-                    <div class="chapter-topics">
-                        <span class="topic-tag">Media y mediana</span>
-                        <span class="topic-tag">Varianza</span>
-                        <span class="topic-tag">Gráficos</span>
-                    </div>
-                </div>
-                <div class="chapter-action">
-                    <span class="status-badge coming-soon">Próximamente</span>
-                    <button class="chapter-btn" disabled>Bloqueado</button>
-                </div>
-            </div>
-
-            <!-- Capítulo 4 - PRÓXIMAMENTE -->
-            <div class="chapter-card disabled">
-                <div class="chapter-info">
-                    <h2 class="chapter-title">4) Inferencia Estadística</h2>
-                    <p class="chapter-description">
-                        Estimación de parámetros, intervalos de confianza y pruebas de hipótesis.
-                    </p>
-                    <div class="chapter-topics">
-                        <span class="topic-tag">Estimadores</span>
-                        <span class="topic-tag">Intervalos</span>
-                        <span class="topic-tag">Tests</span>
-                    </div>
-                </div>
-                <div class="chapter-action">
-                    <span class="status-badge coming-soon">Próximamente</span>
-                    <button class="chapter-btn" disabled>Bloqueado</button>
-                </div>
-            </div>
+  <!-- Unidad 1 -->
+  <div class="chapter-card active">
+    <div id="unidad1" class="chapter-info">
+      <h2 class="chapter-title">1) Fundamentos de Probabilidad</h2>
+      <p class="chapter-description">
+        Conceptos básicos de probabilidad: experimentos aleatorios, espacio muestral, eventos y reglas fundamentales.
+      </p>
+      <div class="chapter-topics">
+        <span class="topic-tag">Experimento aleatorio</span>
+        <span class="topic-tag">Espacio muestral</span>
+        <span class="topic-tag">Eventos</span>
+        <span class="topic-tag">Probabilidad condicional</span>
+        <span class="topic-tag">Teorema de Bayes</span>
+      </div>
+      <div class="related-section">
+        <h4 class="related-title">Ejercicios resueltos</h4>
+        <div class="related-list">
+          <a href="./ejerciciosResueltos/ej_1_cap1.html" class="related-item">1) Dado justo</a>
+          <a href="./ejerciciosResueltos/ej_2_cap1.html" class="related-item">2) Dos monedas</a>
+          <a href="./ejerciciosResueltos/ej_3_cap1.html" class="related-item">3) Urna simple</a>
         </div>
+      </div>
+       <div class="related-section">
+        <h4 class="related-title">Herramientas</h4>
+        <div class="related-list">
+          <a href="./ejerciciosLudicos/ejercicioLudico_1_cap1.html" class="tool-item">Ley de los Grandes Números</a>
+        </div>
+      </div>
     </div>
+    <div class="chapter-action">
+      <span class="status-badge available">Disponible</span>
+      <a href="./capitulos/cap1.html" class="chapter-btn">Estudiar</a>
+    </div>
+  </div>
 
-    <script>
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
+  <!-- Unidad 2 -->
+  <div class="chapter-card active">
+    <div id="unidad2" class="chapter-info">
+      <h2 class="chapter-title">2) Interpretación de Datos Observados</h2>
+      <p class="chapter-description">
+        Recolección y análisis de datos: medidas de tendencia central, dispersión y representación gráfica.
+      </p>
+      <div class="chapter-topics">
+        <span class="topic-tag">Medidas de centralidad</span>
+        <span class="topic-tag">Medidas de dispersión</span>
+        <span class="topic-tag">Histogramas</span>
+        <span class="topic-tag">Frecuencias</span>
+        <span class="topic-tag">Población y muestra</span>
+      </div>
+    </div>
+    <div class="chapter-action">
+      <span class="status-badge available">Disponible</span>
+      <a href="./capitulos/cap2.html" class="chapter-btn">Estudiar</a>
+    </div>
+  </div>
+
+  <!-- Unidad 3 -->
+  <div class="chapter-card active">
+    <div id="unidad3" class="chapter-info">
+      <h2 class="chapter-title">3) Modelos de Probabilidad Discreta</h2>
+      <p class="chapter-description">
+        Distribuciones discretas: binomial, Poisson, hipergeométrica, geométrica y sus aplicaciones reales.
+      </p>
+      <div class="chapter-topics">
+        <span class="topic-tag">Binomial</span>
+        <span class="topic-tag">Poisson</span>
+        <span class="topic-tag">Geométrica</span>
+        <span class="topic-tag">Hipergeométrica</span>
+        <span class="topic-tag">Bernoulli</span>
+      </div>
+    </div>
+    <div class="chapter-action">
+      <span class="status-badge available">Disponible</span>
+      <a href="./capitulos/cap3.html" class="chapter-btn">Estudiar</a>
+    </div>
+  </div>
+
+  <!-- Unidad 4 -->
+  <div id="unidad4" class="chapter-card active">
+    <div class="chapter-info">
+      <h2 class="chapter-title">4) Modelos de Probabilidad Continua</h2>
+      <p class="chapter-description">
+        Distribuciones continuas fundamentales: uniforme, normal, exponencial y chi-cuadrado.
+      </p>
+      <div class="chapter-topics">
+        <span class="topic-tag">Distribución normal</span>
+        <span class="topic-tag">Exponencial</span>
+        <span class="topic-tag">Uniforme continua</span>
+        <span class="topic-tag">Chi-cuadrado</span>
+        <span class="topic-tag">Estandarización</span>
+      </div>
+    </div>
+    <div class="chapter-action">
+      <span class="status-badge available">Disponible</span>
+      <a href="./capitulos/cap4.html" class="chapter-btn">Estudiar</a>
+    </div>
+  </div>
+
+  <!-- Unidad 5 -->
+  <div id="unidad5" class="chapter-card active">
+    <div class="chapter-info">
+      <h2 class="chapter-title">5) Estimación de Parámetros</h2>
+      <p class="chapter-description">
+        Estimadores, intervalos de confianza y el Teorema del Límite Central como base de la inferencia estadística.
+      </p>
+      <div class="chapter-topics">
+        <span class="topic-tag">Estimadores</span>
+        <span class="topic-tag">Intervalos</span>
+        <span class="topic-tag">Distribución muestral</span>
+        <span class="topic-tag">Teorema del Límite Central</span>
+        <span class="topic-tag">t-Student</span>
+      </div>
+    </div>
+    <div class="chapter-action">
+      <span class="status-badge available">Disponible</span>
+      <a href="./capitulos/cap5.html" class="chapter-btn">Estudiar</a>
+    </div>
+  </div>
+
+  <!-- Unidad 6 -->
+  <div id="unidad6" class="chapter-card active">
+    <div class="chapter-info">
+      <h2 class="chapter-title">6) Pruebas de Hipótesis</h2>
+      <p class="chapter-description">
+        Hipótesis nula y alternativa, valor-p, errores tipo I y II y pruebas de medias y proporciones.
+      </p>
+      <div class="chapter-topics">
+        <span class="topic-tag">Hipótesis nula</span>
+        <span class="topic-tag">Valor-p</span>
+        <span class="topic-tag">Errores tipo I y II</span>
+        <span class="topic-tag">Comparación de medias</span>
+        <span class="topic-tag">Chi-cuadrado</span>
+      </div>
+    </div>
+    <div class="chapter-action">
+      <span class="status-badge available">Disponible</span>
+      <a href="./capitulos/cap6.html" class="chapter-btn">Estudiar</a>
+    </div>
+  </div>
+
+  <!-- Unidad 7 -->
+  <div id="unidad7" class="chapter-card active">
+    <div class="chapter-info">
+      <h2 class="chapter-title">7) Regresión Lineal Simple</h2>
+      <p class="chapter-description">
+        Modelos lineales, estimación de parámetros, interpretación de coeficientes y predicción.
+      </p>
+      <div class="chapter-topics">
+        <span class="topic-tag">Mínimos cuadrados</span>
+        <span class="topic-tag">Coeficiente R²</span>
+        <span class="topic-tag">Parámetros α y β</span>
+        <span class="topic-tag">Predicciones</span>
+        <span class="topic-tag">Contraste de hipótesis</span>
+      </div>
+    </div>
+    <div class="chapter-action">
+      <span class="status-badge available">Disponible</span>
+      <a href="./capitulos/cap7.html" class="chapter-btn">Estudiar</a>
+    </div>
+  </div>
+
+  <!-- Unidad 8 - Avanzada (bloqueada) -->
+  <div id="unidad8" class="chapter-card disabled">
+    <div class="chapter-info">
+      <h2 class="chapter-title">8) Modelos Avanzados y Regresión Múltiple</h2>
+      <p class="chapter-description">
+        Extensión del modelo lineal a múltiples variables, análisis de correlación y validación de modelos predictivos.
+      </p>
+      <div class="chapter-topics">
+        <span class="topic-tag">Regresión múltiple</span>
+        <span class="topic-tag">Correlación</span>
+        <span class="topic-tag">Multicolinealidad</span>
+        <span class="topic-tag">Validación</span>
+      </div>
+    </div>
+    <div class="chapter-action">
+      <span class="status-badge coming-soon">Próximamente</span>
+      <button class="chapter-btn" disabled>Bloqueado</button>
+    </div>
+  </div>
+
+  <!-- Unidad 9 - IA (bloqueada) -->
+  <div id="unidad9" class="chapter-card disabled">
+    <div class="chapter-info">
+      <h2 class="chapter-title">9) Introducción a la Inteligencia Artificial y Redes Neuronales</h2>
+      <p class="chapter-description">
+        Puente entre estadística e inteligencia artificial: aprendizaje automático, clasificación y redes neuronales básicas.
+      </p>
+      <div class="chapter-topics">
+        <span class="topic-tag">Machine Learning</span>
+        <span class="topic-tag">Regresión múltiple</span>
+        <span class="topic-tag">Clasificación</span>
+        <span class="topic-tag">Redes neuronales</span>
+        <span class="topic-tag">Entrenamiento</span>
+      </div>
+    </div>
+    <div class="chapter-action">
+      <span class="status-badge coming-soon">Próximamente</span>
+      <button class="chapter-btn" disabled>Bloqueado</button>
+    </div>
+  </div>
+
+</div>
+
+    </div>
+<script>
+document.querySelectorAll('.nav-subbar a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      const headerOffset = 100; // altura navbar superior
+      const extraOffset = -150; // 🔹 desplazamiento adicional para dejarla más arriba
+      const elementPosition = target.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - headerOffset + extraOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+// efecto al hacer scroll
+window.addEventListener("scroll", () => {
+  const nav = document.querySelector(".navbar");
+  if (window.scrollY > 20) nav.classList.add("scrolled");
+  else nav.classList.remove("scrolled");
+});
+</script>
+
+
 </body>
 </html>

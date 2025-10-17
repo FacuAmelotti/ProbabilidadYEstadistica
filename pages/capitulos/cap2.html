@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unidad 2: Interpretación de Datos Observados</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+    <style>
+        
+/* Layout principal */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 120px 60px 20px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar de navegación */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 2px 2px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border-left: 2px solid transparent;
+        }
+
+        .nav-item a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-item a.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: #ffffff;
+        }
+
+        /* Contenido principal */
+        .content-wrapper {
+            max-width: 800px;
+        }
+
+        .page-header {
+            margin-bottom: 60px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #ffffff;
+        }
+
+        .breadcrumb-separator {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        /* Secciones de contenido */
+        .content-section {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+            opacity: 0.8;
+        }
+
+        .section-content {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 20px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .section-content strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Listas */
+        .content-section ul,
+        .content-section ol {
+            margin: 20px 0;
+            padding-left: 25px;
+        }
+
+        .content-section li {
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Ejemplos */
+        .example-box {
+            background: rgba(120, 119, 198, 0.1);
+            border-left: 3px solid rgba(120, 119, 198, 0.5);
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: rgba(120, 119, 198, 1);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Fórmulas */
+        .formula-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Destacados */
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+        }
+
+        .highlight-box h4 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* Grid de conceptos */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .concept-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .concept-card h4 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .concept-card p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Botones de navegación */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-button {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #ffffff, #e0e0e0);
+            color: #000000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-button.secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 100px 30px 40px;
+            }
+
+            .sidebar {
+                position: static;
+                top: auto;
+            }
+
+            .content-wrapper {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                padding: 100px 20px 40px;
+            }
+
+            .section-content {
+                padding: 25px 20px;
+            }
+
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Tabla */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        td {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="" class="logo">PyE - Unidad 2</a>
+      <ul class="nav-menu">
+        <li><a href="../temario.html" class="nav-link">Temario</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="main-layout">
+
+    <!-- Contenido principal -->
+    <main class="content-wrapper">
+      <header class="page-header">
+        <nav class="breadcrumb">
+          <a href="../../index.html">Inicio</a>
+          <span class="breadcrumb-separator">›</span>
+          <a href="../temario.html">Temario</a>
+          <span class="breadcrumb-separator">›</span>
+          <span>Unidad 2</span>
+        </nav>
+        <h1 class="page-title">Interpretación de Datos Observados</h1>
+        <p class="page-description">
+          Cómo recolectar, organizar y analizar datos para describir fenómenos.  
+          Introducción a la estadística descriptiva: medidas, gráficos y tablas.
+        </p>
+      </header>
+
+      <!-- Población y muestra -->
+      <section id="poblacion" class="content-section">
+        <h2 class="section-title"><span class="section-icon">👥</span>Población y muestra</h2>
+        <div class="section-content">
+          <p>
+            La <strong>población</strong> es el conjunto total de elementos que queremos estudiar.  
+            Una <strong>muestra</strong> es un subconjunto representativo de esa población.
+          </p>
+          <div class="example-box">
+            <div class="example-title">Ejemplo</div>
+            <p>Población: todos los estudiantes de una universidad.<br>Muestra: 100 estudiantes seleccionados al azar.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tipos de variables -->
+      <section id="variables" class="content-section">
+        <h2 class="section-title"><span class="section-icon">🔢</span>Tipos de variables</h2>
+        <div class="section-content">
+          <p>Las variables son características observables de los elementos estudiados.</p>
+          <ul>
+            <li><strong>Cualitativas:</strong> expresan categorías o cualidades (color, género, tipo).</li>
+            <li><strong>Cuantitativas:</strong> expresan valores numéricos.</li>
+          </ul>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr><th>Tipo</th><th>Ejemplo</th><th>Subtipo</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Cualitativa nominal</td><td>Color de ojos</td><td>Sin orden</td></tr>
+                <tr><td>Cualitativa ordinal</td><td>Nivel de satisfacción</td><td>Con orden</td></tr>
+                <tr><td>Cuantitativa discreta</td><td>Número de hijos</td><td>Enteros</td></tr>
+                <tr><td>Cuantitativa continua</td><td>Altura</td><td>Decimales</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tablas de frecuencia -->
+      <section id="frecuencia" class="content-section">
+        <h2 class="section-title"><span class="section-icon">📊</span>Tablas de frecuencia</h2>
+        <div class="section-content">
+          <p>
+            Sirven para resumir los datos observados agrupando cuántas veces aparece cada valor o categoría.
+          </p>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr><th>Valor</th><th>Frecuencia (f)</th><th>Frecuencia relativa (fᵣ)</th><th>Frecuencia acumulada</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>3</td><td>0.15</td><td>3</td></tr>
+                <tr><td>2</td><td>5</td><td>0.25</td><td>8</td></tr>
+                <tr><td>3</td><td>7</td><td>0.35</td><td>15</td></tr>
+                <tr><td>4</td><td>5</td><td>0.25</td><td>20</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="formula-box">
+            $$f_r = \frac{f_i}{n} \quad , \quad \sum f_i = n \quad , \quad \sum f_r = 1$$
+          </div>
+        </div>
+      </section>
+
+      <!-- Representaciones gráficas -->
+      <section id="graficos" class="content-section">
+        <h2 class="section-title"><span class="section-icon">📈</span>Representaciones gráficas</h2>
+        <div class="section-content">
+          <ul>
+            <li><strong>Histograma:</strong> para variables cuantitativas continuas.</li>
+            <li><strong>Polígono de frecuencias:</strong> une los puntos medios de cada clase.</li>
+            <li><strong>Diagrama de barras:</strong> para variables discretas o cualitativas.</li>
+            <li><strong>Gráfico circular:</strong> muestra proporciones.</li>
+          </ul>
+          <div class="example-box">
+            <div class="example-title">Interpretación</div>
+            <p>Los gráficos permiten detectar patrones, simetrías o valores atípicos.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Medidas de tendencia central -->
+      <section id="tendencia" class="content-section">
+        <h2 class="section-title"><span class="section-icon">🎯</span>Medidas de tendencia central</h2>
+        <div class="section-content">
+          <ul>
+            <li><strong>Media:</strong> \( \bar{x} = \frac{\sum x_i}{n} \)</li>
+            <li><strong>Mediana:</strong> valor central que divide los datos en dos partes iguales.</li>
+            <li><strong>Moda:</strong> valor más frecuente.</li>
+          </ul>
+          <div class="example-box">
+            <div class="example-title">Ejemplo</div>
+            <p>Datos: 2, 3, 4, 4, 5 → media = 3.6, mediana = 4, moda = 4.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Medidas de dispersión -->
+      <section id="dispersion" class="content-section">
+        <h2 class="section-title"><span class="section-icon">📏</span>Medidas de dispersión</h2>
+        <div class="section-content">
+          <p>Miden cuánto se alejan los datos de la media.</p>
+          <ul>
+            <li><strong>Rango:</strong> \( R = x_{max} - x_{min} \)</li>
+            <li><strong>Varianza:</strong> \( s^2 = \frac{\sum (x_i - \bar{x})^2}{n-1} \)</li>
+            <li><strong>Desviación estándar:</strong> \( s = \sqrt{s^2} \)</li>
+            <li><strong>Coeficiente de variación:</strong> \( CV = \frac{s}{\bar{x}} \times 100\% \)</li>
+          </ul>
+          <div class="highlight-box">
+            <p><strong>Interpretación:</strong> cuanto mayor sea la dispersión, más variables o inconsistentes son los datos.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Distribución agrupada -->
+      <section id="agrupada" class="content-section">
+        <h2 class="section-title"><span class="section-icon">🧮</span>Distribución agrupada</h2>
+        <div class="section-content">
+          <p>Cuando hay muchos datos, se agrupan en intervalos (clases).</p>
+          <div class="formula-box">
+            $$\text{Amplitud del intervalo: } a = \frac{x_{max} - x_{min}}{k}$$
+          </div>
+          <p>donde \( k \) es el número de clases sugerido (por ejemplo, por la regla de Sturges).</p>
+        </div>
+      </section>
+
+      <!-- Resumen -->
+      <section id="resumen" class="content-section">
+        <h2 class="section-title"><span class="section-icon">📋</span>Resumen General</h2>
+        <div class="section-content">
+          <ul>
+            <li><strong>Población y muestra</strong> → quiénes estudiamos.</li>
+            <li><strong>Variables</strong> → qué medimos.</li>
+            <li><strong>Frecuencias</strong> → cuántas veces ocurre cada valor.</li>
+            <li><strong>Gráficos</strong> → representación visual.</li>
+            <li><strong>Medidas</strong> → resumen numérico (media, mediana, moda, varianza).</li>
+          </ul>
+          <div class="highlight-box">
+            <h4>Objetivo</h4>
+            <p>Transformar datos en información comprensible para tomar decisiones o detectar patrones.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Navegación -->
+      <div class="navigation-buttons">
+        <a href="./cap1.html" class="nav-button secondary">← Unidad 1</a>
+        <a href="./cap3.html" class="nav-button">Unidad 3 →</a>
+      </div>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-title">Unidad 2</div>
+      <ul class="nav-list">
+        <li class="nav-item"><a href="#poblacion">Población y muestra</a></li>
+        <li class="nav-item"><a href="#variables">Tipos de variables</a></li>
+        <li class="nav-item"><a href="#frecuencia">Tablas de frecuencia</a></li>
+        <li class="nav-item"><a href="#graficos">Gráficos</a></li>
+        <li class="nav-item"><a href="#tendencia">Tendencia central</a></li>
+        <li class="nav-item"><a href="#dispersion">Dispersión</a></li>
+        <li class="nav-item"><a href="#agrupada">Distribución agrupada</a></li>
+        <li class="nav-item"><a href="#resumen">Resumen</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <script>
+    // Sidebar activo y scroll suave
+    const sections = document.querySelectorAll('.content-section');
+    const navLinks = document.querySelectorAll('.nav-item a');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${id}`) link.classList.add('active');
+          });
+        }
+      });
+    }, { rootMargin: '-100px 0px -70% 0px' });
+    sections.forEach(section => observer.observe(section));
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

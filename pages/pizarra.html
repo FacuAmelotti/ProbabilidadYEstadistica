@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pizarra Interactiva PRO</title>
+
+  <style>
+    :root {
+      --panel-bg: #181b1f;
+      --panel-border: #2d3239;
+      --panel-shadow: 0 2px 8px rgba(0,0,0,0.5);
+      --color-text: #e6e9ec;
+      --color-muted: #a2a8b0;
+      --color-accent: #4cb8ff;
+      --color-accent-soft: rgba(76,184,255,0.25);
+      --radius: 8px;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, sans-serif;
+      background: #0c0f12;
+      color: var(--color-text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ======== TOOLBAR GENERAL ======== */
+    .toolbar {
+      background: var(--panel-bg);
+      border-top: 1px solid var(--panel-border);
+      border-bottom: 1px solid var(--panel-border);
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 8px 18px;
+      height: 64px;
+      box-shadow: var(--panel-shadow);
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    .top-toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      border-top: none;
+    }
+
+    .bottom-toolbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .toolbar .group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-right: 1px solid var(--panel-border);
+      padding-right: 12px;
+    }
+
+    .toolbar .group:last-child {
+      border-right: none;
+    }
+
+    .toolbar button,
+    .toolbar input,
+    .exit_btn {
+      background: #21252b;
+      border: 1px solid var(--panel-border);
+      color: var(--color-text);
+      border-radius: var(--radius);
+      height: 36px;
+      padding: 0 12px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: 0.15s ease;
+    }
+
+    .exit_btn{
+        text-align: center;
+        text-decoration: none;
+        background-color: rgb(84, 36, 36);
+
+        align-content: center;
+    }
+
+    .toolbar button:hover {
+      background: var(--color-accent-soft);
+      border-color: var(--color-accent);
+    }
+
+    .toolbar button.active {
+      background: var(--color-accent);
+      color: #fff;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 8px var(--color-accent-soft);
+    }
+
+    .toolbar input[type="color"] {
+      width: 44px;
+      padding: 0;
+      background: transparent;
+      border: none;
+    }
+
+    .toolbar input[type="range"] {
+      width: 120px;
+      accent-color: var(--color-accent);
+    }
+
+    .status {
+      margin-left: auto;
+      margin-right: 32px;
+      font-size: 13px;
+      color: var(--color-muted);
+    }
+
+    /* ======== CANVAS ======== */
+    .canvas-viewport {
+      flex: 1;
+      position: relative;
+      top: 64px;
+      margin-bottom: 64px; /* deja espacio para la barra inferior */
+      background: radial-gradient(circle at 30% 30%, #13161a, #0c0f12);
+      overflow: hidden;
+    }
+
+    .board {
+      position: absolute;
+      top: 0; left: 0;
+      transform-origin: 0 0;
+      background:
+        linear-gradient(#0c0f12 0 0) padding-box,
+        repeating-linear-gradient(to right, rgba(255,255,255,0.04) 0 1px, transparent 1px 64px),
+        repeating-linear-gradient(to bottom, rgba(255,255,255,0.04) 0 1px, transparent 1px 64px);
+    }
+
+    canvas#mainCanvas { display: block; }
+
+    .text-box {
+      position: absolute;
+      background: rgba(24, 28, 33, 0.8);
+      border: 1px solid var(--panel-border);
+      border-radius: var(--radius);
+      color: #fff;
+      padding: 6px 10px;
+      font-size: 18px;
+      resize: both;
+      outline: none;
+      pointer-events: all;
+      transition: 0.2s ease;
+    }
+
+    .text-box.selected {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 2px var(--color-accent-soft);
+    }
+
+    /* ===== HUD ===== */
+    .hud {
+      position: fixed;
+      right: 16px;
+      bottom: 96px;
+      background: rgba(24, 28, 33, 0.85);
+      border-radius: var(--radius);
+      border: 1px solid var(--panel-border);
+      font-size: 13px;
+      color: var(--color-muted);
+      padding: 8px 12px;
+      backdrop-filter: blur(8px);
+      z-index: 50;
+    }
+  </style>
+</head>
+
+<body>
+    
+  <!-- ===== TOOLBAR SUPERIOR ===== -->
+  <div class="toolbar top-toolbar">
+    <div class="group">
+      <button id="tool-pen" title="Lápiz (P)" onclick="setTool('pen')">✏️ Lápiz</button>
+      <button id="tool-eraser" title="Borrador (E)" onclick="setTool('eraser')">🧹 Borrador</button>
+      <button id="tool-text" title="Texto (T)" onclick="setTool('text')">📝 Texto</button>
+      <button id="tool-hand" title="Mano/Pan (H o mantener ESPACIO)" onclick="setTool('hand')">✋ Mano</button>
+    </div>
+    <div class="group">
+      <label>Color</label>
+      <input type="color" id="strokeColor" value="#ffffff" />
+      <label>Tamaño</label>
+      <input type="range" id="strokeSize" min="1" max="60" value="3" />
+    </div>
+    <div class="group">
+      <label>Fuente</label>
+      <input type="number" id="fontSize" min="8" max="200" value="20" style="width:70px"/>
+      <label>Color</label>
+      <input type="color" id="textColor" value="#ffffff"/>
+      <button title="Aplicar formato al texto seleccionado" onclick="applyTextStyle()">Aplicar</button>
+    </div>
+        <div class="group">
+             <a href="./../pages/temario.html" class="exit_btn">Salir</a>
+        </div>
+  </div>
+
+  <!-- ===== CANVAS ===== -->
+  <div class="canvas-viewport" id="viewport">
+    <div class="board" id="board">
+      <canvas id="mainCanvas" width="3000" height="2000"></canvas>
+      <div id="textContainer"></div>
+    </div>
+  </div>
+
+  <!-- ===== TOOLBAR INFERIOR ===== -->
+  <div class="toolbar bottom-toolbar">
+    <div class="group">
+      <button onclick="undo()" title="Ctrl+Z">↶ Deshacer</button>
+      <button onclick="redo()" title="Ctrl+Y / Ctrl+Shift+Z">↷ Rehacer</button>
+      <button onclick="clearBoard()" title="Limpiar pizarra">🗑️ Limpiar</button>
+    </div>
+
+    <div class="group">
+      <button onclick="zoomOut()" title="Zoom out (Ctrl + rueda o -)">🔍−</button>
+      <button onclick="resetZoom()" title="Reset zoom (0)">🧭 Reset</button>
+      <button onclick="zoomIn()" title="Zoom in (Ctrl + rueda o +)">🔍+</button>
+    </div>
+
+    <div class="group">
+      <button onclick="savePNG()" title="Exportar PNG">💾 Export PNG</button>
+      <button onclick="saveProject()" title="Guardar proyecto en este navegador">💾 Guardar</button>
+      <button onclick="loadProject()" title="Cargar proyecto guardado">📂 Cargar</button>
+    </div>
+
+    <div class="status">
+      <span id="statusZoom">100%</span> •
+      <span id="statusTool">Herramienta: Lápiz</span>
+    </div>
+  </div>
+
+  <div class="hud">
+    Tips: Ctrl + rueda = zoom • Espacio = Pan • Doble click en texto para editar • Supr = borrar
+  </div>
+
+  <script>
+    // ---------- Referencias ----------
+    const canvas = document.getElementById('mainCanvas');
+    const ctx = canvas.getContext('2d');
+    const board = document.getElementById('board');
+    const viewport = document.getElementById('viewport');
+    const textContainer = document.getElementById('textContainer');
+
+    // Toolbar controls
+    const strokeColorEl = document.getElementById('strokeColor');
+    const strokeSizeEl = document.getElementById('strokeSize');
+    const fontSizeEl = document.getElementById('fontSize');
+    const textColorEl = document.getElementById('textColor');
+    const statusZoomEl = document.getElementById('statusZoom');
+    const statusToolEl = document.getElementById('statusTool');
+
+    const toolButtons = {
+      pen: document.getElementById('tool-pen'),
+      eraser: document.getElementById('tool-eraser'),
+      text: document.getElementById('tool-text'),
+      hand: document.getElementById('tool-hand'),
+    };
+
+    // ---------- Estado ----------
+    let tool = 'pen';
+    let isDrawing = false;
+    let isPanning = false;
+    let spacePanning = false;  // pan temporal con barra espaciadora
+    let lastPos = {x:0, y:0};  // en coords de board
+
+    // Transformaciones de la board (pan/zoom)
+    let scale = 1;
+    let translate = {x: 100, y: 100}; // offset inicial para que no quede pegado a (0,0)
+    const MIN_SCALE = 0.2;
+    const MAX_SCALE = 8;
+
+    // Historial (incluye canvas + textos + transform)
+    let history = [];
+    let historyStep = -1;
+
+    // Selección de texto
+    let selectedTextEl = null;
+    let draggingText = false;
+    let textDragOffset = {x:0, y:0};
+
+    // ---------- Utilidades de coordenadas ----------
+    function screenToBoard(clientX, clientY){
+      const rect = viewport.getBoundingClientRect();
+      const x = (clientX - rect.left - translate.x) / scale;
+      const y = (clientY - rect.top  - translate.y) / scale;
+      return {x, y};
+    }
+
+    function applyTransform(){
+      board.style.transform = `translate(${translate.x}px, ${translate.y}px) scale(${scale})`;
+      updateStatus();
+    }
+
+    function updateStatus(){
+      statusZoomEl.textContent = `${Math.round(scale*100)}%`;
+      const map = {pen:'Lápiz', eraser:'Borrador', text:'Texto', hand:'Mano'};
+      statusToolEl.textContent = `Herramienta: ${map[tool]}`;
+      Object.keys(toolButtons).forEach(k=>{
+        toolButtons[k].classList.toggle('active', tool===k);
+      });
+      canvas.style.cursor = (tool==='text') ? 'text' : (tool==='hand' || spacePanning) ? 'grab' : 'crosshair';
+    }
+
+    function setTool(next){
+      tool = next;
+      updateStatus();
+    }
+
+    function centerBoard() {
+  const rect = viewport.getBoundingClientRect();
+  translate.x = (rect.width  - canvas.width  * scale) / 2;
+  translate.y = (rect.height - canvas.height * scale) / 2;
+  applyTransform();
+}
+
+    // ---------- Dibujo ----------
+    function beginStroke(p){
+      isDrawing = true;
+      ctx.save();
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = +strokeSizeEl.value;
+      if (tool==='eraser'){
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.strokeStyle = 'rgba(0,0,0,1)';
+      } else {
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.strokeStyle = strokeColorEl.value;
+      }
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+    }
+
+    function drawTo(p){
+      if(!isDrawing) return;
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+    }
+
+    function endStroke(){
+      if(!isDrawing) return;
+      isDrawing = false;
+      ctx.restore();
+      pushHistory();
+    }
+
+    // ---------- Textos ----------
+    function createTextAt(p){
+      const div = document.createElement('div');
+      div.className = 'text-box';
+      div.contentEditable = "true";
+      div.textContent = 'Texto';
+      div.style.left = `${p.x}px`;
+      div.style.top = `${p.y}px`;
+      div.style.fontSize = `${+fontSizeEl.value}px`;
+      div.style.color = textColorEl.value;
+      textContainer.appendChild(div);
+      selectText(div);
+      div.focus();
+      // Guardar cuando termina de editar (blur) o Enter+Ctrl
+      div.addEventListener('blur', ()=> pushHistoryDebounced());
+      div.addEventListener('keydown', (e)=>{
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='enter'){
+          div.blur();
+        }
+      });
+      // Arrastre
+      div.addEventListener('pointerdown', (e)=>{
+        // Evitar que el pan de la board intercepte
+        e.stopPropagation();
+        selectText(div);
+        draggingText = true;
+        const pBoard = screenToBoard(e.clientX, e.clientY);
+        const left = parseFloat(div.style.left);
+        const top  = parseFloat(div.style.top);
+        textDragOffset.x = pBoard.x - left;
+        textDragOffset.y = pBoard.y - top;
+        div.setPointerCapture(e.pointerId);
+      });
+      div.addEventListener('pointermove', (e)=>{
+        if(!draggingText) return;
+        const pBoard = screenToBoard(e.clientX, e.clientY);
+        div.style.left = `${pBoard.x - textDragOffset.x}px`;
+        div.style.top  = `${pBoard.y - textDragOffset.y}px`;
+      });
+      div.addEventListener('pointerup', (e)=>{
+        if(draggingText){
+          draggingText = false;
+          pushHistory();
+        }
+      });
+      pushHistory();
+    }
+
+    function selectText(el){
+      if (selectedTextEl) selectedTextEl.classList.remove('selected');
+      selectedTextEl = el;
+      if (selectedTextEl) selectedTextEl.classList.add('selected');
+      // Cargar sus estilos en la UI
+      if (selectedTextEl){
+        const fs = parseInt(getComputedStyle(selectedTextEl).fontSize)||20;
+        fontSizeEl.value = fs;
+        const col = rgbToHex(getComputedStyle(selectedTextEl).color);
+        textColorEl.value = col;
+      }
+    }
+
+    function applyTextStyle(){
+      if(!selectedTextEl) return;
+      selectedTextEl.style.fontSize = `${+fontSizeEl.value}px`;
+      selectedTextEl.style.color = textColorEl.value;
+      pushHistory();
+    }
+
+    function rgbToHex(rgb){
+      const m = rgb.match(/(\d+),\s*(\d+),\s*(\d+)/);
+      if(!m) return '#ffffff';
+      const [r,g,b] = m.slice(1).map(n=>(+n).toString(16).padStart(2,'0'));
+      return `#${r}${g}${b}`;
+    }
+
+    function deleteSelected(){
+      if(selectedTextEl){
+        selectedTextEl.remove();
+        selectedTextEl = null;
+        pushHistory();
+      }
+    }
+
+    // ---------- Pan & Zoom ----------
+    function startPan(){
+      isPanning = true;
+      viewport.style.cursor = 'grabbing';
+    }
+    function endPan(){
+      isPanning = false;
+      viewport.style.cursor = (tool==='hand' || spacePanning) ? 'grab' : (tool==='text' ? 'text' : 'crosshair');
+    }
+
+    function zoomAt(pointClient, delta, ctrlWheel=false){
+      // Si se usa rueda sin Ctrl, hacemos scroll del navegador; con Ctrl, hacemos zoom al puntero
+      const factor = (delta<0) ? 1.1 : 1/1.1;
+      const newScale = clamp(scale * factor, MIN_SCALE, MAX_SCALE);
+      const rect = viewport.getBoundingClientRect();
+      const before = screenToBoard(pointClient.x, pointClient.y);
+      scale = newScale;
+      const after = screenToBoard(pointClient.x, pointClient.y);
+      // Ajustar translate para mantener el punto bajo el cursor
+      translate.x += (after.x - before.x) * scale;
+      translate.y += (after.y - before.y) * scale;
+      applyTransform();
+    }
+
+    function zoomIn(){ zoomAt({x: viewport.clientWidth/2, y: viewport.clientHeight/2}, -1); }
+    function zoomOut(){ zoomAt({x: viewport.clientWidth/2, y: viewport.clientHeight/2}, +1); }
+    function resetZoom(){
+    scale = 1;
+    centerBoard(); // centramos correctamente al resetear
+    }
+
+    function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+
+    // ---------- Historial ----------
+    function serializeState(){
+      return {
+        image: canvas.toDataURL(),
+        texts: Array.from(textContainer.children).map(div=>({
+          x: parseFloat(div.style.left)||0,
+          y: parseFloat(div.style.top)||0,
+          w: parseFloat(div.style.width)||null,
+          h: parseFloat(div.style.height)||null,
+          fontSize: parseInt(getComputedStyle(div).fontSize)||20,
+          color: rgbToHex(getComputedStyle(div).color),
+          html: div.innerHTML
+        })),
+        transform: {scale, translate:{...translate}}
+      };
+    }
+
+    function restoreState(state){
+      return new Promise(resolve=>{
+        const img = new Image();
+        img.onload = ()=>{
+          ctx.clearRect(0,0,canvas.width,canvas.height);
+          ctx.drawImage(img, 0, 0);
+          // Reponer textos
+          textContainer.innerHTML = '';
+          state.texts.forEach(t=>{
+            const div = document.createElement('div');
+            div.className = 'text-box';
+            div.contentEditable = "true";
+            div.innerHTML = t.html;
+            div.style.left = `${t.x}px`;
+            div.style.top = `${t.y}px`;
+            if (t.w) div.style.width = `${t.w}px`;
+            if (t.h) div.style.height = `${t.h}px`;
+            div.style.fontSize = `${t.fontSize}px`;
+            div.style.color = t.color;
+            // Re-attach events
+            div.addEventListener('blur', ()=> pushHistoryDebounced());
+            div.addEventListener('keydown', (e)=>{
+              if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='enter'){ div.blur(); }
+            });
+            div.addEventListener('pointerdown', (e)=>{
+              e.stopPropagation();
+              selectText(div);
+              draggingText = true;
+              const pBoard = screenToBoard(e.clientX, e.clientY);
+              const left = parseFloat(div.style.left);
+              const top  = parseFloat(div.style.top);
+              textDragOffset.x = pBoard.x - left;
+              textDragOffset.y = pBoard.y - top;
+              div.setPointerCapture(e.pointerId);
+            });
+            div.addEventListener('pointermove', (e)=>{
+              if(!draggingText) return;
+              const pBoard = screenToBoard(e.clientX, e.clientY);
+              div.style.left = `${pBoard.x - textDragOffset.x}px`;
+              div.style.top  = `${pBoard.y - textDragOffset.y}px`;
+            });
+            div.addEventListener('pointerup', ()=>{
+              if(draggingText){ draggingText = false; pushHistory(); }
+            });
+            textContainer.appendChild(div);
+          });
+          // Transform
+          scale = state.transform.scale;
+          translate = {...state.transform.translate};
+          applyTransform();
+          resolve();
+        };
+        img.src = state.image;
+      });
+    }
+
+    function pushHistory(){
+      const state = serializeState();
+      history = history.slice(0, historyStep + 1);
+      history.push(state);
+      historyStep = history.length - 1;
+    }
+
+    const pushHistoryDebounced = debounce(pushHistory, 250);
+
+    function undo(){
+      if (historyStep > 0){
+        historyStep--;
+        restoreState(history[historyStep]);
+      }
+    }
+    function redo(){
+      if (historyStep < history.length - 1){
+        historyStep++;
+        restoreState(history[historyStep]);
+      }
+    }
+
+    function debounce(fn, ms){
+      let t; return (...args)=>{ clearTimeout(t); t = setTimeout(()=>fn(...args), ms); };
+    }
+
+    // ---------- Guardar/Exportar ----------
+    function savePNG(){
+      // Componer en canvas offscreen para NO perder editabilidad
+      const off = document.createElement('canvas');
+      off.width = canvas.width;
+      off.height = canvas.height;
+      const octx = off.getContext('2d');
+
+      // Dibujo base
+      octx.drawImage(canvas, 0, 0);
+
+      // Dibujar textos (simple, multi-línea)
+      Array.from(textContainer.children).forEach(div=>{
+        const x = parseFloat(div.style.left)||0;
+        const y = parseFloat(div.style.top)||0;
+        const fs = parseInt(getComputedStyle(div).fontSize)||20;
+        const col = getComputedStyle(div).color;
+        const lines = div.innerText.replace(/\r/g,'').split('\n');
+        octx.font = `${fs}px Arial, system-ui, sans-serif`;
+        octx.fillStyle = col;
+        octx.textBaseline = 'top';
+        let yy = y;
+        lines.forEach(line=>{
+          octx.fillText(line, x+2, yy+2);
+          yy += fs * 1.25;
+        });
+      });
+
+      const link = document.createElement('a');
+      link.download = `pizarra_${Date.now()}.png`;
+      link.href = off.toDataURL('image/png');
+      link.click();
+    }
+
+    function saveProject(){
+      const state = serializeState();
+      localStorage.setItem('pizarra_project', JSON.stringify(state));
+      flash('Proyecto guardado ✔️');
+    }
+
+    async function loadProject(){
+      const raw = localStorage.getItem('pizarra_project');
+      if(!raw){ flash('No hay proyecto guardado'); return; }
+      const state = JSON.parse(raw);
+      await restoreState(state);
+      // resetear historial a partir de lo cargado
+      history = [serializeState()];
+      historyStep = 0;
+      flash('Proyecto cargado 📂');
+    }
+
+    function clearBoard(){
+      if (!confirm('¿Limpiar toda la pizarra?')) return;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      textContainer.innerHTML = '';
+      pushHistory();
+    }
+
+    function flash(msg){
+      const el = document.createElement('div');
+      el.textContent = msg;
+      el.style.position='absolute';
+      el.style.left='12px';
+      el.style.bottom='12px';
+      el.style.padding='8px 12px';
+      el.style.background='rgba(0,0,0,.6)';
+      el.style.border='1px solid rgba(255,255,255,.15)';
+      el.style.borderRadius='8px';
+      el.style.fontSize='12px';
+      el.style.zIndex=50;
+      document.body.appendChild(el);
+      setTimeout(()=>{ el.remove(); }, 1600);
+    }
+
+    // ---------- Eventos de puntero (mouse/touch/pen) ----------
+    // Usamos pointer events para soportar touch también
+    viewport.addEventListener('pointerdown', (e)=>{
+      // Si se hace click en un texto, sus handlers se encargan
+      if (e.target.classList.contains('text-box')) return;
+
+      const p = screenToBoard(e.clientX, e.clientY);
+      lastPos = p;
+
+      // Selección: click vacío quita selección de texto
+      if (selectedTextEl && e.target!==selectedTextEl){
+        selectText(null);
+      }
+
+      if (tool==='hand' || spacePanning || e.button===1){
+        startPan();
+        viewport.setPointerCapture(e.pointerId);
+        return;
+      }
+
+      if (tool==='pen' || tool==='eraser'){
+        beginStroke(p);
+        viewport.setPointerCapture(e.pointerId);
+      } else if (tool==='text'){
+        createTextAt(p);
+      }
+    });
+
+    viewport.addEventListener('pointermove', (e)=>{
+      const p = screenToBoard(e.clientX, e.clientY);
+
+      if (isPanning){
+        translate.x += (e.movementX);
+        translate.y += (e.movementY);
+        applyTransform();
+        return;
+      }
+
+      if (isDrawing){
+        drawTo(p);
+      }
+    });
+
+    viewport.addEventListener('pointerup', (e)=>{
+      if (isPanning){ endPan(); }
+      if (isDrawing){ endStroke(); }
+      try{ viewport.releasePointerCapture(e.pointerId); }catch(_){}
+    });
+
+    // Zoom con rueda (Ctrl+rueda para zoom al puntero)
+    viewport.addEventListener('wheel', (e)=>{
+      if (e.ctrlKey){
+        e.preventDefault();
+        zoomAt({x:e.clientX, y:e.clientY}, e.deltaY, true);
+      }
+    }, {passive:false});
+
+    // ---------- Teclado ----------
+    document.addEventListener('keydown', (e)=>{
+      // Atajos herramientas
+      if (!e.ctrlKey && !e.metaKey) {
+        if (e.key.toLowerCase()==='p') { setTool('pen'); }
+        else if (e.key.toLowerCase()==='e') { setTool('eraser'); }
+        else if (e.key.toLowerCase()==='t') { setTool('text'); }
+        else if (e.key.toLowerCase()==='h') { setTool('hand'); }
+        else if (e.key===' ') { spacePanning = true; updateStatus(); }
+        else if (e.key==='+'){ zoomIn(); }
+        else if (e.key==='-'){ zoomOut(); }
+        else if (e.key==='0'){ resetZoom(); }
+        else if (e.key==='Delete'){ deleteSelected(); }
+      }
+
+      // Deshacer/rehacer
+      if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='z'){
+        e.preventDefault();
+        if (e.shiftKey) redo(); else undo();
+      } else if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='y'){
+        e.preventDefault();
+        redo();
+      }
+    });
+
+    document.addEventListener('keyup', (e)=>{
+      if (e.key===' '){ spacePanning = false; updateStatus(); }
+    });
+
+    // ---------- Init ----------
+function init(){
+  ctx.fillStyle = 'rgba(0,0,0,0)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // Esperamos al siguiente frame para asegurarnos que el viewport tenga tamaño real
+  requestAnimationFrame(() => {
+    centerBoard();
+  });
+
+  pushHistory();
+
+  textContainer.addEventListener('pointerdown', (e)=>{
+    if (e.target.classList.contains('text-box')){
+      selectText(e.target);
+    }
+  });
+
+  updateStatus();
+}
+
+
+    init();
+
+    // Exponer algunas funciones a los botones
+    window.setTool = setTool;
+    window.undo = undo;
+    window.redo = redo;
+    window.zoomIn = zoomIn;
+    window.zoomOut = zoomOut;
+    window.resetZoom = resetZoom;
+    window.savePNG = savePNG;
+    window.saveProject = saveProject;
+    window.loadProject = loadProject;
+    window.clearBoard = clearBoard;
+    window.applyTextStyle = applyTextStyle;
+
+  </script>
+</body>
+</html>

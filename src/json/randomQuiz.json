@@ -1,0 +1,603 @@
+[
+  {
+    "titulo": "Espacio muestral de una moneda",
+    "descripcion": "Se lanza una moneda equilibrada una vez. ¿Cuál es el espacio muestral del experimento?",
+    "opciones": [
+      "Ω = ∅",
+      "{Cara, Cruz}",
+      "{0, 1}",
+      "{1, 2, 3, 4, 5, 6}",
+      "{C, X}",
+      "Ω = {Cara}",
+      "{A, B, C}",
+      "{Cara, Cruz, Canto}",
+      "Ninguna de las anteriores",
+      "{Cara}"
+    ],
+    "respuestaCorrecta": 1,
+    "justificaciones": {
+      "0": "Incorrecto. El conjunto vacío significa que no hay resultados posibles, lo cual no tiene sentido aquí.",
+      "1": "✅ Correcto. Al lanzar una moneda solo hay dos resultados posibles: Cara o Cruz.",
+      "2": "Incorrecto. {0,1} puede representar resultados binarios, pero no es la notación natural del experimento.",
+      "3": "Incorrecto. Ese espacio corresponde a un dado, no a una moneda.",
+      "4": "Incorrecto. Es una forma abreviada, pero no se usa en notación formal.",
+      "5": "Incorrecto. Falta incluir el resultado Cruz.",
+      "6": "Incorrecto. Los símbolos A, B, C no representan resultados del experimento.",
+      "7": "Incorrecto. El canto no es un resultado posible en la teoría de probabilidad.",
+      "8": "Incorrecto. Hay una opción correcta explícita arriba.",
+      "9": "Incorrecto. Falta el segundo resultado posible."
+    },
+    "dificultad": "facil"
+  },
+  {
+    "titulo": "Probabilidad de evento simple",
+    "descripcion": "Se lanza un dado justo de seis caras. ¿Cuál es la probabilidad de obtener un número mayor que 4?",
+    "opciones": [
+      "1/6",
+      "2/6",
+      "1/3",
+      "4/6",
+      "1/2",
+      "5/6",
+      "3/6",
+      "2/3",
+      "1",
+      "0"
+    ],
+    "respuestaCorrecta": 2,
+    "justificaciones": {
+      "0": "Incorrecto. Solo un número (6) sería 1/6, pero también cuenta el 5.",
+      "1": "Incorrecto. 2/6 simplifica a 1/3.",
+      "2": "✅ Correcto. Los resultados favorables son {5,6}, dos de seis posibles: 2/6 = 1/3.",
+      "3": "Incorrecto. Contás 4 números, pero solo 2 cumplen la condición.",
+      "4": "Incorrecto. No son la mitad de los posibles resultados.",
+      "5": "Incorrecto. Eso representaría casi certeza.",
+      "6": "Incorrecto. 3 números no cumplen el criterio.",
+      "7": "Incorrecto. 2/3 sería el complementario (números ≤ 4).",
+      "8": "Incorrecto. No todos los resultados cumplen.",
+      "9": "Incorrecto. Hay casos favorables."
+    },
+    "dificultad": "facil"
+  },
+  {
+    "titulo": "Eventos mutuamente excluyentes",
+    "descripcion": "En el lanzamiento de un dado, considerá los eventos A = {1,2,3} y B = {4,5,6}. ¿Qué se puede afirmar?",
+    "opciones": [
+      "Son mutuamente excluyentes",
+      "Son independientes",
+      "Son complementarios",
+      "Son el mismo evento",
+      "A ∩ B = {3,4}",
+      "A ∩ B = ∅",
+      "P(A ∩ B) = 1/6",
+      "A ⊂ B",
+      "B ⊂ A",
+      "Ninguna de las anteriores"
+    ],
+    "respuestaCorrecta": 0,
+    "justificaciones": {
+      "0": "✅ Correcto. No comparten resultados. A ∩ B = ∅, por lo tanto son mutuamente excluyentes.",
+      "1": "Incorrecto. No son independientes, ya que la ocurrencia de uno excluye al otro.",
+      "2": "Incorrecto. No son complementarios porque A ∪ B = Ω, pero los complementarios son A y su complemento Aᶜ.",
+      "3": "Incorrecto. Son distintos conjuntos disjuntos.",
+      "4": "Incorrecto. 3 pertenece a A y 4 a B, no a ambos.",
+      "5": "Correcto también, aunque es la definición formal de exclusión.",
+      "6": "Incorrecto. La intersección tiene probabilidad 0.",
+      "7": "Incorrecto. A no está contenido en B.",
+      "8": "Incorrecto. B no está contenido en A.",
+      "9": "Incorrecto. Hay una afirmación correcta explícita."
+    },
+    "dificultad": "medio"
+  },
+  {
+    "titulo": "Probabilidad condicional",
+    "descripcion": "En una urna hay 4 bolas rojas y 2 azules. Se extrae una bola al azar. Si sabemos que la bola NO es azul, ¿cuál es la probabilidad de que sea roja?",
+    "opciones": [
+      "4/6",
+      "2/6",
+      "1",
+      "2/3",
+      "1/2",
+      "3/4",
+      "5/6",
+      "0",
+      "4/2",
+      "6/6"
+    ],
+    "respuestaCorrecta": 2,
+    "justificaciones": {
+      "0": "Incorrecto. Esa es la probabilidad simple de roja, no la condicional.",
+      "1": "Incorrecto. 2/6 sería la de azul, no la de roja dado que no es azul.",
+      "2": "✅ Correcto. Si no es azul, entonces necesariamente es roja. P(roja|no azul) = 1.",
+      "3": "Incorrecto. 2/3 sería la probabilidad simple, no la condicional dada la información.",
+      "4": "Incorrecto. Solo sería así si hubiera igual cantidad de bolas de cada color.",
+      "5": "Incorrecto. Incorrecta interpretación del total de casos posibles.",
+      "6": "Incorrecto. 5/6 representa otro tipo de suceso.",
+      "7": "Incorrecto. La probabilidad no puede ser cero.",
+      "8": "Incorrecto. Operación inválida.",
+      "9": "Incorrecto. 6/6 = 1, pero debe justificarse correctamente."
+    },
+    "dificultad": "medio"
+  },
+  {
+    "titulo": "Teorema de Bayes (intuición)",
+    "descripcion": "Una prueba médica tiene 95% de sensibilidad y 90% de especificidad. La prevalencia de la enfermedad es 1%. Si una persona da positivo, ¿cuál es la probabilidad de que realmente esté enferma?",
+    "opciones": [
+      "95%",
+      "90%",
+      "8.8%",
+      "50%",
+      "1%",
+      "99%",
+      "10%",
+      "5%",
+      "25%",
+      "0.5%"
+    ],
+    "respuestaCorrecta": 2,
+    "justificaciones": {
+      "0": "Incorrecto. Esa es la sensibilidad (P(+|E)), no P(E|+).",
+      "1": "Incorrecto. Esa es la especificidad (P(-|¬E)), no la probabilidad posterior.",
+      "2": "✅ Correcto. Aplicando Bayes: P(E|+) ≈ (0.95×0.01)/[(0.95×0.01)+(0.10×0.99)] ≈ 8.8%.",
+      "3": "Incorrecto. Es una estimación común errónea: el valor real es menor.",
+      "4": "Incorrecto. Es la prevalencia, no la probabilidad posterior.",
+      "5": "Incorrecto. 99% es la probabilidad complementaria en otro contexto.",
+      "6": "Incorrecto. Aproximado, pero ligeramente superior al valor correcto.",
+      "7": "Incorrecto. Es el error de falso positivo, no la probabilidad buscada.",
+      "8": "Incorrecto. No hay proporción 1/4 entre casos verdaderos.",
+      "9": "Incorrecto. Es demasiado bajo; ignora los verdaderos positivos."
+    },
+    "dificultad": "dificil"
+  },
+  {
+    "titulo": "Regla de la suma",
+    "descripcion": "En un mazo de 52 cartas, sea A = 'sacar un As' y B = 'sacar una carta de Corazones'. ¿Cuál es P(A ∪ B)?",
+    "opciones": [
+      "4/52 + 13/52",
+      "4/52 + 13/52 - 1/52",
+      "16/52",
+      "17/52",
+      "12/52",
+      "1/52",
+      "3/52",
+      "15/52",
+      "8/52",
+      "9/52"
+    ],
+    "respuestaCorrecta": 1,
+    "justificaciones": {
+      "0": "Incorrecto. Falta restar la intersección (el As de Corazones).",
+      "1": "✅ Correcto. P(A ∪ B) = 4/52 + 13/52 - 1/52 = 16/52.",
+      "2": "Correcto también, es el resultado simplificado.",
+      "3": "Incorrecto. Se suma sin restar la intersección.",
+      "4": "Incorrecto. No representa la unión total.",
+      "5": "Incorrecto. Probabilidad de una carta específica.",
+      "6": "Incorrecto. Valor parcial de un subconjunto.",
+      "7": "Incorrecto. No coincide con el total correcto.",
+      "8": "Incorrecto. Insuficiente cantidad de casos favorables.",
+      "9": "Incorrecto. Valor sin relación con los eventos dados."
+    },
+    "dificultad": "medio"
+  },
+  {
+    "titulo": "Complemento de un evento",
+    "descripcion": "Al lanzar tres monedas, sea A el evento 'obtener al menos una cara'. ¿Cuál es la probabilidad de A usando el complemento?",
+    "opciones": [
+      "P(A) = 1 - P(todas cruces)",
+      "P(A) = P(CCC)",
+      "P(A) = 1/2",
+      "P(A) = 3/4",
+      "P(A) = 7/8",
+      "P(A) = 5/8",
+      "P(A) = 6/8",
+      "P(A) = 1 - 1/8",
+      "P(A) = 1/8",
+      "P(A) = 0"
+    ],
+    "respuestaCorrecta": 4,
+    "justificaciones": {
+      "0": "Correcto parcialmente, pero falta el valor numérico.",
+      "1": "Incorrecto. Esa es la probabilidad del complemento, no del evento.",
+      "2": "Incorrecto. Es el caso de una sola moneda.",
+      "3": "Incorrecto. La probabilidad correcta es 7/8.",
+      "4": "✅ Correcto. P(A) = 1 - P(CCC) = 1 - 1/8 = 7/8.",
+      "5": "Incorrecto. Cálculo erróneo de los casos favorables.",
+      "6": "Incorrecto. No coincide con el total de combinaciones.",
+      "7": "Correcto también. Es la expresión previa al cálculo final.",
+      "8": "Incorrecto. Es el valor del complemento.",
+      "9": "Incorrecto. Siempre hay posibilidad de obtener cara."
+    },
+    "dificultad": "medio"
+  },
+  {
+    "titulo": "Ley de probabilidad total",
+    "descripcion": "Una fábrica tiene 3 máquinas: M1 produce el 50%, M2 el 30%, M3 el 20%. Sus tasas de defectos son 1%, 2% y 3% respectivamente. ¿Cuál es la probabilidad de que un producto sea defectuoso?",
+    "opciones": [
+      "1.6%",
+      "2%",
+      "3%",
+      "6%",
+      "1%",
+      "4%",
+      "2.5%",
+      "1.2%",
+      "1.8%",
+      "2.8%"
+    ],
+    "respuestaCorrecta": 0,
+    "justificaciones": {
+      "0": "✅ Correcto. P(D) = 0.01×0.5 + 0.02×0.3 + 0.03×0.2 = 0.016 = 1.6%.",
+      "1": "Incorrecto. Es un promedio no ponderado.",
+      "2": "Incorrecto. Corresponde solo a una máquina.",
+      "3": "Incorrecto. Suma errónea, no ponderada.",
+      "4": "Incorrecto. Solo el primer caso.",
+      "5": "Incorrecto. Exceso al combinar tasas.",
+      "6": "Incorrecto. No aplica al promedio ponderado.",
+      "7": "Incorrecto. Subestimación.",
+      "8": "Incorrecto. Cálculo incorrecto.",
+      "9": "Incorrecto. Error de redondeo."
+    },
+    "dificultad": "dificil"
+  },
+  {
+    "titulo": "Clasificación de eventos",
+    "descripcion": "Si A = {números pares} y B = {números múltiplos de 3} en el lanzamiento de un dado, ¿cómo se relacionan A y B?",
+    "opciones": [
+      "A y B son independientes",
+      "A y B son disjuntos",
+      "A y B son complementarios",
+      "A y B se superponen",
+      "A y B son idénticos",
+      "A y B son excluyentes",
+      "A y B son mutuamente dependientes",
+      "A ⊂ B",
+      "B ⊂ A",
+      "A ∩ B = ∅"
+    ],
+    "respuestaCorrecta": 3,
+    "justificaciones": {
+      "0": "Incorrecto. No son independientes, comparten un resultado común (6).",
+      "1": "Incorrecto. No son disjuntos, se cruzan en el 6.",
+      "2": "Incorrecto. No son opuestos.",
+      "3": "✅ Correcto. Tienen intersección no vacía: A ∩ B = {6}.",
+      "4": "Incorrecto. Son distintos conjuntos.",
+      "5": "Incorrecto. No son excluyentes.",
+      "6": "Incorrecto. No hay dependencia directa.",
+      "7": "Incorrecto. Ninguno está completamente contenido en el otro.",
+      "8": "Incorrecto. B tampoco está contenido en A.",
+      "9": "Incorrecto. La intersección no es vacía."
+    },
+    "dificultad": "facil"
+  },
+  {
+    "titulo": "Frecuencia relativa",
+    "descripcion": "Si en 100 lanzamientos de un dado el número 4 aparece 18 veces, ¿cuál es la frecuencia relativa de obtener un 4?",
+    "opciones": [
+      "0.18",
+      "0.25",
+      "0.5",
+      "1/6",
+      "18%",
+      "0.1666",
+      "0.2",
+      "0.1",
+      "0.12",
+      "0.3"
+    ],
+    "respuestaCorrecta": 0,
+    "justificaciones": {
+      "0": "✅ Correcto. f = 18/100 = 0.18 = 18%.",
+      "1": "Incorrecto. 25% es 1/4, mayor a la observada.",
+      "2": "Incorrecto. 0.5 es demasiado alta.",
+      "3": "Incorrecto. Es el valor teórico, no el observado.",
+      "4": "Correcto también, es la forma porcentual.",
+      "5": "Incorrecto. Es la probabilidad teórica aproximada.",
+      "6": "Incorrecto. No coincide con los datos.",
+      "7": "Incorrecto. Solo 10 de 100 lanzamientos.",
+      "8": "Incorrecto. 12 de 100, menor a la observada.",
+      "9": "Incorrecto. 30% es demasiado alta."
+    },
+    "dificultad": "facil"
+  },
+  {
+    "titulo": "Identificación de experimento aleatorio",
+    "descripcion": "¿Cuál de los siguientes es un experimento aleatorio?",
+    "opciones": [
+      "Medir la altura exacta de una persona",
+      "Observar el clima de mañana",
+      "Encender una lámpara y ver si prende",
+      "Calcular 2 + 2",
+      "Sacar una carta de un mazo",
+      "Leer el título de un libro",
+      "Determinar el color de una pelota en una urna",
+      "Contar las hojas de un libro",
+      "Encender una calculadora",
+      "Medir el ancho de una hoja con regla"
+    ],
+    "respuestaCorrecta": 4,
+    "justificaciones": {
+      "0": "Incorrecto. Medir no es aleatorio si la persona ya tiene una altura fija.",
+      "1": "Correcto parcialmente. El clima tiene aleatoriedad, pero depende de muchas variables externas.",
+      "2": "Incorrecto. El resultado depende de una acción determinista.",
+      "3": "Incorrecto. 2 + 2 = 4 no varía, no hay azar.",
+      "4": "✅ Correcto. Al sacar una carta no se puede predecir cuál saldrá; tiene resultados aleatorios.",
+      "5": "Incorrecto. Leer un título no implica incertidumbre.",
+      "6": "Correcto también, pero se pidió uno; es equivalente al ejemplo clásico de urna.",
+      "7": "Incorrecto. El conteo no es aleatorio.",
+      "8": "Incorrecto. No interviene el azar.",
+      "9": "Incorrecto. El ancho es fijo y medible, no incierto."
+    },
+    "dificultad": "facil"
+  },
+  {
+    "titulo": "Eventos complementarios",
+    "descripcion": "Si A es el evento 'sale cara al lanzar una moneda', ¿cuál es el complemento de A?",
+    "opciones": [
+      "Aᶜ = {cara}",
+      "Aᶜ = {cruz}",
+      "Aᶜ = {cara, cruz}",
+      "Aᶜ = ∅",
+      "Aᶜ = {cara, canto}",
+      "Aᶜ = {canto}",
+      "Aᶜ = {cara, cara}",
+      "Aᶜ = {lado}",
+      "Aᶜ = {no cara}",
+      "Aᶜ = {canto, cruz}"
+    ],
+    "respuestaCorrecta": 1,
+    "justificaciones": {
+      "0": "Incorrecto. Es el mismo evento A, no su complemento.",
+      "1": "✅ Correcto. El complemento de obtener cara es obtener cruz.",
+      "2": "Incorrecto. Ese sería el espacio muestral completo, no el complemento.",
+      "3": "Incorrecto. El vacío indicaría que A siempre ocurre, lo cual es falso.",
+      "4": "Incorrecto. 'Canto' no es un resultado válido en la idealización teórica.",
+      "5": "Incorrecto. No existe esa opción en una moneda ideal.",
+      "6": "Incorrecto. No hay dos caras simultáneas en una tirada.",
+      "7": "Incorrecto. 'Lado' no es una opción física real.",
+      "8": "Parcialmente correcto, pero debe expresarse explícitamente como {cruz}.",
+      "9": "Incorrecto. Se agregó un resultado inexistente."
+    },
+    "dificultad": "facil"
+  },
+  {
+    "titulo": "Axiomas de Kolmogorov",
+    "descripcion": "Según los axiomas de la probabilidad, ¿qué afirmación es verdadera?",
+    "opciones": [
+      "La probabilidad siempre es mayor que 1",
+      "La probabilidad puede ser negativa",
+      "P(Ω) = 1",
+      "P(∅) = 1",
+      "P(A) + P(B) = P(A ∪ B)",
+      "P(A) = 0 si A es imposible",
+      "P(A ∩ B) = P(A) + P(B)",
+      "P(Ω) = 0",
+      "P(A) ≤ 0",
+      "P(A ∪ B) ≤ P(A)"
+    ],
+    "respuestaCorrecta": 2,
+    "justificaciones": {
+      "0": "Incorrecto. La probabilidad nunca puede superar 1.",
+      "1": "Incorrecto. No existen probabilidades negativas.",
+      "2": "✅ Correcto. El espacio muestral siempre tiene probabilidad 1.",
+      "3": "Incorrecto. El conjunto vacío tiene probabilidad 0.",
+      "4": "Incorrecto. Falta restar la intersección.",
+      "5": "Correcto también, pero no es la afirmación principal de los axiomas.",
+      "6": "Incorrecto. Solo si A y B son disjuntos.",
+      "7": "Incorrecto. El espacio muestral no puede tener probabilidad 0.",
+      "8": "Incorrecto. Las probabilidades son siempre ≥ 0.",
+      "9": "Incorrecto. La unión nunca es menor que una parte."
+    },
+    "dificultad": "medio"
+  },
+  {
+    "titulo": "Eventos independientes",
+    "descripcion": "Si se lanza una moneda y un dado, ¿qué relación existe entre los eventos A = 'sale cara' y B = 'sale número par'?",
+    "opciones": [
+      "Son mutuamente excluyentes",
+      "Son dependientes",
+      "Son independientes",
+      "Son complementarios",
+      "No se pueden combinar",
+      "A y B son el mismo evento",
+      "A causa B",
+      "B depende de A",
+      "A ∩ B = ∅",
+      "P(A ∩ B) = 1"
+    ],
+    "respuestaCorrecta": 2,
+    "justificaciones": {
+      "0": "Incorrecto. No se excluyen; pueden ocurrir simultáneamente.",
+      "1": "Incorrecto. Son experimentos distintos, por lo tanto independientes.",
+      "2": "✅ Correcto. El resultado del dado no afecta el de la moneda.",
+      "3": "Incorrecto. No son opuestos.",
+      "4": "Incorrecto. Sí se pueden combinar mediante producto de probabilidades.",
+      "5": "Incorrecto. Son eventos distintos en diferentes experimentos.",
+      "6": "Incorrecto. No hay causalidad.",
+      "7": "Incorrecto. No hay dependencia estadística.",
+      "8": "Incorrecto. La intersección no es vacía.",
+      "9": "Incorrecto. P(A∩B) = 1/2×1/2 = 1/4, no 1."
+    },
+    "dificultad": "facil"
+  },
+  {
+    "titulo": "Variable aleatoria discreta",
+    "descripcion": "¿Cuál de los siguientes experimentos genera una variable aleatoria discreta?",
+    "opciones": [
+      "Medir la temperatura cada hora",
+      "Contar el número de autos que pasan por una calle en 1 hora",
+      "Medir el peso de una persona",
+      "Calcular la altura de una planta",
+      "Registrar la presión atmosférica",
+      "Contar los goles en un partido",
+      "Medir el tiempo de una carrera",
+      "Determinar la velocidad promedio",
+      "Medir la distancia a la Luna",
+      "Registrar la temperatura exacta"
+    ],
+    "respuestaCorrecta": 1,
+    "justificaciones": {
+      "0": "Incorrecto. La temperatura es continua.",
+      "1": "✅ Correcto. El número de autos es un conteo entero (discreto).",
+      "2": "Incorrecto. El peso puede tomar infinitos valores dentro de un rango.",
+      "3": "Incorrecto. La altura es continua.",
+      "4": "Incorrecto. La presión es una magnitud continua.",
+      "5": "Correcto también. Es otro ejemplo de variable discreta (valores enteros).",
+      "6": "Incorrecto. El tiempo es continuo.",
+      "7": "Incorrecto. La velocidad es continua.",
+      "8": "Incorrecto. La distancia es continua.",
+      "9": "Incorrecto. Temperatura exacta → continua."
+    },
+    "dificultad": "facil"
+  },
+  {
+    "titulo": "Evento seguro e imposible",
+    "descripcion": "¿Cuál de las siguientes afirmaciones es correcta?",
+    "opciones": [
+      "El evento imposible tiene probabilidad 1",
+      "El evento seguro tiene probabilidad 0",
+      "El evento imposible tiene probabilidad 0",
+      "Ambos tienen probabilidad 0",
+      "El evento seguro no existe",
+      "El evento imposible no existe",
+      "El evento seguro depende del azar",
+      "P(∅) = 1",
+      "P(Ω) = 0",
+      "P(Ω) = 1"
+    ],
+    "respuestaCorrecta": 9,
+    "justificaciones": {
+      "0": "Incorrecto. El imposible tiene probabilidad 0.",
+      "1": "Incorrecto. El evento seguro ocurre siempre, tiene probabilidad 1.",
+      "2": "Correcto también, pero no es la más completa.",
+      "3": "Incorrecto. Solo el imposible tiene probabilidad 0.",
+      "4": "Incorrecto. Siempre hay un evento seguro (el espacio muestral).",
+      "5": "Incorrecto. Se usa teóricamente como referencia.",
+      "6": "Incorrecto. El evento seguro ocurre sin azar.",
+      "7": "Incorrecto. El conjunto vacío tiene probabilidad 0.",
+      "8": "Incorrecto. El espacio muestral nunca tiene probabilidad 0.",
+      "9": "✅ Correcto. P(Ω) = 1 define el evento seguro."
+    },
+    "dificultad": "facil"
+  },
+  {
+    "titulo": "Número de resultados posibles",
+    "descripcion": "Se lanzan dos monedas simultáneamente. ¿Cuántos resultados posibles hay en el espacio muestral?",
+    "opciones": [
+      "2",
+      "3",
+      "4",
+      "6",
+      "8",
+      "9",
+      "1",
+      "5",
+      "12",
+      "16"
+    ],
+    "respuestaCorrecta": 2,
+    "justificaciones": {
+      "0": "Incorrecto. Eso sería una sola moneda.",
+      "1": "Incorrecto. No hay tres combinaciones posibles.",
+      "2": "✅ Correcto. Ω = {CC, CX, XC, XX}, total 4 resultados.",
+      "3": "Incorrecto. Se confunde con un dado.",
+      "4": "Incorrecto. 8 resultados sería para tres monedas.",
+      "5": "Incorrecto. No hay nueve combinaciones.",
+      "6": "Incorrecto. Un único resultado sería determinista.",
+      "7": "Incorrecto. Cinco resultados no es posible con dos monedas.",
+      "8": "Incorrecto. 12 sería si fueran dos dados.",
+      "9": "Incorrecto. 16 es para cuatro monedas."
+    },
+    "dificultad": "facil"
+  },
+  {
+    "titulo": "Probabilidad de la unión de eventos disjuntos",
+    "descripcion": "Si A y B son disjuntos, ¿cuál de las siguientes igualdades es cierta?",
+    "opciones": [
+      "P(A ∪ B) = P(A) + P(B)",
+      "P(A ∩ B) = P(A) + P(B)",
+      "P(A ∪ B) = P(A) × P(B)",
+      "P(A ∪ B) = 0",
+      "P(A ∩ B) = 1",
+      "P(A ∩ B) = 0",
+      "P(A) + P(B) = 1",
+      "P(A ∪ B) = P(A)",
+      "P(A ∪ B) = P(B)",
+      "Ninguna es correcta"
+    ],
+    "respuestaCorrecta": 0,
+    "justificaciones": {
+      "0": "✅ Correcto. Si son disjuntos, A ∩ B = ∅ ⇒ P(A ∪ B) = P(A) + P(B).",
+      "1": "Incorrecto. Se confunden las operaciones de unión e intersección.",
+      "2": "Incorrecto. El producto se aplica a eventos independientes, no disjuntos.",
+      "3": "Incorrecto. La unión no puede tener probabilidad cero si alguno tiene casos favorables.",
+      "4": "Incorrecto. La intersección de disjuntos es nula.",
+      "5": "Correcto también, pero no es la igualdad pedida.",
+      "6": "Incorrecto. No necesariamente suman 1.",
+      "7": "Incorrecto. La unión puede ser mayor que P(A).",
+      "8": "Incorrecto. Idem anterior.",
+      "9": "Incorrecto. Hay opciones correctas arriba."
+    },
+    "dificultad": "medio"
+  },
+  {
+    "titulo": "Cálculo de probabilidad compuesta",
+    "descripcion": "Se lanzan dos dados. ¿Cuál es la probabilidad de obtener un total de 7?",
+    "opciones": [
+      "1/6",
+      "1/12",
+      "1/36",
+      "5/36",
+      "6/36",
+      "7/36",
+      "8/36",
+      "10/36",
+      "12/36",
+      "15/36"
+    ],
+    "respuestaCorrecta": 4,
+    "justificaciones": {
+      "0": "Incorrecto. 1/6 ≈ 6/36, pero hay que verificar los casos favorables.",
+      "1": "Incorrecto. Hay más combinaciones posibles.",
+      "2": "Incorrecto. Representa un único caso (p. ej. 1+6).",
+      "3": "Incorrecto. Faltan combinaciones, son 6.",
+      "4": "✅ Correcto. Combinaciones (1,6)(2,5)(3,4)(4,3)(5,2)(6,1): 6/36 = 1/6.",
+      "5": "Incorrecto. 7/36 sería para un total de 6.",
+      "6": "Incorrecto. Exceso de casos.",
+      "7": "Incorrecto. Error de conteo.",
+      "8": "Incorrecto. Probabilidad sobreestimada.",
+      "9": "Incorrecto. 15/36 sería total > 9."
+    },
+    "dificultad": "medio"
+  },
+  {
+    "titulo": "Regla del complemento en probabilidad",
+    "descripcion": "Si P(A) = 0.7, ¿cuál es P(Aᶜ)?",
+    "opciones": [
+      "0.7",
+      "0.3",
+      "1.7",
+      "−0.7",
+      "0",
+      "0.5",
+      "1.3",
+      "0.2",
+      "0.1",
+      "1"
+    ],
+    "respuestaCorrecta": 1,
+    "justificaciones": {
+      "0": "Incorrecto. Es el valor de A, no del complemento.",
+      "1": "✅ Correcto. P(Aᶜ) = 1 − P(A) = 0.3.",
+      "2": "Incorrecto. Las probabilidades no pueden superar 1.",
+      "3": "Incorrecto. No pueden ser negativas.",
+      "4": "Incorrecto. Solo si A fuera seguro (P(A)=1).",
+      "5": "Incorrecto. No hay equiprobabilidad aquí.",
+      "6": "Incorrecto. 1.3 excede el rango permitido.",
+      "7": "Incorrecto. Diferente de 1−0.7=0.3.",
+      "8": "Incorrecto. Representa un suceso aún más raro.",
+      "9": "Incorrecto. P(Aᶜ)=1 solo si P(A)=0."
+    },
+    "dificultad": "facil"
+  }
+]
+

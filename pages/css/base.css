@@ -441,6 +441,289 @@ p {
   align-items: center;
 }
 
+.formula-caption {
+  color: #9AFF9A;
+  font-weight: 500;
+  margin-top: -8px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 4px rgba(0,255,0,0.2);
+}
+
+/* Barra de progreso del scroll */
+.scroll-progress-bar {
+  position: fixed;
+  top: 68px; /* altura aprox del nav */
+  left: 0;
+  width: 0%;
+  height: 4px;
+  background: linear-gradient(90deg, #286a3c, #00c77f);
+  box-shadow: 0 0 10px rgba(0, 255, 128, 0.3);
+  border-radius: 0 2px 2px 0;
+  z-index: 999;
+  transition: width 0.15s ease-out;
+}
+
+    /* 🌿 Contenedor compacto */
+.study-check {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 12px;
+  user-select: none;
+  transition: all 0.25s ease;
+  font-family: "Work Sans", sans-serif;
+}
+
+/* 💎 Botón tipo chip */
+.study-checkbox {
+  appearance: none;
+  cursor: pointer;
+  width: auto;
+  padding: 6px 16px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.55);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.05);
+  text-align: center;
+  margin-right: 5px;
+}
+
+/* 🩶 Estado "no estudiado" */
+.study-checkbox:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* 💚 Estado "estudiado" */
+.study-checkbox:checked {
+  background: linear-gradient(135deg, #00ff99, #00cc88);
+  color: #000;
+  border-color: transparent;
+  box-shadow: 0 0 15px rgba(0, 255, 153, 0.45);
+  transform: scale(1.03);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* 💚 Efecto glow verde en el texto */
+.study-checkbox:checked + label {
+  color: #00ff99;
+  text-shadow: 0 0 6px rgba(0, 255, 153, 0.5);
+  transition: all 0.3s ease;
+}
+
+/* ✨ Animación sutil */
+.study-checkbox {
+  transition: all 0.25s ease, box-shadow 0.4s ease, color 0.3s ease;
+}
+
+/* 🌱 Efecto sutil verde en secciones estudiadas */
+.section-studied {
+  position: relative;
+  border: 1px solid rgba(0, 255, 153, 0.2);
+  background: linear-gradient(135deg,
+    rgba(0, 255, 153, 0.05),
+    rgba(0, 255, 153, 0.02)
+  );
+  box-shadow: 0 0 25px rgba(0, 255, 153, 0.05);
+  transition: all 0.6s ease;
+}
+
+/* 🌿 Animación de entrada cuando se marca */
+.section-studied::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: radial-gradient(circle at 30% 50%, rgba(0, 255, 153, 0.08), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.section-studied:hover::before {
+  opacity: 1;
+}
+
+/* ✨ Transición fluida */
+.content-section {
+  transition: all 0.6s ease, box-shadow 0.8s ease;
+}
+
+/* ===========================
+   🌿 SIDEBAR - Estado de temas estudiados
+   =========================== */
+
+.sidebar {
+  position: fixed;
+  top: 100px;
+  left: 0;
+  width: 240px;
+  padding: 25px 20px;
+  background: rgba(10, 10, 10, 0.6);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  height: calc(100vh - 100px);
+  overflow-y: auto;
+  border-radius: 0 16px 16px 0;
+  transition: all 0.3s ease;
+}
+
+.sidebar-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.2rem;
+  color: #00ff99;
+  margin-bottom: 18px;
+  font-weight: 600;
+  text-shadow: 0 0 10px rgba(0, 255, 153, 0.25);
+}
+
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  margin-bottom: 8px;
+}
+
+/* 🔸 Enlace normal */
+.nav-item a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+/* Hover */
+.nav-item a:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  transform: translateX(3px);
+}
+
+/* 💚 Cuando el tema fue marcado como estudiado */
+.nav-item a.studied {
+  color: #00ff99;
+  background: rgba(0, 255, 153, 0.08);
+  border-left: 3px solid #00ff99;
+  box-shadow: 0 0 12px rgba(0, 255, 153, 0.15);
+  text-shadow: 0 0 8px rgba(0, 255, 153, 0.4);
+}
+
+.nav-item a.studied:hover {
+  background: rgba(0, 255, 153, 0.15);
+  box-shadow: 0 0 16px rgba(0, 255, 153, 0.3);
+  transform: translateX(4px);
+}
+
+/* ===========================
+   💡 Infotext Box
+   =========================== */
+.infotext-box {
+  background: rgba(255, 255, 255, 0.04);
+  padding: 20px 25px;
+  border-radius: 10px;
+  margin: 25px 0;
+  box-shadow: 0 0 15px rgba(0, 255, 153, 0.08);
+  transition: all 0.3s ease;
+}
+
+.infotext-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(0, 255, 153, 0.15);
+}
+
+.infotext-box h4 {
+  margin-bottom: 10px;
+  font-weight: 600;
+  color: #00ff99;
+
+}
+
+.infotext-box p {
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* 💡 Contenedor base */
+.formula-box {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 20px 25px;
+  margin: 25px 0;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 1.1rem;
+  display: block;
+}
+
+/* 🧩 Versión con imagen */
+.formula-box.with-image {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  text-align: left;
+}
+
+/* 🔹 Columna izquierda (LaTeX) */
+.formula-left {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🔹 Columna derecha (imagen) */
+.formula-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.formula-right img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+/* 📘 Caption debajo del bloque */
+.formula-caption {
+  text-align: center;
+  color: #9AFF9A;
+  font-weight: 500;
+  margin-top: 5px;
+  margin-bottom: 25px;
+  font-size: 0.9rem;
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 4px rgba(0,255,0,0.25);
+}
+
+/* 📱 Responsivo */
+@media (max-width: 768px) {
+  .formula-box.with-image {
+    flex-direction: column;
+  }
+  .formula-right {
+    margin-top: 15px;
+  }
+}
 
 body {
   font-family: 'Work Sans', sans-serif;

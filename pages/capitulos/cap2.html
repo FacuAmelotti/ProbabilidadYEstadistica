@@ -4,10 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Unidad 2: Interpretación de Datos Observados</title>
+  <link rel="icon" type="image/png" href="../../src/img/logo.png">
   <link rel="stylesheet" href="../css/base.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
     <style>
         
 /* Layout principal */
@@ -373,6 +374,8 @@
     </div>
   </nav>
 
+<div class="scroll-progress-bar"></div>
+
   <div class="main-layout">
 
     <!-- Contenido principal -->
@@ -391,6 +394,145 @@
           Introducción a la estadística descriptiva: medidas, gráficos y tablas.
         </p>
       </header>
+
+      <!-- Sección: Técnicas de Conteo -->
+<section id="conteo" class="content-section">
+  <h2 class="section-title">
+    <span class="section-icon">🧮</span>
+    Técnicas de Conteo
+  </h2>
+  <div class="section-content">
+    <p>
+      Cuando se calculan probabilidades, muchas veces necesitamos determinar el 
+      <strong>número de resultados posibles</strong> de un espacio muestral o evento.  
+      Para eso utilizamos distintas <strong>técnicas de conteo</strong>.
+    </p>
+
+    <!-- PRINCIPIO FUNDAMENTAL -->
+    <div class="highlight-box">
+      <h4>📘 Principio Fundamental de Conteo (Diagrama de Árbol)</h4>
+      <p>
+        Si una operación se puede realizar de <strong>n₁</strong> maneras y para cada una de ellas 
+        una segunda se puede hacer de <strong>n₂</strong> maneras, entonces el total de maneras de 
+        realizar ambas operaciones es:
+      </p>
+      <div class="formula-box">
+        $$n_1 \times n_2$$
+      </div>
+      <p>
+        En general, si se quieren realizar <strong>k operaciones</strong> independientes, el número total 
+        de formas es:
+      </p>
+      <div class="formula-box">
+        $$\prod_{i=1}^{k} n_i = n_1 \times n_2 \times n_3 \times \cdots \times n_k$$
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo</div>
+      <p>
+        Un hombre tiene 2 camisas (R₁, R₂) y 4 corbatas (T₁, T₂, T₃, T₄).  
+        ¿Cuántas combinaciones posibles hay para elegir una camisa y una corbata?
+      </p>
+      <p>
+        Total = \( 2 \times 4 = 8 \) combinaciones posibles.
+      </p>
+      <p>
+        Este principio se puede representar con un <strong>diagrama de árbol</strong>, donde cada 
+        rama representa una posible elección.
+      </p>
+    </div>
+
+    <!-- PERMUTACIONES -->
+    <div class="highlight-box">
+      <h4>🔄 Permutaciones</h4>
+      <p>
+        Una <strong>permutación</strong> es un <strong>ordenamiento</strong> posible de un conjunto de elementos.
+      </p>
+      <p>Por ejemplo, las permutaciones de las letras A, B y C son:</p>
+      <p style="text-align:center; font-weight:600;">
+        ABC, ACB, BAC, BCA, CAB, CBA
+      </p>
+
+      <p>
+        En general, el número de permutaciones de <strong>n elementos distintos</strong> es:
+      </p>
+      <div class="formula-box">
+        $$n! = n \times (n - 1) \times (n - 2) \times \cdots \times 2 \times 1$$
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo</div>
+      <p>
+        Cinco personas se ubican en una fila de cine.  
+        ¿De cuántas formas distintas pueden acomodarse?
+      </p>
+      <div class="formula-box">
+        $$5! = 1 \times 2 \times 3 \times 4 \times 5 = 120$$
+      </div>
+      <p>
+        Se pueden acomodar de <strong>120 formas distintas</strong>.
+      </p>
+    </div>
+
+    <!-- PERMUTACIONES DE SUBCONJUNTOS -->
+    <div class="highlight-box">
+      <h4>📏 Permutaciones de Subconjuntos</h4>
+      <p>
+        Si queremos elegir y ordenar <strong>k elementos</strong> de un conjunto de <strong>n</strong>:
+      </p>
+      <div class="formula-box">
+        $$P(n, k) = \frac{n!}{(n - k)!}$$
+      </div>
+      <p>
+        Ejemplo: 5 salvavidas y 3 puestos de guardia → \( P(5,3) = 5 \times 4 \times 3 = 60 \)
+      </p>
+      <p>
+        Si los elementos se pueden repetir, las <strong>permutaciones con repetición</strong> son:
+      </p>
+      <div class="formula-box">
+        $$n^k$$
+      </div>
+    </div>
+
+    <!-- COMBINACIONES -->
+    <div class="highlight-box">
+      <h4>🧩 Combinaciones</h4>
+      <p>
+        Una <strong>combinación</strong> es una selección de elementos <strong>sin importar el orden</strong>.
+      </p>
+      <p>
+        Si se eligen <strong>k elementos</strong> de un conjunto de <strong>n</strong>:
+      </p>
+      <div class="formula-box">
+        $${n \choose k} = \frac{n!}{k!(n - k)!}$$
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo</div>
+      <p>
+        Si tenemos 5 salvavidas y queremos elegir 3 sin importar el orden:
+      </p>
+      <div class="formula-box">
+        $${5 \choose 3} = \frac{5!}{3!(5 - 3)!} = \frac{120}{6 \times 2} = 10$$
+      </div>
+      <p>
+        Hay <strong>10 combinaciones posibles</strong> de 3 salvavidas entre 5.
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>💡 Diferencia entre Permutación y Combinación</h4>
+      <ul>
+        <li><strong>Permutación:</strong> importa el orden (ABC ≠ BAC)</li>
+        <li><strong>Combinación:</strong> no importa el orden (ABC = BAC)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 
       <!-- Población y muestra -->
       <section id="poblacion" class="content-section">
@@ -549,6 +691,8 @@
     <aside class="sidebar">
       <div class="sidebar-title">Unidad 2</div>
       <ul class="nav-list">
+        <li class="nav-item"><a href="#conteo">Técnicas de Conteo</a></li>
+
         <li class="nav-item"><a href="#poblacion">Población y muestra</a></li>
         <li class="nav-item"><a href="#variables">Tipos de variables</a></li>
         <li class="nav-item"><a href="#frecuencia">Tablas de frecuencia</a></li>
@@ -585,5 +729,69 @@
       });
     });
   </script>
+      <script>
+  // 🔹 Barra de progreso scroll
+  const progressBar = document.querySelector('.scroll-progress-bar');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    progressBar.style.width = `${scrollPercent}%`;
+  });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // 🔹 Agregar checkbox de estudio a cada sección
+  document.querySelectorAll('.content-section').forEach(section => {
+    const id = section.id;
+    const checkDiv = document.createElement('div');
+    checkDiv.className = 'study-check';
+    checkDiv.innerHTML = `
+      <input type="checkbox" class="study-checkbox" id="check-${id}">
+      <label for="check-${id}">Estudiado</label>
+    `;
+    const content = section.querySelector('.section-content');
+    if (content) content.prepend(checkDiv);
+  });
+
+  // 🔹 Sincronizar checkbox con sidebar + localStorage
+  document.querySelectorAll('.study-checkbox').forEach(checkbox => {
+    const id = checkbox.id.replace('check-', '');
+    const key = `tema_estudiado_${id}`;
+    const section = document.getElementById(id);
+    const navLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+    const saved = localStorage.getItem(key);
+
+    // Restaurar estado guardado
+    if (saved === 'true') {
+      checkbox.checked = true;
+      section.classList.add('section-studied');
+      if (navLink) navLink.classList.add('studied');
+    }
+
+    // Escuchar cambios
+    checkbox.addEventListener('change', () => {
+      localStorage.setItem(key, checkbox.checked);
+      if (checkbox.checked) {
+        section.classList.add('section-studied');
+        if (navLink) navLink.classList.add('studied');
+      } else {
+        section.classList.remove('section-studied');
+        if (navLink) navLink.classList.remove('studied');
+      }
+    });
+  });
+});
+</script>
+<!-- 🔢 MathJax para renderizar fórmulas -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' },
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
 </body>
 </html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unidad 1: Conceptos Fundamentales</title>
     <link rel="stylesheet" href="../css/base.css">
+            <link rel="icon" type="image/png" href="../../src/img/logo.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
     <style>
         
@@ -327,6 +328,8 @@
             }
         }
 
+
+
         /* Tabla */
         .table-wrapper {
             overflow-x: auto;
@@ -358,7 +361,17 @@
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+.section-icon {
+  font-size: 2.2rem;
+  opacity: 0.9;
+  line-height: 1;
+  font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", sans-serif !important;
+  filter: drop-shadow(0 0 2px rgba(255,255,255,0.3));
+}
 
+
+</style>
 </head>
 <body>
     <!-- Animated Background -->
@@ -384,508 +397,640 @@
     <!-- Main Layout -->
     <div class="main-layout">
 
-        <!-- Main Content -->
-        <main class="content-wrapper">
-            <header class="page-header">
-                <nav class="breadcrumb">
-                    <a href="../../index.html">Inicio</a>
-                    <span class="breadcrumb-separator">›</span>
-                    <a href="../temario.html">Temario</a>
-                    <span class="breadcrumb-separator">›</span>
-                    <span>Unidad 1</span>
-                </nav>
-                <h1 class="page-title">Conceptos Fundamentales</h1>
-                <p class="page-description">
-                    Fundamentos esenciales de probabilidad y estadística: desde experimentos aleatorios 
-                    hasta variables aleatorias y distribuciones.
-                </p>
-            </header>
+<!-- Main Content -->
+<main class="content-wrapper">
+  <header class="page-header">
+    <nav class="breadcrumb">
+      <a href="../../index.html">Inicio</a>
+      <span class="breadcrumb-separator">›</span>
+      <a href="../temario.html">Temario</a>
+      <span class="breadcrumb-separator">›</span>
+      <span>Unidad 1</span>
+    </nav>
+    <div class="scroll-progress-bar"></div>
+    <h1 class="page-title">Conceptos Fundamentales</h1>
+    <p class="page-description">
+      Fundamentos esenciales de probabilidad y estadística: desde experimentos aleatorios 
+      hasta variables aleatorias y distribuciones.
+    </p>
+  </header>
 
-            <!-- Sección 1: Experimento aleatorio -->
-            <section id="exp-aleatorio" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">🎲</span>
-                    Experimento aleatorio
-                </h2>
-                <div class="section-content">
-                    <p>
-                        Un <strong>experimento aleatorio</strong> es un proceso cuyo resultado 
-                        <strong>no se puede predecir con certeza</strong> antes de realizarlo.
-                    </p>
-                    
-                    <div class="example-box">
-                        <div class="example-title">Ejemplos</div>
-                        <ol>
-                            <li>Lanzar un dado → no sabés qué número va a salir</li>
-                            <li>El tiempo de espera en la parada de un colectivo</li>
-                            <li>La temperatura máxima que va a hacer en el día</li>
-                            <li>Cantidad de mensajes que vas a mandar en el día</li>
-                        </ol>
-                    </div>
-                </div>
-            </section>
+  <!-- 🔹 Introducción -->
+  <section id="intro-aleatoriedad" class="content-section">
+    <h2 class="section-title">
+      <span class="section-icon">📘</span>
+      Introducción a los experimentos aleatorios
+    </h2>
+    <div class="section-content">
+      <p>
+        Sabemos que si realizamos <strong>experiencias bajo las mismas condiciones</strong> (idénticas),
+        obtendremos siempre los mismos resultados. Por tanto, en estas circunstancias estamos
+        en capacidad de <strong>controlar las variables</strong> que afectan el experimento.
+      </p>
+      <p>
+        Sin embargo, esto no siempre es posible. A veces no somos capaces de controlar
+        determinadas variables, y el resultado de la experiencia <strong>no es siempre el mismo</strong>.
+        Estos experimentos son los que denominamos <strong>aleatorios</strong>.
+      </p>
+      <div class="example-box">
+        <div class="example-title">Ejemplo</div>
+        <p>
+          Un ejemplo de esta situación es el <strong>lanzamiento de una moneda o un dado al aire</strong>.
+          No tenemos la certeza de con qué cara va a caer.
+        </p>
+      </div>
+      <p>
+        Un conjunto <strong>S</strong> que consta de todos los resultados posibles de un
+        experimento aleatorio se denomina <strong>espacio muestral</strong>. 
+        Podemos llegar a tener varios espacios que describan los resultados de la experiencia, 
+        pero generalmente <strong>uno de ellos es el que provee mayor información</strong>.
+      </p>
+    </div>
+  </section>
 
-            <!-- Sección 2: Espacio muestral -->
-            <section id="espacio-muestral" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">🌌</span>
-                    Espacio muestral (Ω)
-                </h2>
-                <div class="section-content">
-                    <p>
-                        Es el <strong>conjunto de todos los posibles resultados</strong> del experimento aleatorio.
-                    </p>
-                    
-                    <div class="example-box">
-                        <div class="example-title">Ejemplos</div>
-                        <ul>
-                            <li><strong>Lanzar un dado:</strong> Ω = {1, 2, 3, 4, 5, 6} <em>(Variable aleatoria discreta)</em></li>
-                            <li><strong>Tiempo de espera del colectivo:</strong> Ω = [0, 120] minutos <em>(Variable aleatoria continua)</em></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+  <!-- 🔹 Experimento aleatorio -->
+  <section id="exp-aleatorio" class="content-section">
+    <h2 class="section-title">
+      <span class="section-icon">🎲</span>
+      Experimento aleatorio
+    </h2>
+    <div class="section-content">
+      <p>
+        Un <strong>experimento aleatorio</strong> es un proceso cuyo resultado 
+        <strong>no se puede predecir con certeza</strong> antes de realizarlo.
+      </p>
+      <div class="example-box">
+        <div class="example-title">Ejemplos</div>
+        <ol>
+          <li>Lanzar un dado → no sabés qué número va a salir</li>
+          <li>El tiempo de espera en la parada de un colectivo</li>
+          <li>La temperatura máxima que va a hacer en el día</li>
+          <li>Cantidad de mensajes que vas a mandar en el día</li>
+        </ol>
+      </div>
+    </div>
+  </section>
 
-            <!-- Sección 3: Evento -->
-            <section id="evento" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">📍</span>
-                    Evento (E)
-                </h2>
-                <div class="section-content">
-                    <p>
-                        Un <strong>evento</strong> es un <strong>subconjunto del espacio muestral</strong>.
-                    </p>
-                    
-                    <div class="example-box">
-                        <div class="example-title">Ejemplo</div>
-                        <p>En el lanzamiento de un dado, el evento "que salga un número par" sería:</p>
-                        <p style="text-align: center; font-weight: 600; margin-top: 10px;">E = {2, 4, 6}</p>
-                    </div>
-                </div>
-            </section>
+  <!-- 🔹 Espacio muestral -->
+  <section id="espacio-muestral" class="content-section">
+    <h2 class="section-title">
+      <span class="section-icon">🌌</span>
+      Espacio muestral (Ω)
+    </h2>
+    <div class="section-content">
+      <p>Es el <strong>conjunto de todos los posibles resultados</strong> del experimento aleatorio.</p>
+      <div class="example-box">
+        <div class="example-title">Ejemplos</div>
+        <ul>
+          <li><strong>Lanzar un dado:</strong> Ω = {1, 2, 3, 4, 5, 6}</li>
+          <li><strong>Tiempo de espera:</strong> Ω = [0, 120] minutos</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-            <!-- Sección 4: Probabilidad -->
-            <section id="probabilidad" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">〽️</span>
-                    Probabilidad
-                </h2>
-                <div class="section-content">
-                    <p>
-                        Una <strong>función</strong> que asigna a cada evento un número entre 0 y 1.
-                    </p>
-                    
-                    <div class="highlight-box">
-                        <h4>Axiomas de probabilidad</h4>
-                        <ul>
-                            <li><strong>P(Ω) = 1</strong> → Algo del espacio siempre pasa</li>
-                            <li><strong>P(∅) = 0</strong> → Lo imposible no ocurre</li>
-                            <li>Si A y B son excluyentes: <strong>P(A ∪ B) = P(A) + P(B)</strong></li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
+  <!-- 🔹 Evento -->
+  <section id="evento" class="content-section">
+    <h2 class="section-title"><span class="section-icon">📍</span>Evento (E)</h2>
+    <div class="section-content">
+      <p>Un <strong>evento</strong> es un <strong>subconjunto del espacio muestral</strong>.</p>
+      <div class="example-box">
+        <div class="example-title">Ejemplo</div>
+        <p>En el lanzamiento de un dado, el evento "que salga un número par" es:</p>
+        <p style="text-align:center;font-weight:600;margin-top:10px;">E = {2, 4, 6}</p>
+      </div>
+    </div>
+  </section>
 
-            <!-- Sección 5: Operaciones -->
-            <section id="operaciones" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">🧰</span>
-                    Operaciones con eventos
-                </h2>
-                <div class="section-content">
-                    <p>Reglas de juego para combinar eventos:</p>
-                    
-                    <div class="concepts-grid">
-                        <div class="concept-card">
-                            <h4>Unión (A ∪ B)</h4>
-                            <p>"A o B ocurren"</p>
-                        </div>
-                        <div class="concept-card">
-                            <h4>Intersección (A ∩ B)</h4>
-                            <p>"A y B ocurren"</p>
-                        </div>
-                        <div class="concept-card">
-                            <h4>Diferencia (A – B)</h4>
-                            <p>"A ocurre y B no"</p>
-                        </div>
-                        <div class="concept-card">
-                            <h4>Complemento (Aᶜ)</h4>
-                            <p>"A no ocurre"</p>
-                        </div>
-                    </div>
-                    
-                    <p style="margin-top: 20px;">
-                        Esto te da el <strong>"álgebra de eventos"</strong>, muy usado en ejercicios.
-                    </p>
-                </div>
-            </section>
+  <!-- 🔹 Probabilidad -->
+  <section id="probabilidad" class="content-section">
+    <h2 class="section-title"><span class="section-icon">〽️</span>Probabilidad</h2>
+    <div class="section-content">
+      <p>Una <strong>función</strong> que asigna a cada evento un número entre 0 y 1.</p>
+      <div class="highlight-box">
+        <h4>Axiomas de probabilidad</h4>
+        <ul>
+          <li><strong>P(Ω) = 1</strong> → Algo del espacio siempre pasa</li>
+          <li><strong>P(∅) = 0</strong> → Lo imposible no ocurre</li>
+          <li>Si A y B son excluyentes: <strong>P(A ∪ B) = P(A) + P(B)</strong></li>
+        </ul>
+      </div>
 
-            <!-- Sección 6: Probabilidad condicional -->
-            <section id="condicional" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">📐</span>
-                    Probabilidad condicional e independencia
-                </h2>
-                <div class="section-content">
-                    <h4 style="color: #fff; margin-bottom: 15px;">Probabilidad condicional</h4>
-                    <p>La probabilidad de que ocurra A, dado que ya ocurrió B:</p>
-                    <div class="formula-box">
-                        $$P(A|B) = \frac{P(A \cap B)}{P(B)}$$
-                    </div>
-                    
-                    <h4 style="color: #fff; margin: 30px 0 15px;">Independencia</h4>
-                    <p>Dos eventos A y B son independientes si:</p>
-                    <div class="formula-box">
-                        $$P(A \cap B) = P(A) \cdot P(B)$$
-                    </div>
-                </div>
-            </section>
+      <div class="highlight-box">
+        <h4>🚫 ¿Qué significa “mutuamente excluyentes (disjuntos)”?</h4>
+        <p>Dos eventos \(A\) y \(B\) son <strong>mutuamente excluyentes</strong> si <strong>no pueden ocurrir al mismo tiempo</strong>.</p>
 
-            <!-- Sección 7: Clasificación de sucesos -->
-            <section id="clasificacion" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">🏷️</span>
-                    Clasificación de sucesos
-                </h2>
-                <div class="section-content">
-                    <ul>
-                        <li><strong>Sucesos Elementales:</strong> formados por un único resultado</li>
-                        <li><strong>Sucesos Compuestos:</strong> formados por más de un resultado</li>
-                        <li><strong>Sucesos Excluyentes:</strong> no pueden ocurrir juntos (mutuamente excluyentes)</li>
-                        <li><strong>Sucesos Exhaustivos:</strong> su unión cubre todo el espacio muestral</li>
-                    </ul>
-                </div>
-            </section>
+        <div class="formula-box">
+          $$A \cap B = \varnothing \quad\Longleftrightarrow\quad P(A \cap B)=0$$
+        </div>
+        <div class="formula-caption">👉 Se lee: “A intersección B es vacío; su probabilidad es cero”.</div>
 
-            <!-- Sección 8: Probabilidad total -->
-            <section id="prob-total" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">∑</span>
-                    Probabilidad total
-                </h2>
-                <div class="section-content">
-                    <p>Cuando un evento puede ocurrir de distintas formas:</p>
-                    <div class="formula-box">
-                        $$P(B) = \sum P(B|A_i) \cdot P(A_i)$$
-                    </div>
-                    <p style="margin-top: 15px; font-style: italic; color: rgba(255,255,255,0.6);">
-                        Se usa mucho junto con el Teorema de Bayes
-                    </p>
-                </div>
-            </section>
+        <div class="formula-box">
+          $$P(A \cup B) = P(A) + P(B) \quad \text{si } A \cap B = \varnothing$$
+        </div>
+        <div class="formula-caption">👉 Se lee: “La probabilidad de A o B es la suma de sus probabilidades si no se superponen”.</div>
 
-            <!-- Sección 9: Ley de los grandes números -->
-            <section id="ley-grandes" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">∞</span>
-                    Ley de los grandes números
-                </h2>
-                <div class="section-content">
-                    <p>
-                        A medida que <strong>repetimos un experimento aleatorio muchas veces</strong>, 
-                        la frecuencia relativa de un evento tiende a su probabilidad teórica.
-                    </p>
-                    
-                    <div class="highlight-box">
-                        <p>
-                            Si repetís el experimento infinitas veces, la proporción de veces que 
-                            ocurre un evento se acerca cada vez más a su probabilidad real.
-                        </p>
-                    </div>
-                </div>
-            </section>
+        <p>En un espacio equiprobable:</p>
+        <div class="formula-box">$$P(A) = \frac{\#A}{\#S}$$</div>
+        <div class="formula-caption">👉 Se lee: “Probabilidad de A es igual al número de casos favorables dividido el total de casos posibles”.</div>
+    
+        <div class="infotext-box">
+  <h4>🎯 ¿Qué significa “equiprobable”?</h4>
+  <p>
+    Decimos que un experimento o conjunto de resultados es 
+    <strong>equiprobable</strong> cuando <strong>todos los resultados posibles 
+    tienen la misma probabilidad de ocurrir</strong>.
+  </p>
+  <p>
+    Es decir, <em>no hay ningún resultado más “favorecido” que otro</em>.  
+    Este principio se usa en la probabilidad clásica (de Laplace).
+  </p>
+  <div class="formula-box">
+    $$P(A) = \frac{\text{casos favorables}}{\text{casos posibles}}$$
+  </div>
+  <p>
+    Ejemplo: al lanzar un <strong>dado justo</strong>, cada cara (1 a 6) tiene 
+    una probabilidad igual de \( \tfrac{1}{6} \).  
+    Por eso el dado se considera un experimento equiprobable.
+  </p>
+</div>
 
-            <!-- Sección 10: Frecuencia relativa -->
-            <section id="frecuencia" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">📊</span>
-                    Frecuencia relativa
-                </h2>
-                <div class="section-content">
-                    <p>La frecuencia relativa de un evento A en n repeticiones es:</p>
-                    
-                    <div class="formula-box">
-                        $$f_n(A) = \frac{\text{n° de veces que ocurre A}}{n}$$
-                    </div>
-                    
-                    <ul>
-                        <li>Conecta lo observado en la práctica con la probabilidad teórica</li>
-                        <li><strong>Ley de los grandes números:</strong> cuando \(n \to \infty\), entonces \(f_n(A) \to P(A)\)</li>
-                    </ul>
-                    
-                    <div class="example-box">
-                        <div class="example-title">Ejemplo</div>
-                        <p>
-                            Tirás una moneda 100 veces y sale cara 56 veces → \(f_{100}(\text{cara}) = 0.56\)
-                        </p>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Sección 11: Tipos de probabilidad -->
-            <section id="tipos" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">🧭</span>
-                    Tipos de probabilidad
-                </h2>
-                <div class="section-content">
-                    <h4 style="color: #fff; margin-bottom: 10px;">1. Clásica (Laplace)</h4>
-                    <div class="formula-box">
-                        $$P(A) = \frac{\text{casos favorables}}{\text{casos posibles}}$$
-                    </div>
-                    <p>Requiere <strong>resultados equiprobables</strong> (dados ideales, cartas, urnas simétricas).</p>
-                    
-                    <h4 style="color: #fff; margin: 30px 0 10px;">2. Frecuentista</h4>
-                    <div class="formula-box">
-                        $$P(A) = \lim_{n \to \infty} f_n(A)$$
-                    </div>
-                    <p>Probabilidad como <strong>límite de frecuencias relativas</strong> en repeticiones.</p>
-                    
-                    <h4 style="color: #fff; margin: 30px 0 10px;">3. Axiomática (Kolmogórov)</h4>
-                    <p>Define P(·) como una <strong>medida</strong> sobre eventos cumpliendo:</p>
-                    <ul>
-                        <li>\(0 \le P(A) \le 1\)</li>
-                        <li>\(P(\Omega) = 1\)</li>
-                        <li><strong>Aditividad:</strong> si \(A \cap B = \emptyset\), entonces \(P(A \cup B) = P(A) + P(B)\)</li>
-                    </ul>
-                    
-                    <h4 style="color: #fff; margin: 30px 0 10px;">4. Bayesiana/Subjetiva</h4>
-                    <div class="formula-box">
-                        $$P(\theta | \text{datos}) \propto P(\text{datos}|\theta) \, P(\theta)$$
-                    </div>
-                    <p>Interpreta P(A) como <strong>grado de creencia</strong> actualizado con datos vía Bayes.</p>
-                </div>
-            </section>
+    </div>
+      
+    </div>
+  </section>
 
-            <!-- Sección 12: Variables aleatorias -->
-            <section id="var-aleatorias" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">X</span>
-                    Variables aleatorias
-                </h2>
-                <div class="section-content">
-                    <p>
-                        Una <strong>variable aleatoria (VA)</strong> es una <strong>función</strong> 
-                        que asigna un número real a cada resultado del experimento.
-                    </p>
-                    
-                    <div class="concepts-grid">
-                        <div class="concept-card">
-                            <h4>Discreta</h4>
-                            <p>Valores aislados (0, 1, 2, ...)</p>
-                            <div class="example-box" style="margin-top: 15px; background: rgba(120, 119, 198, 0.05);">
-                                <div class="example-title">Ejemplo</div>
-                                <p style="font-size: 0.9rem;">Número de caras al tirar 3 monedas</p>
-                            </div>
-                        </div>
-                        <div class="concept-card">
-                            <h4>Continua</h4>
-                            <p>Valores en un intervalo</p>
-                            <div class="example-box" style="margin-top: 15px; background: rgba(120, 119, 198, 0.05);">
-                                <div class="example-title">Ejemplo</div>
-                                <p style="font-size: 0.9rem;">Altura de personas en cm</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <h4 style="color: #fff; margin: 30px 0 15px;">Distribución de probabilidad</h4>
-                    <p>Describe <strong>cómo se reparten las probabilidades</strong> entre los valores posibles de la VA.</p>
-                    
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Tipo</th>
-                                    <th>Función</th>
-                                    <th>Reglas</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><strong>Discreta</strong></td>
-                                    <td>Función de probabilidad f(x)</td>
-                                    <td>f(x) ≥ 0, Σf(x) = 1</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Continua</strong></td>
-                                    <td>Función de densidad f(x)</td>
-                                    <td>f(x) ≥ 0, ∫f(x)dx = 1</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    
-                    <h4 style="color: #fff; margin: 30px 0 15px;">Parámetros de una distribución</h4>
-                    
-                    <div class="highlight-box">
-                        <h4>Valor esperado (media)</h4>
-                        <p><strong>Discreta:</strong></p>
-                        <div class="formula-box">
-                            $E[X] = \sum x \cdot f(x)$
-                        </div>
-                        <p><strong>Continua:</strong></p>
-                        <div class="formula-box">
-                            $E[X] = \int x \cdot f(x) \, dx$
-                        </div>
-                    </div>
-                    
-                    <div class="highlight-box">
-                        <h4>Varianza</h4>
-                        <div class="formula-box">
-                            $Var(X) = E[X^2] - (E[X])^2$
-                        </div>
-                        <p style="margin-top: 10px;">Mide la dispersión de los valores respecto a la media.</p>
-                    </div>
-                </div>
-            </section>
+  <!-- 🔹 Teoremas -->
+  <section id="teoremas" class="content-section">
+    <h2 class="section-title"><span class="section-icon">📘</span>Teoremas de probabilidad</h2>
+<div class="section-content">
+  <div class="highlight-box">
+    <h4>📘 Teoremas Fundamentales de Probabilidad</h4>
+    <ul>
+      <li><strong>T1)</strong> Inclusión de eventos:
+        <div>
+<div class="formula-box with-image">
+  <div class="formula-left">
+    $$A_1 ⊂ A_2 \Rightarrow P(A_1) ≤ P(A_2)$$
+  </div>
+  <div class="formula-right">
+    <img src="../../src/img/visuales/cap1_1.png" alt="Relación entre A1 y A2">
+  </div>
+</div>
+<div class="formula-caption">☝️ Se lee: “Si A₁ está contenido en A₂, su probabilidad es menor o igual”.</div>
 
-            <!-- Sección 13: Resumen -->
-            <section id="resumen" class="content-section">
-                <h2 class="section-title">
-                    <span class="section-icon">📋</span>
-                    Resumen Absoluto
-                </h2>
-                <div class="section-content">
-                    <h3 style="color: #fff; margin-bottom: 20px; font-size: 1.3rem;">🔹 Conceptos básicos</h3>
-                    <ul>
-                        <li><strong>Experimento aleatorio</strong> → proceso con resultado incierto</li>
-                        <li><strong>Espacio muestral (Ω)</strong> → conjunto de todos los resultados posibles</li>
-                        <li><strong>Evento (E)</strong> → subconjunto de Ω</li>
-                        <li><strong>Probabilidad (P)</strong> → función que asigna a cada evento un valor entre 0 y 1</li>
-                    </ul>
-                    
-                    <h3 style="color: #fff; margin: 30px 0 20px; font-size: 1.3rem;">🔹 Operaciones con eventos</h3>
-                    <ul>
-                        <li><strong>Unión:</strong> A ∪ B = "A o B ocurren"</li>
-                        <li><strong>Intersección:</strong> A ∩ B = "A y B ocurren"</li>
-                        <li><strong>Diferencia:</strong> A – B = "A ocurre y B no"</li>
-                        <li><strong>Complemento:</strong> Aᶜ = "A no ocurre"</li>
-                    </ul>
-                    
-                    <h3 style="color: #fff; margin: 30px 0 20px; font-size: 1.3rem;">🔹 Reglas esenciales</h3>
-                    <div class="concepts-grid">
-                        <div class="concept-card">
-                            <h4>Complemento</h4>
-                            <p>P(Aᶜ) = 1 − P(A)</p>
-                        </div>
-                        <div class="concept-card">
-                            <h4>Condicional</h4>
-                            <p>P(A|B) = P(A ∩ B) / P(B)</p>
-                        </div>
-                        <div class="concept-card">
-                            <h4>Independencia</h4>
-                            <p>P(A ∩ B) = P(A) · P(B)</p>
-                        </div>
-                        <div class="concept-card">
-                            <h4>Bayes</h4>
-                            <p>P(A|B) = P(B|A)·P(A) / P(B)</p>
-                        </div>
-                    </div>
-                    
-                    <h3 style="color: #fff; margin: 30px 0 20px; font-size: 1.3rem;">🔹 Clasificación de sucesos</h3>
-                    <ul>
-                        <li><strong>Elementales:</strong> un solo resultado</li>
-                        <li><strong>Compuestos:</strong> varios resultados</li>
-                        <li><strong>Excluyentes:</strong> no pueden ocurrir juntos</li>
-                        <li><strong>Exhaustivos:</strong> su unión cubre todo Ω</li>
-                    </ul>
-                    
-                    <h3 style="color: #fff; margin: 30px 0 20px; font-size: 1.3rem;">🔹 Teoremas clave</h3>
-                    <div class="highlight-box">
-                        <h4>Probabilidad total</h4>
-                        <div class="formula-box">
-                            $P(B) = \sum_i P(B|A_i) \cdot P(A_i)$
-                        </div>
-                        <p style="font-size: 0.9rem; margin-top: 10px;">
-                            Cuando los A<sub>i</sub> forman una partición de Ω
-                        </p>
-                    </div>
-                    
-                    <div class="highlight-box">
-                        <h4>Ley de los grandes números</h4>
-                        <p>
-                            A medida que n → ∞, la frecuencia relativa de un evento tiende a su probabilidad teórica.
-                        </p>
-                    </div>
-                    
-                    <h3 style="color: #fff; margin: 30px 0 20px; font-size: 1.3rem;">🔹 Tipos de probabilidad</h3>
-                    <ol>
-                        <li><strong>Clásica (Laplace):</strong> casos favorables / casos posibles</li>
-                        <li><strong>Frecuentista:</strong> límite de frecuencias relativas</li>
-                        <li><strong>Axiomática (Kolmogórov):</strong> probabilidad como medida con axiomas</li>
-                        <li><strong>Bayesiana:</strong> probabilidad como grado de creencia</li>
-                    </ol>
-                </div>
-            </section>
+          
+        <div class="formula-box">$$P(A_2 − A_1) = P(A_2) − P(A_1)$$</div>
+        <div class="formula-caption">☝️ Se lee: “La diferencia entre eventos tiene probabilidad igual a la diferencia de sus probabilidades”.</div>
+      </li>
 
-            <!-- Sección extra: Práctica rápida -->
-<section id="practica" class="content-section">
+      <li><strong>T2)</strong> Cotas de probabilidad:
+        <div class="formula-box">$$0 ≤ P(A) ≤ 1$$</div>
+        <div class="formula-caption">👉 Se lee: “Toda probabilidad está entre 0 y 1 inclusive”.</div>
+      </li>
+
+      <li><strong>T3)</strong> Evento imposible:
+        <div class="formula-box">$$P(∅) = 0$$</div>
+        <div class="formula-caption">👉 Se lee: “El evento imposible tiene probabilidad nula”.</div>
+      </li>
+
+      <li><strong>T4)</strong> Complemento:
+        <div class="formula-box">$$P(Aᶜ) = 1 − P(A)$$</div>
+        <div class="formula-caption">👉 Se lee: “La probabilidad de que no ocurra A es: 1 menos la probabilidad de A”.</div>
+      </li>
+
+      <li><strong>T5)</strong> Eventos mutuamente excluyentes:
+        <div class="formula-box">$$A = A_1 ∪ A_2 ∪ … ∪ A_n \Rightarrow P(A) = P(A_1) + P(A_2) + ⋯ + P(A_n)$$</div>
+        <div class="formula-caption">👉 Se lee: “Si los eventos no se superponen, la probabilidad total es la suma de cada uno”.</div>
+        <div class="formula-box">$$\text{Si } A = Ω, \text{ entonces } P(A_1)+P(A_2)+⋯+P(A_n)=1$$</div>
+        <div class="formula-caption">👉 Se lee: “La suma de probabilidades de todos los casos posibles es uno”.</div>
+      </li>
+
+<li><strong>T6)</strong> Unión de eventos:
+  <div class="formula-box with-image">
+    <div class="formula-left">
+      $$P(A ∪ B) = P(A) + P(B) - P(A ∩ B)$$
+    </div>
+    <div class="formula-right">
+      <img src="../../src/img/visuales/cap1_2.png" alt="Unión de A y B">
+    </div>
+  </div>
+  <div class="formula-caption">👉 Se lee: “Probabilidad de A o B es la suma de ambas menos su intersección”.</div>
+</li>
+
+
+      <li><strong>T7)</strong> Descomposición:
+        <div class="formula-box">$$P(A) = P(A ∩ B) + P(A ∩ Bᶜ)$$</div>
+        <div class="formula-caption">👉 Se lee: “La probabilidad de A se reparte entre ocurrir con B o sin B”.</div>
+      </li>
+
+      <li><strong>T8)</strong> Partición de un evento:
+        <div class="formula-box">$$P(A) = P(A ∩ A_1) + P(A ∩ A_2) + ⋯ + P(A ∩ A_n)$$</div>
+        <div class="formula-caption">👉 Se lee: “Si A puede ocurrir junto a varios eventos excluyentes, su probabilidad total es la suma de cada caso”.</div>
+      </li>
+
+      <li><strong>T9)</strong> Probabilidad condicional:
+        <div class="formula-box">$$P(B|A) = \frac{P(A ∩ B)}{P(A)}$$</div>
+        <div class="formula-caption">👉 Se lee: “Probabilidad de B dado A es la probabilidad de ambos sobre la de A”.</div>
+
+        <div class="formula-box">$$P(A ∩ B) = P(A) \cdot P(B|A)$$</div>
+        <div class="formula-caption">👉 Se lee: “La probabilidad conjunta se obtiene multiplicando la de A por la de B dado A”.</div>
+
+        <div class="formula-box">$$P(A ∩ B) = P(A) \cdot P(B)$$</div>
+        <div class="formula-caption">👉 Se lee: “Si A y B son independientes, la conjunta es el producto de ambas”.</div>
+
+        <div class="formula-box">$$P(A_1 ∩ A_2 ∩ A_3) = P(A_1) P(A_2|A_1) P(A_3|(A_1 ∩ A_2))$$</div>
+        <div class="formula-caption">👉 Se lee: “La probabilidad conjunta de tres eventos se calcula en cadena”.</div>
+
+        <div class="formula-box">$$\text{Si son independientes: } P(A_1 ∩ A_2 ∩ A_3) = P(A_1) P(A_2) P(A_3)$$</div>
+        <div class="formula-caption">👉 Se lee: “Si los tres son independientes, basta multiplicar sus probabilidades”.</div>
+      </li>
+
+      <li><strong>T10)</strong> Probabilidad total:
+        <div class="formula-box">$$P(A) = P(A_1)P(A|A_1) + P(A_2)P(A|A_2) + ⋯ + P(A_n)P(A|A_n)$$</div>
+        <div class="formula-caption">👉 Se lee: “La probabilidad total se obtiene sumando cada caso ponderado por su probabilidad”.</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="highlight-box">
+    <h4>🧮 Teorema de Bayes</h4>
+    <div class="formula-box">
+      $$P(A_k|A) = \frac{P(A_k) \, P(A|A_k)}{\sum_{j=1}^{n} P(A_j) \, P(A|A_j)}$$
+    </div>
+    <div class="formula-caption">👉 Se lee: “Probabilidad de Aₖ dado A es igual a su probabilidad previa multiplicada por la verosimilitud, dividida por la suma total”.</div>
+  </div>
+</div>
+
+  </section>
+
+  <!-- 🔹 Prob. condicional -->
+  <section id="condicional" class="content-section">
+    <h2 class="section-title"><span class="section-icon">📐</span>Probabilidad condicional e independencia</h2>
+    <div class="section-content">
+      <div class="formula-box">$$P(A|B) = \frac{P(A \cap B)}{P(B)}$$</div>
+      <div class="formula-caption">👉 Se lee: “Probabilidad de A dado B es el cociente entre la probabilidad conjunta y la de B”.</div>
+
+      <div class="formula-box">$$P(A \cap B) = P(A) \cdot P(B)$$</div>
+      <div class="formula-caption">👉 Se lee: “A y B son independientes si la probabilidad conjunta es el producto de ambas”.</div>
+    </div>
+  </section>
+
+  <!-- 🔹 Prob. total -->
+  <section id="prob-total" class="content-section">
+    <h2 class="section-title"><span class="section-icon">∑</span>Probabilidad total</h2>
+    <div class="section-content">
+      <div class="formula-box">$$P(B) = \sum P(B|A_i) \cdot P(A_i)$$</div>
+      <div class="formula-caption">👉 Se lee: “Probabilidad de B es la suma de las probabilidades condicionadas a cada Aᵢ, multiplicadas por sus pesos”.</div>
+    </div>
+  </section>
+
+  <!-- 🔹 Frecuencia relativa -->
+  <section id="frecuencia" class="content-section">
+    <h2 class="section-title"><span class="section-icon">📊</span>Frecuencia relativa</h2>
+    <div class="section-content">
+      <div class="formula-box">$$f_n(A) = \frac{\text{n° de veces que ocurre A}}{n}$$</div>
+      <div class="formula-caption">👉 Se lee: “Frecuencia relativa de A es el número de veces que ocurre dividido el total de repeticiones”.</div>
+    </div>
+  </section>
+
+  <!-- 🔹 Tipos de probabilidad -->
+  <section id="tipos" class="content-section">
+    <h2 class="section-title"><span class="section-icon">🧭</span>Tipos de probabilidad</h2>
+    <div class="section-content">
+      <div class="formula-box">$$P(A) = \frac{\text{casos favorables}}{\text{casos posibles}}$$</div>
+      <div class="formula-caption">👉 Se lee: “Casos favorables sobre casos posibles”.</div>
+
+      <div class="formula-box">$$P(A) = \lim_{n \to \infty} f_n(A)$$</div>
+      <div class="formula-caption">👉 Se lee: “Probabilidad de A como límite de la frecuencia relativa cuando el número de repeticiones tiende al infinito”.</div>
+
+      <div class="formula-box">$$P(\theta | \text{datos}) \propto P(\text{datos}|\theta) \, P(\theta)$$</div>
+      <div class="formula-caption">👉 Se lee: “Probabilidad posterior es proporcional a la verosimilitud por la probabilidad previa”.</div>
+    </div>
+  </section>
+
+  <!-- Sección 5: Operaciones -->
+<section id="operaciones" class="content-section">
   <h2 class="section-title">
-    <span class="section-icon">🧩</span>
-    Práctica rápida
+    <span class="section-icon">🧰</span>
+    Operaciones con eventos
   </h2>
   <div class="section-content">
-    <p>Probá aplicar lo aprendido con estos ejercicios introductorios:</p>
+    <p>Reglas de juego para combinar eventos:</p>
 
-    <ol style="margin-top: 20px;">
-      <li>
-        Lanzás <strong>dos dados</strong>. ¿Cuál es la probabilidad de que la suma sea <strong>7</strong>?
-      </li>
-      <li>
-        En una urna hay <strong>3 bolas rojas</strong> y <strong>2 azules</strong>. Se extrae una al azar.<br>
-        ¿Cuál es la probabilidad de que salga una bola roja?
-      </li>
-      <li>
-        Si \(P(A)=0.6\) y \(P(B)=0.3\), siendo A y B <strong>independientes</strong>, calculá \(P(A \cap B)\).
-      </li>
-      <li>
-        Se extrae una carta de una baraja francesa (52 cartas).<br>
-        ¿Cuál es la probabilidad de que sea <strong>roja o una figura</strong>?
-      </li>
-      <li>
-        En un grupo de 5 personas, ¿cuál es la probabilidad de que <strong>al menos dos</strong> cumplan años el mismo día?
-        <em>(Pista: principio del complemento)</em>
-      </li>
-    </ol>
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <h4>Unión (A ∪ B)</h4>
+        <p>"A o B ocurren"</p>
+      </div>
+      <div class="concept-card">
+        <h4>Intersección (A ∩ B)</h4>
+        <p>"A y B ocurren"</p>
+      </div>
+      <div class="concept-card">
+        <h4>Diferencia (A – B)</h4>
+        <p>"A ocurre y B no"</p>
+      </div>
+      <div class="concept-card">
+        <h4>Complemento (Aᶜ)</h4>
+        <p>"A no ocurre"</p>
+      </div>
+    </div>
 
-    <div class="example-box" style="margin-top: 30px;">
-      <div class="example-title">Tip</div>
-      <p>Podés verificar los resultados desde la sección <a href="../ejercicios.html" style="color:#fff; text-decoration:underline;">Ejercicios resueltos</a> o simularlos con el  <a href="../ejercicios.html" style="color:#fff; text-decoration:underline;"><strong>Simulador de Monedas y Dados</strong></a>.</p>
+    <p style="margin-top: 20px;">
+      Esto te da el <strong>"álgebra de eventos"</strong>, muy usado en ejercicios.
+    </p>
+  </div>
+
+  <div class="section-content">
+        <img  src="../../src/img/visuales/cap1_3.png" alt="">
+  </div>
+</section>
+
+<!-- Sección 6: Probabilidad condicional -->
+<section id="condicional" class="content-section">
+  <h2 class="section-title">
+    <span class="section-icon">📐</span>
+    Probabilidad condicional e independencia
+  </h2>
+  <div class="section-content">
+    <h4 style="color: #fff; margin-bottom: 15px;">Probabilidad condicional</h4>
+    <p>La probabilidad de que ocurra A, dado que ya ocurrió B:</p>
+    <div class="formula-box">
+      $$P(A|B) = \frac{P(A \cap B)}{P(B)}$$
+    </div>
+    <div class="formula-caption">👉 Se lee: “Probabilidad de A dado B es el cociente entre la probabilidad conjunta y la de B”.</div>
+
+    <h4 style="color: #fff; margin: 30px 0 15px;">Independencia</h4>
+    <p>Dos eventos A y B son independientes si:</p>
+    <div class="formula-box">
+      $$P(A \cap B) = P(A) \cdot P(B)$$
+    </div>
+    <div class="formula-caption">👉 Se lee: “A y B son independientes si la probabilidad conjunta es el producto de ambas”.</div>
+  </div>
+</section>
+
+<!-- Sección 7: Clasificación de sucesos -->
+<section id="clasificacion" class="content-section">
+  <h2 class="section-title">
+    <span class="section-icon">🏷️</span>
+    Clasificación de sucesos
+  </h2>
+  <div class="section-content">
+    <ul>
+      <li><strong>Sucesos Elementales:</strong> formados por un único resultado</li>
+      <li><strong>Sucesos Compuestos:</strong> formados por más de un resultado</li>
+      <li><strong>Sucesos Excluyentes:</strong> no pueden ocurrir juntos (mutuamente excluyentes)</li>
+      <li><strong>Sucesos Exhaustivos:</strong> su unión cubre todo el espacio muestral</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Sección 8: Probabilidad total -->
+<section id="prob-total" class="content-section">
+  <h2 class="section-title">
+    <span class="section-icon">∑</span>
+    Probabilidad total
+  </h2>
+  <div class="section-content">
+    <p>Cuando un evento puede ocurrir de distintas formas:</p>
+    <div class="formula-box">
+      $$P(B) = \sum P(B|A_i) \cdot P(A_i)$$
+    </div>
+    <div class="formula-caption">👉 Se lee: “Probabilidad de B es la suma de las probabilidades condicionadas a cada Aᵢ, multiplicadas por sus pesos”.</div>
+    <p style="margin-top: 15px; font-style: italic; color: rgba(255,255,255,0.6);">
+      Se usa mucho junto con el Teorema de Bayes
+    </p>
+  </div>
+</section>
+
+<!-- Sección 9: Ley de los grandes números -->
+<section id="ley-grandes" class="content-section">
+  <h2 class="section-title">
+    <span class="section-icon">∞</span>
+    Ley de los grandes números
+  </h2>
+  <div class="section-content">
+    <p>
+      A medida que <strong>repetimos un experimento aleatorio muchas veces</strong>, 
+      la frecuencia relativa de un evento tiende a su probabilidad teórica.
+    </p>
+
+    <div class="highlight-box">
+      <p>
+        Si repetís el experimento infinitas veces, la proporción de veces que 
+        ocurre un evento se acerca cada vez más a su probabilidad real.
+      </p>
     </div>
   </div>
 </section>
 
-
-            <!-- Navegación -->
-            <div class="navigation-buttons">
-                <a href="../temario.html" class="nav-button secondary">
-                    ← Volver al Temario
-                </a>
-                    <a href="./cap2.html" class="nav-button">Unidad 2 →</a>
-            </div>
-        </main>
-
-                <!-- Sidebar -->
-        <aside class="sidebar">
-            <div class="sidebar-title">Unidad 1</div>
-            <ul class="nav-list">
-                <li class="nav-item"><a href="#exp-aleatorio">Experimento aleatorio</a></li>
-                <li class="nav-item"><a href="#espacio-muestral">Espacio muestral</a></li>
-                <li class="nav-item"><a href="#evento">Evento</a></li>
-                <li class="nav-item"><a href="#probabilidad">Probabilidad</a></li>
-                <li class="nav-item"><a href="#operaciones">Operaciones</a></li>
-                <li class="nav-item"><a href="#condicional">Prob. condicional</a></li>
-                <li class="nav-item"><a href="#clasificacion">Clasificación</a></li>
-                <li class="nav-item"><a href="#prob-total">Probabilidad total</a></li>
-                <li class="nav-item"><a href="#ley-grandes">Ley grandes números</a></li>
-                <li class="nav-item"><a href="#frecuencia">Frecuencia relativa</a></li>
-                <li class="nav-item"><a href="#tipos">Tipos de probabilidad</a></li>
-                <li class="nav-item"><a href="#var-aleatorias">Variables aleatorias</a></li>
-                <li class="nav-item"><a href="#resumen">Resumen</a></li>
-            </ul>
-        </aside>
+<!-- Sección 10: Frecuencia relativa -->
+<section id="frecuencia" class="content-section">
+  <h2 class="section-title">
+    <span class="section-icon">📊</span>
+    Frecuencia relativa
+  </h2>
+  <div class="section-content">
+    <p>La frecuencia relativa de un evento A en n repeticiones es:</p>
+    <div class="formula-box">
+      $$f_n(A) = \frac{\text{n° de veces que ocurre A}}{n}$$
     </div>
+    <div class="formula-caption">👉 Se lee: “Frecuencia relativa de A es el número de veces que ocurre dividido el total de repeticiones”.</div>
+    <ul>
+      <li>Conecta lo observado en la práctica con la probabilidad teórica</li>
+      <li><strong>Ley de los grandes números:</strong> cuando \(n \to \infty\), entonces \(f_n(A) \to P(A)\)</li>
+    </ul>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo</div>
+      <p>
+        Tirás una moneda 100 veces y sale cara 56 veces → \(f_{100}(\text{cara}) = 0.56\)
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Sección 11: Tipos de probabilidad -->
+<section id="tipos" class="content-section">
+  <h2 class="section-title">
+    <span class="section-icon">🧭</span>
+    Tipos de probabilidad
+  </h2>
+  <div class="section-content">
+    <h4 style="color: #fff; margin-bottom: 10px;">1. Clásica (Laplace)</h4>
+    <div class="formula-box">
+      $$P(A) = \frac{\text{casos favorables}}{\text{casos posibles}}$$
+    </div>
+    <div class="formula-caption">👉 Se lee: “Casos favorables sobre casos posibles”.</div>
+    <p>Requiere <strong>resultados equiprobables</strong> (dados ideales, cartas, urnas simétricas).</p>
+
+    <h4 style="color: #fff; margin: 30px 0 10px;">2. Frecuentista</h4>
+    <div class="formula-box">
+      $$P(A) = \lim_{n \to \infty} f_n(A)$$
+    </div>
+    <div class="formula-caption">👉 Se lee: “Probabilidad de A como límite de la frecuencia relativa cuando el número de repeticiones tiende al infinito”.</div>
+    <p>Probabilidad como <strong>límite de frecuencias relativas</strong> en repeticiones.</p>
+
+    <h4 style="color: #fff; margin: 30px 0 10px;">3. Axiomática (Kolmogórov)</h4>
+    <p>Define P(·) como una <strong>medida</strong> sobre eventos cumpliendo:</p>
+    <ul>
+      <li>\(0 \le P(A) \le 1\)</li>
+      <li>\(P(\Omega) = 1\)</li>
+      <li><strong>Aditividad:</strong> si \(A \cap B = \emptyset\), entonces \(P(A \cup B) = P(A) + P(B)\)</li>
+    </ul>
+
+    <h4 style="color: #fff; margin: 30px 0 10px;">4. Bayesiana/Subjetiva</h4>
+    <div class="formula-box">
+      $$P(\theta | \text{datos}) \propto P(\text{datos}|\theta) \, P(\theta)$$
+    </div>
+    <div class="formula-caption">👉 Se lee: “Probabilidad posterior es proporcional a la verosimilitud por la probabilidad previa”.</div>
+    <p>Interpreta P(A) como <strong>grado de creencia</strong> actualizado con datos vía Bayes.</p>
+  </div>
+</section>
+
+<!-- Sección 12: Variables aleatorias -->
+<section id="var-aleatorias" class="content-section">
+  <h2 class="section-title">
+    <span class="section-icon">X</span>
+    Variables aleatorias
+  </h2>
+  <div class="section-content">
+    <p>
+      Una <strong>variable aleatoria (VA)</strong> es una <strong>función</strong> 
+      que asigna un número real a cada resultado del experimento.
+    </p>
+
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <h4>Discreta</h4>
+        <p>Valores aislados (0, 1, 2, ...)</p>
+        <div class="example-box" style="margin-top: 15px; background: rgba(120, 119, 198, 0.05);">
+          <div class="example-title">Ejemplo</div>
+          <p style="font-size: 0.9rem;">Número de caras al tirar 3 monedas</p>
+        </div>
+      </div>
+      <div class="concept-card">
+        <h4>Continua</h4>
+        <p>Valores en un intervalo</p>
+        <div class="example-box" style="margin-top: 15px; background: rgba(120, 119, 198, 0.05);">
+          <div class="example-title">Ejemplo</div>
+          <p style="font-size: 0.9rem;">Altura de personas en cm</p>
+        </div>
+      </div>
+    </div>
+
+    <h4 style="color: #fff; margin: 30px 0 15px;">Distribución de probabilidad</h4>
+    <p>Describe <strong>cómo se reparten las probabilidades</strong> entre los valores posibles de la VA.</p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>Tipo</th><th>Función</th><th>Reglas</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Discreta</strong></td><td>f(x)</td><td>f(x) ≥ 0, Σf(x) = 1</td></tr>
+          <tr><td><strong>Continua</strong></td><td>f(x)</td><td>f(x) ≥ 0, ∫f(x)dx = 1</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4 style="color: #fff; margin: 30px 0 15px;">Parámetros de una distribución</h4>
+    <div class="highlight-box">
+      <h4>Valor esperado (media)</h4>
+      <p><strong>Discreta:</strong></p>
+      <div class="formula-box">$E[X] = \sum x \cdot f(x)$</div>
+      <div class="formula-caption">👉 Se lee: “La esperanza es la suma de cada valor por su probabilidad”.</div>
+      <p><strong>Continua:</strong></p>
+      <div class="formula-box">$E[X] = \int x \cdot f(x) \, dx$</div>
+      <div class="formula-caption">👉 Se lee: “En variables continuas, se integra x por su densidad de probabilidad”.</div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Varianza</h4>
+      <div class="formula-box">$Var(X) = E[X^2] - (E[X])^2$</div>
+      <div class="formula-caption">👉 Se lee: “La varianza mide cuánto se dispersan los valores respecto a la media”.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección 13: Resumen -->
+<section id="resumen" class="content-section">
+  <h2 class="section-title">
+    <span class="section-icon">📋</span>
+    Resumen Absoluto
+  </h2>
+  <div class="section-content">
+    <h3 style="color: #fff; margin-bottom: 20px; font-size: 1.3rem;">🔹 Conceptos básicos</h3>
+    <ul>
+      <li><strong>Experimento aleatorio:</strong> resultado incierto</li>
+      <li><strong>Espacio muestral (Ω):</strong> todos los resultados posibles</li>
+      <li><strong>Evento (E):</strong> subconjunto de Ω</li>
+      <li><strong>Probabilidad (P):</strong> función entre 0 y 1</li>
+    </ul>
+    <h3 style="color: #fff; margin: 30px 0 20px; font-size: 1.3rem;">🔹 Operaciones</h3>
+    <ul>
+      <li><strong>Unión:</strong> A ∪ B</li>
+      <li><strong>Intersección:</strong> A ∩ B</li>
+      <li><strong>Diferencia:</strong> A – B</li>
+      <li><strong>Complemento:</strong> Aᶜ</li>
+    </ul>
+    <h3 style="color: #fff; margin: 30px 0 20px; font-size: 1.3rem;">🔹 Reglas esenciales</h3>
+    <div class="concepts-grid">
+      <div class="concept-card"><h4>Complemento</h4><p>P(Aᶜ) = 1 − P(A)</p></div>
+      <div class="concept-card"><h4>Condicional</h4><p>P(A|B) = P(A ∩ B) / P(B)</p></div>
+      <div class="concept-card"><h4>Independencia</h4><p>P(A ∩ B) = P(A) · P(B)</p></div>
+      <div class="concept-card"><h4>Bayes</h4><p>P(A|B) = P(B|A)·P(A)/P(B)</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Sección extra: Práctica rápida -->
+<section id="practica" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🧩</span>Práctica rápida</h2>
+  <div class="section-content">
+    <p>Probá aplicar lo aprendido con estos ejercicios introductorios:</p>
+    <ol style="margin-top: 20px;">
+      <li>Lanzás <strong>dos dados</strong>. ¿Probabilidad de que la suma sea <strong>7</strong>?</li>
+      <li>En una urna con 3 rojas y 2 azules, ¿probabilidad de sacar una roja?</li>
+      <li>Si \(P(A)=0.6\) y \(P(B)=0.3\), siendo A y B independientes, calculá \(P(A ∩ B)\).</li>
+      <li>De una baraja francesa, ¿probabilidad de que sea <strong>roja o una figura</strong>?</li>
+      <li>En un grupo de 5 personas, ¿probabilidad de que al menos dos cumplan años el mismo día?</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Navegación -->
+<div class="navigation-buttons">
+  <a href="../temario.html" class="nav-button secondary">← Volver al Temario</a>
+  <a href="./cap2.html" class="nav-button">Unidad 2 →</a>
+</div>
+</main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+    <div class="sidebar-title">Unidad 1</div>
+    <ul class="nav-list">
+        
+                <li class="nav-item"><a href="#intro-aleatoriedad">Introduccion</a></li>
+        <li class="nav-item"><a href="#exp-aleatorio">Experimento aleatorio</a></li>
+        <li class="nav-item"><a href="#espacio-muestral">Espacio muestral</a></li>
+        <li class="nav-item"><a href="#evento">Evento</a></li>
+        <li class="nav-item"><a href="#probabilidad">Probabilidad</a></li>
+        <li class="nav-item"><a href="#teoremas">Teoremas</a></li>
+        <li class="nav-item"><a href="#operaciones">Operaciones</a></li>
+        <li class="nav-item"><a href="#condicional">Prob. condicional</a></li>
+        <li class="nav-item"><a href="#clasificacion">Clasificación</a></li>
+        <li class="nav-item"><a href="#prob-total">Probabilidad total</a></li>
+        <li class="nav-item"><a href="#ley-grandes">Ley grandes números</a></li>
+        <li class="nav-item"><a href="#frecuencia">Frecuencia relativa</a></li>
+        <li class="nav-item"><a href="#tipos">Tipos de probabilidad</a></li>
+        <li class="nav-item"><a href="#var-aleatorias">Variables aleatorias</a></li>
+        <li class="nav-item"><a href="#resumen">Resumen</a></li>
+    </ul>
+    </aside>
+
 
     <script>
         // Smooth scroll y active nav
@@ -931,5 +1076,70 @@
             });
         });
     </script>
+          <script>
+  // 🔹 Barra de progreso scroll
+  const progressBar = document.querySelector('.scroll-progress-bar');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    progressBar.style.width = `${scrollPercent}%`;
+  });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // 🔹 Agregar checkbox de estudio a cada sección
+  document.querySelectorAll('.content-section').forEach(section => {
+    const id = section.id;
+    const checkDiv = document.createElement('div');
+    checkDiv.className = 'study-check';
+    checkDiv.innerHTML = `
+      <input type="checkbox" class="study-checkbox" id="check-${id}">
+      <label for="check-${id}">Estudiado</label>
+    `;
+    const content = section.querySelector('.section-content');
+    if (content) content.prepend(checkDiv);
+  });
+
+  // 🔹 Sincronizar checkbox con sidebar + localStorage
+  document.querySelectorAll('.study-checkbox').forEach(checkbox => {
+    const id = checkbox.id.replace('check-', '');
+    const key = `tema_estudiado_${id}`;
+    const section = document.getElementById(id);
+    const navLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+    const saved = localStorage.getItem(key);
+
+    // Restaurar estado guardado
+    if (saved === 'true') {
+      checkbox.checked = true;
+      section.classList.add('section-studied');
+      if (navLink) navLink.classList.add('studied');
+    }
+
+    // Escuchar cambios
+    checkbox.addEventListener('change', () => {
+      localStorage.setItem(key, checkbox.checked);
+      if (checkbox.checked) {
+        section.classList.add('section-studied');
+        if (navLink) navLink.classList.add('studied');
+      } else {
+        section.classList.remove('section-studied');
+        if (navLink) navLink.classList.remove('studied');
+      }
+    });
+  });
+});
+</script>
+<!-- 🔢 MathJax para renderizar fórmulas -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' },
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+
 </body>
 </html>

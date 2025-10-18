@@ -1,0 +1,77 @@
+[
+  {
+    "topic": "Independencia",
+    "q": "Si P(A)=0.4, P(B)=0.5 y P(A∩B)=0.2, ¿son A y B independientes?",
+    "options": ["Sí", "No"],
+    "correct": 0,
+    "explain": "P(A)·P(B)=0.4·0.5=0.2 = P(A∩B), por lo tanto son independientes."
+  },
+  {
+    "topic": "Unión",
+    "q": "Si P(A)=0.3, P(B)=0.4 y P(A∩B)=0.1, ¿cuál es P(A∪B)?",
+    "options": ["0.5", "0.6", "0.7", "0.8"],
+    "correct": 1,
+    "explain": "P(A∪B)=P(A)+P(B)−P(A∩B)=0.3+0.4−0.1=0.6."
+  },
+  {
+    "topic": "Complemento",
+    "q": "Si P(A)=0.68, ¿cuál es P(Aᶜ)?",
+    "options": ["0.68", "0.32", "0.42", "0.72"],
+    "correct": 1,
+    "explain": "P(Aᶜ)=1−P(A)=0.32."
+  },
+  {
+    "topic": "Probabilidad Condicional",
+    "q": "Si P(A∩B)=0.12 y P(B)=0.3, ¿cuál es P(A|B)?",
+    "options": ["0.04", "0.12", "0.36", "0.40"],
+    "correct": 3,
+    "explain": "P(A|B)=P(A∩B)/P(B)=0.12/0.3=0.4."
+  },
+  {
+    "topic": "Bayes",
+    "q": "Si P(A)=0.3, P(B|A)=0.8 y P(B)=0.5, ¿cuál es P(A|B)?",
+    "options": ["0.48", "0.6", "0.24", "0.12"],
+    "correct": 0,
+    "explain": "P(A|B)=(P(B|A)·P(A))/P(B)=(0.8·0.3)/0.5=0.48."
+  },
+  {
+    "topic": "Eventos Excluyentes",
+    "q": "Si A y B son excluyentes y P(A)=0.3, P(B)=0.5, ¿cuál es P(A∩B)?",
+    "options": ["0", "0.15", "0.8", "0.2"],
+    "correct": 0,
+    "explain": "Eventos excluyentes no pueden ocurrir juntos, entonces P(A∩B)=0."
+  },
+  {
+    "topic": "Probabilidad Total",
+    "q": "Si B₁ y B₂ son una partición con P(B₁)=0.6, P(B₂)=0.4, P(A|B₁)=0.2 y P(A|B₂)=0.5, ¿cuál es P(A)?",
+    "options": ["0.32", "0.26", "0.38", "0.44"],
+    "correct": 0,
+    "explain": "P(A)=P(B₁)P(A|B₁)+P(B₂)P(A|B₂)=0.6·0.2+0.4·0.5=0.32."
+  },
+  {
+    "topic": "Distribución Discreta",
+    "q": "Si X puede tomar valores {1,2,3} con probabilidades {0.2,0.5,0.3}, ¿cuál es E[X]?",
+    "options": ["1.5", "2.0", "2.1", "2.3"],
+    "correct": 3,
+    "explain": "E[X]=1·0.2+2·0.5+3·0.3=0.2+1+0.9=2.1 (redondeado 2.1)."
+  },
+  {
+    "topic": "Varianza",
+    "q": "Si E[X]=10 y E[X²]=108, ¿cuál es Var(X)?",
+    "options": ["8", "18", "100", "98"],
+    "correct": 1,
+    "explain": "Var(X)=E[X²]−(E[X])²=108−100=8."
+  },
+  {
+    "topic": "Interpretación",
+    "q": "Un evento tiene P(E)=0.9. ¿Qué significa esto?",
+    "options": [
+      "Que es imposible que ocurra.",
+      "Que ocurre el 90% de las veces a largo plazo.",
+      "Que ocurrirá exactamente 9 de cada 10 veces.",
+      "Que P(Eᶜ)=0.9."
+    ],
+    "correct": 1,
+    "explain": "Una probabilidad de 0.9 indica alta frecuencia esperada, no certeza."
+  }
+]

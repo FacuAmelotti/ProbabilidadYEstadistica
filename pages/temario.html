@@ -328,6 +328,89 @@
   text-shadow: 0 0 3px rgba(180, 190, 255, 0.5);
   transform: translateY(-1px);
 }
+/* === BOTÓN DE ESTUDIADO (tipo toggle) === */
+.mark-studied-btn {
+  position: relative;
+  padding: 10px 36px 10px 48px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.75);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* icono tipo check */
+.mark-studied-btn::before {
+  content: "✓";
+  position: absolute;
+  left: 18px;
+  font-size: 1.1rem;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+}
+
+/* hover gris */
+.mark-studied-btn:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: rgba(255,255,255,0.25);
+  color: #fff;
+}
+
+/* estado activado (estudiado) */
+.mark-studied-btn.active {
+  background: rgba(120,255,150,0.15);
+  border-color: rgba(120,255,150,0.35);
+  color: rgb(120,255,150);
+  text-shadow: 0 0 4px rgba(120,255,150,0.4);
+}
+
+.mark-studied-btn.active::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* efecto de transición suave */
+.mark-studied-btn.active:hover {
+  background: rgba(120,255,150,0.25);
+  box-shadow: 0 0 15px rgba(120,255,150,0.25);
+}
+
+/* === TARJETA VERDE CUANDO ESTUDIADA === */
+.chapter-card.studied {
+  border-color: rgba(120,255,150,0.35);
+  box-shadow: 0 10px 40px rgba(120,255,150,0.15);
+  background: rgba(120,255,150,0.05);
+  transition: all 0.5s ease;
+}
+
+.chapter-card.studied .chapter-title {
+  color: rgb(120,255,150);
+  text-shadow: 0 0 6px rgba(120,255,150,0.4);
+}
+
+/* === LINK EN NAV VERDE === */
+.nav-subbar a.studied {
+  background: rgba(120,255,150,0.1);
+  border-color: rgba(120,255,150,0.35);
+  color: rgb(120,255,150);
+  font-weight: 500;
+  box-shadow: 0 0 8px rgba(120,255,150,0.2);
+}
+.nav-subbar a.studied:hover {
+  background: rgba(120,255,150,0.2);
+  border-color: rgba(120,255,150,0.5);
+  color: #fff;
+}
+
 
 </style>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
@@ -357,6 +440,7 @@
       <li><a href="./../pages/pregs.html" class="nav-link">Evaluador</a></li>
       <li><a href="./../pages/randomPreg.html" class="nav-link">Quiz</a></li>
             <li><a href="./../pages/pizarra.html" class="nav-link">Pizarra</a></li>
+                        <li><a href="./../pages/games/batallaProbabilistica.html" class="nav-link">Batalla Probabilistica</a></li>
     </ul>
   </div>
 
@@ -417,6 +501,8 @@
     <div class="chapter-action">
       <span class="status-badge available">Disponible</span>
       <a href="./capitulos/cap1.html" class="chapter-btn">Estudiar</a>
+      <button class="chapter-btn mark-studied-btn" data-id="unidad1">Marcar como estudiado</button>
+
     </div>
   </div>
 
@@ -438,6 +524,8 @@
     <div class="chapter-action">
       <span class="status-badge available">Disponible</span>
       <a href="./capitulos/cap2.html" class="chapter-btn">Estudiar</a>
+      <button class="chapter-btn mark-studied-btn" data-id="unidad2">Marcar como estudiado</button>
+
     </div>
   </div>
 
@@ -459,6 +547,7 @@
     <div class="chapter-action">
       <span class="status-badge available">Disponible</span>
       <a href="./capitulos/cap3.html" class="chapter-btn">Estudiar</a>
+            <button class="chapter-btn mark-studied-btn" data-id="unidad3">Marcar como estudiado</button>
     </div>
   </div>
 
@@ -480,6 +569,7 @@
     <div class="chapter-action">
       <span class="status-badge available">Disponible</span>
       <a href="./capitulos/cap4.html" class="chapter-btn">Estudiar</a>
+            <button class="chapter-btn mark-studied-btn" data-id="unidad4">Marcar como estudiado</button>
     </div>
   </div>
 
@@ -501,6 +591,7 @@
     <div class="chapter-action">
       <span class="status-badge available">Disponible</span>
       <a href="./capitulos/cap5.html" class="chapter-btn">Estudiar</a>
+            <button class="chapter-btn mark-studied-btn" data-id="unidad5">Marcar como estudiado</button>
     </div>
   </div>
 
@@ -522,6 +613,7 @@
     <div class="chapter-action">
       <span class="status-badge available">Disponible</span>
       <a href="./capitulos/cap6.html" class="chapter-btn">Estudiar</a>
+            <button class="chapter-btn mark-studied-btn" data-id="unidad6">Marcar como estudiado</button>
     </div>
   </div>
 
@@ -543,6 +635,7 @@
     <div class="chapter-action">
       <span class="status-badge available">Disponible</span>
       <a href="./capitulos/cap7.html" class="chapter-btn">Estudiar</a>
+            <button class="chapter-btn mark-studied-btn" data-id="unidad7">Marcar como estudiado</button>
     </div>
   </div>
 
@@ -614,6 +707,47 @@ window.addEventListener("scroll", () => {
   const nav = document.querySelector(".navbar");
   if (window.scrollY > 20) nav.classList.add("scrolled");
   else nav.classList.remove("scrolled");
+});
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const studiedUnits = JSON.parse(localStorage.getItem("studiedUnits") || "[]");
+
+  studiedUnits.forEach(id => {
+    const card = document.querySelector(`#${id}`).closest(".chapter-card");
+    const navLink = document.querySelector(`.nav-subbar a[href="#${id}"]`);
+    const btn = document.querySelector(`.mark-studied-btn[data-id="${id}"]`);
+    if (card) card.classList.add("studied");
+    if (navLink) navLink.classList.add("studied");
+    if (btn) btn.classList.add("active");
+    if (btn) btn.textContent = "Estudiado";
+  });
+
+  document.querySelectorAll(".mark-studied-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const card = document.querySelector(`#${id}`).closest(".chapter-card");
+      const navLink = document.querySelector(`.nav-subbar a[href="#${id}"]`);
+      let studiedUnits = JSON.parse(localStorage.getItem("studiedUnits") || "[]");
+
+      if (studiedUnits.includes(id)) {
+        studiedUnits = studiedUnits.filter(u => u !== id);
+        localStorage.setItem("studiedUnits", JSON.stringify(studiedUnits));
+        card.classList.remove("studied");
+        navLink.classList.remove("studied");
+        btn.classList.remove("active");
+        btn.textContent = "Marcar como estudiado";
+      } else {
+        studiedUnits.push(id);
+        localStorage.setItem("studiedUnits", JSON.stringify(studiedUnits));
+        card.classList.add("studied");
+        navLink.classList.add("studied");
+        btn.classList.add("active");
+        btn.textContent = "Estudiado";
+      }
+    });
+  });
 });
 </script>
 

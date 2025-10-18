@@ -181,6 +181,87 @@
   box-shadow: none;
 }
 
+/* === BOTÓN REVISADO (gris → verde) === */
+.mark-reviewed-btn {
+  position: relative;
+  padding: 10px 34px 10px 46px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+  gap: 8px;
+}
+
+.mark-reviewed-btn::before {
+  content: "✓";
+  position: absolute;
+  left: 18px;
+  font-size: 1.1rem;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+}
+
+.mark-reviewed-btn:hover {
+
+  border-color: rgba(255,255,255,0.25);
+  color: #fff;
+}
+
+/* estado activo (revisado) */
+.mark-reviewed-btn.active {
+
+  color: rgb(120,255,150);
+  text-shadow: 0 0 4px rgba(120,255,150,0.4);
+}
+
+.mark-reviewed-btn.active::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.mark-reviewed-btn.active:hover {
+  background: rgba(120,255,150,0.25);
+  box-shadow: 0 0 15px rgba(120,255,150,0.25);
+}
+
+/* === TARJETA VERDE CUANDO REVISADA === */
+.exercise-card.reviewed {
+  border-color: rgba(120,255,150,0.35);
+  box-shadow: 0 10px 40px rgba(120,255,150,0.15);
+  background: rgba(120,255,150,0.05);
+  transition: all 0.5s ease;
+}
+
+.exercise-card.reviewed .exercise-title {
+  color: rgb(120,255,150);
+  text-shadow: 0 0 6px rgba(120,255,150,0.4);
+}
+
+/* === CONTENEDOR DE BOTONES === */
+.exercise-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; /* separación entre botones */
+}
+
+/* Ajuste: ambos botones centrados */
+.exercise-card .exercise-btn,
+.exercise-card .mark-reviewed-btn {
+  align-self: center;
+}
+
+
 /* ====== RESPONSIVE ====== */
 @media (max-width: 900px) {
   .exercises-container {
@@ -254,6 +335,8 @@
             </p>
           </div>
           <a href="./ejerciciosResueltos/ej_1_cap1.html" class="exercise-btn">Ver ejercicio</a>
+          <button class="mark-reviewed-btn" data-id="ej_1_cap1">Marcar como revisado</button>
+
         </div>
 
         <div class="exercise-card">
@@ -265,6 +348,8 @@
             </p>
           </div>
           <a href="./ejerciciosResueltos/ej_2_cap1.html" class="exercise-btn">Ver ejercicio</a>
+          <button class="mark-reviewed-btn" data-id="ej_2_cap1">Marcar como revisado</button>
+
         </div>
 
         <div class="exercise-card">
@@ -276,6 +361,8 @@
             </p>
           </div>
           <a href="./ejerciciosResueltos/ej_3_cap1.html" class="exercise-btn">Ver ejercicio</a>
+          <button class="mark-reviewed-btn" data-id="ej_3_cap1">Marcar como revisado</button>
+
         </div>
 
       </div>
@@ -329,6 +416,47 @@
       </div>
     </section>
   </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const reviewedList = JSON.parse(localStorage.getItem("reviewedExercises") || "[]");
+
+  // Aplicar estados guardados
+  reviewedList.forEach(id => {
+    const card = document.querySelector(`.mark-reviewed-btn[data-id="${id}"]`)?.closest(".exercise-card");
+    const btn = document.querySelector(`.mark-reviewed-btn[data-id="${id}"]`);
+    if (card) card.classList.add("reviewed");
+    if (btn) {
+      btn.classList.add("active");
+      btn.textContent = "Revisado";
+    }
+  });
+
+  // Escuchar clicks
+  document.querySelectorAll(".mark-reviewed-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.dataset.id;
+      const card = btn.closest(".exercise-card");
+      let reviewedList = JSON.parse(localStorage.getItem("reviewedExercises") || "[]");
+
+      if (reviewedList.includes(id)) {
+        // Quitar revisión
+        reviewedList = reviewedList.filter(e => e !== id);
+        localStorage.setItem("reviewedExercises", JSON.stringify(reviewedList));
+        card.classList.remove("reviewed");
+        btn.classList.remove("active");
+        btn.textContent = "Marcar como revisado";
+      } else {
+        // Marcar revisado
+        reviewedList.push(id);
+        localStorage.setItem("reviewedExercises", JSON.stringify(reviewedList));
+        card.classList.add("reviewed");
+        btn.classList.add("active");
+        btn.textContent = "Revisado";
+      }
+    });
+  });
+});
+</script>
 
 </body>
 </html>

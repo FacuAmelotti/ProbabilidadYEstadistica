@@ -167,6 +167,58 @@
       margin-bottom: 12px;
     }
 
+    /* ===========================
+   EVENTO EN LÍNEA CON TÍTULO
+   =========================== */
+.battlefield-header-inline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.event-display-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(47, 0, 255, 0.08);
+  transition: all 0.4s ease;
+  min-width: 260px;
+}
+
+.event-icon-inline {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  object-fit: cover;
+  box-shadow: 0 0 8px rgba(89, 0, 255, 0.25);
+}
+
+.event-info-inline {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  line-height: 1.1em;
+}
+
+.event-name-inline {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #cbc5d2;
+}
+
+.event-desc-inline {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  color: #ccc;
+}
+
+
     .section-title {
       font-size: 1.5rem;
       font-weight: 300;
@@ -195,32 +247,74 @@
       min-height: 0;
     }
 
-    .castle {
-      width: 85%;
-      max-width: 200px;
-      border-radius: 12px;
-      padding: 12px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.15);
-      text-align: center;
-      box-shadow: inset 0 0 12px rgba(0,0,0,0.3);
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      justify-content: center;
-    }
 
-    .castle .name {
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
+.name-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 4px;
+}
 
-    .lifes {
-      font-size: 16px;
-      letter-spacing: 2px;
-      filter: drop-shadow(0 0 4px rgba(0,255,128,0.2));
-    }
+.name {
+  font-weight: 600;
+}
+
+.role-tag {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  color: #ccc;
+}
+
+.points {
+  font-size: 0.8rem;
+  color: #ffd166;
+  opacity: 0.9;
+}
+.castle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 85%;
+  height: 85%;
+  border-radius: 12px;
+  padding: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.15);
+  text-align: center;
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.4);
+  position: relative; /* 🔹 necesario para posicionar el texto dentro */
+}
+
+.lifes {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 6px;
+  letter-spacing: 2px;
+}
+
+/* 🔹 Nuevo: bloque fijo debajo de las vidas */
+.thinking {
+  position: absolute;
+  bottom: 6px;                /* 🔹 justo debajo del bloque interno */
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.62rem;
+  color: #66ff99;
+  opacity: 0.8;
+  animation: fadeThinking 0.3s ease;
+  pointer-events: none;       /* no interfiere con clics */
+}
+
+@keyframes fadeThinking {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 0.8; transform: translateY(0); }
+}
+
+
 
     .tag {
       position: absolute;
@@ -389,6 +483,19 @@
       font-size: 18px;
       letter-spacing: 3px;
     }
+/* ===========================================
+   📍 Fijar las vidas SIEMPRE al borde derecho
+   =========================================== */
+
+
+.player-hud .hearts-lg {
+  position: absolute;
+  right: 24px;  /* pegado al borde derecho */
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: right;
+  white-space: nowrap;
+}
 
     /* ===========================
        MODAL
@@ -574,6 +681,7 @@
   border-radius: 8px;
   border: 1px solid rgba(255,255,255,0.15);
   box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  margin-left: 12px;
 }
 
 .avatar.dead {
@@ -660,22 +768,6 @@
   transform: scale(1.02);
 }
 
-/* Contenido del jugador o bot */
-.castle {
-  width: 85%;
-  height: 85%;
-  border-radius: 12px;
-  padding: 12px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
-  border: 1px solid rgba(255,255,255,0.15);
-  text-align: center;
-  box-shadow: inset 0 0 12px rgba(0,0,0,0.4);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 6px;
-}
-
 .castle .name {
   font-weight: 600;
   font-size: 0.9rem;
@@ -691,13 +783,32 @@
   transform: scale(0.9);
   animation: fadeInCastle 0.6s ease forwards;
 }
-
-@keyframes fadeInCastle {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+.name-block {
+  text-align: center;
+  margin-top: 4px;
+  line-height: 1.2em;
 }
+
+.name {
+  margin: 0px 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.role {
+  font-size: 0.8rem;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+.points {
+  font-size: 0.8rem;
+  color: #ffd166;
+  opacity: 0.9;
+  margin-top: 2px;
+}
+
+
 
 /* ===========================
    TURNOS Y EFECTO ACTIVO
@@ -867,6 +978,86 @@
   animation: failEffect 0.7s ease-out forwards;
 }
 
+/* 🔹 Oculta completamente el grupo de acciones cuando no es turno del jugador */
+.player-hud .action-group.hidden {
+  display: none;
+}
+
+
+/* ===========================
+   EVENTO DE RONDA
+   =========================== */
+.event-display {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 6px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,255,153,0.1);
+  transition: all 0.4s ease;
+}
+
+.event-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 0 12px rgba(0, 255, 153, 0.25);
+  transition: transform 0.3s ease;
+}
+
+.event-display:hover .event-icon {
+  transform: scale(1.05);
+}
+
+.event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.event-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #00ff99;
+}
+
+.event-desc {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  color: #cccccc;
+}
+
+/* ✨ Parpadeo cuando aparece un nuevo evento */
+.flashEvent {
+  box-shadow: 0 0 25px rgba(0,255,255,0.4), 0 0 8px rgba(0,255,255,0.2) inset;
+  transform: scale(1.05);
+  transition: all 0.4s ease;
+}
+
+/* ✨ Texto flotante de puntos */
+.floating-points {
+  position: absolute;
+  left: 50%;
+  top: -10px;
+  transform: translateX(-50%);
+  color: #00ffcc;
+  font-weight: bold;
+  font-size: 1rem;
+  text-shadow: 0 0 6px rgba(0,255,255,0.6);
+  animation: floatUp 1.2s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes floatUp {
+  from { opacity: 1; transform: translate(-50%, 0); }
+  to { opacity: 0; transform: translate(-50%, -40px); }
+}
+
+
 @keyframes failEffect {
   0% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.5); opacity: 0.8; }
@@ -1032,9 +1223,17 @@
   <div class="game-container">
     <!-- Campo de batalla -->
 <section class="battlefield">
-  <div class="battlefield-header">
-    <h2 class="section-title">Batalla de Probabilidad</h2>
+<div class="battlefield-header-inline">
+  <h2 class="section-title">Batalla de Probabilidad</h2>
+  <div id="eventDisplay" class="event-display-inline">
+    <img id="eventIcon" src="../../src/img/eventos/none.png" alt="Evento" class="event-icon-inline">
+    <div class="event-info-inline">
+      <div class="event-name-inline" id="eventName">Sin evento</div>
+      <div class="event-desc-inline" id="eventDesc">—</div>
+    </div>
   </div>
+</div>
+
 
 <div class="battle-grid" id="grid">
   <div class="cell" id="p1"></div>
@@ -1086,7 +1285,6 @@
       <div class="targets" id="targetBox"></div>
     </div>
     <div>
-      <span class="small">Tus vidas: </span>
       <span class="hearts-lg" id="playerHearts">❤️❤️❤️❤️❤️</span>
     </div>
   </div>
@@ -1298,8 +1496,22 @@ function newGame(playerName = "Jugador", mode = "normal") {
     chosenTarget: null,
     spyBonus: false,
     players,
-    order: players.map((_, idx) => idx), // 0..N-1
+order: generarOrdenHorario(players.length),
+
   };
+
+  // 🧹 Reset de eventos activos
+state.currentEvent = null;
+state.eventMultiplier = 1;
+state.eventAccuracyPenalty = 0;
+state.eventExtraDamage = 0;
+
+// 🔄 Actualizar visualmente el área de evento
+$("#eventName").textContent = "Sin evento";
+$("#eventDesc").textContent = "—";
+$("#eventIcon").src = "../../src/img/visuales/event_5.jpg";
+$("#eventDisplay").style.boxShadow = "0 0 15px rgba(255,255,255,0.1)";
+
 
   randomizeGridPositions(mode);
 
@@ -1313,6 +1525,7 @@ function newGame(playerName = "Jugador", mode = "normal") {
   highlightTurn();
   startTurnTimer();
 
+  
   addLog("🎮 <b>¡Nueva partida iniciada!</b>");
   if (music.paused) {
     music.play();
@@ -1346,32 +1559,199 @@ for (let i = 0; i < state.players.length; i++) {
     togglePlayerControls(myTurn);
     }
 
+    // ============================================
+// EVENTOS ESPECIALES CON IMÁGENES
+// ============================================
+const ROUND_EVENTS = [
+  {
+    name: "Evento de Doble Puntos",
+    desc: "Todas las acciones exitosas otorgan el doble de puntos.",
+    icon: "../../src/img/visuales/event_1.jpg",
+    effect: state => state.eventMultiplier = 2
+  },
+  {
+    name: "Curación Global",
+    desc: "Todos los jugadores vivos recuperan +1 vida.",
+    icon: "../../src/img/visuales/event_2.jpg",
+    effect: state => {
+      state.players.forEach(p => {
+        if (p.alive) p.hp = clamp(p.hp + 1, 0, MAX_HP);
+      });
+    }
+  },
+  {
+    name: "Furia",
+    desc: "Daño +1 en ataques exitosos.",
+    icon: "../../src/img/visuales/event_4.jpg",
+    effect: state => state.eventExtraDamage = 1
+  },
+  {
+    name: "Sin evento",
+    desc: "-",
+    icon: "../../src/img/visuales/event_5.jpg",
+    effect: state => {
+      state.eventMultiplier = 0;
+      state.eventAccuracyPenalty = 0;
+      state.eventExtraDamage = 0;
+    }
+  }
+];
+
+// ======================================================
+// ORDEN DE TURNOS EN CÍRCULO ANTIHORARIO (TRUCO INVERTIDO 😎)
+// ======================================================
+function generarOrdenHorario(totalPlayers) {
+  if (totalPlayers === 4) {
+    // player (abajo) → izquierda (p2) → arriba (p1) → derecha (p3)
+    return [0, 3, 1, 2];
+  }
+
+  if (totalPlayers === 8) {
+    // player → p7 → p5 → p3 → p2 → p1 → p4 → p6
+    return [0, 7, 5, 3, 2, 1, 4, 6];
+  }
+
+  return Array.from({ length: totalPlayers }, (_, i) => i);
+}
+
+
+function applyRoundEvent() {
+  const event = rnd(ROUND_EVENTS);
+  state.currentEvent = event;
+
+  // Reiniciar efectos previos
+  state.eventMultiplier = 1;
+  state.eventAccuracyPenalty = 0;
+  state.eventExtraDamage = 0;
+  event.effect(state);
+
+  // Actualizar interfaz
+  $("#eventName").textContent = event.name;
+  $("#eventDesc").textContent = event.desc;
+  $("#eventIcon").src = event.icon;
+
+  // 💫 Parpadeo y color
+  const eventBox = $("#eventDisplay");
+  eventBox.classList.add("flashEvent");
+  setTimeout(() => eventBox.classList.remove("flashEvent"), 800);
+
+  eventBox.style.boxShadow =
+    event.name.includes("Doble") ? "0 0 15px rgba(255,215,0,0.4)" :
+    event.name.includes("Curación") ? "0 0 15px rgba(0,255,153,0.4)" :
+    event.name.includes("Furia") ? "0 0 15px rgba(255,80,80,0.4)" :
+    "0 0 15px rgba(255,255,255,0.1)";
+
+  // 🔊 Reproducir sonido según el evento
+  switch (event.name) {
+    case "Evento de Doble Puntos": sfx.event_double.play(); break;
+    case "Curación Global": sfx.event_heal.play(); break;
+    case "Furia": sfx.event_fury.play(); break;
+    default: sfx.event_none.play(); break;
+  }
+
+  addLog(`🌀 <b>${event.name}</b>: ${event.desc}`);
+}
+
+
+    const SCORE_VALUES = {
+  ATTACK_SUCCESS: 80,
+  FORTIFY_SUCCESS: 80,
+  KILL_BONUS: 200,
+  REPAIR: 0,
+  FAIL: 0
+};
+
 function renderCastle(sel, p) {
   const box = $(sel);
   if (!box) return;
+  if (!p) return (box.innerHTML = "");
 
-  if (!p || !p.alive) {
+  // ⚰️ Si está muerto
+  if (!p.alive) {
     box.innerHTML = `
       <div class="castle-info">
         <div class="avatar dead"></div>
-        <div class="name muted">${p ? p.name || "—" : "—"}</div>
+        <div class="name muted">${p.name}</div>
       </div>
+      <div class="points">⭐ ${p.score || 0}</div>
       <div class="lifes">✖︎</div>
     `;
-    box.parentElement.classList.remove("active-turn");
     return;
   }
 
-  box.innerHTML = `
-    <div class="castle-info">
-      <div class="avatar" style="background-image:url('${p.img || 'img/default.png'}');"></div>
-      <div>
-        <div class="name">${p.name}</div>
-        <div class="small muted">${p.type === 'bot' ? 'Bot' : 'Jugador'}</div>
-      </div>
-    </div>
-    <div class="lifes">${hearts(p.hp)}</div>
-  `;
+  // 🧱 Personaje vivo
+box.innerHTML = `
+  <div class="castle-info">
+    <div class="avatar" style="background-image:url('${p.img || 'img/default.png'}');"></div>
+  </div>
+
+  <div class="name-block">
+    <div class="name">${p.name}</div>
+    <div class="role small muted">${p.type === 'bot' ? 'Bot' : 'Jugador'}</div>
+    <div class="points">⭐ ${p.score || 0}</div>
+  </div>
+
+  <div class="lifes">${hearts(p.hp)}</div>
+  ${p.type === "bot" && p.thinking ? `<div class="thinking">${p.thinking}</div>` : ""}
+`;
+
+}
+
+const THOUGHTS = [
+  "{name} reflexiona sobre la distribución correcta…",
+  "{name} ajusta los parámetros de su modelo mental…",
+  "{name} calcula probabilidades condicionales…",
+  "{name} recuerda el teorema de Bayes…",
+  "{name} busca una estrategia óptima…",
+  "{name} repasa sus fórmulas favoritas…",
+  "{name} consulta a su tabla de probabilidades…",
+  "{name} duda entre fortificar o atacar…",
+  "{name} traza un plan aleatorio…",
+  "{name} revisa la varianza de sus decisiones…",
+  "{name} hace simulaciones mentales…",
+  "{name} evalúa los valores esperados…",
+  "{name} realiza un muestreo rápido…",
+  "{name} calcula un intervalo de confianza…",
+  "{name} aplica el principio de Laplace…",
+  "{name} intenta reducir la entropía del sistema…",
+  "{name} busca el equilibrio estadístico…",
+  "{name} traza una función de densidad mental…",
+  "{name} considera todos los casos posibles…",
+  "{name} se pierde en una integral triple…",
+  "{name} prueba una hipótesis arriesgada…",
+  "{name} evalúa su distribución de errores…",
+  "{name} duda si su muestra es representativa…",
+  "{name} busca correlaciones ocultas…",
+  "{name} proyecta un modelo predictivo…",
+  "{name} realiza un pequeño experimento mental…",
+  "{name} hace un sorteo interno…",
+  "{name} intenta maximizar su esperanza de vida…",
+  "{name} revisa si sus eventos son disjuntos…",
+  "{name} considera un enfoque bayesiano…",
+  "{name} contempla la simetría del azar…",
+  "{name} ordena sus pensamientos aleatoriamente…",
+  "{name} busca una variable aleatoria auxiliar…",
+  "{name} intenta predecir el próximo turno…",
+  "{name} mide la probabilidad de su propio éxito…",
+  "{name} consulta a su instinto estadístico…",
+  "{name} prepara una demostración rigurosa…",
+  "{name} visualiza un espacio muestral infinito…"
+];
+
+
+// Muestra el mensaje debajo de las vidas por un rato
+function botSay(idx, text, ms = 1200) {
+  const p = state.players[idx];
+  if (!p || !p.alive) return;
+  p.thinking = text;
+  renderAll();
+  setTimeout(() => {
+    // si sigue vivo, limpiamos el mensaje
+    if (p.alive) {
+      p.thinking = "";
+      renderAll();
+    }
+  }, ms);
 }
 
 
@@ -1405,25 +1785,26 @@ function buildPlayers(playerName, mode) {
 
 
 
-    function togglePlayerControls(enabled) {
-function togglePlayerControls(enabled) {
-  const buttons = ["#btnAttack", "#btnFortify", "#btnRepair", "#btnSpy"];
-  
-  buttons.forEach(id => {
-    const el = $(id);
-    if (enabled) {
-      el.classList.remove("disabled");
-    } else {
-      el.classList.add("disabled");
-    }
-  });
 
-  // 🧹 Limpiar y ocultar targetBox
+// ============================================
+// CONTROL VISUAL DE BOTONES DEL JUGADOR
+// ============================================
+function togglePlayerControls(enabled) {
+  const actionGroup = document.querySelector(".player-hud .action-group");
   const targetBox = $("#targetBox");
+
+  // 🔹 Mostrar u ocultar el grupo completo
+  if (enabled) {
+    actionGroup.classList.remove("hidden");
+  } else {
+    actionGroup.classList.add("hidden");
+  }
+
+  // 🔹 Limpiar objetivos
   targetBox.innerHTML = "";
   targetBox.classList.remove("active", "attack-mode");
 
-  // 🧠 Si está habilitado (es tu turno), crear botones
+  // 🔹 Si es tu turno (enabled), generar los botones de objetivo
   if (enabled) {
     state.players.forEach((p, idx) => {
       if (idx > 0 && p.alive) {
@@ -1438,60 +1819,44 @@ function togglePlayerControls(enabled) {
 }
 
 
-    // Generar botones de objetivos
-    const targetBox = $("#targetBox");
-    targetBox.innerHTML = "";
-    targetBox.classList.remove("active");
-
-    if (enabled) {
-        state.players.forEach((p, idx) => {
-        if (idx > 0 && p.alive) {
-            const btn = document.createElement("button");
-            btn.className = "btn-ghost";
-            btn.textContent = p.name;
-            btn.onclick = () => selectTarget(idx);
-            targetBox.appendChild(btn);
-        }
-        });
-    }
-    }
-
 function highlightTurn() {
   const idx = state.order[state.turnIdx];
   const p = state.players[idx];
-  
+
   $("#turnName").textContent = p ? p.name : "—";
 
-  // Limpiar todas las celdas activas
+  // Limpiar resaltado
   $$(".cell").forEach(c => c.classList.remove("active-turn"));
 
-  // Mapeo de índices
   const idMap = { 
-    0: "#player",
-    1: "#p1",
-    2: "#p2",
-    3: "#p3",
-    4: "#p4",
-    5: "#p5",
-    6: "#p6",
-    7: "#p7",
-    8: "#p8"
+    0: "#player", 1: "#p1", 2: "#p2", 3: "#p3",
+    4: "#p4", 5: "#p5", 6: "#p6", 7: "#p7", 8: "#p8"
   };
 
   const sel = idMap[idx];
   if (sel) {
     const cell = $(sel);
-    if (cell) {
-      cell.classList.add("active-turn"); // ✅ ahora aplica al .cell
-    }
+    if (cell) cell.classList.add("active-turn");
   }
 
-  // Efecto de turno en el HUD inferior
-const playerHUD = document.querySelector(".player-hud");
-if (state.order[state.turnIdx] === 0) {
-  playerHUD.classList.add("active-turn");
-} else {
-  playerHUD.classList.remove("active-turn");
+  // Efecto en HUD inferior si es turno del jugador
+  const playerHUD = document.querySelector(".player-hud");
+  playerHUD.classList.toggle("active-turn", state.order[state.turnIdx] === 0);
+
+  // 💭 Si es turno de un bot vivo → mostrar mensaje "pensando..."
+// 💭 Si es turno de un bot vivo → mostrar mensaje solo desde la segunda ronda
+if (p && p.type === "bot" && p.alive && state.round > 1) {
+  const msg = rnd(THOUGHTS).replace("{name}", p.name);
+  p.thinking = msg;
+  renderAll();
+
+  // Borrar el mensaje luego de 1.3s aprox
+  setTimeout(() => {
+    if (p.alive && state.players[state.order[state.turnIdx]] === p) {
+      p.thinking = "";
+      renderAll();
+    }
+  }, 1300);
 }
 
 }
@@ -1744,43 +2109,52 @@ if (kind === "attack") {
   }
 
   if (success) {
-    state.score += 80;
-    state.players[t].hp = clamp(state.players[t].hp - 2, 0, MAX_HP);
-    addLog(`⚔️ Atacás a <b>${state.players[t].name}</b> con éxito: <b>-2 vidas</b>.`);
+    // 🎯 aplicar multiplicador de evento y daño extra (como bots)
+    const basePts = SCORE_VALUES.ATTACK_SUCCESS;
+    const pts = Math.round(basePts * (state.eventMultiplier || 1));
+    state.score += pts;
+    state.players[0].score = (state.players[0].score || 0) + pts;
+
+    const baseDamage = 2 + (state.eventExtraDamage || 0);
+    state.players[t].hp = clamp(state.players[t].hp - baseDamage, 0, MAX_HP);
+
+    addLog(`⚔️ Atacás a <b>${state.players[t].name}</b> con éxito: <b>-${baseDamage} vidas</b> (+${pts} pts).`);
     checkDeath(t);
-    // 💥 efecto visual
-    flashCell("#player", "violet"); // el atacante (vos)
-    flashCell(idFromIndex(t), "red"); // el objetivo
-     launchProjectile("#player", idFromIndex(t));
+    flashCell("#player", "violet");
+    flashCell(idFromIndex(t), "red");
+    launchProjectile("#player", idFromIndex(t));
+    sfx.attack.play();
   } else {
     me.hp = clamp(me.hp - 1, 0, MAX_HP);
     addLog(`⚔️ Fallaste el ataque: <b>-1 vida</b> para vos.`);
     launchEffect("#player", "fail");
-    checkDeath(0);
     flashCell("#player", "red");
+    sfx.fail.play();
+    checkDeath(0);
   }
-  if (success) {
-  sfx.attack.play();
-} else {
-  sfx.fail.play();
-}
-
 }
 
 
   // ==== FORTIFICAR ====
 if (kind === "fortify") {
   if (success) {
-    state.score += 50;
-    me.hp = clamp(me.hp + 3, 0, MAX_HP);
-    addLog("🛡️ Se cura: <b>+3 vida</b>.");
+    const basePts = SCORE_VALUES.FORTIFY_SUCCESS;
+    const pts = Math.round(basePts * (state.eventMultiplier || 1));
+    const healAmount = 3;
+
+    state.score += pts;
+    state.players[0].score = (state.players[0].score || 0) + pts;
+
+    me.hp = clamp(me.hp + healAmount, 0, MAX_HP);
+    addLog(`🛡️ Te fortificás: <b>+${healAmount} vida</b> (+${pts} pts).`);
     flashCell("#player", "green");
     launchEffect("#player", "shield");
     sfx.fortify.play();
   } else {
     addLog("🛡️ Fallaste la fortificación (sin efecto).");
+    launchEffect("#player", "fail");
+    sfx.fail.play();
   }
-  
 }
 
 
@@ -1845,11 +2219,19 @@ if (kind === "fortify") {
 
         // Bonus por eliminar bot
         const killerIsPlayer = state.order[state.turnIdx] === 0;
-        if (killerIsPlayer) {
-        state.score += 200;
-        $("#score").textContent = state.score;
-        addLog("🎉 <b>+200 puntos</b> por eliminar un rival.");
-        }
+if (killerIsPlayer) {
+  state.score += SCORE_VALUES.KILL_BONUS;
+  state.players[0].score = (state.players[0].score || 0) + SCORE_VALUES.KILL_BONUS;
+  $("#score").textContent = state.score;
+  addLog("🎉 <b>+200 puntos</b> por eliminar un rival.");
+} else {
+  const killer = state.players[state.order[state.turnIdx]];
+  if (killer && killer.type === "bot") {
+    killer.score = (killer.score || 0) + SCORE_VALUES.KILL_BONUS;
+    addLog(`💀 <b>${killer.name}</b> gana ${SCORE_VALUES.KILL_BONUS} puntos por eliminar a ${p.name}.`);
+  }
+}
+
 
         // Victoria si todos los bots murieron
         const vivosBots = state.players.slice(1).filter(x => x.alive).length;
@@ -1904,11 +2286,37 @@ function endTurn() {
   state.turnIdx = (state.turnIdx + 1) % state.order.length;
 
   // Si vuelve al jugador humano => nueva ronda
-  if (state.turnIdx === 0) {
-    state.round++;
-    $("#round").textContent = state.round;
-    $("#tip").textContent = rnd(baseTips);
-  }
+if (state.turnIdx === 0) {
+  state.round++;
+  $("#round").textContent = state.round;
+  $("#tip").textContent = rnd(baseTips);
+  applyRoundEvent();
+
+  // 💫 Recompensa por sobrevivir
+  state.players.forEach((p, idx) => {
+    if (p.alive) {
+      p.score = (p.score || 0) + 100;
+
+      // 🔹 Si es el jugador humano (idx = 0)
+      if (idx === 0) {
+        state.score += 100;
+        $("#score").textContent = state.score;
+
+        // 🔸 Texto flotante +100 sobre el jugador
+        const text = document.createElement("div");
+        text.className = "floating-points";
+        text.textContent = "+100";
+        const castle = document.querySelector("#player");
+        castle.appendChild(text);
+        setTimeout(() => text.remove(), 1200);
+      }
+    }
+  });
+
+  addLog("💫 Todos ganan +100 puntos por sobrevivir a la ronda.");
+  renderAll();
+}
+
 
   renderAll();
   highlightTurn();
@@ -1920,110 +2328,136 @@ function endTurn() {
 
 if (player && player.type === "bot" && player.alive) {
   const turnSnapshot = state.round + "-" + state.turnIdx;
-  setTimeout(() => {
-    // 💡 verificamos que sigue siendo su turno
-    if (state.round + "-" + state.turnIdx === turnSnapshot) {
-      botAct(idx);
-    }
-  }, 1500);
+// 🕐 Espera aleatoria antes de que el bot actúe (más natural)
+const delay = 1000 + Math.random() * 800; // entre 1.0 y 1.8 s aprox
+setTimeout(() => {
+  // 💡 verificamos que sigue siendo su turno
+  if (state.round + "-" + state.turnIdx === turnSnapshot) {
+    botAct(idx);
+  }
+}, delay);
+
 }
 
 }
 
 function botAct(idx) {
   if (gameEnded) return;
-
-  // ⚠️ Si ya no es el turno de este bot, salir (previene bugs)
   if (state.order[state.turnIdx] !== idx) return;
 
   const bot = state.players[idx];
-  if (!bot || !bot.alive) {
-    endTurn();
-    return;
-  }
+  if (!bot || !bot.alive) { endTurn(); return; }
 
-  let action;
+  // ① Mostrar mensaje "pensando..." ANTES de actuar
+  const msg = rnd(THOUGHTS).replace("{name}", bot.name);
+  botSay(idx, msg, 1200);
 
-  if (bot.hp <= 2) {
-    action = Math.random() < 0.7 ? "fortify" : "repair";
-  } else if (bot.hp >= 5) {
-    action = Math.random() < 0.8 ? "attack" : "fortify";
-  } else {
-    const r = Math.random();
-    if (r < 0.5) action = "attack";
-    else if (r < 0.8) action = "fortify";
-    else action = "repair";
-  }
+  // Tomamos un snapshot para evitar actuar si el turno cambió
+  const turnSnapshot = state.round + "-" + state.turnIdx;
 
-  // ==== REPARAR ====
-  if (action === "repair") {
-    bot.hp = clamp(bot.hp + 1, 0, MAX_HP);
-    addLog(`💊 <b>${bot.name}</b> se cura (+1 vida).`);
-    renderAll();
-    flashCell(idFromIndex(idx), "green");
-    launchEffect(idFromIndex(idx), "heal");
-    sfx.heal.play();
-    return endTurn();
-  }
+  // ② Después del breve delay, ejecutar la IA normal
+const actionDelay = 1000 + Math.random() * 900; // 1.0s–1.9s
+setTimeout(() => {
+  if (gameEnded) return;
+  if (state.round + "-" + state.turnIdx !== turnSnapshot) return; // ya cambió el turno
+  
+    let action;
 
-  // ==== FORTIFICAR ====
-  if (action === "fortify") {
-    const success = rollBot(bot, "fortify");
-    if (success) {
+    if (bot.hp <= 2) {
+      action = Math.random() < 0.7 ? "fortify" : "repair";
+    } else if (bot.hp >= 5) {
+      action = Math.random() < 0.8 ? "attack" : "fortify";
+    } else {
+      const r = Math.random();
+      if (r < 0.5) action = "attack";
+      else if (r < 0.8) action = "fortify";
+      else action = "repair";
+    }
+
+    // ==== REPARAR ====
+    if (action === "repair") {
       bot.hp = clamp(bot.hp + 1, 0, MAX_HP);
-      addLog(`🛡️ <b>${bot.name}</b> fortifica (+1 vida).`);
-      launchEffect(idFromIndex(idx), "shield");
+      addLog(`💊 <b>${bot.name}</b> se cura (+1 vida).`);
+      renderAll();
       flashCell(idFromIndex(idx), "green");
-      sfx.fortify.play();
-    } else {
-      addLog(`🛡️ <b>${bot.name}</b> falló la fortificación.`);
-      launchEffect(idFromIndex(idx), "fail");
+      launchEffect(idFromIndex(idx), "heal");
+      sfx.heal.play();
+      return endTurn();
     }
-    renderAll();
-    return endTurn();
+
+    // ==== FORTIFICAR ====
+if (action === "fortify") {
+  const success = rollBot(bot, "fortify");
+  if (success) {
+    const healAmount = 3; // igual que jugador
+    bot.hp = clamp(bot.hp + healAmount, 0, MAX_HP);
+
+    const basePts = SCORE_VALUES.FORTIFY_SUCCESS;
+    const pts = Math.round(basePts * (state.eventMultiplier || 1));
+    bot.score = (bot.score || 0) + pts;
+
+    addLog(`🛡️ <b>${bot.name}</b> fortifica (+${healAmount} vida, +${pts} pts).`);
+    launchEffect(idFromIndex(idx), "shield");
+    flashCell(idFromIndex(idx), "green");
+    sfx.fortify.play();
+  } else {
+    addLog(`🛡️ <b>${bot.name}</b> falló la fortificación.`);
+    launchEffect(idFromIndex(idx), "fail");
+        sfx.fail.play();
   }
+  renderAll();
+  return endTurn();
+}
 
-  // ==== ATAQUE ====
-  if (action === "attack") {
-    const targets = state.players
-      .map((p, i) => ({ i, p }))
-      .filter(x => x.i !== idx && x.p && x.p.alive);
 
-    if (targets.length === 0) return endTurn();
+    // ==== ATAQUE ====
+    if (action === "attack") {
+      const targets = state.players
+        .map((p, i) => ({ i, p }))
+        .filter(x => x.i !== idx && x.p && x.p.alive);
 
-    let target;
-    const chanceAttackPlayer = 0.23;
+      if (targets.length === 0) return endTurn();
 
-    if (Math.random() < chanceAttackPlayer && state.players[0].alive) {
-      target = { i: 0, p: state.players[0] };
-    } else {
-      const botsOnly = targets.filter(t => t.i !== 0);
-      target = botsOnly.length > 0 ? rnd(botsOnly) : rnd(targets);
+      let target;
+      const chanceAttackPlayer = 0.23;
+      if (Math.random() < chanceAttackPlayer && state.players[0].alive) {
+        target = { i: 0, p: state.players[0] };
+      } else {
+        const botsOnly = targets.filter(t => t.i !== 0);
+        target = botsOnly.length > 0 ? rnd(botsOnly) : rnd(targets);
+      }
+
+      const success = rollBot(bot, "attack");
+
+if (success) {
+  const baseDamage = 2 + (state.eventExtraDamage || 0);
+  target.p.hp = clamp(target.p.hp - baseDamage, 0, MAX_HP);
+
+  const basePts = SCORE_VALUES.ATTACK_SUCCESS;
+  const pts = Math.round(basePts * (state.eventMultiplier || 1));
+  bot.score = (bot.score || 0) + pts;
+
+  addLog(`⚔️ <b>${bot.name}</b> ataca a <b>${target.p.name}</b> (-${baseDamage} vidas, +${pts} pts).`);
+  checkDeath(target.i);
+  flashCell(idFromIndex(idx), "violet");
+  flashCell(idFromIndex(target.i), "red");
+  sfx.attack.play();
+  launchProjectile(idFromIndex(idx), idFromIndex(target.i));
+} else {
+  const penalty = state.eventAccuracyPenalty ? 1 + state.eventAccuracyPenalty : 1;
+  const damage = Math.round(1 * penalty);
+  bot.hp = clamp(bot.hp - damage, 0, MAX_HP);
+  addLog(`⚔️ <b>${bot.name}</b> falló y se dañó (-${damage} vida).`);
+  launchEffect(idFromIndex(target.i), "fail");
+  sfx.fail.play();
+  checkDeath(idx);
+}
+
+
+      renderAll();
+      return endTurn();
     }
-
-    const success = rollBot(bot, "attack");
-
-    if (success) {
-      target.p.hp = clamp(target.p.hp - 2, 0, MAX_HP);
-      addLog(`⚔️ <b>${bot.name}</b> ataca a <b>${target.p.name}</b> (-2 vidas).`);
-      checkDeath(target.i);
-      flashCell(idFromIndex(idx), "violet");
-      flashCell(idFromIndex(target.i), "red");
-      sfx.attack.play();
-      launchEffect(idFromIndex(target.i), "fail"); 
-       launchProjectile(idFromIndex(idx), idFromIndex(target.i));
-    } else {
-      bot.hp = clamp(bot.hp - 1, 0, MAX_HP);
-      addLog(`⚔️ <b>${bot.name}</b> falló y se dañó (-1 vida).`);
-      checkDeath(idx);
-      flashCell(idFromIndex(idx), "red");
-      launchEffect(idFromIndex(target.i), "fail"); 
-      sfx.fail.play();
-    }
-
-    renderAll();
-    return endTurn();
-  }
+  }, actionDelay);
 }
 
     function rollBot(bot, kind) {
@@ -2210,12 +2644,16 @@ music.volume = 0.15;
 
 const sfx = {
   heal: new Audio("../../src/audio/gameBattle/heal.mp3"),
-  fortify: new Audio("../../src/audio/gameBattle//heal.mp3"),
+  fortify: new Audio("../../src/audio/gameBattle/forti.mp3"),
   attack: new Audio("../../src/audio/gameBattle/attack.mp3"),
   fail: new Audio("../../src/audio/gameBattle/miss.mp3"),
   victory: new Audio("../../src/audio/gameBattle/victory.mp3"),
   gameover: new Audio("../../src/audio/gameBattle/gameover.mp3"),
-  death: new Audio("../../src/audio/gameBattle/npcdeath.mp3") 
+  death: new Audio("../../src/audio/gameBattle/npcdeath.mp3"),
+  event_double: new Audio("../../src/audio/gameBattle/event_double.mp3"),
+  event_heal: new Audio("../../src/audio/gameBattle/event_heal.mp3"),
+  event_fury: new Audio("../../src/audio/gameBattle/event_fury.mp3"),
+  event_none: new Audio("../../src/audio/gameBattle/event_none.mp3")
 };
 
 // 🔊 Aplicar volumen inicial del slider a todos los sonidos

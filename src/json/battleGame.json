@@ -1,77 +1,233 @@
 [
+{
+  "topic": "Conceptos fundamentales",
+  "q": "¿Qué es un experimento aleatorio?",
+  "options": [
+    "Un proceso cuyo resultado no se puede predecir con certeza antes de realizarlo",
+    "Un procedimiento que siempre produce el mismo resultado",
+    "Una observación controlada sin variabilidad en los resultados",
+    "Un conjunto de eventos mutuamente excluyentes con probabilidades iguales"
+  ],
+  "correct": 0,
+  "explain": "Un experimento aleatorio es aquel en el que, aunque se conozcan todas las posibilidades, no puede saberse con certeza cuál ocurrirá hasta realizarlo (por ejemplo, lanzar un dado o una moneda)."
+},
+{
+  "topic": "Conceptos fundamentales",
+  "q": "¿Qué es el espacio muestral?",
+  "options": [
+    "El conjunto de todos los posibles resultados de un experimento aleatorio",
+    "El conjunto de los resultados favorables al evento A",
+    "El número total de repeticiones necesarias para obtener un resultado",
+    "El subconjunto de resultados más probables dentro del experimento"
+  ],
+  "correct": 0,
+  "explain": "El espacio muestral (Ω) es el conjunto formado por todos los resultados posibles de un experimento aleatorio. Por ejemplo, al lanzar un dado, Ω = {1, 2, 3, 4, 5, 6}."
+},
+{
+  "topic": "Conceptos fundamentales",
+  "q": "¿Qué es un evento en probabilidad?",
+  "options": [
+    "Un subconjunto del espacio muestral que agrupa ciertos resultados posibles",
+    "El resultado más probable dentro del experimento aleatorio",
+    "Un proceso repetible bajo condiciones idénticas",
+    "El conjunto total de todos los resultados posibles"
+  ],
+  "correct": 0,
+  "explain": "Un evento (o suceso) es cualquier subconjunto del espacio muestral. Representa una o más posibilidades que pueden ocurrir en un experimento aleatorio. Por ejemplo, al lanzar un dado, el evento 'número par' es {2, 4, 6}."
+},
+{
+  "topic": "Conceptos fundamentales",
+  "q": "¿Qué es la probabilidad?",
+  "options": [
+    "Una función que asigna a cada evento un número entre 0 y 1 que representa su posibilidad de ocurrir",
+    "El número total de resultados posibles en un experimento aleatorio",
+    "El conjunto de resultados favorables dentro del espacio muestral",
+    "La frecuencia observada de un resultado al repetir infinitamente un experimento"
+  ],
+  "correct": 0,
+  "explain": "La probabilidad es una función que asocia a cada evento un número real entre 0 y 1, donde 0 significa que el evento es imposible y 1 que es seguro. Por ejemplo, al lanzar una moneda, P(cara) = 0.5."
+},
   {
-    "topic": "Independencia",
-    "q": "Si P(A)=0.4, P(B)=0.5 y P(A∩B)=0.2, ¿son A y B independientes?",
-    "options": ["Sí", "No"],
-    "correct": 0,
-    "explain": "P(A)·P(B)=0.4·0.5=0.2 = P(A∩B), por lo tanto son independientes."
-  },
-  {
-    "topic": "Unión",
-    "q": "Si P(A)=0.3, P(B)=0.4 y P(A∩B)=0.1, ¿cuál es P(A∪B)?",
-    "options": ["0.5", "0.6", "0.7", "0.8"],
-    "correct": 1,
-    "explain": "P(A∪B)=P(A)+P(B)−P(A∩B)=0.3+0.4−0.1=0.6."
-  },
-  {
-    "topic": "Complemento",
-    "q": "Si P(A)=0.68, ¿cuál es P(Aᶜ)?",
-    "options": ["0.68", "0.32", "0.42", "0.72"],
-    "correct": 1,
-    "explain": "P(Aᶜ)=1−P(A)=0.32."
-  },
-  {
-    "topic": "Probabilidad Condicional",
-    "q": "Si P(A∩B)=0.12 y P(B)=0.3, ¿cuál es P(A|B)?",
-    "options": ["0.04", "0.12", "0.36", "0.40"],
-    "correct": 3,
-    "explain": "P(A|B)=P(A∩B)/P(B)=0.12/0.3=0.4."
-  },
-  {
-    "topic": "Bayes",
-    "q": "Si P(A)=0.3, P(B|A)=0.8 y P(B)=0.5, ¿cuál es P(A|B)?",
-    "options": ["0.48", "0.6", "0.24", "0.12"],
-    "correct": 0,
-    "explain": "P(A|B)=(P(B|A)·P(A))/P(B)=(0.8·0.3)/0.5=0.48."
-  },
-  {
-    "topic": "Eventos Excluyentes",
-    "q": "Si A y B son excluyentes y P(A)=0.3, P(B)=0.5, ¿cuál es P(A∩B)?",
-    "options": ["0", "0.15", "0.8", "0.2"],
-    "correct": 0,
-    "explain": "Eventos excluyentes no pueden ocurrir juntos, entonces P(A∩B)=0."
-  },
-  {
-    "topic": "Probabilidad Total",
-    "q": "Si B₁ y B₂ son una partición con P(B₁)=0.6, P(B₂)=0.4, P(A|B₁)=0.2 y P(A|B₂)=0.5, ¿cuál es P(A)?",
-    "options": ["0.32", "0.26", "0.38", "0.44"],
-    "correct": 0,
-    "explain": "P(A)=P(B₁)P(A|B₁)+P(B₂)P(A|B₂)=0.6·0.2+0.4·0.5=0.32."
-  },
-  {
-    "topic": "Distribución Discreta",
-    "q": "Si X puede tomar valores {1,2,3} con probabilidades {0.2,0.5,0.3}, ¿cuál es E[X]?",
-    "options": ["1.5", "2.0", "2.1", "2.3"],
-    "correct": 3,
-    "explain": "E[X]=1·0.2+2·0.5+3·0.3=0.2+1+0.9=2.1 (redondeado 2.1)."
-  },
-  {
-    "topic": "Varianza",
-    "q": "Si E[X]=10 y E[X²]=108, ¿cuál es Var(X)?",
-    "options": ["8", "18", "100", "98"],
-    "correct": 1,
-    "explain": "Var(X)=E[X²]−(E[X])²=108−100=8."
-  },
-  {
-    "topic": "Interpretación",
-    "q": "Un evento tiene P(E)=0.9. ¿Qué significa esto?",
+    "topic": "Axiomas de la probabilidad",
+    "q": "¿Qué establece el primer axioma de la probabilidad, P(Ω) = 1?",
     "options": [
-      "Que es imposible que ocurra.",
-      "Que ocurre el 90% de las veces a largo plazo.",
-      "Que ocurrirá exactamente 9 de cada 10 veces.",
-      "Que P(Eᶜ)=0.9."
+      "Que la probabilidad del espacio muestral completo es 1, es decir, que algún resultado ocurrirá con certeza",
+      "Que todos los eventos posibles tienen la misma probabilidad",
+      "Que la probabilidad de un evento imposible es 0",
+      "Que la suma de probabilidades de todos los eventos es infinita"
     ],
-    "correct": 1,
-    "explain": "Una probabilidad de 0.9 indica alta frecuencia esperada, no certeza."
+    "correct": 0,
+    "explain": "El primer axioma afirma que la probabilidad del espacio muestral completo es 1, lo que implica que algún resultado ocurrirá con certeza."
+  },
+  {
+    "topic": "Axiomas de la probabilidad",
+    "q": "¿Qué expresa el segundo axioma de la probabilidad, P(A) ≥ 0?",
+    "options": [
+      "Que la probabilidad de cualquier evento es siempre un número no negativo",
+      "Que todos los eventos tienen al menos una probabilidad del 50%",
+      "Que las probabilidades no pueden superar el valor 1",
+      "Que los eventos imposibles no existen"
+    ],
+    "correct": 0,
+    "explain": "El segundo axioma establece que la probabilidad de cualquier evento no puede ser negativa: P(A) ≥ 0. Todas las probabilidades se encuentran en el rango [0, 1]."
+  },
+  {
+    "topic": "Axiomas de la probabilidad",
+    "q": "¿Qué indica el tercer axioma de la probabilidad para eventos mutuamente excluyentes?",
+    "options": [
+      "Que si A y B son excluyentes, la probabilidad de que ocurra A o B es la suma de sus probabilidades individuales",
+      "Que si A y B son independientes, P(A ∩ B) = P(A)·P(B)",
+      "Que si A y B son excluyentes, ambos no pueden tener probabilidad distinta de 0",
+      "Que la probabilidad de un evento compuesto es el producto de sus componentes"
+    ],
+    "correct": 0,
+    "explain": "El tercer axioma afirma que para eventos mutuamente excluyentes, la probabilidad de su unión es la suma de las probabilidades individuales: P(A ∪ B) = P(A) + P(B) si A ∩ B = ∅."
+  },
+  {
+  "topic": "Eventos y relaciones",
+  "q": "¿Qué significa que dos eventos sean mutuamente excluyentes?",
+  "options": [
+    "Que no pueden ocurrir al mismo tiempo, es decir, su intersección es vacía",
+    "Que siempre ocurren juntos en cada experimento",
+    "Que tienen la misma probabilidad de ocurrir",
+    "Que la ocurrencia de uno aumenta la probabilidad del otro"
+  ],
+  "correct": 0,
+  "explain": "Dos eventos son mutuamente excluyentes (o disjuntos) cuando no pueden suceder simultáneamente. Matemáticamente, A ∩ B = ∅ y por tanto P(A ∩ B) = 0. Por ejemplo, al lanzar una moneda, 'cara' y 'cruz' son eventos mutuamente excluyentes."
+},
+{
+  "topic": "Conceptos fundamentales",
+  "q": "¿Qué significa que los resultados de un experimento sean equiprobables?",
+  "options": [
+    "Que todos los resultados posibles tienen la misma probabilidad de ocurrir",
+    "Que algunos resultados son más probables que otros",
+    "Que los resultados dependen de eventos anteriores",
+    "Que los resultados no tienen probabilidad definida"
+  ],
+  "correct": 0,
+  "explain": "Equiprobable significa que cada resultado posible del experimento tiene la misma probabilidad de ocurrir. Por ejemplo, en un dado justo, cada cara (1 a 6) tiene P = 1/6."
+},
+ {
+    "topic": "Tipos de probabilidad",
+    "q": "¿En qué se basa la probabilidad clásica o de Laplace?",
+    "options": [
+      "En contar los casos favorables y posibles cuando todos son equiprobables",
+      "En repetir un experimento muchas veces y observar frecuencias",
+      "En medir la probabilidad como una creencia subjetiva",
+      "En definir reglas matemáticas para cualquier evento"
+    ],
+    "correct": 0,
+    "explain": "La probabilidad clásica se aplica cuando todos los resultados son igualmente probables. Se calcula como P(A) = casos favorables / casos posibles. Es típica en juegos de azar como dados, monedas o cartas."
+  },
+  {
+    "topic": "Tipos de probabilidad",
+    "q": "¿Cómo se interpreta la probabilidad frecuentista?",
+    "options": [
+      "Como el límite de la frecuencia relativa de un evento cuando el número de repeticiones tiende al infinito",
+      "Como una estimación basada en la intuición del observador",
+      "Como una medida de certeza lógica sin necesidad de experimentos",
+      "Como la proporción entre casos favorables y posibles en un juego de azar"
+    ],
+    "correct": 0,
+    "explain": "La probabilidad frecuentista se interpreta como el límite de la frecuencia relativa: al repetir el experimento muchas veces, la proporción de veces que ocurre A se acerca a su probabilidad real."
+  },
+  {
+    "topic": "Tipos de probabilidad",
+    "q": "¿Qué caracteriza al enfoque axiomático de la probabilidad?",
+    "options": [
+      "Define a la probabilidad como una función matemática que cumple con tres axiomas fundamentales",
+      "Depende de la opinión del observador y la evidencia disponible",
+      "Se basa en contar resultados equiprobables",
+      "Es una estimación empírica obtenida por repetición de experimentos"
+    ],
+    "correct": 0,
+    "explain": "El enfoque axiomático, introducido por Kolmogórov, define la probabilidad como una medida P sobre un conjunto de eventos que cumple tres axiomas: no negatividad, normalización y aditividad para eventos disjuntos."
+  },
+  {
+    "topic": "Tipos de probabilidad",
+    "q": "¿Qué propone la interpretación bayesiana de la probabilidad?",
+    "options": [
+      "Que la probabilidad representa un grado de creencia que se actualiza con nueva información mediante el teorema de Bayes",
+      "Que solo se puede calcular repitiendo un experimento muchas veces",
+      "Que todos los resultados tienen igual probabilidad de ocurrir",
+      "Que la probabilidad es una propiedad física del experimento"
+    ],
+    "correct": 0,
+    "explain": "La probabilidad bayesiana interpreta P(A) como un grado de creencia subjetivo sobre un evento. Cuando se obtiene nueva evidencia, se actualiza mediante el teorema de Bayes: P(hipótesis | datos) ∝ P(datos | hipótesis) · P(hipótesis)."
+  },
+  {
+  "topic": "Relaciones entre eventos",
+  "q": "¿Qué significa que A₁ ⊂ A₂ (A1 contenido en A2)?",
+  "options": [
+    "Que todos los resultados de A₁ también pertenecen a A₂",
+    "Que A₁ y A₂ no pueden ocurrir al mismo tiempo",
+    "Que A₁ y A₂ son eventos equiprobables",
+    "Que A₁ tiene siempre mayor probabilidad que A₂"
+  ],
+  "correct": 0,
+  "explain": "A₁ ⊂ A₂ significa que A₁ está contenido en A₂, es decir, cada resultado posible de A₁ también pertenece a A₂. Por lo tanto, su probabilidad cumple P(A₁) ≤ P(A₂)."
+},
+{
+  "topic": "Relaciones entre eventos",
+  "q": "¿Qué significa que A₁ ⊄ A₂?",
+  "options": [
+    "Que A₁ tiene al menos un resultado que no pertenece a A₂",
+    "Que todos los resultados de A₁ también están en A₂",
+    "Que A₁ y A₂ son disjuntos (no comparten resultados)",
+    "Que A₁ tiene la misma probabilidad que A₂"
+  ],
+  "correct": 0,
+  "explain": "A₁ ⊄ A₂ significa que A₁ no está contenido en A₂, es decir, existe al menos un resultado de A₁ que no pertenece a A₂. En este caso, no se cumple que P(A₁) ≤ P(A₂)."
+},
+  {
+    "topic": "Teoremas de probabilidad",
+    "q": "¿Qué establece el teorema de la probabilidad de la unión de dos eventos?",
+    "options": [
+      "P(A ∪ B) = P(A) + P(B) − P(A ∩ B)",
+      "P(A ∪ B) = P(A) × P(B)",
+      "P(A ∪ B) = P(A) − P(B)",
+      "P(A ∪ B) = P(A ∩ B)"
+    ],
+    "correct": 0,
+    "explain": "El teorema de la unión indica cómo calcular la probabilidad de que ocurra al menos uno de dos eventos. Se debe restar P(A ∩ B) para evitar contar dos veces los casos comunes."
+  },
+  {
+    "topic": "Teoremas de probabilidad",
+    "q": "¿Qué expresa el teorema de la probabilidad total?",
+    "options": [
+      "Descompone la probabilidad de un evento en función de una partición del espacio muestral",
+      "Permite calcular la probabilidad de la intersección entre dos eventos",
+      "Relaciona la probabilidad condicional con la probabilidad conjunta",
+      "Indica que la suma de todas las probabilidades posibles es 1"
+    ],
+    "correct": 0,
+    "explain": "El teorema de la probabilidad total establece que si {B₁, B₂, …, Bₙ} es una partición de Ω, entonces P(A) = Σ P(A|Bᵢ)·P(Bᵢ). Permite calcular P(A) combinando los casos posibles."
+  },
+  {
+    "topic": "Teoremas de probabilidad",
+    "q": "¿Qué describe el teorema de Bayes?",
+    "options": [
+      "Permite actualizar la probabilidad de una hipótesis al conocer nueva evidencia",
+      "Calcula la probabilidad de la unión de dos eventos disjuntos",
+      "Explica cómo obtener el complemento de un evento",
+      "Establece que todos los resultados son equiprobables"
+    ],
+    "correct": 0,
+    "explain": "El teorema de Bayes permite invertir probabilidades condicionales: P(H|E) = [P(E|H)·P(H)] / P(E). Se usa para actualizar la creencia en una hipótesis H tras observar evidencia E."
+  },
+  {
+    "topic": "Teoremas de probabilidad",
+    "q": "¿Qué significa que dos eventos A y B sean independientes?",
+    "options": [
+      "Que la ocurrencia de uno no afecta la probabilidad del otro",
+      "Que no pueden ocurrir al mismo tiempo",
+      "Que son eventos complementarios",
+      "Que tienen la misma probabilidad de ocurrir"
+    ],
+    "correct": 0,
+    "explain": "Dos eventos A y B son independientes si P(A ∩ B) = P(A)·P(B). Esto implica que conocer si uno ocurre no cambia la probabilidad del otro."
   }
+
+
+
 ]

@@ -427,7 +427,7 @@
     }
 
     .q-title {
-      font-size: 1.1rem;
+      font-size: 1.45rem;
       margin-bottom: 12px;
       line-height: 1.4;
     }
@@ -446,6 +446,7 @@
       cursor: pointer;
       transition: all 0.2s ease;
       font-size: 0.95rem;
+      color: #9177c9;
     }
 
     .opt:hover {
@@ -579,6 +580,15 @@
   filter: grayscale(100%) brightness(0.5);
   opacity: 0.6;
 }
+
+/* Efecto de turno activo en HUD inferior */
+.player-hud.active-turn {
+  background: linear-gradient(180deg, rgba(0,255,153,0.15), rgba(0,255,153,0.05));
+  border-top: 1px solid rgba(49, 174, 86, 0.4);
+  box-shadow: 0 0 25px rgba(61, 167, 66, 0.25);
+  transition: all 0.4s ease;
+}
+
 
 /* ===========================
    MUSIC PANEL (INLINE NAV)
@@ -770,6 +780,98 @@
 .battle-grid.full #p8 { grid-area: 2 / 2; display: none; } /* centro vacío */
 .battle-grid.full #player { grid-area: 3 / 2; } /* jugador abajo centro */
 
+/* ===========================
+   EFECTO DE PROYECTIL
+   =========================== */
+/* ===========================
+   EFECTO DE PROYECTIL RÁPIDO (VIOLETA)
+   =========================== */
+.projectile {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #d28bff 0%, #8a2be2 60%, #4b0082 100%);
+  pointer-events: none;
+  z-index: 3000;
+  box-shadow: 0 0 25px rgba(190, 80, 255, 0.9);
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 0.95;
+  transition: transform 0.35s ease-in, opacity 0.25s ease-out;
+}
+
+
+#targetBox.attack-mode .btn-ghost {
+  border-color: rgba(255, 80, 80, 0.7);
+  color: #ff8080;
+  background-color: rgb(58, 22, 22);
+}
+
+#targetBox.attack-mode .btn-ghost:hover {
+  background: rgba(255, 80, 80, 0.15);
+  color: #ffb3b3;
+}
+
+/* =====================================================
+   EFECTOS VISUALES EXTRA
+   ===================================================== */
+
+/* 💚 Curación (heal) */
+.effect-heal {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00ff99 0%, #008f5a 80%);
+  box-shadow: 0 0 30px rgba(0,255,153,0.7);
+  z-index: 3000;
+  opacity: 0.9;
+  animation: healEffect 0.8s ease-out forwards;
+}
+
+@keyframes healEffect {
+  0% { transform: scale(0.8); opacity: 1; }
+  60% { transform: scale(1.5); opacity: 0.8; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* 💙 Fortificar (shield) */
+.effect-shield {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00ccff 0%, #0066ff 80%);
+  box-shadow: 0 0 25px rgba(0,180,255,0.8);
+  z-index: 3000;
+  opacity: 0.95;
+  animation: shieldEffect 1s ease-out forwards;
+}
+
+@keyframes shieldEffect {
+  0% { transform: scale(0.7); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.9; }
+  100% { transform: scale(2); opacity: 0; }
+}
+
+/* 💔 Fallo (miss/fail) */
+.effect-fail {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff4444 0%, #990000 80%);
+  box-shadow: 0 0 25px rgba(255,80,80,0.9);
+  z-index: 3000;
+  opacity: 0.9;
+  animation: failEffect 0.7s ease-out forwards;
+}
+
+@keyframes failEffect {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.8; }
+  100% { transform: scale(2.3); opacity: 0; }
+}
 
 
 @media (max-width: 768px) {
@@ -979,7 +1081,7 @@
     <div class="action-group">
       <button class="btn-ghost btn-danger" id="btnAttack">⚔️ Atacar</button>
       <button class="btn-ghost btn-good" id="btnFortify">🛡️ Fortificar</button>
-      <button class="btn-ghost" id="btnRepair">💊 Curar</button>
+      <button class="btn-ghost" id="btnRepair">❤️ Curar</button>
       <button class="btn-ghost" id="btnSpy">🕵️ Espiar</button>
       <div class="targets" id="targetBox"></div>
     </div>
@@ -997,7 +1099,10 @@
       <div class="options" id="qOptions"></div>
       <div class="explain" id="qExplain"></div>
       <div class="chips">
-        <span class="chip" id="needTimer">⏱️ 20s</span>
+<div class="mt-2" style="text-align:right;">
+  <button id="btnCloseQuestion" class="btn-ghost small">❌ Cerrar</button>
+</div>
+
         <span class="chip" id="chipBonus" style="display:none;">🎯 +15% bonus</span>
       </div>
     </div>
@@ -1026,11 +1131,11 @@
   <label class="small">Modo de juego:</label>
   <div class="btn-ghost" style="display:inline-flex; gap:12px; align-items:center; padding:8px 12px;">
     <label style="display:flex; gap:6px; align-items:center; cursor:pointer;">
-      <input type="radio" name="gameMode" id="modeNormal" value="normal" checked>
+      <input type="radio" name="gameMode" id="modeNormal" value="normal" >
       Normal (4 jugadores)
     </label>
     <label style="display:flex; gap:6px; align-items:center; cursor:pointer;">
-      <input type="radio" name="gameMode" id="modeFull" value="full">
+      <input type="radio" name="gameMode" id="modeFull" value="full" checked>
       Casa llena (8 jugadores)
     </label>
   </div>
@@ -1301,16 +1406,37 @@ function buildPlayers(playerName, mode) {
 
 
     function togglePlayerControls(enabled) {
-    const buttons = ["#btnAttack", "#btnFortify", "#btnRepair", "#btnSpy"];
-    
-    buttons.forEach(id => {
-        const el = $(id);
-        if (enabled) {
-        el.classList.remove("disabled");
-        } else {
-        el.classList.add("disabled");
-        }
+function togglePlayerControls(enabled) {
+  const buttons = ["#btnAttack", "#btnFortify", "#btnRepair", "#btnSpy"];
+  
+  buttons.forEach(id => {
+    const el = $(id);
+    if (enabled) {
+      el.classList.remove("disabled");
+    } else {
+      el.classList.add("disabled");
+    }
+  });
+
+  // 🧹 Limpiar y ocultar targetBox
+  const targetBox = $("#targetBox");
+  targetBox.innerHTML = "";
+  targetBox.classList.remove("active", "attack-mode");
+
+  // 🧠 Si está habilitado (es tu turno), crear botones
+  if (enabled) {
+    state.players.forEach((p, idx) => {
+      if (idx > 0 && p.alive) {
+        const btn = document.createElement("button");
+        btn.className = "btn-ghost";
+        btn.textContent = p.name;
+        btn.onclick = () => selectTarget(idx);
+        targetBox.appendChild(btn);
+      }
     });
+  }
+}
+
 
     // Generar botones de objetivos
     const targetBox = $("#targetBox");
@@ -1359,6 +1485,15 @@ function highlightTurn() {
       cell.classList.add("active-turn"); // ✅ ahora aplica al .cell
     }
   }
+
+  // Efecto de turno en el HUD inferior
+const playerHUD = document.querySelector(".player-hud");
+if (state.order[state.turnIdx] === 0) {
+  playerHUD.classList.add("active-turn");
+} else {
+  playerHUD.classList.remove("active-turn");
+}
+
 }
 
     function current() {
@@ -1433,12 +1568,14 @@ function startTurnTimer() {
     return state.order[state.turnIdx] === 0 && !gameEnded;
     }
 
-    $("#btnAttack").onclick = () => {
+  $("#btnAttack").onclick = () => {
     if (!isMyTurn() || state.awaitingAnswer) return;
     state.chosenAction = "attack";
-    $("#targetBox").classList.add("active");
+    const targetBox = $("#targetBox");
+    targetBox.classList.add("active", "attack-mode"); // 🔴 activamos modo ataque visual
     addLog("⚔️ Elegí a quién atacar.");
-    };
+  };
+
 
     function selectTarget(idx) {
     if (!isMyTurn() || state.awaitingAnswer) return;
@@ -1471,6 +1608,7 @@ function startTurnTimer() {
     addLog(`💊 <b>${me.name}</b> se cura (+1 vida).`);
     renderAll();
     endTurn();
+    launchEffect("#player", "heal");
     sfx.heal.play();
     };
 
@@ -1486,11 +1624,17 @@ function startTurnTimer() {
     // ============================================
     // SISTEMA DE PREGUNTAS
     // ============================================
+// ============================================
+// CERRAR PREGUNTA Y REANUDAR CON TIEMPO RESTANTE
+// ============================================
+let savedTimer = null;
+
 function askQuestion(kind) {
-  const q = rnd(QUESTIONS);
+  savedTimer = state.timer; // ⏱️ guardamos tiempo actual
   state.awaitingAnswer = true;
 
   $("#qModal").classList.add("active");
+  const q = rnd(QUESTIONS);
   $("#qTopic").textContent = q.topic;
   $("#qTitle").textContent = q.q;
   $("#qExplain").style.display = "none";
@@ -1500,41 +1644,72 @@ function askQuestion(kind) {
   const optBox = $("#qOptions");
   optBox.innerHTML = "";
 
-  // 🔀 Mezclamos las opciones manteniendo cuál es la correcta
-  const shuffled = q.options
-    .map((text, i) => ({ text, i }))        // asociamos texto + índice original
-    .sort(() => Math.random() - 0.5);       // mezclamos aleatoriamente
+  const shuffled = q.options.map((text, i) => ({ text, i }))
+    .sort(() => Math.random() - 0.5);
 
   shuffled.forEach(opt => {
     const btn = document.createElement("button");
     btn.className = "opt";
     btn.textContent = opt.text;
-    btn.onclick = () => resolveQuestion(q, opt.i, kind); // mantiene referencia real
+    btn.onclick = () => resolveQuestion(q, opt.i, kind);
     optBox.appendChild(btn);
   });
 }
 
-    function resolveQuestion(q, idx, kind) {
-    if (!state.awaitingAnswer) return;
-    state.awaitingAnswer = false;
+// ✅ el correcto
+$("#btnCloseQuestion").onclick = () => {
+  $("#qModal").classList.remove("active");
+  state.awaitingAnswer = false;
+  state.chosenAction = null;
+  state.chosenTarget = null;
+  if (savedTimer && savedTimer > 0) state.timer = savedTimer;
+  if (state.order[state.turnIdx] === 0 && !gameEnded) {
+    clearInterval(state.interval);
+    updateTimerUI();
+    state.interval = setInterval(() => {
+      if (gameEnded || state.awaitingAnswer) return;
+      state.timer -= 1;
+      updateTimerUI();
+      if (state.timer <= 0) {
+        clearInterval(state.interval);
+        onTimeOut();
+      }
+    }, 1000);
+    togglePlayerControls(true);
+    addLog("❌ Cerraste la pregunta. El turno continúa.");
+  }
+};
 
-    const correct = (idx === q.correct);
-    const explainBox = $("#qExplain");
-    explainBox.style.display = "block";
-    
-    explainBox.innerHTML = correct 
-        ? "<div class='right'>✅ Correcto</div>" 
-        : "<div class='wrong'>❌ Incorrecto</div>";
-    explainBox.innerHTML += "<p class='mt-1'>" + q.explain + "</p>";
 
-    // Deshabilitar opciones
-    $$(".opt").forEach(btn => btn.style.pointerEvents = "none");
+function resolveQuestion(q, idx, kind) {
+  if (!state.awaitingAnswer) return;
+  state.awaitingAnswer = false;
 
-    setTimeout(() => {
-        $("#qModal").classList.remove("active");
-        applyQuestionOutcome(correct, kind);
-    }, 2500);
-    }
+  // 🔒 Ocultar el botón cerrar inmediatamente
+  $("#btnCloseQuestion").style.display = "none";
+
+  const correct = (idx === q.correct);
+  const explainBox = $("#qExplain");
+  explainBox.style.display = "block";
+  
+  explainBox.innerHTML = correct 
+      ? "<div class='right'>✅ Correcto</div>" 
+      : "<div class='wrong'>❌ Incorrecto</div>";
+  explainBox.innerHTML += "<p class='mt-1'>" + q.explain + "</p>";
+
+  // Deshabilitar opciones
+  $$(".opt").forEach(btn => btn.style.pointerEvents = "none");
+
+  // 🔁 Esperar y cerrar
+  setTimeout(() => {
+    $("#qModal").classList.remove("active");
+    $("#btnCloseQuestion").style.display = "inline-block"; // 🔙 volver a mostrar para la próxima pregunta
+    applyQuestionOutcome(correct, kind);
+  }, 2500);
+}
+
+
+
 
 function applyQuestionOutcome(correct, kind) {
   if (gameEnded) return;
@@ -1576,9 +1751,11 @@ if (kind === "attack") {
     // 💥 efecto visual
     flashCell("#player", "violet"); // el atacante (vos)
     flashCell(idFromIndex(t), "red"); // el objetivo
+     launchProjectile("#player", idFromIndex(t));
   } else {
     me.hp = clamp(me.hp - 1, 0, MAX_HP);
     addLog(`⚔️ Fallaste el ataque: <b>-1 vida</b> para vos.`);
+    launchEffect("#player", "fail");
     checkDeath(0);
     flashCell("#player", "red");
   }
@@ -1598,6 +1775,7 @@ if (kind === "fortify") {
     me.hp = clamp(me.hp + 3, 0, MAX_HP);
     addLog("🛡️ Se cura: <b>+3 vida</b>.");
     flashCell("#player", "green");
+    launchEffect("#player", "shield");
     sfx.fortify.play();
   } else {
     addLog("🛡️ Fallaste la fortificación (sin efecto).");
@@ -1783,6 +1961,7 @@ function botAct(idx) {
     addLog(`💊 <b>${bot.name}</b> se cura (+1 vida).`);
     renderAll();
     flashCell(idFromIndex(idx), "green");
+    launchEffect(idFromIndex(idx), "heal");
     sfx.heal.play();
     return endTurn();
   }
@@ -1793,10 +1972,12 @@ function botAct(idx) {
     if (success) {
       bot.hp = clamp(bot.hp + 1, 0, MAX_HP);
       addLog(`🛡️ <b>${bot.name}</b> fortifica (+1 vida).`);
+      launchEffect(idFromIndex(idx), "shield");
       flashCell(idFromIndex(idx), "green");
       sfx.fortify.play();
     } else {
       addLog(`🛡️ <b>${bot.name}</b> falló la fortificación.`);
+      launchEffect(idFromIndex(idx), "fail");
     }
     renderAll();
     return endTurn();
@@ -1811,7 +1992,7 @@ function botAct(idx) {
     if (targets.length === 0) return endTurn();
 
     let target;
-    const chanceAttackPlayer = 0.32;
+    const chanceAttackPlayer = 0.23;
 
     if (Math.random() < chanceAttackPlayer && state.players[0].alive) {
       target = { i: 0, p: state.players[0] };
@@ -1829,11 +2010,14 @@ function botAct(idx) {
       flashCell(idFromIndex(idx), "violet");
       flashCell(idFromIndex(target.i), "red");
       sfx.attack.play();
+      launchEffect(idFromIndex(target.i), "fail"); 
+       launchProjectile(idFromIndex(idx), idFromIndex(target.i));
     } else {
       bot.hp = clamp(bot.hp - 1, 0, MAX_HP);
       addLog(`⚔️ <b>${bot.name}</b> falló y se dañó (-1 vida).`);
       checkDeath(idx);
       flashCell(idFromIndex(idx), "red");
+      launchEffect(idFromIndex(target.i), "fail"); 
       sfx.fail.play();
     }
 
@@ -1858,6 +2042,66 @@ function botAct(idx) {
     acc = clamp(acc, 0.1, 0.95);
     return Math.random() < acc;
     }
+
+// =====================================================
+// ANIMACIÓN DE PROYECTIL RÁPIDO (VIOLETA)
+// =====================================================
+function launchProjectile(fromSelector, toSelector) {
+  const fromEl = document.querySelector(fromSelector);
+  const toEl = document.querySelector(toSelector);
+  if (!fromEl || !toEl) return;
+
+  const fromRect = fromEl.getBoundingClientRect();
+  const toRect = toEl.getBoundingClientRect();
+
+  // Crear proyectil
+  const projectile = document.createElement("div");
+  projectile.className = "projectile";
+  document.body.appendChild(projectile);
+
+  // Posición inicial
+  const startX = fromRect.left + fromRect.width / 2;
+  const startY = fromRect.top + fromRect.height / 2;
+  const endX = toRect.left + toRect.width / 2;
+  const endY = toRect.top + toRect.height / 2;
+
+  projectile.style.left = `${startX}px`;
+  projectile.style.top = `${startY}px`;
+
+  // Forzar reflow para que la transición se aplique
+  void projectile.offsetWidth;
+
+  const dx = endX - startX;
+  const dy = endY - startY;
+
+  // Movimiento rápido (más corto)
+  projectile.style.transitionDuration = "0.35s";
+  projectile.style.transform = `translate(${dx}px, ${dy}px) scale(1.3)`;
+
+  // Desvanecer y eliminar después del impacto
+  setTimeout(() => {
+    projectile.style.opacity = "0";
+    setTimeout(() => projectile.remove(), 200);
+  }, 350);
+}
+
+// =====================================================
+// EFECTOS DE CURACIÓN / FORTIFICACIÓN / FALLO
+// =====================================================
+function launchEffect(selector, type) {
+  const targetEl = document.querySelector(selector);
+  if (!targetEl) return;
+
+  const rect = targetEl.getBoundingClientRect();
+  const effect = document.createElement("div");
+  effect.className = `effect-${type}`;
+
+  document.body.appendChild(effect);
+  effect.style.left = `${rect.left + rect.width / 2}px`;
+  effect.style.top = `${rect.top + rect.height / 2}px`;
+
+  setTimeout(() => effect.remove(), 1000);
+}
 
     // ============================================
     // FIN DE JUEGO
@@ -1884,12 +2128,21 @@ function botAct(idx) {
     }
     $("#best").textContent = Math.max(best, state.score);
 
-    if (win) sfx.victory.play();
-    else sfx.gameover.play();
+// 🎵 Detener música y reproducir sonido final
+music.pause();
+music.currentTime = 0; // reinicia la canción para la próxima
 
-    setTimeout(() => {
-        $("#endOverlay").classList.add("active");
-    }, 500);
+if (win) {
+  sfx.victory.play();
+} else {
+  sfx.gameover.play();
+}
+
+// Mostrar overlay después de un breve retardo
+setTimeout(() => {
+  $("#endOverlay").classList.add("active");
+}, 500);
+
     }
 
     // ============================================
@@ -1920,12 +2173,18 @@ $("#btnPlayAgain").onclick = () => {
   $("#endOverlay").classList.remove("active");
   const name = state.players[0].name;
   const mode = (state.players.length >= 8) ? "full" : "normal";
+
+  // 🎵 Reiniciar y reproducir música desde el inicio
+  music.currentTime = 0;
+  music.play();
+  $("#btnPlayMusic").textContent = "⏸️";
+
   newGame(name, mode);
   const grid = document.getElementById("grid");
-grid.classList.remove("normal", "full");
-grid.classList.add(mode === "full" ? "full" : "normal");
-
+  grid.classList.remove("normal", "full");
+  grid.classList.add(mode === "full" ? "full" : "normal");
 };
+
 
 
 $("#btnHelp").onclick = () => {

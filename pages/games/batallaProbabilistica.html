@@ -856,6 +856,30 @@
   100% { box-shadow: none; background: rgba(255,255,255,0.02); }
 }
 
+/* ✨ Efecto flotante de puntos (⭐ +100) */
+.points-float {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffd166;
+  text-shadow: 0 0 8px rgba(255,215,0,0.6);
+  animation: floatPoints 1.2s ease-out forwards;
+  pointer-events: none;
+  z-index: 4000;
+}
+
+@keyframes floatPoints {
+  0%   { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  50%  { opacity: 1; transform: translate(-50%, -25px) scale(1.2); }
+  100% { opacity: 0; transform: translate(-50%, -50px) scale(1); }
+}
+
+.damage-float.heal { transform: translate(-70%, -50%) scale(1); }
+.points-float { transform: translate(-30%, -50%) scale(1); }
+
 
 /* ===========================
    DISTRIBUCIÓN NORMAL (4 rivales)
@@ -1052,10 +1076,38 @@
   pointer-events: none;
 }
 
-@keyframes floatUp {
-  from { opacity: 1; transform: translate(-50%, 0); }
-  to { opacity: 0; transform: translate(-50%, -40px); }
+/* ===========================
+   EFECTO DE DAÑO / CURACIÓN (CORAZÓN FLOTANTE)
+   =========================== */
+.damage-float {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  font-size: 1.1rem;
+  font-weight: 600;
+  pointer-events: none;
+  animation: floatUp 1.2s ease-out forwards;
+  z-index: 4000;
+  text-shadow: 0 0 6px rgba(0,0,0,0.4);
 }
+
+.damage-float.damage {
+  color: #ff6b6b;
+  text-shadow: 0 0 8px rgba(255,80,80,0.6);
+}
+
+.damage-float.heal {
+  color: #00ff99;
+  text-shadow: 0 0 8px rgba(0,255,153,0.6);
+}
+
+@keyframes floatUp {
+  0%   { opacity: 1; transform: translate(-50%, 0) scale(1); }
+  50%  { opacity: 1; transform: translate(-50%, -25px) scale(1.2); }
+  100% { opacity: 0; transform: translate(-50%, -50px) scale(1); }
+}
+
 
 
 @keyframes failEffect {
@@ -1212,7 +1264,7 @@
   <!-- 🎵 Panel de música -->
   <div class="music-panel-inline">
     <button id="btnPlayMusic">⏯️</button>
-    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.15">
+    <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.75">
   </div>
 </ul>
 
@@ -1574,10 +1626,29 @@ const ROUND_EVENTS = [
     desc: "Todos los jugadores vivos recuperan +1 vida.",
     icon: "../../src/img/visuales/event_2.jpg",
     effect: state => {
-      state.players.forEach(p => {
-        if (p.alive) p.hp = clamp(p.hp + 1, 0, MAX_HP);
-      });
-    }
+        state.players.forEach((p, idx) => {
+          if (!p.alive) return;
+
+          if (p.hp < MAX_HP) {
+            // 💚 Cura +1 vida
+            p.hp = clamp(p.hp + 1, 0, MAX_HP);
+            showDamageFloat(idFromIndex(idx), 1, "heal");
+            launchEffect(idFromIndex(idx), "heal");
+            sfx.heal.play();
+          } else {
+            // ⭐ Si ya está al máximo → gana puntos
+            const bonus = 100;
+            p.score = (p.score || 0) + bonus;
+            if (idx === 0) {
+              state.score += bonus;
+              $("#score").textContent = state.score;
+            }
+            showPointsFloat(idFromIndex(idx), bonus);
+            sfx.event_double.play(); // sonido tipo "bonus"
+          }
+        });
+        renderAll();
+      } 
   },
   {
     name: "Furia",
@@ -1970,6 +2041,8 @@ function startTurnTimer() {
     if (!isMyTurn() || state.awaitingAnswer) return;
     const me = state.players[0];
     me.hp = clamp(me.hp + 1, 0, MAX_HP);
+    showDamageFloat("#player", 1, "heal");
+
     addLog(`💊 <b>${me.name}</b> se cura (+1 vida).`);
     renderAll();
     endTurn();
@@ -2111,12 +2184,15 @@ if (kind === "attack") {
   if (success) {
     // 🎯 aplicar multiplicador de evento y daño extra (como bots)
     const basePts = SCORE_VALUES.ATTACK_SUCCESS;
-    const pts = Math.round(basePts * (state.eventMultiplier || 1));
-    state.score += pts;
-    state.players[0].score = (state.players[0].score || 0) + pts;
+const pts = Math.round(basePts * (state.eventMultiplier || 1));
+state.score += pts;
+state.players[0].score = (state.players[0].score || 0) + pts;
+setTimeout(() => showPointsFloat("#player", pts), 300); // ⭐ delay visual
+
 
     const baseDamage = 2 + (state.eventExtraDamage || 0);
     state.players[t].hp = clamp(state.players[t].hp - baseDamage, 0, MAX_HP);
+    showDamageFloat(idFromIndex(t), baseDamage);
 
     addLog(`⚔️ Atacás a <b>${state.players[t].name}</b> con éxito: <b>-${baseDamage} vidas</b> (+${pts} pts).`);
     checkDeath(t);
@@ -2126,6 +2202,8 @@ if (kind === "attack") {
     sfx.attack.play();
   } else {
     me.hp = clamp(me.hp - 1, 0, MAX_HP);
+    showDamageFloat("#player", 1);
+
     addLog(`⚔️ Fallaste el ataque: <b>-1 vida</b> para vos.`);
     launchEffect("#player", "fail");
     flashCell("#player", "red");
@@ -2144,8 +2222,13 @@ if (kind === "fortify") {
 
     state.score += pts;
     state.players[0].score = (state.players[0].score || 0) + pts;
+//showPointsFloat("#player", pts);
 
     me.hp = clamp(me.hp + healAmount, 0, MAX_HP);
+    showDamageFloat("#player", healAmount, "heal");
+    setTimeout(() => showPointsFloat("#player", pts), 300); // pequeño delay lateral
+
+
     addLog(`🛡️ Te fortificás: <b>+${healAmount} vida</b> (+${pts} pts).`);
     flashCell("#player", "green");
     launchEffect("#player", "shield");
@@ -2224,12 +2307,24 @@ if (killerIsPlayer) {
   state.players[0].score = (state.players[0].score || 0) + SCORE_VALUES.KILL_BONUS;
   $("#score").textContent = state.score;
   addLog("🎉 <b>+200 puntos</b> por eliminar un rival.");
-} else {
-  const killer = state.players[state.order[state.turnIdx]];
-  if (killer && killer.type === "bot") {
-    killer.score = (killer.score || 0) + SCORE_VALUES.KILL_BONUS;
-    addLog(`💀 <b>${killer.name}</b> gana ${SCORE_VALUES.KILL_BONUS} puntos por eliminar a ${p.name}.`);
-  }
+
+  // ⭐ Kill bonus aparece un poco después del +80
+  setTimeout(() => showPointsFloat("#player", SCORE_VALUES.KILL_BONUS), 800);
+  sfx.event_double.play();
+}
+
+ else {
+const killer = state.players[state.order[state.turnIdx]];
+if (killer && killer.type === "bot") {
+  killer.score = (killer.score || 0) + SCORE_VALUES.KILL_BONUS;
+  addLog(`💀 <b>${killer.name}</b> gana ${SCORE_VALUES.KILL_BONUS} puntos por eliminar a ${p.name}.`);
+
+  // ⭐ Kill bonus con delay extra
+  setTimeout(() => showPointsFloat(idFromIndex(state.order[state.turnIdx]), SCORE_VALUES.KILL_BONUS), 800);
+  sfx.event_double.play();
+}
+
+
 }
 
 
@@ -2311,6 +2406,12 @@ if (state.turnIdx === 0) {
         setTimeout(() => text.remove(), 1200);
       }
     }
+    /*
+    if (p.alive && p.hp < MAX_HP) {
+      p.hp = clamp(p.hp + 1, 0, MAX_HP);
+      showDamageFloat(idFromIndex(idx), 1, "heal");
+    }
+      */
   });
 
   addLog("💫 Todos ganan +100 puntos por sobrevivir a la ronda.");
@@ -2377,6 +2478,7 @@ setTimeout(() => {
     // ==== REPARAR ====
     if (action === "repair") {
       bot.hp = clamp(bot.hp + 1, 0, MAX_HP);
+      showDamageFloat(idFromIndex(idx), 1, "heal");
       addLog(`💊 <b>${bot.name}</b> se cura (+1 vida).`);
       renderAll();
       flashCell(idFromIndex(idx), "green");
@@ -2391,10 +2493,14 @@ if (action === "fortify") {
   if (success) {
     const healAmount = 3; // igual que jugador
     bot.hp = clamp(bot.hp + healAmount, 0, MAX_HP);
+    showDamageFloat(idFromIndex(idx), healAmount, "heal");
 
     const basePts = SCORE_VALUES.FORTIFY_SUCCESS;
     const pts = Math.round(basePts * (state.eventMultiplier || 1));
     bot.score = (bot.score || 0) + pts;
+
+    // 💫 Mostrar los puntos después de 300ms (igual que el jugador)
+    setTimeout(() => showPointsFloat(idFromIndex(idx), pts), 300);
 
     addLog(`🛡️ <b>${bot.name}</b> fortifica (+${healAmount} vida, +${pts} pts).`);
     launchEffect(idFromIndex(idx), "shield");
@@ -2403,7 +2509,7 @@ if (action === "fortify") {
   } else {
     addLog(`🛡️ <b>${bot.name}</b> falló la fortificación.`);
     launchEffect(idFromIndex(idx), "fail");
-        sfx.fail.play();
+    sfx.fail.play();
   }
   renderAll();
   return endTurn();
@@ -2432,10 +2538,13 @@ if (action === "fortify") {
 if (success) {
   const baseDamage = 2 + (state.eventExtraDamage || 0);
   target.p.hp = clamp(target.p.hp - baseDamage, 0, MAX_HP);
+showDamageFloat(idFromIndex(target.i), baseDamage);
 
-  const basePts = SCORE_VALUES.ATTACK_SUCCESS;
-  const pts = Math.round(basePts * (state.eventMultiplier || 1));
-  bot.score = (bot.score || 0) + pts;
+const basePts = SCORE_VALUES.ATTACK_SUCCESS;
+const pts = Math.round(basePts * (state.eventMultiplier || 1));
+bot.score = (bot.score || 0) + pts;
+setTimeout(() => showPointsFloat(idFromIndex(idx), pts), 300);
+
 
   addLog(`⚔️ <b>${bot.name}</b> ataca a <b>${target.p.name}</b> (-${baseDamage} vidas, +${pts} pts).`);
   checkDeath(target.i);
@@ -2447,6 +2556,8 @@ if (success) {
   const penalty = state.eventAccuracyPenalty ? 1 + state.eventAccuracyPenalty : 1;
   const damage = Math.round(1 * penalty);
   bot.hp = clamp(bot.hp - damage, 0, MAX_HP);
+  showDamageFloat(idFromIndex(idx), damage);
+
   addLog(`⚔️ <b>${bot.name}</b> falló y se dañó (-${damage} vida).`);
   launchEffect(idFromIndex(target.i), "fail");
   sfx.fail.play();
@@ -2536,6 +2647,46 @@ function launchEffect(selector, type) {
 
   setTimeout(() => effect.remove(), 1000);
 }
+
+// =====================================================
+// EFECTO DE VIDA (💔 / 💚) — con desplazamiento opcional
+// =====================================================
+function showDamageFloat(selector, amount, type = "damage", offsetY = 0) {
+  const target = document.querySelector(selector);
+  if (!target) return;
+
+  const rect = target.getBoundingClientRect();
+  const float = document.createElement("div");
+  float.className = `damage-float ${type}`;
+  float.innerHTML = type === "damage" ? `💔 -${amount}` : `💚 +${amount}`;
+
+  document.body.appendChild(float);
+  float.style.left = `${rect.left + rect.width / 2}px`;
+  float.style.top = `${rect.top + rect.height / 2 - 10 + offsetY}px`;
+
+  setTimeout(() => float.remove(), 1200);
+}
+
+// =====================================================
+// EFECTO DE PUNTOS (⭐) — con desplazamiento opcional
+// =====================================================
+function showPointsFloat(selector, amount, offsetY = 0) {
+  const target = document.querySelector(selector);
+  if (!target) return;
+
+  const rect = target.getBoundingClientRect();
+  const float = document.createElement("div");
+  float.className = "points-float";
+  float.innerHTML = `⭐ +${amount}`;
+
+  document.body.appendChild(float);
+  float.style.left = `${rect.left + rect.width / 2}px`;
+  float.style.top = `${rect.top + rect.height / 2 - 10 + offsetY}px`;
+
+  setTimeout(() => float.remove(), 1200);
+}
+
+
 
     // ============================================
     // FIN DE JUEGO
@@ -2638,9 +2789,9 @@ $("#btnHelp").onclick = () => {
 // ===========================
 // AUDIO SYSTEM
 // ===========================
-const music = new Audio("../../src/audio/gameBattle/song.mp3");
+const music = new Audio("../../src/audio/gameBattle/deep_song.mp3");
 music.loop = true;
-music.volume = 0.15;
+music.volume = 0.75;
 
 const sfx = {
   heal: new Audio("../../src/audio/gameBattle/heal.mp3"),

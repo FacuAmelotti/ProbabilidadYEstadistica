@@ -2279,21 +2279,24 @@ if (kind === "fortify") {
 
          sfx.death.play();
 
-        // Remover del orden de turnos
-        const oldOrder = [...state.order];
-        state.order = state.order.filter(i => i !== idx);
+// 🧹 Remover del orden de turnos sin romper la secuencia
+const currentActor = state.order[state.turnIdx]; // quién está actuando ahora
+state.order = state.order.filter(i => i !== idx);
 
-        // Ajustar índice de turno si es necesario
-        if (state.order.length > 0) {
-        // Encontrar quién sigue después del eliminado
-        const wasAtIdx = oldOrder.indexOf(idx);
-        if (state.turnIdx >= state.order.length) {
-          state.turnIdx = 0;
-        }
+// 🧭 Ajustar puntero de turno para que siga correctamente
+if (state.order.length > 0) {
+  // Si el jugador actual murió, pasar al siguiente
+  if (idx === currentActor) {
+    state.turnIdx = state.turnIdx % state.order.length;
+  } else {
+    // Si murió alguien antes en la lista, retroceder índice 1
+    const pos = state.order.indexOf(currentActor);
+    state.turnIdx = pos !== -1 ? pos : 0;
+  }
+} else {
+  state.turnIdx = 0;
+}
 
-        // Asegurar que el índice esté en rango
-        state.turnIdx = state.turnIdx % state.order.length;
-        }
 
         // Game over si muere el jugador
         if (idx === 0) {

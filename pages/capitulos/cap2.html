@@ -18,8 +18,9 @@
             gap: 60px;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 120px 60px 20px;
+                            padding: 120px 10px 20px;
             min-height: 100vh;
+
         }
 
         /* Sidebar de navegación */
@@ -76,7 +77,7 @@
 
         /* Contenido principal */
         .content-wrapper {
-            max-width: 800px;
+            max-width: 1200px;
         }
 
         .page-header {
@@ -396,143 +397,252 @@
       </header>
 
       <!-- Sección: Técnicas de Conteo -->
-<section id="conteo" class="content-section">
-  <h2 class="section-title">
-    <span class="section-icon">🧮</span>
-    Técnicas de Conteo
-  </h2>
-  <div class="section-content">
-    <p>
-      Cuando se calculan probabilidades, muchas veces necesitamos determinar el 
-      <strong>número de resultados posibles</strong> de un espacio muestral o evento.  
-      Para eso utilizamos distintas <strong>técnicas de conteo</strong>.
-    </p>
+      <section id="conteo" class="content-section">
+        <h2 class="section-title">
+          <span class="section-icon">🧮</span>
+          Técnicas de Conteo
+        </h2>
+        <div class="section-content">
+          <p>
+            Cuando se calculan probabilidades, muchas veces necesitamos determinar el 
+            <strong>número de resultados posibles</strong> de un espacio muestral o evento.  
+            Para eso utilizamos distintas <strong>técnicas de conteo</strong>.
+          </p>
 
-    <!-- PRINCIPIO FUNDAMENTAL -->
-    <div class="highlight-box">
-      <h4>📘 Principio Fundamental de Conteo (Diagrama de Árbol)</h4>
-      <p>
-        Si una operación se puede realizar de <strong>n₁</strong> maneras y para cada una de ellas 
-        una segunda se puede hacer de <strong>n₂</strong> maneras, entonces el total de maneras de 
-        realizar ambas operaciones es:
-      </p>
-      <div class="formula-box">
-        $$n_1 \times n_2$$
-      </div>
-      <p>
-        En general, si se quieren realizar <strong>k operaciones</strong> independientes, el número total 
-        de formas es:
-      </p>
-      <div class="formula-box">
-        $$\prod_{i=1}^{k} n_i = n_1 \times n_2 \times n_3 \times \cdots \times n_k$$
-      </div>
-    </div>
+          <!-- PRINCIPIO FUNDAMENTAL -->
+          <div class="highlight-box">
+            <h4>📘 Principio Fundamental de Conteo (Diagrama de Árbol)</h4>
+            <p>
+              Si una operación se puede realizar de <strong>n₁</strong> maneras y para cada una de ellas 
+              una segunda se puede hacer de <strong>n₂</strong> maneras, entonces el total de maneras de 
+              realizar ambas operaciones es:
+            </p>
+            <div class="formula-box">
+              $$n_1 \times n_2$$
+            </div>
+            <p>
+              En general, si se quieren realizar <strong>k operaciones</strong> independientes, el número total 
+              de formas es:
+            </p>
+            <div class="formula-box">
+              $$\prod_{i=1}^{k} n_i = n_1 \times n_2 \times n_3 \times \cdots \times n_k$$
+            </div>
+          </div>
 
-    <div class="example-box">
-      <div class="example-title">Ejemplo</div>
-      <p>
-        Un hombre tiene 2 camisas (R₁, R₂) y 4 corbatas (T₁, T₂, T₃, T₄).  
-        ¿Cuántas combinaciones posibles hay para elegir una camisa y una corbata?
-      </p>
-      <p>
-        Total = \( 2 \times 4 = 8 \) combinaciones posibles.
-      </p>
-      <p>
-        Este principio se puede representar con un <strong>diagrama de árbol</strong>, donde cada 
-        rama representa una posible elección.
-      </p>
-    </div>
+          <div class="example-box">
+            <div class="example-title">Ejemplo</div>
+            <p>
+              Un hombre tiene 2 camisas (R₁, R₂) y 4 corbatas (T₁, T₂, T₃, T₄).  
+              ¿Cuántas combinaciones posibles hay para elegir una camisa y una corbata?
+            </p>
+            <p>
+              Total = \( 2 \times 4 = 8 \) combinaciones posibles.
+            </p>
+            <p>
+              Este principio se puede representar con un <strong>diagrama de árbol</strong>, donde cada 
+              rama representa una posible elección.
+            </p>
+          </div>
 
-    <!-- PERMUTACIONES -->
-    <div class="highlight-box">
-      <h4>🔄 Permutaciones</h4>
-      <p>
-        Una <strong>permutación</strong> es un <strong>ordenamiento</strong> posible de un conjunto de elementos.
-      </p>
-      <p>Por ejemplo, las permutaciones de las letras A, B y C son:</p>
-      <p style="text-align:center; font-weight:600;">
-        ABC, ACB, BAC, BCA, CAB, CBA
-      </p>
+          <!-- PERMUTACIONES -->
+          <div class="highlight-box">
+            <h4>🔄 Permutaciones</h4>
+            <p>
+              Una <strong>permutación</strong> es un <strong>ordenamiento</strong> posible de un conjunto de elementos.
+            </p>
+            <p>Por ejemplo, las permutaciones de las letras A, B y C son:</p>
+            <p style="text-align:center; font-weight:600;">
+              ABC, ACB, BAC, BCA, CAB, CBA
+            </p>
 
-      <p>
-        En general, el número de permutaciones de <strong>n elementos distintos</strong> es:
-      </p>
-      <div class="formula-box">
-        $$n! = n \times (n - 1) \times (n - 2) \times \cdots \times 2 \times 1$$
-      </div>
-    </div>
+            <p>
+              En general, el número de permutaciones de <strong>n elementos distintos</strong> es:
+            </p>
+            <div class="formula-box">
+              $$n! = n \times (n - 1) \times (n - 2) \times \cdots \times 2 \times 1$$
+            </div>
+          </div>
 
-    <div class="example-box">
-      <div class="example-title">Ejemplo</div>
-      <p>
-        Cinco personas se ubican en una fila de cine.  
-        ¿De cuántas formas distintas pueden acomodarse?
-      </p>
-      <div class="formula-box">
-        $$5! = 1 \times 2 \times 3 \times 4 \times 5 = 120$$
-      </div>
-      <p>
-        Se pueden acomodar de <strong>120 formas distintas</strong>.
-      </p>
-    </div>
+          <div class="example-box">
+            <div class="example-title">Ejemplo</div>
+            <p>
+              Cinco personas se ubican en una fila de cine.  
+              ¿De cuántas formas distintas pueden acomodarse?
+            </p>
+            <div class="formula-box">
+              $$5! = 1 \times 2 \times 3 \times 4 \times 5 = 120$$
+            </div>
+            <p>
+              Se pueden acomodar de <strong>120 formas distintas</strong>.
+            </p>
+          </div>
 
-    <!-- PERMUTACIONES DE SUBCONJUNTOS -->
-    <div class="highlight-box">
-      <h4>📏 Permutaciones de Subconjuntos</h4>
-      <p>
-        Si queremos elegir y ordenar <strong>k elementos</strong> de un conjunto de <strong>n</strong>:
-      </p>
-      <div class="formula-box">
-        $$P(n, k) = \frac{n!}{(n - k)!}$$
-      </div>
-      <p>
-        Ejemplo: 5 salvavidas y 3 puestos de guardia → \( P(5,3) = 5 \times 4 \times 3 = 60 \)
-      </p>
-      <p>
-        Si los elementos se pueden repetir, las <strong>permutaciones con repetición</strong> son:
-      </p>
-      <div class="formula-box">
-        $$n^k$$
-      </div>
-    </div>
+          <!-- PERMUTACIONES DE SUBCONJUNTOS -->
+          <div class="highlight-box">
+            <h4>📏 Permutaciones de Subconjuntos</h4>
+            <p>
+              Si queremos elegir y ordenar <strong>k elementos</strong> de un conjunto de <strong>n</strong>:
+            </p>
+            <div class="formula-box">
+              $$P(n, k) = \frac{n!}{(n - k)!}$$
+            </div>
+            <p>
+              Ejemplo: 5 salvavidas y 3 puestos de guardia → \( P(5,3) = 5 \times 4 \times 3 = 60 \)
+            </p>
+            <p>
+              Si los elementos se pueden repetir, las <strong>permutaciones con repetición</strong> son:
+            </p>
+            <div class="formula-box">
+              $$n^k$$
+            </div>
+          </div>
 
-    <!-- COMBINACIONES -->
-    <div class="highlight-box">
-      <h4>🧩 Combinaciones</h4>
-      <p>
-        Una <strong>combinación</strong> es una selección de elementos <strong>sin importar el orden</strong>.
-      </p>
-      <p>
-        Si se eligen <strong>k elementos</strong> de un conjunto de <strong>n</strong>:
-      </p>
-      <div class="formula-box">
-        $${n \choose k} = \frac{n!}{k!(n - k)!}$$
-      </div>
-    </div>
+          <!-- COMBINACIONES -->
+          <div class="highlight-box">
+            <h4>🧩 Combinaciones</h4>
+            <p>
+              Una <strong>combinación</strong> es una selección de elementos <strong>sin importar el orden</strong>.
+            </p>
+            <p>
+              Si se eligen <strong>k elementos</strong> de un conjunto de <strong>n</strong>:
+            </p>
+            <div class="formula-box">
+              $${n \choose k} = \frac{n!}{k!(n - k)!}$$
+            </div>
+          </div>
 
-    <div class="example-box">
-      <div class="example-title">Ejemplo</div>
-      <p>
-        Si tenemos 5 salvavidas y queremos elegir 3 sin importar el orden:
-      </p>
-      <div class="formula-box">
-        $${5 \choose 3} = \frac{5!}{3!(5 - 3)!} = \frac{120}{6 \times 2} = 10$$
-      </div>
-      <p>
-        Hay <strong>10 combinaciones posibles</strong> de 3 salvavidas entre 5.
-      </p>
-    </div>
+          <div class="example-box">
+            <div class="example-title">Ejemplo</div>
+            <p>
+              Si tenemos 5 salvavidas y queremos elegir 3 sin importar el orden:
+            </p>
+            <div class="formula-box">
+              $${5 \choose 3} = \frac{5!}{3!(5 - 3)!} = \frac{120}{6 \times 2} = 10$$
+            </div>
+            <p>
+              Hay <strong>10 combinaciones posibles</strong> de 3 salvavidas entre 5.
+            </p>
+          </div>
 
-    <div class="highlight-box">
-      <h4>💡 Diferencia entre Permutación y Combinación</h4>
-      <ul>
-        <li><strong>Permutación:</strong> importa el orden (ABC ≠ BAC)</li>
-        <li><strong>Combinación:</strong> no importa el orden (ABC = BAC)</li>
-      </ul>
-    </div>
-  </div>
-</section>
+          <div class="highlight-box">
+            <h4>💡 Diferencia entre Permutación y Combinación</h4>
+            <ul>
+              <li><strong>Permutación:</strong> importa el orden (ABC ≠ BAC)</li>
+              <li><strong>Combinación:</strong> no importa el orden (ABC = BAC)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
+      <!-- Estadística Descriptiva -->
+      <section id="estadistica" class="content-section">
+        <h2 class="section-title"><span class="section-icon">📊</span>Estadística Descriptiva</h2>
+        <div class="section-content">
+          <p>
+            La <strong>Estadística Descriptiva</strong> se encarga de recolectar, organizar y analizar información 
+            proveniente de una <strong>población</strong> o de una <strong>muestra</strong>, con el objetivo de comprender 
+            el comportamiento de los datos observados.
+          </p>
+
+          <div class="highlight-box">
+            <h4>Conceptos Fundamentales</h4>
+            <ul>
+              <li><strong>Estadística:</strong> conjunto de métodos para obtener, organizar y analizar información.</li>
+              <li><strong>Datos:</strong> observaciones o mediciones obtenidas durante un estudio.</li>
+              <li><strong>Población:</strong> conjunto total de elementos bajo estudio.</li>
+              <li><strong>Muestra:</strong> subconjunto de la población seleccionado para el análisis.</li>
+            </ul>
+          </div>
+
+          <div class="example-box">
+            <div class="example-title">Ejemplo</div>
+            <p>
+              En una fábrica de tornillos, se toma un lote (<strong>población</strong>) del cual se seleccionan 
+              algunos tornillos (<strong>muestra</strong>) y se mide su diámetro (<strong>dato</strong>).
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Fuentes de Obtención de Datos</h4>
+            <ul>
+              <li>📘 Consultar información ya publicada.</li>
+              <li>🧪 Diseñar un experimento.</li>
+              <li>🗳️ Realizar encuestas o mediciones.</li>
+            </ul>
+          </div>
+
+          <p>
+            Los <strong>datos</strong> pueden obtenerse directamente de toda la población o de una muestra.
+            En una <strong>elección presidencial</strong>, la información se obtiene de todos los votantes (población),
+            mientras que una <strong>encuesta electoral</strong> utiliza solo una muestra representativa.
+          </p>
+
+          <div class="highlight-box">
+            <h4>Parámetro y Estadístico</h4>
+            <ul>
+              <li><strong>Parámetro:</strong> valor numérico que describe una característica de la población.</li>
+              <li><strong>Estadístico:</strong> valor numérico que describe una característica de la muestra.</li>
+            </ul>
+          </div>
+
+          <div class="infotext-box">
+            <h4>🎯 Ejemplo</h4>
+            <p>
+              Si el promedio real de edad de todos los empleados de una empresa es 35 años, ese valor es un 
+              <strong>parámetro</strong>.  
+              Si tomamos una muestra de 50 empleados y el promedio es 34 años, ese valor es un 
+              <strong>estadístico</strong>.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Tipos de Datos</h4>
+            <ul>
+              <li><strong>Cuantitativos:</strong> expresan una cantidad numérica (peso, edad, ingresos).</li>
+              <li><strong>Cualitativos:</strong> expresan una cualidad o categoría (color, sexo, tipo de producto).</li>
+            </ul>
+          </div>
+
+          <div class="example-box">
+            <div class="example-title">Ejemplo</div>
+            <ul>
+              <li>💬 Sexo (hombre/mujer) → dato <strong>cualitativo</strong>.</li>
+              <li>⚖️ Peso corporal → dato <strong>cuantitativo</strong>.</li>
+            </ul>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Experimento Estadístico</h4>
+            <p>
+              Es cualquier experimento aleatorio que genera datos observables.
+            </p>
+            <ul>
+              <li>Los resultados se representan como \( X = \{x_1, x_2, \ldots, x_m\} \).</li>
+              <li><strong>Orden:</strong> los valores se registran en el orden obtenido.</li>
+              <li><strong>Independencia:</strong> cada repetición no depende de las anteriores.</li>
+            </ul>
+          </div>
+
+          <div class="infotext-box">
+            <h4>💡 Ejemplo</h4>
+            <p>
+              Medir el tiempo de reacción de 30 personas en un test es un 
+              <strong>experimento estadístico</strong>. Cada medición \( x_i \) representa un dato que se puede
+              analizar para obtener medidas de tendencia o dispersión.
+            </p>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Resumen Conceptual</h4>
+            <ul>
+              <li>📊 La estadística descriptiva analiza los datos observados sin inferir conclusiones generales.</li>
+              <li>🔢 Los datos pueden ser <strong>cuantitativos</strong> o <strong>cualitativos</strong>.</li>
+              <li>📈 Los datos se obtienen mediante observación, encuestas o experimentos.</li>
+              <li>⚙️ Un experimento estadístico produce resultados ordenados e independientes.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
       <!-- Población y muestra -->
       <section id="poblacion" class="content-section">
@@ -573,6 +683,158 @@
           </div>
         </div>
       </section>
+
+      <!-- Estadística Descriptiva II -->
+<section id="estadistica2" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📈</span>Estadística Descriptiva II</h2>
+  <div class="section-content">
+
+    <p>
+      La <strong>población</strong> es una colección completa de todos los elementos bajo estudio,
+      representada por un número total <strong>N</strong>.
+    </p>
+
+    <div class="highlight-box">
+      <h4>Población dicotómica</h4>
+      <p>
+        Cuando solo una parte de los elementos de la población son de interés, hablamos de una 
+        <strong>población dicotómica</strong>.
+      </p>
+      <div class="formula-box">
+        $$p = \frac{R}{N}$$
+      </div>
+      <p>
+        Donde:
+      </p>
+      <ul>
+        <li><strong>R:</strong> cantidad de elementos de interés.</li>
+        <li><strong>N:</strong> cantidad total de elementos en la población.</li>
+        <li><strong>p:</strong> proporción de elementos de interés.</li>
+      </ul>
+    </div>
+
+    <p>
+      Una vez recolectados los datos, se los puede organizar en una <strong>distribución de frecuencia</strong>,
+      que relaciona cada valor de la variable con la cantidad de veces que fue observado.
+    </p>
+
+    <div class="highlight-box">
+      <h4>Distribución de frecuencia</h4>
+      <p>
+        \( x \): valor de la variable<br>
+        \( f \): frecuencia observada (número de veces que se repite el valor \( x \))
+      </p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>x</th>
+              <th>f</th>
+              <th>x·f</th>
+              <th>(x - μ)²·f</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>x₁</td><td>f₁</td><td>x₁·f₁</td><td>(x₁ - μ)²·f₁</td></tr>
+            <tr><td>x₂</td><td>f₂</td><td>x₂·f₂</td><td>(x₂ - μ)²·f₂</td></tr>
+            <tr><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td></tr>
+            <tr><td>xₖ</td><td>fₖ</td><td>xₖ·fₖ</td><td>(xₖ - μ)²·fₖ</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="formula-box">
+        $$μ = \sum x_i f_i \qquad ; \qquad σ^2 = \sum (x_i - μ)^2 f_i$$
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Medidas de Centralidad</h4>
+      <p>Los parámetros que describen la tendencia central de los datos son:</p>
+
+      <ul>
+        <li><strong>Media poblacional:</strong> \( μ = \frac{\sum x·f}{N} \), donde \( N = \sum f \)</li>
+        <li><strong>Mediana (μ̃):</strong> valor central cuando los datos están ordenados.</li>
+      </ul>
+
+      <div class="formula-box">
+        $$d = \frac{N + 1}{2}$$
+      </div>
+      <ul>
+        <li>Si \( N \) es par → \( \tilde{μ} = \frac{X_{d-1/2} + X_{d+1/2}}{2} \)</li>
+        <li>Si \( N \) es impar → \( \tilde{μ} = X_d \)</li>
+      </ul>
+
+      <ul>
+        <li><strong>Moda (μ̅):</strong> valor que aparece con mayor frecuencia en el conjunto de datos.</li>
+      </ul>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Muestra</h4>
+      <p>
+        Cuando la información se obtiene a partir de una muestra:
+      </p>
+      <ul>
+        <li>\( m = \sum f \): tamaño de la muestra.</li>
+        <li>\( \bar{X} = \frac{\sum x·f}{m} \): media muestral.</li>
+      </ul>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Medidas de Dispersión</h4>
+      <ul>
+        <li><strong>Rango:</strong> \( R_x = X_{max} - X_{min} \)</li>
+        <li><strong>Varianza poblacional:</strong> \( σ^2 = \frac{\sum (x - μ)^2 f}{N} \)</li>
+        <li><strong>Varianza muestral:</strong> \( S^2 = \frac{\sum (x - \bar{X})^2 f}{m} \)</li>
+      </ul>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Tabla de frecuencia relativa</h4>
+      <p>
+        En lugar de trabajar con frecuencias absolutas, podemos usar <strong>frecuencias relativas</strong>:
+      </p>
+      <div class="formula-box">
+        $$f_r = \frac{f}{N} \quad \text{o} \quad f_r = \frac{f}{m}$$
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>x</th>
+              <th>fᵣ</th>
+              <th>x·fᵣ</th>
+              <th>(x - μ)²·fᵣ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>x₁</td><td>fᵣ₁</td><td>x₁·fᵣ₁</td><td>(x₁ - μ)²·fᵣ₁</td></tr>
+            <tr><td>x₂</td><td>fᵣ₂</td><td>x₂·fᵣ₂</td><td>(x₂ - μ)²·fᵣ₂</td></tr>
+            <tr><td>⋮</td><td>⋮</td><td>⋮</td><td>⋮</td></tr>
+            <tr><td>xₖ</td><td>fᵣₖ</td><td>xₖ·fᵣₖ</td><td>(xₖ - μ)²·fᵣₖ</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="formula-box">
+        $$\sum fᵣ_i = 1 \quad ; \quad \sum x_i fᵣ_i = μ \text{ (o } \bar{X} \text{ en muestra)}$$
+        $$\sum (x_i - μ)^2 fᵣ_i = σ^2 \text{ (o } S^2 \text{ en muestra)}$$
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Resumen Final</h4>
+      <ul>
+        <li>📊 La <strong>distribución de frecuencia</strong> organiza los datos observados.</li>
+        <li>📈 La <strong>media</strong>, <strong>mediana</strong> y <strong>moda</strong> miden la centralidad.</li>
+        <li>📉 La <strong>varianza</strong> y el <strong>rango</strong> describen la dispersión.</li>
+        <li>💡 Las <strong>frecuencias relativas</strong> permiten comparar conjuntos de diferente tamaño.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
 
       <!-- Tablas de frecuencia -->
       <section id="frecuencia" class="content-section">
@@ -662,6 +924,78 @@
         </div>
       </section>
 
+      <section id="histogramas" class="content-section">
+  <h2 class="section-title">
+    <span class="section-icon">📊</span> Histogramas y Distribución Agrupada
+  </h2>
+  <div class="section-content">
+    <p>
+      Los <strong>histogramas</strong> son representaciones gráficas que permiten visualizar la distribución de los datos
+      mediante rectángulos cuyos lados representan la frecuencia relativa (eje Y) y los valores de la variable (eje X).
+    </p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr><th>x</th><th>f<sub>R</sub></th></tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>0.1</td></tr>
+          <tr><td>2</td><td>0.35</td></tr>
+          <tr><td>3</td><td>0.15</td></tr>
+          <tr><td>4</td><td>0.4</td></tr>
+          <tr><td><strong>Σ</strong></td><td><strong>1.00</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      Para variables continuas, agrupamos los datos en <strong>clases</strong> de igual amplitud, 
+      definidas por el intervalo entre los límites inferior y superior:
+    </p>
+
+    <div class="formula-box">
+      $$ r = \sqrt{n} \quad,\quad h = \frac{b - a}{r} $$
+      <p class="caption">donde \( r \) es el número de clases y \( h \) el ancho de cada una.</p>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo — Tiempos de vida de baterías</div>
+      <p>Se registraron los tiempos (en horas) de 40 baterías similares. Se desea calcular la media y la desviación.</p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>Clase</th><th>f</th><th>f<sub>R</sub></th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1.5 – 2.0</td><td>2</td><td>0.05</td></tr>
+            <tr><td>2.0 – 2.5</td><td>2</td><td>0.05</td></tr>
+            <tr><td>2.5 – 3.0</td><td>5</td><td>0.125</td></tr>
+            <tr><td>3.0 – 3.5</td><td>15</td><td>0.375</td></tr>
+            <tr><td>3.5 – 4.0</td><td>8</td><td>0.20</td></tr>
+            <tr><td>4.0 – 4.5</td><td>6</td><td>0.15</td></tr>
+            <tr><td>4.5 – 5.0</td><td>2</td><td>0.05</td></tr>
+            <tr><td><strong>Σ</strong></td><td><strong>40</strong></td><td><strong>1.00</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>La media y la varianza se calculan mediante:</p>
+      <div class="formula-box">
+        $$ μ = \sum x_i f_R \quad,\quad σ^2 = \sum (x_i - μ)^2 f_R $$
+      </div>
+      <p>Para este caso: \( μ = 3.4 \) y \( σ^2 = 0.49 \).</p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>🎨 Interpretación visual</h4>
+      <p>El histograma muestra una concentración de datos en torno a \( x = 3.4 \), lo que sugiere un comportamiento
+      relativamente simétrico con ligera dispersión a la derecha.</p>
+      <!-- Podés luego integrar aquí un canvas o SVG con el histograma generado -->
+    </div>
+  </div>
+</section>
+
+
       <!-- Resumen -->
       <section id="resumen" class="content-section">
         <h2 class="section-title"><span class="section-icon">📋</span>Resumen General</h2>
@@ -692,14 +1026,18 @@
       <div class="sidebar-title">Unidad 2</div>
       <ul class="nav-list">
         <li class="nav-item"><a href="#conteo">Técnicas de Conteo</a></li>
+<li class="nav-item"><a href="#estadistica">Estadística Descriptiva</a></li>
 
         <li class="nav-item"><a href="#poblacion">Población y muestra</a></li>
         <li class="nav-item"><a href="#variables">Tipos de variables</a></li>
+        <li class="nav-item"><a href="#estadistica2">Estadística Descriptiva (2)</a></li>
+
         <li class="nav-item"><a href="#frecuencia">Tablas de frecuencia</a></li>
         <li class="nav-item"><a href="#graficos">Gráficos</a></li>
         <li class="nav-item"><a href="#tendencia">Tendencia central</a></li>
         <li class="nav-item"><a href="#dispersion">Dispersión</a></li>
         <li class="nav-item"><a href="#agrupada">Distribución agrupada</a></li>
+                <li class="nav-item"><a href="#histogramas">Histogramas y Distribución Agrupada</a></li>
         <li class="nav-item"><a href="#resumen">Resumen</a></li>
       </ul>
     </aside>

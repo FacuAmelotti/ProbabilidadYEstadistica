@@ -771,3 +771,61 @@ h1, h2, h3, h4 {
   font-weight: 600;
   letter-spacing: -0.015em;
 }
+
+.info-gold {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
+  padding: 40px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-gold::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255, 255, 200, 0.15), transparent 70%);
+  animation: goldPulse 6s infinite linear;
+  z-index: 0;
+  pointer-events: none; 
+}
+
+@keyframes goldPulse {
+  0% { transform: rotate(0deg); opacity: 0.5; }
+  50% { opacity: 0.8; }
+  100% { transform: rotate(360deg); opacity: 0.5; }
+}
+
+.info-gold:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+}
+
+.info-gold p {
+  position: relative;
+  z-index: 1;
+  color: #fff9d6;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 25px;
+}
+
+.info-gold a.nav-button {
+  background: linear-gradient(135deg, #FFD700, #FFF3B0);
+  color: #000;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.info-gold a.nav-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+}

@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unidad 3: Modelos de Probabilidad Discreta</title>
+  <link rel="icon" type="image/png" href="../../src/img/logo.png">
+  <link rel="stylesheet" href="../css/base.css">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+    <style>
+        
+/* Layout principal */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+                            padding: 120px 10px 20px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar de navegación */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 2px 2px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border-left: 2px solid transparent;
+        }
+
+        .nav-item a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-item a.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: #ffffff;
+        }
+
+        /* Contenido principal */
+        .content-wrapper {
+            max-width: 1200px;
+        }
+
+
+        .page-header {
+            margin-bottom: 60px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #ffffff;
+        }
+
+        .breadcrumb-separator {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        /* Secciones de contenido */
+        .content-section {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+            opacity: 0.8;
+        }
+
+        .section-content {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 20px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .section-content strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Listas */
+        .content-section ul,
+        .content-section ol {
+            margin: 20px 0;
+            padding-left: 25px;
+        }
+
+        .content-section li {
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Ejemplos */
+        .example-box {
+            background: rgba(120, 119, 198, 0.1);
+            border-left: 3px solid rgba(120, 119, 198, 0.5);
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: rgba(120, 119, 198, 1);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Fórmulas */
+        .formula-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Destacados */
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+        }
+
+        .highlight-box h4 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* Grid de conceptos */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .concept-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .concept-card h4 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .concept-card p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Botones de navegación */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-button {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #ffffff, #e0e0e0);
+            color: #000000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-button.secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 100px 30px 40px;
+            }
+
+            .sidebar {
+                position: static;
+                top: auto;
+            }
+
+            .content-wrapper {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                padding: 100px 20px 40px;
+            }
+
+            .section-content {
+                padding: 25px 20px;
+            }
+
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Tabla */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        td {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="" class="logo">PyE - Unidad 3</a>
+      <ul class="nav-menu">
+        <li><a href="../temario.html" class="nav-link">Temario</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="scroll-progress-bar"></div>
+
+  <div class="main-layout">
+
+    <!-- Contenido principal -->
+    <main class="content-wrapper">
+      <header class="page-header">
+        <nav class="breadcrumb">
+          <a href="../../index.html">Inicio</a>
+          <span class="breadcrumb-separator">›</span>
+          <a href="../temario.html">Temario</a>
+          <span class="breadcrumb-separator">›</span>
+          <span>Unidad 3</span>
+        </nav>
+        <h1 class="page-title">Modelos de Probabilidad Discreta</h1>
+        <p class="page-description">
+          En esta unidad se introducen las <strong>variables aleatorias</strong>, las <strong>distribuciones de probabilidad discreta</strong> y sus parámetros principales:
+          esperanza, varianza y función de distribución.
+        </p>
+      </header>
+
+      <!-- Variable Aleatoria -->
+      <section id="variable-aleatoria" class="content-section">
+        <h2 class="section-title"><span class="section-icon">🎲</span>Variable Aleatoria</h2>
+        <div class="section-content">
+          <p>
+            Una <strong>variable aleatoria</strong> (V.A.) es una función que asigna un valor numérico a cada resultado posible de un <strong>experimento aleatorio</strong>.
+          </p>
+          <p>Se denota generalmente con letras mayúsculas, como \( X \) o \( Y \).</p>
+
+          <div class="highlight-box">
+            <h4>Tipos de Variables Aleatorias</h4>
+            <ul>
+              <li><strong>Discretas:</strong> pueden tomar solo valores finitos o contables. Ejemplo: número de caras al lanzar 3 monedas.</li>
+              <li><strong>Continuas:</strong> pueden tomar infinitos valores dentro de un intervalo. Ejemplo: peso, tiempo, temperatura.</li>
+            </ul>
+          </div>
+
+          <div class="example-box">
+            <div class="example-title">Ejemplo</div>
+            <p>
+              Lanzamos una moneda dos veces.  
+              El espacio muestral es \( S = \{CC, CS, SC, SS\} \).  
+              Definimos \( X \): número de caras obtenidas.
+            </p>
+            <p>
+              Entonces, \( X = \{0, 1, 2\} \).
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Distribución de Probabilidad -->
+      <section id="distribucion" class="content-section">
+        <h2 class="section-title"><span class="section-icon">📊</span>Distribución de Probabilidad</h2>
+        <div class="section-content">
+          <p>
+            La <strong>distribución de probabilidad</strong> de una variable aleatoria discreta describe la probabilidad de ocurrencia de cada uno de sus posibles valores.
+          </p>
+          <p>
+            Si \( X \) puede tomar los valores \( x_1, x_2, ..., x_n \), la función de probabilidad se define como:
+          </p>
+          <div class="formula-box">
+            $$P(X = x_i) = f(x_i)$$
+          </div>
+
+          <ul>
+            <li>\( f(x_i) \ge 0 \) para todo \( x_i \)</li>
+            <li>\( \sum f(x_i) = 1 \)</li>
+          </ul>
+
+          <div class="example-box">
+            <div class="example-title">Ejemplo — Lanzamiento de 2 monedas</div>
+            <p>
+              Sea \( X \): número de caras.  
+              El espacio muestral: \( S = \{CC, CS, SC, SS\} \)
+            </p>
+            <table>
+              <thead>
+                <tr><th>x</th><th>Evento</th><th>P(X = x)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>0</td><td>{SS}</td><td>1/4</td></tr>
+                <tr><td>1</td><td>{CS, SC}</td><td>1/2</td></tr>
+                <tr><td>2</td><td>{CC}</td><td>1/4</td></tr>
+              </tbody>
+            </table>
+            <p>Por tanto, la distribución de probabilidad es:</p>
+            <div class="formula-box">
+              $$f(x) = 
+              \begin{cases}
+              \frac{1}{4}, & x=0\\
+              \frac{1}{2}, & x=1\\
+              \frac{1}{4}, & x=2
+              \end{cases}$$
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Función de Distribución -->
+      <section id="funcion" class="content-section">
+        <h2 class="section-title"><span class="section-icon">📈</span>Función de Distribución Acumulada</h2>
+        <div class="section-content">
+          <p>
+            La <strong>función de distribución acumulada (FDA)</strong> o \( F(x) \) indica la probabilidad de que la variable aleatoria tome valores menores o iguales a \( x \):
+          </p>
+          <div class="formula-box">
+            $$F(x) = P(X \le x)$$
+          </div>
+          <div class="highlight-box">
+            <h4>Propiedades de \( F(x) \):</h4>
+            <ul>
+              <li>No decreciente: \( F(x_1) \le F(x_2) \) si \( x_1 < x_2 \)</li>
+              <li>\( \lim_{x \to -\infty} F(x) = 0 \)</li>
+              <li>\( \lim_{x \to \infty} F(x) = 1 \)</li>
+              <li>Continua por la derecha</li>
+            </ul>
+          </div>
+
+          <div class="example-box">
+            <div class="example-title">Ejemplo — Continuación del anterior</div>
+            <table>
+              <thead>
+                <tr><th>x</th><th>f(x)</th><th>F(x) = P(X ≤ x)</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>0</td><td>1/4</td><td>1/4</td></tr>
+                <tr><td>1</td><td>1/2</td><td>3/4</td></tr>
+                <tr><td>2</td><td>1/4</td><td>1</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Parámetros de la Variable Aleatoria -->
+      <section id="parametros" class="content-section">
+        <h2 class="section-title"><span class="section-icon">⚙️</span>Parámetros de una Variable Aleatoria</h2>
+        <div class="section-content">
+          <p>
+            Para describir una variable aleatoria, se utilizan medidas numéricas conocidas como <strong>parámetros</strong>:
+          </p>
+          <ul>
+            <li><strong>Esperanza (media)</strong></li>
+            <li><strong>Varianza</strong></li>
+            <li><strong>Desviación estándar</strong></li>
+          </ul>
+
+          <div class="highlight-box">
+            <h4>Esperanza Matemática</h4>
+            <p>Es el valor promedio que se espera obtener:</p>
+            <div class="formula-box">
+              $$E[X] = \sum_{i=1}^{n} x_i \, P(X = x_i)$$
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Varianza</h4>
+            <p>Indica la dispersión respecto a la media:</p>
+            <div class="formula-box">
+              $$V[X] = \sum_{i=1}^{n} (x_i - E[X])^2 P(X = x_i)$$
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Desviación estándar</h4>
+            <p>Es la raíz cuadrada de la varianza:</p>
+            <div class="formula-box">
+              $$\sigma_X = \sqrt{V[X]}$$
+            </div>
+          </div>
+
+          <div class="example-box">
+            <div class="example-title">Ejemplo</div>
+            <p>
+              Para la distribución anterior:
+            </p>
+            <ul>
+              <li>\( E[X] = 0(1/4) + 1(1/2) + 2(1/4) = 1 \)</li>
+              <li>\( V[X] = (0-1)^2(1/4) + (1-1)^2(1/2) + (2-1)^2(1/4) = 0.5 \)</li>
+              <li>\( \sigma_X = \sqrt{0.5} \approx 0.707 \)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Funciones de Variables Aleatorias -->
+<section id="funciones" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🧮</span>Funciones de Variables Aleatorias</h2>
+  <div class="section-content">
+    <p>
+      En ocasiones no nos interesa directamente la variable aleatoria \( X \), sino una función de ella.  
+      Por ejemplo, si una variable \( X \) representa el número de páginas de un reporte, podríamos estar interesados en el <strong>tiempo de corrección</strong>, que depende de \( X \) según una relación como \( Y = \sqrt{X} \).
+    </p>
+
+    <div class="highlight-box">
+      <h4>Definición</h4>
+      <p>
+        Si \( X \) es una variable aleatoria y \( Y = h(X) \) es una función definida sobre los valores posibles de \( X \),  
+        entonces \( Y \) también es una variable aleatoria.
+      </p>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo 1 — Tiempo de corrección</div>
+      <p>
+        Un profesor evalúa reportes de entre 1 y 4 páginas, con la siguiente distribución de probabilidad:
+      </p>
+      <table>
+        <thead>
+          <tr><th>x</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>f(x)</td><td>0.01</td><td>0.19</td><td>0.35</td><td>0.45</td></tr>
+        </tbody>
+      </table>
+      <p>
+        Se define \( Y = \sqrt{X} \), que representa el tiempo en minutos que tarda en corregir cada reporte.
+      </p>
+
+      <div class="highlight-box">
+        <h4>1️⃣ Definición de los valores de \( Y \)</h4>
+        <p>\( X = \{1, 2, 3, 4\} \Rightarrow Y = \{\sqrt{1}, \sqrt{2}, \sqrt{3}, \sqrt{4}\} \)</p>
+      </div>
+
+      <div class="highlight-box">
+        <h4>2️⃣ Probabilidades asociadas</h4>
+        <p>
+          Como \( Y = h(X) \), las probabilidades de \( Y \) provienen directamente de las de \( X \):
+        </p>
+        <ul>
+          <li>\( P(Y = \sqrt{1}) = P(X = 1) = 0.01 \)</li>
+          <li>\( P(Y = \sqrt{2}) = P(X = 2) = 0.19 \)</li>
+          <li>\( P(Y = \sqrt{3}) = P(X = 3) = 0.35 \)</li>
+          <li>\( P(Y = \sqrt{4}) = P(X = 4) = 0.45 \)</li>
+        </ul>
+      </div>
+
+      <div class="highlight-box">
+        <h4>3️⃣ Cálculo de la esperanza de \( Y \)</h4>
+        <div class="formula-box">
+          $$E[Y] = \sum y_i P(Y = y_i) = \sqrt{1}(0.01) + \sqrt{2}(0.19) + \sqrt{3}(0.35) + \sqrt{4}(0.45) = 1.78$$
+        </div>
+        <p>El tiempo esperado de corrección es <strong>1.78 minutos</strong>.</p>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Formulación general</h4>
+      <p>
+        La esperanza de una función de una variable aleatoria se calcula así:
+      </p>
+      <div class="formula-box">
+        $$E[h(X)] = 
+        \begin{cases}
+        \sum h(x) \, p(x) & \text{si } X \text{ es discreta} \\
+        \int h(x) \, f(x) \, dx & \text{si } X \text{ es continua}
+        \end{cases}$$
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Propiedad de linealidad de la esperanza</h4>
+      <p>
+        Si \( Y = aX + b \), entonces:
+      </p>
+      <div class="formula-box">
+        $$E[Y] = aE[X] + b$$
+      </div>
+      <p>
+        Es decir, multiplicar una variable por una constante afecta la media en la misma proporción,  
+        y sumar una constante la desplaza sin cambiar su dispersión.
+      </p>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo 2 — Utilidad de un negocio</div>
+      <p>
+        Un negocio compra 3 computadores a $500 cada uno y los venderá a $1000 cada uno.  
+        El fabricante recompra a $200 cada equipo no vendido.
+      </p>
+
+      <p>Definimos:</p>
+      <ul>
+        <li>\( X \): número de computadores vendidos.</li>
+        <li>\( Y = h(X) \): utilidad total (en $).</li>
+      </ul>
+
+      <table>
+        <thead>
+          <tr><th>x</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>f(x)</td><td>0.1</td><td>0.2</td><td>0.3</td><td>0.4</td></tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-box">
+        <h4>Definición de la función</h4>
+        <p>
+          $$Y = 1000x + 200(3 - x) - 1500 = 800x - 900$$
+        </p>
+        <p>
+          Entonces \( E[Y] = E[800X - 900] = 800E[X] - 900 \)
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <h4>Cálculo de \( E[X] \)</h4>
+        <div class="formula-box">
+          $$E[X] = 0(0.1) + 1(0.2) + 2(0.3) + 3(0.4) = 2$$
+        </div>
+        <p>
+          Sustituyendo:
+          $$E[Y] = 800(2) - 900 = 700$$
+          <br>Por tanto, la <strong>utilidad esperada es $700</strong>.
+        </p>
+      </div>
+
+      <div class="highlight-box">
+        <h4>Varianza de una función lineal</h4>
+        <p>
+          La varianza se ajusta con el cuadrado de la constante de escala:
+        </p>
+        <div class="formula-box">
+          $$V[Y] = a^2 V[X]$$
+        </div>
+
+        <h4>Cálculo de \( V[X] \)</h4>
+        <div class="formula-box">
+          $$V[X] = \sum x_i^2 p(x_i) - (E[X])^2 = (0^2)(0.1) + (1^2)(0.2) + (2^2)(0.3) + (3^2)(0.4) - 2^2 = 1$$
+        </div>
+        <p>
+          Por tanto:
+          $$V[Y] = (800)^2 (1) = 640{,}000$$
+          <br>
+          La desviación estándar será \( \sigma_Y = 800 \).
+        </p>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Resumen de propiedades</h4>
+      <ul>
+        <li>\( E[aX + b] = aE[X] + b \)</li>
+        <li>\( V[aX + b] = a^2 V[X] \)</li>
+        <li>\( E[h(X)] = \sum h(x)p(x) \) (discreta) o \( \int h(x)f(x)dx \) (continua)</li>
+        <li>Permite transformar una variable en otra conservando el marco probabilístico.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Distribución Binomial -->
+<section id="binomial" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🎯</span>Distribución Binomial</h2>
+  <div class="section-content">
+
+    <p>
+      La <strong>distribución binomial</strong> describe el número de éxitos obtenidos en un conjunto de
+      <strong>n experimentos independientes</strong>, donde cada experimento tiene solo dos posibles resultados:
+      <em>éxito</em> (probabilidad \( p \)) o <em>fracaso</em> (probabilidad \( 1 - p \)).
+    </p>
+
+    <div class="highlight-box">
+      <h4>Condiciones para que un experimento sea binomial</h4>
+      <ul>
+        <li>Se realizan \( n \) repeticiones de un mismo experimento.</li>
+        <li>Los ensayos son independientes entre sí.</li>
+        <li>En cada repetición solo hay dos resultados posibles: éxito o fracaso.</li>
+        <li>La probabilidad de éxito \( p \) se mantiene constante.</li>
+      </ul>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo 1 — Lanzamiento de una moneda</div>
+      <p>
+        Lanzamos una moneda 4 veces y registramos si sale cara.  
+        Cada lanzamiento es independiente y tiene \( p = 0.5 \).
+      </p>
+      <p>Sea \( X \): número de caras obtenidas.</p>
+
+      <div class="formula-box">
+        $$P(X = k) = {n \choose k} p^k (1 - p)^{n - k}$$
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr><th>k</th><th>$(4 \choose k)$</th><th>$p^k (1 - p)^{4 - k}$</th><th>$P(X = k)$</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0</td><td>1</td><td>$(0.5)^4$</td><td>0.0625</td></tr>
+            <tr><td>1</td><td>4</td><td>$(0.5)^1(0.5)^3$</td><td>0.25</td></tr>
+            <tr><td>2</td><td>6</td><td>$(0.5)^2(0.5)^2$</td><td>0.375</td></tr>
+            <tr><td>3</td><td>4</td><td>$(0.5)^3(0.5)^1$</td><td>0.25</td></tr>
+            <tr><td>4</td><td>1</td><td>$(0.5)^4(0.5)^0$</td><td>0.0625</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        La distribución muestra que el resultado más probable es obtener <strong>2 caras</strong>.
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Propiedades</h4>
+      <div class="formula-box">
+        $$E[X] = n \cdot p \quad ; \quad V[X] = n \cdot p \cdot (1 - p)$$
+      </div>
+      <p>Si una variable aleatoria \( X \) sigue una distribución binomial, se denota:</p>
+      <div class="formula-box">
+        $$X \sim B(n, p)$$
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo 2 — Extracción con reemplazo</div>
+      <p>
+        Una urna contiene 15 bolillas blancas y 5 verdes. Se extraen 3 bolillas con reemplazo, observando si son blancas.
+      </p>
+      <ul>
+        <li>\( p = \frac{15}{20} = 0.75 \)</li>
+        <li>\( n = 3 \)</li>
+        <li>\( X \): número de bolillas blancas.</li>
+      </ul>
+
+      <div class="formula-box">
+        $$P(X = k) = {3 \choose k} (0.75)^k (0.25)^{3 - k}$$
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead><tr><th>k</th><th>$P(X = k)$</th></tr></thead>
+          <tbody>
+            <tr><td>0</td><td>0.0156</td></tr>
+            <tr><td>1</td><td>0.1406</td></tr>
+            <tr><td>2</td><td>0.4219</td></tr>
+            <tr><td>3</td><td>0.4219</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p>
+        La probabilidad de obtener 2 o más bolillas blancas es:
+        $$P(X \ge 2) = P(2) + P(3) = 0.8438$$
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Interpretación gráfica</h4>
+      <p>
+        El gráfico de una distribución binomial muestra cómo varía la probabilidad según el número de éxitos \( k \).
+        Cuando \( p = 0.5 \), la distribución es simétrica; cuando \( p \neq 0.5 \), se sesga hacia uno de los extremos.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Distribución Geométrica -->
+<section id="geometrica" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🎯</span>Distribución Geométrica</h2>
+  <div class="section-content">
+    <p>
+      La <strong>distribución geométrica</strong> describe el número de repeticiones de un experimento aleatorio
+      necesarias hasta obtener el primer éxito. Es un caso particular de la distribución binomial, donde se repite
+      el experimento hasta el primer evento favorable.
+    </p>
+
+    <div class="highlight-box">
+      <h4>Condiciones de un experimento geométrico</h4>
+      <ul>
+        <li>Las repeticiones del experimento son <strong>independientes</strong>.</li>
+        <li>En cada repetición hay solo dos resultados posibles: <em>éxito</em> o <em>fracaso</em>.</li>
+        <li>La probabilidad de éxito \( p \) permanece constante.</li>
+        <li>Se cuentan las repeticiones hasta que ocurre el primer éxito.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      $$P(X = k) = p(1 - p)^{k - 1}, \quad k = 1, 2, 3, \dots$$
+    </div>
+
+    <p>
+      Solo depende de un parámetro: la probabilidad de éxito \( p \).  
+      Se denota:
+    </p>
+    <div class="formula-box">
+      $$X \sim G(p)$$
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo — Falla de una computadora</div>
+      <p>
+        La probabilidad de que una computadora falle un día determinado es \( p = 0.1 \).  
+        Queremos la probabilidad de que falle por primera vez en el <strong>día 12</strong>.
+      </p>
+      <div class="formula-box">
+        $$P(X = 12) = 0.1 (1 - 0.1)^{12 - 1} = 0.1 (0.9)^{11} = 0.031$$
+      </div>
+      <p>Por lo tanto, la probabilidad es <strong>0.031</strong>.</p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Verificación de que es una distribución de probabilidad</h4>
+      <p>
+        La suma de todas las probabilidades posibles debe ser igual a 1:
+      </p>
+      <div class="formula-box">
+        $$\sum_{k=1}^{\infty} P(X = k) = \sum_{k=1}^{\infty} p(1 - p)^{k - 1} = p \sum_{k=0}^{\infty} (1 - p)^k = p \frac{1}{1 - (1 - p)} = 1$$
+      </div>
+      <p>Por tanto, cumple con las condiciones de una distribución de probabilidad.</p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Propiedades</h4>
+      <div class="formula-box">
+        $$E[X] = \frac{1}{p}, \quad V[X] = \frac{1 - p}{p^2}$$
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Distribución Binomial Negativa -->
+<section id="binomial-negativa" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🎯</span>Distribución Binomial Negativa</h2>
+  <div class="section-content">
+    <p>
+      La <strong>distribución binomial negativa</strong> extiende el modelo geométrico para contar
+      el número de repeticiones necesarias hasta obtener <strong>r éxitos</strong>.
+    </p>
+
+    <div class="highlight-box">
+      <h4>Definición</h4>
+      <p>
+        Si cada experimento tiene probabilidad de éxito \( p \) y se realizan repeticiones hasta observar el
+        <strong>r-ésimo éxito</strong>, entonces la variable aleatoria \( X \): “número total de ensayos hasta el r-ésimo éxito”,
+        sigue una distribución binomial negativa.
+      </p>
+    </div>
+
+    <div class="formula-box">
+      $$P(X = k) = \binom{k - 1}{r - 1} p^r (1 - p)^{k - r}, \quad k = r, r+1, r+2, \dots$$
+    </div>
+
+    <p>Se denota:</p>
+    <div class="formula-box">
+      $$X \sim BN(r, p)$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>Propiedades</h4>
+      <div class="formula-box">
+        $$E[X] = \frac{r}{p}, \quad V[X] = \frac{r(1 - p)}{p^2}$$
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo — Prueba de resistencia</div>
+      <p>
+        En un test de soldaduras, el 80% de las pruebas resultan en ruptura de soldadura,  
+        y el 20% en ruptura de viga. Se repiten las pruebas hasta que haya <strong>3 rupturas de viga</strong>.
+      </p>
+      <ul>
+        <li>Evento de interés: ruptura de viga → \( p = 0.2 \)</li>
+        <li>Número de éxitos buscados: \( r = 3 \)</li>
+      </ul>
+
+      <p>Se desea calcular la probabilidad de que esto ocurra en el <strong>8º ensayo</strong>:</p>
+      <div class="formula-box">
+        $$P(X = 8) = \binom{8 - 1}{3 - 1} (0.2)^3 (1 - 0.2)^{8 - 3} = 21 (0.008) (0.32768) = 0.055$$
+      </div>
+      <p>Por tanto, \( P(X = 8) = 0.055 \).</p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Relación con la distribución geométrica</h4>
+      <p>
+        La distribución geométrica es un caso particular de la binomial negativa cuando \( r = 1 \).
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Distribución Hipergeométrica -->
+<section id="hipergeometrica" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🧮</span>Distribución Hipergeométrica</h2>
+  <div class="section-content">
+    <p>
+      La <strong>distribución hipergeométrica</strong> modela el número de éxitos en una muestra de tamaño \( n \)
+      extraída <strong>sin reemplazo</strong> de una población finita de tamaño \( N \), que contiene \( R \) elementos de éxito.
+    </p>
+
+    <div class="highlight-box">
+      <h4>Condiciones para que una variable sea hipergeométrica</h4>
+      <ul>
+        <li>La población tiene \( N \) individuos.</li>
+        <li>Hay \( R \) éxitos en la población (y \( N - R \) fracasos).</li>
+        <li>Se elige una muestra de tamaño \( n \) sin reemplazo.</li>
+        <li>La variable aleatoria \( X \) cuenta cuántos éxitos hay en la muestra.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      $$P(X = x) = \frac{\binom{R}{x} \binom{N - R}{n - x}}{\binom{N}{n}}$$
+    </div>
+
+    <p>Se denota como:</p>
+    <div class="formula-box">
+      $$X \sim H(N, R, n)$$
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo — Cartas de Poker</div>
+      <p>
+        Se extraen 3 cartas de un mazo de 52.  
+        ¿Cuál es la probabilidad de obtener cierta cantidad de corazones?
+      </p>
+      <ul>
+        <li>\( N = 52 \) (total de cartas)</li>
+        <li>\( R = 13 \) (corazones)</li>
+        <li>\( n = 3 \) (cartas tomadas)</li>
+      </ul>
+
+      <div class="formula-box">
+        $$P(X = x) = \frac{\binom{13}{x} \binom{39}{3 - x}}{\binom{52}{3}}, \quad x = 0, 1, 2, 3$$
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Esperanza y Varianza</h4>
+      <div class="formula-box">
+        $$E[X] = n \frac{R}{N}, \quad V[X] = \frac{N - n}{N - 1} \, n \frac{R}{N} \left(1 - \frac{R}{N}\right)$$
+      </div>
+      <p>Si definimos \( p = \frac{R}{N} \), entonces:</p>
+      <div class="formula-box">
+        $$E[X] = n p, \quad V[X] = \frac{N - n}{N - 1} n p (1 - p)$$
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Distribución de Poisson -->
+<section id="poisson" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📈</span>Distribución de Poisson</h2>
+  <div class="section-content">
+    <p>
+      La <strong>distribución de Poisson</strong> se aplica a situaciones donde contamos el número de veces que ocurre un evento
+      durante un intervalo de tiempo o en un área determinada. Es útil cuando los sucesos son raros e independientes.
+    </p>
+
+    <div class="formula-box">
+      $$P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \dots$$
+    </div>
+
+    <p>
+      El parámetro \( \lambda \) representa el número promedio de ocurrencias en el intervalo.
+    </p>
+
+    <div class="highlight-box">
+      <h4>Propiedades</h4>
+      <div class="formula-box">
+        $$E[X] = V[X] = \lambda$$
+      </div>
+      <p>Se denota como \( X \sim P(\lambda) \).</p>
+      <p>
+        La distribución de Poisson puede aproximar a la binomial cuando \( n \) es grande y \( p \) es pequeño, cumpliendo \( n p \le 20 \).
+      </p>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo — Pulsos faltantes</div>
+      <p>
+        Suponga que el número de pulsos faltantes en un disco sigue \( X \sim P(0.2) \).
+      </p>
+
+      <ol>
+        <li>
+          <strong>a)</strong> Probabilidad de que un disco tenga un pulso faltante:
+          $$P(X = 1) = e^{-0.2} \frac{0.2^1}{1!} = 0.164$$
+        </li>
+        <li>
+          <strong>b)</strong> Probabilidad de que tenga al menos dos:
+          $$P(X \ge 2) = 1 - [P(0) + P(1)] = 1 - [e^{-0.2} + e^{-0.2}(0.2)] = 0.018$$
+        </li>
+        <li>
+          <strong>c)</strong> Si se seleccionan dos discos independientes, probabilidad de que ninguno falle:
+          $$P(Y = 2) = (e^{-0.2})^2 = 0.67$$
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- Prueba de Bernoulli -->
+<section id="bernoulli" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🎲</span>Prueba de Bernoulli</h2>
+  <div class="section-content">
+    <p>
+      Una <strong>prueba de Bernoulli</strong> es un experimento aleatorio con solo dos resultados posibles:
+      <em>éxito</em> o <em>fracaso</em>.
+    </p>
+
+    <div class="formula-box">
+      $$P(X = 1) = p, \quad P(X = 0) = 1 - p$$
+    </div>
+
+    <p>Se denota:</p>
+    <div class="formula-box">
+      $$X \sim I_B(p)$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>Esperanza y Varianza</h4>
+      <div class="formula-box">
+        $$E[X] = p, \quad V[X] = p(1 - p)$$
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo</div>
+      <p>
+        Al lanzar una moneda equilibrada:
+        <ul>
+          <li>Éxito: cara → \( p = 0.5 \)</li>
+          <li>Fracaso: cruz → \( 1 - p = 0.5 \)</li>
+        </ul>
+        Entonces \( X \sim I_B(0.5) \), y:
+        <div class="formula-box">
+          $$E[X] = 0.5, \quad V[X] = 0.25$$
+        </div>
+      </p>
+    </div>
+  </div>
+</section>
+
+
+      <!-- Distribuciones Discretas Notables -->
+      <section id="distribuciones" class="content-section">
+        <h2 class="section-title"><span class="section-icon">📐</span>Distribuciones Discretas Notables</h2>
+        <div class="section-content">
+          <p>
+            Existen varios modelos matemáticos discretos que describen diferentes tipos de experimentos aleatorios:
+          </p>
+
+          <div class="highlight-box">
+            <h4>Distribución de Bernoulli</h4>
+            <p>Representa un experimento con solo dos resultados: éxito (1) o fracaso (0).</p>
+            <div class="formula-box">
+              $$P(X = x) = p^x (1 - p)^{1 - x}, \quad x = 0,1$$
+            </div>
+            <p><strong>Media:</strong> \( E[X] = p \), &nbsp; <strong>Varianza:</strong> \( V[X] = p(1 - p) \)</p>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Distribución Binomial</h4>
+            <p>Modela el número de éxitos en \( n \) ensayos independientes con probabilidad \( p \) de éxito.</p>
+            <div class="formula-box">
+              $$P(X = k) = {n \choose k} p^k (1 - p)^{n - k}, \quad k = 0, 1, ..., n$$
+            </div>
+            <p><strong>Media:</strong> \( E[X] = np \), &nbsp; <strong>Varianza:</strong> \( V[X] = np(1 - p) \)</p>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Distribución de Poisson</h4>
+            <p>Modela el número de ocurrencias de un evento en un intervalo de tiempo o espacio dado.</p>
+            <div class="formula-box">
+              $$P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, ...$$
+            </div>
+            <p><strong>Media y Varianza:</strong> \( \lambda \)</p>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Distribución Hipergeométrica</h4>
+            <p>
+              Describe el número de éxitos en una muestra de tamaño \( n \) extraída sin reemplazo de una población finita.
+            </p>
+            <div class="formula-box">
+              $$P(X = k) = \frac{{K \choose k} {N - K \choose n - k}}{{N \choose n}}$$
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4>Distribución Geométrica</h4>
+            <p>
+              Modela el número de ensayos necesarios hasta obtener el primer éxito.
+            </p>
+            <div class="formula-box">
+              $$P(X = k) = (1 - p)^{k - 1} p, \quad k = 1, 2, ...$$
+            </div>
+            <p><strong>Media:</strong> \( \frac{1}{p} \), &nbsp; <strong>Varianza:</strong> \( \frac{1 - p}{p^2} \)</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Resumen -->
+      <section id="resumen" class="content-section">
+        <h2 class="section-title"><span class="section-icon">📋</span>Resumen General</h2>
+        <div class="section-content">
+          <ul>
+            <li>Las variables aleatorias representan numéricamente los resultados de un experimento.</li>
+            <li>Las <strong>discretas</strong> toman valores finitos o contables, y se describen mediante una <strong>función de probabilidad</strong>.</li>
+            <li>La <strong>función de distribución acumulada</strong> resume la probabilidad acumulada hasta un punto.</li>
+            <li>La <strong>media</strong> y <strong>varianza</strong> describen el comportamiento promedio y la dispersión.</li>
+            <li>Modelos discretos importantes: Bernoulli, Binomial, Poisson, Geométrica, Hipergeométrica.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Navegación -->
+      <div class="navigation-buttons">
+        <a href="./cap2.html" class="nav-button secondary">← Unidad 2</a>
+        <a href="./cap4.html" class="nav-button">Unidad 4 →</a>
+      </div>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-title">Unidad 3</div>
+      <ul class="nav-list">
+        <li class="nav-item"><a href="#variable-aleatoria">Variable Aleatoria</a></li>
+        <li class="nav-item"><a href="#distribucion">Distribución de Probabilidad</a></li>
+        <li class="nav-item"><a href="#funcion">Función de Distribución</a></li>
+        <li class="nav-item"><a href="#parametros">Parámetros</a></li>
+        <li class="nav-item"><a href="#funciones">Funciones de Variables Aleatorias</a></li>
+        <li class="nav-item"><a href="#binomial">Distribución Binomial</a></li>
+<li class="nav-item"><a href="#geometrica">Distribución Geométrica</a></li>
+<li class="nav-item"><a href="#binomial-negativa">Distribución Binomial Negativa</a></li>
+<li class="nav-item"><a href="#hipergeometrica">Distribución Hipergeométrica</a></li>
+<li class="nav-item"><a href="#poisson">Distribución de Poisson</a></li>
+<li class="nav-item"><a href="#bernoulli">Prueba de Bernoulli</a></li>
+
+        <li class="nav-item"><a href="#distribuciones">Distribuciones Notables</a></li>
+        <li class="nav-item"><a href="#resumen">Resumen</a></li>
+      </ul>
+    </aside>
+  </div>
+
+  <script>
+    // Sidebar activo y scroll suave
+    const sections = document.querySelectorAll('.content-section');
+    const navLinks = document.querySelectorAll('.nav-item a');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${id}`) link.classList.add('active');
+          });
+        }
+      });
+    }, { rootMargin: '-100px 0px -70% 0px' });
+    sections.forEach(section => observer.observe(section));
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+      <script>
+  // 🔹 Barra de progreso scroll
+  const progressBar = document.querySelector('.scroll-progress-bar');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    progressBar.style.width = `${scrollPercent}%`;
+  });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // 🔹 Agregar checkbox de estudio a cada sección
+  document.querySelectorAll('.content-section').forEach(section => {
+    const id = section.id;
+    const checkDiv = document.createElement('div');
+    checkDiv.className = 'study-check';
+    checkDiv.innerHTML = `
+      <input type="checkbox" class="study-checkbox" id="check-${id}">
+      <label for="check-${id}">Estudiado</label>
+    `;
+    const content = section.querySelector('.section-content');
+    if (content) content.prepend(checkDiv);
+  });
+
+  // 🔹 Sincronizar checkbox con sidebar + localStorage
+  document.querySelectorAll('.study-checkbox').forEach(checkbox => {
+    const id = checkbox.id.replace('check-', '');
+    const key = `tema_estudiado_${id}`;
+    const section = document.getElementById(id);
+    const navLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+    const saved = localStorage.getItem(key);
+
+    // Restaurar estado guardado
+    if (saved === 'true') {
+      checkbox.checked = true;
+      section.classList.add('section-studied');
+      if (navLink) navLink.classList.add('studied');
+    }
+
+    // Escuchar cambios
+    checkbox.addEventListener('change', () => {
+      localStorage.setItem(key, checkbox.checked);
+      if (checkbox.checked) {
+        section.classList.add('section-studied');
+        if (navLink) navLink.classList.add('studied');
+      } else {
+        section.classList.remove('section-studied');
+        if (navLink) navLink.classList.remove('studied');
+      }
+    });
+  });
+});
+</script>
+<!-- 🔢 MathJax para renderizar fórmulas -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' },
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+</body>
+</html>

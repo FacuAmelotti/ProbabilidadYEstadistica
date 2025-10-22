@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tablas Estadísticas Interactivas</title>
+      <link rel="stylesheet" href="./css/base.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+  /* ===========================
+   🌙 ESTILO BASE
+   =========================== */
+body {
+  margin: 0;
+  font-family: 'Work Sans', sans-serif;
+  background: radial-gradient(circle at top, #0e0e1a, #000);
+  color: #fff;
+  overflow-x: hidden;
+}
+
+.main-layout {
+  max-width: 1300px;
+  margin: 120px auto;
+  padding: 40px;
+}
+
+.page-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff, #a8b5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 25px rgba(170, 180, 255, 0.3);
+  margin-bottom: 15px;
+}
+
+.page-description {
+  text-align: center;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 50px;
+  line-height: 1.6;
+}
+
+/* ===========================
+   🔘 BOTONES DE PESTAÑAS
+   =========================== */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.75);
+  border-radius: 40px;
+  padding: 12px 30px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.tab-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #fff;
+}
+
+.tab-btn.active {
+  background: rgba(150, 180, 255, 0.15);
+  border-color: rgba(150, 180, 255, 0.5);
+  color: #a8b5ff;
+  box-shadow: 0 0 15px rgba(150, 180, 255, 0.25);
+  text-shadow: 0 0 6px rgba(160, 170, 255, 0.4);
+}
+
+/* ===========================
+   🧩 PANELES
+   =========================== */
+.tab-panel {
+  display: none;
+  animation: fadeIn 0.7s ease forwards;
+}
+
+.tab-panel.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tab-panel h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  font-weight: 400;
+  color: #fff;
+}
+
+/* ===========================
+   🧮 FÓRMULAS Y BLOQUES
+   =========================== */
+.formula-box {
+  text-align: center;
+  font-size: 1.3rem;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  margin: 25px 0 40px;
+}
+
+.calc-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.calc-box label {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.calc-box input, .calc-box select {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: #fff;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.calc-box input:focus, .calc-box select:focus {
+  border-color: rgba(150, 180, 255, 0.6);
+  box-shadow: 0 0 10px rgba(150, 180, 255, 0.3);
+}
+
+.calc-box button {
+  background: linear-gradient(135deg, #a8b5ff, #ffffff);
+  border: none;
+  color: #000;
+  border-radius: 50px;
+  padding: 10px 30px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.calc-box button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #ffffff, #bfc3ff);
+  box-shadow: 0 0 20px rgba(150, 160, 255, 0.4);
+}
+
+.calc-box p {
+  width: 100%;
+  margin: 0;
+  font-size: 1rem;
+  color: #a8b5ff;
+  font-weight: 500;
+  margin-top: 8px;
+  text-shadow: 0 0 6px rgba(160, 170, 255, 0.4);
+}
+
+/* ===========================
+   📊 TABLAS
+   =========================== */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 14px;
+  margin-bottom: 60px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+th, td {
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+th {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+}
+
+td {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+tr:hover td {
+  background: rgba(150, 180, 255, 0.08);
+  color: #fff;
+}
+
+/* ===========================
+   📱 RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .main-layout {
+    padding: 20px;
+  }
+
+  .tab-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .calc-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .calc-box input, .calc-box select, .calc-box button {
+    width: 100%;
+  }
+
+  .formula-box {
+    font-size: 1.1rem;
+  }
+
+  table {
+    font-size: 0.8rem;
+  }
+}
+
+.table-info {
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.7;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.table-info-list {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 10px 0 25px 40px;
+  line-height: 1.6;
+}
+
+.table-info-list li {
+  margin-bottom: 6px;
+}
+
+</style>
+
+</head>
+
+<body>
+      <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+                     <a href="../index.html" class="logo">
+        <img src="../src/img/logo.png" alt="PyE Logo">PyE
+      </a>
+            <ul class="nav-menu">
+                <li><a href="./temario.html" class="nav-link">Temario</a></li>
+            </ul>
+        </div>
+    </nav>
+
+  <div class="main-layout">
+    <h1 class="page-title">📊 Tablas Estadísticas Interactivas</h1>
+    <p class="page-description">
+      Explora las principales tablas estadísticas: <strong>Z</strong>, <strong>t de Student</strong> y <strong>χ² (Chi-cuadrado)</strong>.  
+      Cada panel incluye su fórmula y calculadora asociada.
+    </p>
+
+    <!-- Botones de pestañas -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="z">Tabla Z</button>
+      <button class="tab-btn" data-tab="t">Tabla t de Student</button>
+      <button class="tab-btn" data-tab="chi">Tabla χ²</button>
+    </div>
+
+    <!-- === PANEL Z === -->
+    <section id="panel-z" class="tab-panel active">
+      <h2>📈 Tabla Z — Curva Normal Estándar</h2>
+      <div class="formula-box">$$ Z = \frac{X - μ}{σ} $$</div>
+
+      <p class="table-info">
+  La <strong>Tabla Z</strong> se utiliza para calcular <strong>probabilidades</strong> en variables que siguen una 
+  <strong>distribución normal</strong>, es decir, cuando los datos se agrupan alrededor de una media \( μ \)
+  con una determinada desviación estándar \( σ \).
+</p>
+<p class="table-info">
+  Es una herramienta fundamental en <strong>estadística inferencial</strong>, especialmente para:
+</p>
+<ul class="table-info-list">
+  <li>Calcular <strong>probabilidades acumuladas</strong> o “áreas bajo la curva” normal estándar.</li>
+  <li>Determinar <strong>intervalos de confianza</strong> y <strong>niveles de significancia</strong> en pruebas z.</li>
+  <li>Comparar valores observados con la media de una población conocida.</li>
+</ul>
+<p class="table-info">
+  Se aplica cuando la población tiene una distribución normal y se conoce su desviación estándar \( σ \).
+</p>
+
+
+      <div class="calc-box">
+        <label>Ingrese valor Z:</label>
+        <input type="number" id="zInput" step="0.01" placeholder="Ej: 1.23">
+        <button id="buscarZ">Buscar área</button>
+        <p id="resultadoZ"></p>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="tablaZ">
+          <thead>
+            <tr>
+              <th>z</th>
+              <th>.00</th><th>.01</th><th>.02</th><th>.03</th><th>.04</th>
+              <th>.05</th><th>.06</th><th>.07</th><th>.08</th><th>.09</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- === PANEL T === -->
+    <section id="panel-t" class="tab-panel">
+      <h2>📊 Tabla t de Student</h2>
+      <div class="formula-box">$$ t = \frac{\bar{X} - μ}{S / \sqrt{n}} $$</div>
+
+      <p class="table-info">
+  La <strong>Tabla t de Student</strong> se emplea para calcular probabilidades o valores críticos de la 
+  <strong>distribución t</strong>, utilizada cuando se trabaja con <strong>muestras pequeñas</strong> 
+  (\( n < 30 \)) o cuando la <strong>desviación estándar de la población es desconocida</strong>.
+</p>
+<p class="table-info">
+  Es esencial para:
+</p>
+<ul class="table-info-list">
+  <li>Calcular <strong>intervalos de confianza</strong> para la media cuando \( σ \) no se conoce.</li>
+  <li>Realizar <strong>pruebas de hipótesis</strong> para una o dos muestras pequeñas.</li>
+  <li>Comparar medias entre grupos o condiciones.</li>
+</ul>
+<p class="table-info">
+  Su forma depende de los <strong>grados de libertad (ν = n - 1)</strong>, lo que la hace más ancha 
+  que la distribución normal, reflejando la incertidumbre por muestras pequeñas.
+</p>
+
+
+      <div class="calc-box">
+        <label>Grados de libertad (ν):</label>
+        <input type="number" id="vInput" min="1" max="120" step="1" placeholder="Ej: 10">
+        <label>α:</label>
+        <select id="alphaT">
+          <option value="0.10">0.10</option>
+          <option value="0.05" selected>0.05</option>
+          <option value="0.025">0.025</option>
+          <option value="0.01">0.01</option>
+        </select>
+        <button id="buscarT">Buscar valor crítico</button>
+        <p id="resultadoT"></p>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="tablaT">
+          <thead>
+            <tr><th>ν</th><th>0.10</th><th>0.05</th><th>0.025</th><th>0.01</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- === PANEL CHI === -->
+    <section id="panel-chi" class="tab-panel">
+      <h2>🧮 Tabla χ² — Chi-cuadrado</h2>
+      <div class="formula-box">$$ χ² = \frac{(O - E)^2}{E} $$</div>
+
+      <p class="table-info">
+  La <strong>Tabla χ² (Chi-cuadrado)</strong> se utiliza para comparar <strong>frecuencias observadas</strong> con 
+  <strong>frecuencias esperadas</strong> en datos categóricos, determinando si existe una diferencia significativa.
+</p>
+<p class="table-info">
+  Es la base de varios contrastes estadísticos:
+</p>
+<ul class="table-info-list">
+  <li><strong>Prueba de bondad de ajuste:</strong> verifica si los datos se ajustan a una distribución teórica.</li>
+  <li><strong>Prueba de independencia:</strong> evalúa si dos variables categóricas están relacionadas.</li>
+  <li><strong>Prueba de homogeneidad:</strong> analiza si distintas poblaciones presentan el mismo comportamiento.</li>
+</ul>
+<p class="table-info">
+  La distribución χ² depende de los <strong>grados de libertad (ν)</strong> y es siempre <strong>asimétrica</strong>, 
+  con valores positivos que aumentan con la dispersión de los datos.
+</p>
+
+
+      <div class="calc-box">
+        <label>Grados de libertad (ν):</label>
+        <input type="number" id="vChi" min="1" max="30" step="1" placeholder="Ej: 5">
+        <label>α:</label>
+        <select id="alphaChi">
+          <option value="0.10">0.10</option>
+          <option value="0.05" selected>0.05</option>
+          <option value="0.025">0.025</option>
+          <option value="0.01">0.01</option>
+        </select>
+        <button id="buscarChi">Buscar valor crítico</button>
+        <p id="resultadoChi"></p>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="tablaChi">
+          <thead>
+            <tr><th>ν</th><th>0.10</th><th>0.05</th><th>0.025</th><th>0.01</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <!-- === SCRIPT === -->
+  <script>
+  /* ==== CAMBIO DE PESTAÑAS ==== */
+  const tabBtns = document.querySelectorAll(".tab-btn");
+  const panels = document.querySelectorAll(".tab-panel");
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      tabBtns.forEach(b => b.classList.remove("active"));
+      panels.forEach(p => p.classList.remove("active"));
+      btn.classList.add("active");
+      document.querySelector(`#panel-${btn.dataset.tab}`).classList.add("active");
+    });
+  });
+
+  /* ==== TABLA Z ==== */
+  const tablaZDatos = {
+    "0.0": [0.0000,0.0040,0.0080,0.0120,0.0160,0.0199,0.0239,0.0279,0.0319,0.0359],
+    "0.1": [0.0398,0.0438,0.0478,0.0517,0.0557,0.0596,0.0636,0.0675,0.0714,0.0753],
+    "0.2": [0.0793,0.0832,0.0871,0.0910,0.0948,0.0987,0.1026,0.1064,0.1103,0.1141],
+    "0.3": [0.1179,0.1217,0.1255,0.1293,0.1331,0.1368,0.1406,0.1443,0.1480,0.1517],
+    "0.4": [0.1554,0.1591,0.1628,0.1664,0.1700,0.1736,0.1772,0.1808,0.1844,0.1879],
+    "0.5": [0.1915,0.1950,0.1985,0.2019,0.2054,0.2088,0.2123,0.2157,0.2190,0.2224],
+    "0.6": [0.2257,0.2291,0.2324,0.2357,0.2389,0.2422,0.2454,0.2486,0.2517,0.2549],
+    "0.7": [0.2580,0.2611,0.2642,0.2673,0.2703,0.2734,0.2764,0.2794,0.2823,0.2852],
+    "0.8": [0.2881,0.2910,0.2939,0.2967,0.2995,0.3023,0.3051,0.3078,0.3106,0.3133],
+    "0.9": [0.3159,0.3186,0.3212,0.3238,0.3264,0.3289,0.3315,0.3340,0.3365,0.3389],
+    "1.0": [0.3413,0.3438,0.3461,0.3485,0.3508,0.3531,0.3554,0.3577,0.3599,0.3621],
+    "1.1": [0.3643,0.3665,0.3686,0.3708,0.3729,0.3749,0.3770,0.3790,0.3810,0.3830],
+    "1.2": [0.3849,0.3869,0.3888,0.3907,0.3925,0.3944,0.3962,0.3980,0.3997,0.4015],
+    "1.3": [0.4032,0.4049,0.4066,0.4082,0.4099,0.4115,0.4131,0.4147,0.4162,0.4177]
+  };
+
+  const tbodyZ = document.querySelector("#tablaZ tbody");
+  for (const z in tablaZDatos) {
+    const fila = document.createElement("tr");
+    fila.innerHTML = `<td>${z}</td>` + tablaZDatos[z].map(v => `<td>${v.toFixed(4)}</td>`).join("");
+    tbodyZ.appendChild(fila);
+  }
+
+  document.querySelector("#buscarZ").addEventListener("click", () => {
+    const z = parseFloat(document.querySelector("#zInput").value);
+    const resultado = document.querySelector("#resultadoZ");
+    if (isNaN(z)) return resultado.textContent = "Ingrese un valor válido.";
+    const fila = Math.floor(z * 10) / 10;
+    const col = Math.round((z - fila) * 100);
+    const valores = tablaZDatos[fila.toFixed(1)];
+    if (valores && valores[col]) {
+      resultado.textContent = `Área desde 0 hasta z = ${z.toFixed(2)} → ${valores[col].toFixed(4)}`;
+    } else resultado.textContent = "Valor fuera del rango de la tabla.";
+  });
+
+  /* ==== TABLA T ==== */
+  const tablaTDatos = {
+    1: [3.078, 6.314, 12.706, 31.821],
+    2: [1.886, 2.920, 4.303, 6.965],
+    5: [1.476, 2.015, 2.571, 3.365],
+    10: [1.372, 1.812, 2.228, 2.764],
+    20: [1.325, 1.725, 2.086, 2.528],
+    30: [1.310, 1.697, 2.042, 2.457],
+    120: [1.289, 1.658, 1.980, 2.358],
+    "∞": [1.282, 1.645, 1.960, 2.326]
+  };
+
+  const tbodyT = document.querySelector("#tablaT tbody");
+  for (const v in tablaTDatos) {
+    const fila = document.createElement("tr");
+    fila.innerHTML = `<td>${v}</td>` + tablaTDatos[v].map(vv => `<td>${vv}</td>`).join("");
+    tbodyT.appendChild(fila);
+  }
+
+  document.querySelector("#buscarT").addEventListener("click", () => {
+    const v = document.querySelector("#vInput").value;
+    const a = document.querySelector("#alphaT").value;
+    const resultado = document.querySelector("#resultadoT");
+    const col = { "0.10": 0, "0.05": 1, "0.025": 2, "0.01": 3 }[a];
+    if (tablaTDatos[v]) {
+      resultado.textContent = `t crítico (ν=${v}, α=${a}) = ${tablaTDatos[v][col]}`;
+    } else resultado.textContent = "Valor fuera del rango.";
+  });
+
+  /* ==== TABLA CHI ==== */
+  const tablaChiDatos = {
+    1: [2.706, 3.841, 5.024, 6.635],
+    2: [4.605, 5.991, 7.378, 9.210],
+    5: [9.236, 11.070, 12.833, 15.086],
+    10: [15.987, 18.307, 20.483, 23.209],
+    20: [28.412, 31.410, 34.170, 37.566],
+    30: [40.256, 43.773, 46.979, 50.892]
+  };
+
+  const tbodyChi = document.querySelector("#tablaChi tbody");
+  for (const v in tablaChiDatos) {
+    const fila = document.createElement("tr");
+    fila.innerHTML = `<td>${v}</td>` + tablaChiDatos[v].map(vv => `<td>${vv}</td>`).join("");
+    tbodyChi.appendChild(fila);
+  }
+
+  document.querySelector("#buscarChi").addEventListener("click", () => {
+    const v = document.querySelector("#vChi").value;
+    const a = document.querySelector("#alphaChi").value;
+    const resultado = document.querySelector("#resultadoChi");
+    const col = { "0.10": 0, "0.05": 1, "0.025": 2, "0.01": 3 }[a];
+    if (tablaChiDatos[v]) {
+      resultado.textContent = `χ² crítico (ν=${v}, α=${a}) = ${tablaChiDatos[v][col]}`;
+    } else resultado.textContent = "Valor fuera del rango.";
+  });
+  </script>
+</body>
+</html>

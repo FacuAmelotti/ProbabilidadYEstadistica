@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unidad 4: Modelos de Probabilidad Continua</title>
+  <link rel="icon" type="image/png" href="../../src/img/logo.png">
+  <link rel="stylesheet" href="../css/base.css">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+    <style>
+        
+/* Layout principal */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+                            padding: 120px 10px 20px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar de navegación */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 2px 2px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border-left: 2px solid transparent;
+        }
+
+        .nav-item a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-item a.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: #ffffff;
+        }
+
+        /* Contenido principal */
+        .content-wrapper {
+            max-width: 1200px;
+        }
+
+
+        .page-header {
+            margin-bottom: 60px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #ffffff;
+        }
+
+        .breadcrumb-separator {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        /* Secciones de contenido */
+        .content-section {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+            opacity: 0.8;
+        }
+
+        .section-content {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 20px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .section-content strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Listas */
+        .content-section ul,
+        .content-section ol {
+            margin: 20px 0;
+            padding-left: 25px;
+        }
+
+        .content-section li {
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Ejemplos */
+        .example-box {
+            background: rgba(120, 119, 198, 0.1);
+            border-left: 3px solid rgba(120, 119, 198, 0.5);
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: rgba(120, 119, 198, 1);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Fórmulas */
+        .formula-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Destacados */
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+        }
+
+        .highlight-box h4 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* Grid de conceptos */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .concept-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .concept-card h4 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .concept-card p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Botones de navegación */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-button {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #ffffff, #e0e0e0);
+            color: #000000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-button.secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 100px 30px 40px;
+            }
+
+            .sidebar {
+                position: static;
+                top: auto;
+            }
+
+            .content-wrapper {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                padding: 100px 20px 40px;
+            }
+
+            .section-content {
+                padding: 25px 20px;
+            }
+
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Tabla */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        td {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="" class="logo">PyE - Unidad 4</a>
+      <ul class="nav-menu">
+        <li><a href="../temario.html" class="nav-link">Temario</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="scroll-progress-bar"></div>
+
+  <div class="main-layout">
+
+    <!-- Contenido principal -->
+    <main class="content-wrapper">
+      <header class="page-header">
+        <nav class="breadcrumb">
+          <a href="../../index.html">Inicio</a>
+          <span class="breadcrumb-separator">›</span>
+          <a href="../temario.html">Temario</a>
+          <span class="breadcrumb-separator">›</span>
+          <span>Unidad 4</span>
+        </nav>
+<h1 class="page-title">Modelos de Probabilidad Continua</h1>
+<p class="page-description">
+  En esta unidad se estudian las <strong>distribuciones de probabilidad continua</strong>, 
+  donde las variables aleatorias pueden tomar un número infinito de valores posibles dentro de un intervalo.  
+  Se analizan funciones de densidad, cálculo de probabilidades mediante integración, y las 
+  <strong>distribuciones Uniforme y Exponencial</strong> como casos representativos, junto con su relación con la 
+  <strong>distribución de Poisson</strong>.
+</p>
+
+      </header>
+<!-- Distribución Uniforme -->
+<section id="uniforme" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📏</span>Distribución Uniforme Continua</h2>
+  <div class="section-content">
+    <p>
+      Una variable aleatoria continua \( X \) tiene <strong>distribución uniforme</strong> en el intervalo \([a,b]\),
+      con \( a < b \), si su <strong>función de densidad de probabilidad</strong> (fdp) es:
+    </p>
+
+    <div class="formula-box">
+      $$f(x) =
+      \begin{cases}
+      \frac{1}{b - a}, & a \le x \le b \\
+      0, & \text{caso contrario}
+      \end{cases}$$
+    </div>
+
+    <p>Se denota como:</p>
+    <div class="formula-box">
+      $$X \sim U(a,b)$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>Propiedades</h4>
+      <ul>
+        <li>\( f(x) \ge 0 \) para todo \( x \).</li>
+        <li>\( \int_{-\infty}^{\infty} f(x)\,dx = 1 \).</li>
+      </ul>
+      <p>Verificación:</p>
+      <div class="formula-box">
+        $$\int_a^b \frac{1}{b-a} dx = \frac{x}{b-a} \bigg|_a^b = \frac{b-a}{b-a} = 1$$
+      </div>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo — Espera del colectivo</div>
+      <p>
+        Los colectivos de una línea llegan cada 15 minutos, comenzando a las 7:00 am.  
+        Si un pasajero llega en cualquier momento entre las 7:00 y las 7:30, se tiene:
+      </p>
+      <div class="formula-box">
+        $$X \sim U(0, 30)$$
+      </div>
+      <ul>
+        <li>Probabilidad de esperar <strong>menos de 5 minutos</strong>: \( P(10 \le X \le 15) + P(25 \le X \le 30) \)</li>
+        <li>Probabilidad de esperar <strong>más de 10 minutos</strong>: \( P(0 \le X \le 5) + P(15 \le X \le 20) \)</li>
+      </ul>
+
+      <div class="formula-box">
+        $$P = \frac{(15 - 10) + (30 - 25)}{30 - 0} = \frac{10}{30} = \frac{1}{3}$$
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Esperanza y Varianza</h4>
+      <div class="formula-box">
+        $$E[X] = \frac{a + b}{2}, \quad V[X] = \frac{(b - a)^2}{12}$$
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Demostración simplificada de la varianza</h4>
+      <div class="formula-box">
+        $$E[X] = \int_a^b \frac{x}{b - a} dx = \frac{b^2 - a^2}{2(b - a)} = \frac{a + b}{2}$$
+      </div>
+      <div class="formula-box">
+        $$E[X^2] = \int_a^b \frac{x^2}{b - a} dx = \frac{b^3 - a^3}{3(b - a)}$$
+      </div>
+      <p>
+        Entonces:
+        $$V[X] = E[X^2] - [E[X]]^2 = \frac{(b - a)^2}{12}$$
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Distribución Exponencial -->
+<section id="exponencial" class="content-section">
+  <h2 class="section-title"><span class="section-icon">⏱️</span>Distribución Exponencial</h2>
+  <div class="section-content">
+    <p>
+      Una variable aleatoria continua \( X \) tiene <strong>distribución exponencial</strong> con parámetro \( \lambda > 0 \)
+      si su función de densidad de probabilidad es:
+    </p>
+
+    <div class="formula-box">
+      $$f(x) =
+      \begin{cases}
+      \lambda e^{-\lambda x}, & x \ge 0 \\
+      0, & \text{caso contrario}
+      \end{cases}$$
+    </div>
+
+    <p>Se denota como:</p>
+    <div class="formula-box">
+      $$X \sim E(\lambda)$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>Propiedades</h4>
+      <div class="formula-box">
+        $$E[X] = \frac{1}{\lambda}, \quad V[X] = \frac{1}{\lambda^2}$$
+      </div>
+      <p>Modela tiempos de espera o duración de eventos hasta la primera ocurrencia.</p>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo — Tiempo de respuesta</div>
+      <p>
+        Supongamos que el tiempo de respuesta (en segundos) de una terminal sigue una distribución \( X \sim E(0.2) \).
+      </p>
+      <ul>
+        <li>\( P(X \le 10) = 1 - e^{-0.2(10)} = 1 - e^{-2} = 0.86 \)</li>
+        <li>\( P(5 \le X \le 10) = e^{-1} - e^{-2} = 0.23 \)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Relación entre Exponencial y Poisson -->
+<section id="relacion-exponencial-poisson" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🔗</span>Relación entre Distribución Exponencial y Poisson</h2>
+  <div class="section-content">
+    <p>
+      Si los eventos siguen un <strong>proceso de Poisson</strong> con parámetro \( \lambda \), y definimos
+      \( T \) como el <strong>tiempo de espera</strong> hasta el siguiente evento, entonces:
+    </p>
+
+    <div class="formula-box">
+      $$P(T > t) = P(X = 0) = e^{-\lambda t}$$
+    </div>
+
+    <p>Por tanto:</p>
+    <div class="formula-box">
+      $$P(T \le t) = 1 - e^{-\lambda t}$$
+    </div>
+
+    <p>
+      Esto corresponde a la <strong>función de distribución acumulada (FDA)</strong> de una variable exponencial.
+      Es decir, \( T \sim E(\lambda) \).
+    </p>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo — Inundaciones</div>
+      <p>
+        Sea \( X \): número de inundaciones en un periodo \([0, t]\) con \( X \sim P(\lambda t) \).
+      </p>
+      <ul>
+        <li>El número medio de inundaciones en ese tiempo es \( E[X] = \lambda t \).</li>
+        <li>El tiempo entre inundaciones se modela como \( T \sim E(\lambda) \).</li>
+        <li>El tiempo medio de retorno es \( E[T] = 1 / \lambda \).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- Distribución Normal -->
+<section id="normal" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📈</span>Distribución Normal (Gaussiana)</h2>
+  <div class="section-content">
+    <p>
+      Sea \( X \) una variable aleatoria continua. Decimos que tiene <strong>distribución normal</strong> con parámetros 
+      \( \mu \) y \( \sigma \) si su <strong>función de densidad de probabilidad</strong> es:
+    </p>
+
+    <div class="formula-box">
+      $$f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma}\right)^2}, 
+      \quad \mu \in \mathbb{R}, \ \sigma > 0$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>Observaciones</h4>
+      <ul>
+        <li>El gráfico es <strong>simétrico</strong> alrededor de \( \mu \).</li>
+        <li>El parámetro \( \mu \) representa la <strong>posición</strong> (traslada la curva).</li>
+        <li>El parámetro \( \sigma \) controla la <strong>escala o ancho</strong> de la curva.</li>
+      </ul>
+    </div>
+
+    <p>
+      Se denota como:
+    </p>
+    <div class="formula-box">
+      $$X \sim N(\mu, \sigma^2)$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>Esperanza y Varianza</h4>
+      <div class="formula-box">
+        $$E[X] = \mu, \quad V[X] = \sigma^2$$
+      </div>
+    </div>
+
+    <h3 class="section-subtitle">Distribución Normal Estándar</h3>
+    <p>
+      Si \( \mu = 0 \) y \( \sigma = 1 \), se dice que \( X \) sigue una 
+      <strong>distribución normal estándar</strong>:
+    </p>
+    <div class="formula-box">
+      $$X \sim N(0,1)$$
+    </div>
+
+    <p>
+      Su función de densidad y distribución acumulada son:
+    </p>
+
+    <div class="formula-box">
+      $$\varphi(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2 / 2}, \qquad 
+      \Phi(x) = P(X \le x) = \int_{-\infty}^{x} \varphi(t) \, dt$$
+    </div>
+
+    <p>
+      La integral de \( \Phi(x) \) no puede expresarse en términos de funciones elementales. 
+      Por ello, se utilizan <strong>tablas de valores</strong> de \( \Phi(x) \) para aproximar probabilidades.
+    </p>
+
+    <div class="highlight-box">
+      <h4>Propiedades útiles</h4>
+      <ul>
+        <li>\( \Phi(-x) = 1 - \Phi(x) \)</li>
+        <li>Para \( x < -4 \Rightarrow \Phi(x) \approx 0 \)</li>
+        <li>Para \( x > 4 \Rightarrow \Phi(x) \approx 1 \)</li>
+      </ul>
+    </div>
+
+    <h3 class="section-subtitle">Ejemplos con tabla de la Normal Estándar</h3>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo 1</div>
+      <p>\( P(X \le 1.26) = \Phi(1.26) = 0.89616 \)</p>
+      <p>\( P(X > 1.26) = 1 - \Phi(1.26) = 0.10384 \)</p>
+      <p>\( P(X > -1.37) = P(X \le 1.37) = \Phi(1.37) = 0.91465 \)</p>
+      <p>
+        \( P(-1.25 < X < 0.37) = \Phi(0.37) - \Phi(-1.25) 
+        = \Phi(0.37) - [1 - \Phi(1.25)] = 0.53866 \)
+      </p>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo 2</div>
+      <p>Para qué valor de \( x \) se cumple \( P(-x < X < x) = 0.95 \):</p>
+      <div class="formula-box">
+        $$2\Phi(x) - 1 = 0.95 \Rightarrow \Phi(x) = 0.975 \Rightarrow x = 1.96$$
+      </div>
+    </div>
+
+    <h3 class="section-subtitle">Transformación Lineal y Estandarización</h3>
+
+    <p>
+      Si \( X \sim N(\mu, \sigma^2) \) y \( Y = aX + b \), entonces:
+    </p>
+
+    <div class="formula-box">
+      $$Y \sim N(a\mu + b, a^2\sigma^2)$$
+    </div>
+
+    <p>
+      En particular, al definir:
+    </p>
+
+    <div class="formula-box">
+      $$Z = \frac{X - \mu}{\sigma} \Rightarrow Z \sim N(0,1)$$
+    </div>
+
+    <p>
+      Se tiene entonces la relación:
+    </p>
+    <div class="formula-box">
+      $$P(X \le x) = P\left(Z \le \frac{x - \mu}{\sigma}\right) = \Phi\left(\frac{x - \mu}{\sigma}\right)$$
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo 3 — Normalización</div>
+      <p>
+        Si \( X \sim N(3, 9) \), es decir \( \mu = 3, \sigma = 3 \):
+      </p>
+      <ul>
+        <li>
+          \( P(2 < X < 5) = \Phi(2/3) - \Phi(-1/3) 
+          = \Phi(2/3) - [1 - \Phi(1/3)] = 0.3779 \)
+        </li>
+        <li>
+          \( P(X > 0) = \Phi(1) = 0.8413 \)
+        </li>
+        <li>
+          \( P(|X - 3| > 6) = 2[1 - \Phi(2)] = 0.0456 \)
+        </li>
+      </ul>
+    </div>
+
+    <div class="example-box">
+      <div class="example-title">Ejemplo 4 — Máquinas de corchos</div>
+      <p>
+        Se comparan dos máquinas que producen corchos con diámetros normales:
+      </p>
+      <ul>
+        <li>\( X \sim N(3, 0.1^2) \)</li>
+        <li>\( Y \sim N(3.04, 0.02^2) \)</li>
+      </ul>
+      <p>
+        Corchos aceptables: \( 2.9 \le d \le 3.1 \)
+      </p>
+      <p>
+        Para la máquina 1:
+        \( P(2.9 \le X \le 3.1) = 2\Phi(1) - 1 = 0.683 \)
+      </p>
+      <p>
+        Para la máquina 2:
+        \( P(2.9 \le Y \le 3.1) = \Phi(3) - \Phi(-7) = \Phi(3) = 0.99 \)
+      </p>
+      <p>
+        <strong>Conclusión:</strong> la máquina 2 tiene mayor probabilidad de producir corchos aceptables.
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>Regla práctica</h4>
+      <p>
+        Cualquier situación donde intervengan muchos factores aleatorios independientes tiende a 
+        seguir una <strong>distribución normal</strong>.
+      </p>
+      <p>
+        Ejemplo: diferencias entre valores medidos o muestreados de una misma población.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Distribución Chi-Cuadrado -->
+<section id="chi-cuadrado" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📊</span>Distribución Chi-Cuadrado (χ²)</h2>
+  <div class="section-content">
+    <p>
+      Recordemos que \( S^2 \) es la <strong>varianza muestral</strong>, la cual se usa para estimar la varianza poblacional \( \sigma^2 \)
+      de una distribución normal. Se define como:
+    </p>
+
+    <div class="formula-box">
+      $$S^2 = \frac{\sum_{i=1}^{n}(x_i - \overline{X})^2}{n - 1}$$
+    </div>
+
+    <p>
+      Para evaluar qué tan buena es esta estimación de \( \sigma^2 \), se utiliza el
+      <strong>estadístico Chi-Cuadrado (χ²)</strong>:
+    </p>
+
+    <div class="formula-box">
+      $$\chi^2 = \frac{(n - 1) S^2}{\sigma^2}, \quad \nu = n - 1 \text{ (grados de libertad)}$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>Observaciones</h4>
+      <ul>
+        <li>Los valores posibles de \( \chi^2 \) son siempre \( \ge 0 \).</li>
+        <li>La distribución depende del número de grados de libertad \( \nu \).</li>
+        <li>No es simétrica; tiene una forma sesgada hacia la derecha.</li>
+      </ul>
+    </div>
+
+    <p>
+      La variable \( \chi^2 \) puede considerarse una versión estandarizada de la varianza muestral.
+      Si los datos provienen de una población normal:
+    </p>
+
+    <div class="formula-box">
+      $$X \sim N(\mu, \sigma^2) \Rightarrow Z \sim N(0, 1)$$
+    </div>
+
+    <h3 class="section-subtitle">Ejemplo</h3>
+    <p>
+      Sea una muestra aleatoria de tamaño \( n = 25 \) proveniente de una población normal con \( \sigma^2 = 6 \).  
+      Se desea calcular la probabilidad de que la varianza muestral sea:
+    </p>
+    <ul>
+      <li>Mayor que \( 9.1 \)</li>
+      <li>Entre \( 3.462 \) y \( 10.745 \)</li>
+    </ul>
+
+    <div class="formula-box">
+      \[
+      P(S^2 > 9.1) = P\left(\chi^2 > \frac{(25 - 1)(9.1)}{6}\right)
+      = P(\chi^2 > 36.4) = 1 - P(\chi^2 \le 36.4) = 0.05
+      \]
+    </div>
+
+    <div class="formula-box">
+      \[
+      P(3.462 \le S^2 \le 10.745) =
+      P(13.84 \le \chi^2 \le 42.98) =
+      P(\chi^2 \le 42.98) - P(\chi^2 \le 13.84) = 0.95 - 0.01 = 0.94
+      \]
+    </div>
+  </div>
+</section>
+
+<!-- Distribución t de Student -->
+<section id="t-student" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📉</span>Distribución t de Student</h2>
+  <div class="section-content">
+    <p>
+      Cuando se estima la media poblacional \( \mu \) a partir de una muestra pequeña y la varianza \( \sigma^2 \)
+      es <strong>desconocida</strong>, se utiliza la <strong>distribución t de Student</strong>.
+    </p>
+
+    <p>
+      Recordemos que la media muestral se define como:
+    </p>
+
+    <div class="formula-box">
+      $$\overline{X} = \frac{\sum_{i=1}^{n} x_i}{n}$$
+    </div>
+
+    <p>
+      Si \( \sigma \) es conocida, entonces:
+    </p>
+
+    <div class="formula-box">
+      $$Z = \frac{\overline{X} - \mu}{\sigma / \sqrt{n}}$$
+    </div>
+
+    <p>
+      Pero si \( \sigma \) es desconocida, se reemplaza por \( S \) y se obtiene el estadístico t:
+    </p>
+
+    <div class="formula-box">
+      $$T = \frac{\overline{X} - \mu}{S / \sqrt{n}}$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>Observaciones</h4>
+      <ul>
+        <li>Tiene forma de campana, centrada en el origen.</li>
+        <li>Es más ancha que la distribución normal estándar.</li>
+        <li>Al aumentar los grados de libertad \( \nu = n - 1 \), se asemeja más a \( N(0,1) \).</li>
+      </ul>
+    </div>
+
+    <h3 class="section-subtitle">Ejemplo</h3>
+    <p>
+      Calcular \( k \) tal que \( P(k < T < -1.761) = 0.045 \) para una muestra de tamaño \( n = 15 \)
+      (grados de libertad \( \nu = 14 \)).
+    </p>
+
+    <div class="formula-box">
+      \[
+      t_{0.05,14} = 1.761 \Rightarrow -t_{0.05} = -1.761
+      \]
+      \[
+      0.045 = 0.05 - \alpha \Rightarrow \alpha = 0.005
+      \]
+      \[
+      k = -t_{0.005,14} = -2.977
+      \]
+    </div>
+
+    <p>
+      Por tanto:
+      \( P(-2.977 < T < 2.977) = 0.045 \)
+    </p>
+
+    <div class="highlight-box">
+      <h4>Conclusión</h4>
+      <p>
+        La distribución t-Student se utiliza para inferencias sobre medias con varianza desconocida y 
+        tamaños muestrales pequeños.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="tablas-z" class="content-section">
+      <h2 class="section-title">
+    <span class="section-icon">🟡</span>Herramientas Interactivas — Tablas Estadísticas
+  </h2>
+  <div class="info-gold">
+    <p>
+      Consultá de forma dinámica los valores de las principales <strong>tablas estadísticas</strong> 
+      utilizadas en probabilidad e inferencia: Normal (Z), t-Student y Chi-Cuadrado.  
+      Cada herramienta permite ingresar un valor y obtener su probabilidad asociada al instante.
+    </p>
+
+
+    <div style="text-align:center;">
+      <a href="../tablas.html" 
+         class="nav-button">
+        🔗 Ir a "Tablas Estadísticas Interactivas"
+      </a>
+    </div>
+  </div>
+</section>
+
+
+      <!-- Resumen -->
+      <section id="resumen" class="content-section">
+        <h2 class="section-title"><span class="section-icon">📋</span>Resumen General</h2>
+        <div class="section-content">
+          <ul>
+            <li>Las variables aleatorias representan numéricamente los resultados de un experimento.</li>
+            <li>Las <strong>discretas</strong> toman valores finitos o contables, y se describen mediante una <strong>función de probabilidad</strong>.</li>
+            <li>La <strong>función de distribución acumulada</strong> resume la probabilidad acumulada hasta un punto.</li>
+            <li>La <strong>media</strong> y <strong>varianza</strong> describen el comportamiento promedio y la dispersión.</li>
+            <li>Modelos discretos importantes: Bernoulli, Binomial, Poisson, Geométrica, Hipergeométrica.</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Navegación -->
+      <div class="navigation-buttons">
+        <a href="./cap3.html" class="nav-button secondary">← Unidad 3</a>
+        <a href="./cap5.html" class="nav-button">Unidad 5 →</a>
+      </div>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-title">Unidad 3</div>
+      <ul class="nav-list">
+  <li class="nav-item"><a href="#uniforme">Distribución Uniforme</a></li>
+  <li class="nav-item"><a href="#exponencial">Distribución Exponencial</a></li>
+  <li class="nav-item"><a href="#relacion-exponencial-poisson">Relación Exponencial–Poisson</a></li>
+    <li class="nav-item"><a href="#normal">Distribución Normal (Gaussiana)</a></li>
+    <li class="nav-item"><a href="#chi-cuadrado">Distribución Chi-Cuadrado (χ²)</a></li>
+<li class="nav-item"><a href="#t-student">Distribución t de Student</a></li>
+<li class="nav-item"><a href="#resumen">Resumen del Capítulo</a></li>
+
+
+</ul>
+
+    </aside>
+  </div>
+
+  <script>
+    // Sidebar activo y scroll suave
+    const sections = document.querySelectorAll('.content-section');
+    const navLinks = document.querySelectorAll('.nav-item a');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${id}`) link.classList.add('active');
+          });
+        }
+      });
+    }, { rootMargin: '-100px 0px -70% 0px' });
+    sections.forEach(section => observer.observe(section));
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+      <script>
+  // 🔹 Barra de progreso scroll
+  const progressBar = document.querySelector('.scroll-progress-bar');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    progressBar.style.width = `${scrollPercent}%`;
+  });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // 🔹 Agregar checkbox de estudio a cada sección
+  document.querySelectorAll('.content-section').forEach(section => {
+    const id = section.id;
+    const checkDiv = document.createElement('div');
+    checkDiv.className = 'study-check';
+    checkDiv.innerHTML = `
+      <input type="checkbox" class="study-checkbox" id="check-${id}">
+      <label for="check-${id}">Estudiado</label>
+    `;
+    const content = section.querySelector('.section-content');
+    if (content) content.prepend(checkDiv);
+  });
+
+  // 🔹 Sincronizar checkbox con sidebar + localStorage
+  document.querySelectorAll('.study-checkbox').forEach(checkbox => {
+    const id = checkbox.id.replace('check-', '');
+    const key = `tema_estudiado_${id}`;
+    const section = document.getElementById(id);
+    const navLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+    const saved = localStorage.getItem(key);
+
+    // Restaurar estado guardado
+    if (saved === 'true') {
+      checkbox.checked = true;
+      section.classList.add('section-studied');
+      if (navLink) navLink.classList.add('studied');
+    }
+
+    // Escuchar cambios
+    checkbox.addEventListener('change', () => {
+      localStorage.setItem(key, checkbox.checked);
+      if (checkbox.checked) {
+        section.classList.add('section-studied');
+        if (navLink) navLink.classList.add('studied');
+      } else {
+        section.classList.remove('section-studied');
+        if (navLink) navLink.classList.remove('studied');
+      }
+    });
+  });
+});
+</script>
+<!-- 🔢 MathJax para renderizar fórmulas -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' },
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+</body>
+</html>

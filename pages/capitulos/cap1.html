@@ -324,7 +324,161 @@
   font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", sans-serif !important;
   filter: drop-shadow(0 0 2px rgba(255,255,255,0.3));
 }
-
+   .container {
+      max-width: 1400px;
+      width: 100%;
+    }
+    .main-layout {
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 20px;
+      align-items: start;
+    }
+    @media (max-width: 968px) {
+      .main-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    .subtitle {
+      text-align: center;
+      margin-bottom: 30px;
+      opacity: 0.9;
+      font-size: 1.1em;
+    }
+    .venn-wrapper {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      margin-bottom: 30px;
+    }
+    #vennCanvas {
+      width: 100%;
+      height: 400px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 15px;
+      cursor: grab;
+      touch-action: none;
+      position: relative;
+    }
+    #vennCanvas:active {
+      cursor: grabbing;
+    }
+    .info-panel {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    .status-bar {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .status-item {
+      background: rgba(255,255,255,0.1);
+      padding: 10px 12px;
+      border-radius: 8px;
+      border-left: 3px solid;
+    }
+    .status-item.blue { border-color: #64a0ff; }
+    .status-item.red { border-color: #ff7a7a; }
+    .status-item.operation { border-color: #ffd700; }
+    .status-item h3 {
+      font-size: 0.75em;
+      opacity: 0.8;
+      margin-bottom: 3px;
+    }
+    .status-item .value {
+      font-size: 1.1em;
+      font-weight: bold;
+    }
+    .operations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .operation-card {
+      background: rgba(255,255,255,0.1);
+      padding: 15px;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+    }
+    .operation-card:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+    .operation-card h4 {
+      color: #ffd700;
+      margin-bottom: 8px;
+      font-size: 1.1em;
+    }
+    .operation-card p {
+      font-size: 0.95em;
+      line-height: 1.5;
+      opacity: 0.9;
+    }
+    .controls {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 15px;
+    }
+    button {
+      background: rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: #fff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.85em;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      flex: 1;
+      min-width: 120px;
+    }
+    button:hover {
+      background: rgba(255,255,255,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .highlight {
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      color: #333;
+      border: none;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .legend {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.5);
+    }
 
 </style>
 </head>
@@ -485,6 +639,66 @@
         </div>
         <div class="formula-caption">👉 Se lee: “La probabilidad de A o B es la suma de sus probabilidades si no se superponen”.</div>
 
+        <div class="info-blue">
+  <h3>🎲 Ejemplo — Eventos Mutuamente Excluyentes</h3>
+
+  <p>
+    Supongamos que lanzamos un <strong>dado justo de seis caras</strong> y definimos:
+  </p>
+
+  <ul>
+    <li><strong>A</strong> = “sale un número par” = {2, 4, 6}</li>
+    <li><strong>B</strong> = “sale un número impar” = {1, 3, 5}</li>
+  </ul>
+
+  <p>
+    Como un número no puede ser par e impar al mismo tiempo, 
+    <strong>los eventos A y B no pueden ocurrir simultáneamente</strong>.
+  </p>
+
+  <div class="formula-box">
+    \( A \cap B = \emptyset \quad \Rightarrow \quad P(A \cup B) = P(A) + P(B) \)
+  </div>
+
+  <p>
+    👉 Por lo tanto, A y B son <strong>eventos mutuamente excluyentes</strong>.
+  </p>
+
+  <div class="ej-table-wrapper">
+    <table class="ej-table">
+      <thead>
+        <tr>
+          <th>Situación</th>
+          <th>Evento A</th>
+          <th>Evento B</th>
+          <th>¿Excluyentes?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lanzar una moneda</td>
+          <td>Sale cara</td>
+          <td>Sale cruz</td>
+          <td>✅ Sí</td>
+        </tr>
+        <tr>
+          <td>Sacar una carta</td>
+          <td>Sale figura</td>
+          <td>Sale número</td>
+          <td>✅ Sí</td>
+        </tr>
+        <tr>
+          <td>Elegir una persona</td>
+          <td>Es mujer</td>
+          <td>Es zurda</td>
+          <td>❌ No</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
         <p>En un espacio equiprobable:</p>
         <div class="formula-box">$$P(A) = \frac{\#A}{\#S}$$</div>
         <div class="formula-caption">👉 Se lee: “Probabilidad de A es igual al número de casos favorables dividido el total de casos posibles”.</div>
@@ -508,6 +722,81 @@
     una probabilidad igual de \( \tfrac{1}{6} \).  
     Por eso el dado se considera un experimento equiprobable.
   </p>
+
+  <div class="info-blue">
+  <h3>⚖️ Ejemplo — Eventos Equiprobables</h3>
+
+  <p>
+    Se dice que los <strong>eventos son equiprobables</strong> cuando todos los resultados posibles de un experimento 
+    tienen la <strong>misma probabilidad de ocurrir</strong>.
+  </p>
+
+  <p>
+    Por ejemplo, al <strong>lanzar un dado justo</strong> de seis caras numeradas del 1 al 6:
+  </p>
+
+  <ul>
+    <li>El espacio muestral es: Ω = {1, 2, 3, 4, 5, 6}</li>
+    <li>Cada resultado tiene una probabilidad de \( \frac{1}{6} \)</li>
+  </ul>
+
+  <div class="formula-box">
+    \( P(1) = P(2) = P(3) = P(4) = P(5) = P(6) = \frac{1}{6} \)
+  </div>
+
+  <p>
+    Entonces, todos los eventos elementales son <strong>igualmente probables</strong>, es decir, 
+    ninguno tiene más posibilidad que otro.
+  </p>
+
+  <div class="highlight-box" style="background: rgba(120,200,255,0.08); border: 1px solid rgba(100,180,255,0.35);">
+    <h4>💡 Nota:</h4>
+    <p>
+      Si un dado estuviera cargado o una moneda sesgada, los resultados ya <strong>no serían equiprobables</strong>, 
+      porque algunos tendrían más probabilidad que otros.
+    </p>
+  </div>
+
+  <div class="ej-table-wrapper">
+    <table class="ej-table">
+      <thead>
+        <tr>
+          <th>Experimento</th>
+          <th>Espacio muestral (Ω)</th>
+          <th>Probabilidad de cada resultado</th>
+          <th>¿Equiprobables?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Lanzar un dado justo</td>
+          <td>{1, 2, 3, 4, 5, 6}</td>
+          <td>\( \frac{1}{6} \) cada uno</td>
+          <td>✅ Sí</td>
+        </tr>
+        <tr>
+          <td>Lanzar una moneda balanceada</td>
+          <td>{Cara, Cruz}</td>
+          <td>\( \frac{1}{2} \) cada uno</td>
+          <td>✅ Sí</td>
+        </tr>
+        <tr>
+          <td>Extraer una carta de una baraja</td>
+          <td>52 cartas</td>
+          <td>\( \frac{1}{52} \) cada una</td>
+          <td>✅ Sí</td>
+        </tr>
+        <tr>
+          <td>Moneda sesgada</td>
+          <td>{Cara, Cruz}</td>
+          <td>\( P(Cara)=0.7, P(Cruz)=0.3 \)</td>
+          <td>❌ No</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
 </div>
 
 
@@ -602,6 +891,75 @@
     <p>
       Interpreta \(P(A)\) como un <strong>grado de creencia</strong> que se actualiza con nueva evidencia mediante el teorema de Bayes.
     </p>
+
+    <div class="info-blue">
+  <h3>🎯 Ejemplo — Tipos de Probabilidad</h3>
+
+  <p>
+    Existen tres enfoques principales para asignar probabilidades a los eventos: 
+    <strong>clásico, frecuencial y subjetivo</strong>.  
+    Cada uno se usa en distintos contextos según la información disponible.
+  </p>
+
+  <div class="ej-table-wrapper">
+    <table class="ej-table">
+      <thead>
+        <tr>
+          <th>Tipo de probabilidad</th>
+          <th>Descripción</th>
+          <th>Ejemplo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Clásica</strong></td>
+          <td>
+            Se basa en la suposición de que <strong>todos los resultados son equiprobables</strong>.  
+            Se usa cuando conocemos el número total de casos posibles.
+          </td>
+          <td>
+            Al lanzar un dado justo, la probabilidad de obtener un “3” es  
+            \( P(3) = \frac{1}{6} \).
+          </td>
+        </tr>
+
+        <tr>
+          <td><strong>Frecuencial</strong></td>
+          <td>
+            Se calcula a partir de la <strong>frecuencia relativa</strong> observada en experimentos repetidos muchas veces.  
+            Cuanto mayor sea el número de repeticiones, más se aproxima al valor real.
+          </td>
+          <td>
+            Si lanzamos una moneda 1000 veces y sale “cara” 510 veces,  
+            \( P(\text{cara}) = \frac{510}{1000} = 0.51 \).
+          </td>
+        </tr>
+
+        <tr>
+          <td><strong>Subjetiva</strong></td>
+          <td>
+            Surge de la <strong>opinión o creencia personal</strong> sobre la ocurrencia de un evento, 
+            basada en experiencia, conocimiento o intuición.
+          </td>
+          <td>
+            Un meteorólogo estima que hay un 70% de probabilidad de lluvia mañana  
+            \( P(\text{lluvia}) = 0.7 \).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="highlight-box" style="background: rgba(120,200,255,0.08); border: 1px solid rgba(100,180,255,0.35);">
+    <h4>💡 En resumen:</h4>
+    <ul>
+      <li><strong>Clásica:</strong> se usa cuando todos los casos posibles son conocidos y equivalentes.</li>
+      <li><strong>Frecuencial:</strong> depende de la repetición del experimento.</li>
+      <li><strong>Subjetiva:</strong> se basa en el juicio o experiencia del observador.</li>
+    </ul>
+  </div>
+</div>
+
 
     <!-- Video explicativo -->
     <div class="video-box" style="margin-top: 40px;">
@@ -719,6 +1077,112 @@
   </div>
   <div class="formula-caption">👉 Se lee: “Probabilidad de Aₖ dado A es igual a su probabilidad previa multiplicada por la verosimilitud, dividida por la suma total”.</div>
 
+  <div class="info-blue">
+  <h3>🧠 Ejemplo — Teorema de Bayes</h3>
+
+  <p>
+    El <strong>Teorema de Bayes</strong> permite actualizar una probabilidad inicial (llamada 
+    <em>probabilidad a priori</em>) cuando se dispone de nueva información.  
+    Es decir, nos ayuda a calcular una <em>probabilidad a posteriori</em> con base en evidencia observada.
+  </p>
+
+  <div class="formula-box">
+    \( P(A|B) = \dfrac{P(B|A) \cdot P(A)}{P(B)} \)
+  </div>
+
+  <h4>🔹 Ejemplo práctico:</h4>
+
+  <p>
+    Una prueba médica se usa para detectar una enfermedad que afecta al 
+    <strong>1% de la población</strong>.
+  </p>
+
+  <ul>
+    <li>Si una persona <strong>está enferma (E)</strong>, la prueba da positivo el <strong>99%</strong> de las veces.<br>→ \( P(+|E) = 0.99 \)</li>
+    <li>Si una persona <strong>no está enferma (¬E)</strong>, la prueba da positivo el <strong>2%</strong> de las veces.<br>→ \( P(+|¬E) = 0.02 \)</li>
+  </ul>
+
+  <p>
+    Si una persona recibe un resultado positivo, queremos saber:
+    <strong>¿Cuál es la probabilidad de que realmente esté enferma?</strong>
+    Es decir, calcular \( P(E|+) \).
+  </p>
+
+  <div class="formula-box">
+    \( P(E|+) = \dfrac{P(+|E) \cdot P(E)}{P(+)} \)
+  </div>
+
+  <p>
+    Primero, calculamos \( P(+) \) —la probabilidad total de obtener un resultado positivo—  
+    considerando ambos casos (personas enfermas y sanas):
+  </p>
+
+  <div class="formula-box">
+    \( P(+) = P(+|E)P(E) + P(+|¬E)P(¬E) \)
+  </div>
+
+  <p>
+    Sustituyendo los valores:
+  </p>
+
+  <div class="formula-box">
+    \( P(+) = (0.99)(0.01) + (0.02)(0.99) = 0.0099 + 0.0198 = 0.0297 \)
+  </div>
+
+  <p>
+    Ahora aplicamos el teorema:
+  </p>
+
+  <div class="formula-box">
+    \( P(E|+) = \dfrac{(0.99)(0.01)}{0.0297} = \dfrac{0.0099}{0.0297} ≈ 0.333 \)
+  </div>
+
+  <p>
+    📊 <strong>Interpretación:</strong>  
+    Aunque la prueba tiene un 99% de precisión, si el resultado es positivo, la probabilidad de estar realmente enfermo es sólo del <strong>33.3%</strong>.  
+    Esto ocurre porque la enfermedad es poco frecuente (1%), y los falsos positivos influyen mucho más.
+  </p>
+
+  <div class="highlight-box" style="background: rgba(120,200,255,0.08); border: 1px solid rgba(100,180,255,0.35); margin-top: 25px;">
+    <h4>💡 En resumen:</h4>
+    <ul>
+      <li><strong>Probabilidad a priori:</strong> información previa (ej. 1% tiene la enfermedad).</li>
+      <li><strong>Evidencia:</strong> el resultado del test (positivo o negativo).</li>
+      <li><strong>Probabilidad a posteriori:</strong> probabilidad actualizada con la evidencia → \( P(E|+) = 33.3\% \).</li>
+    </ul>
+  </div>
+
+  <div class="ej-table-wrapper">
+    <table class="ej-table">
+      <thead>
+        <tr>
+          <th>Escenario</th>
+          <th>Evento</th>
+          <th>Probabilidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Persona enferma y test positivo</td>
+          <td>\( P(+|E) \cdot P(E) \)</td>
+          <td>0.0099</td>
+        </tr>
+        <tr>
+          <td>Persona sana y test positivo</td>
+          <td>\( P(+|¬E) \cdot P(¬E) \)</td>
+          <td>0.0198</td>
+        </tr>
+        <tr>
+          <td>Total de positivos</td>
+          <td>\( P(+) \)</td>
+          <td>0.0297</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
   <!-- 🎥 Video explicativo -->
   <div class="video-box">
     <iframe
@@ -769,13 +1233,241 @@
     <p style="margin-top: 20px;">
       Esto te da el <strong>"álgebra de eventos"</strong>, muy usado en ejercicios.
     </p>
-  </div>
+
 
   <div class="section-content">
         <img  src="../../src/img/visuales/cap1_3.png" alt="">
   </div>
-</section>
 
+  <div class="container">
+    <h1>🎯 Diagrama de Venn Interactivo</h1>
+    <p class="subtitle">Arrastrá los círculos para explorar las operaciones entre conjuntos</p>
+    <p class="subtitle">
+   Cada círculo representa una bolsa con pelotas. 
+  El círculo azul (A) contiene pelotas azules, y el rojo (B) pelotas rojas. 
+</p>
+    <div class="main-layout">
+      <!-- Canvas a la izquierda -->
+      <div class="venn-wrapper">
+        <canvas id="vennCanvas"></canvas>
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background: rgba(100,150,255,0.6);"></div>
+            <span>Conjunto A</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: rgba(255,120,120,0.6);"></div>
+            <span>Conjunto B</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: rgba(180,100,255,0.6);"></div>
+            <span>Intersección (A ∩ B)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Panel de info a la derecha -->
+      <div class="info-panel">
+        <div class="status-bar">
+          <div class="status-item blue">
+            <h3>🔵 Pelotas Azules</h3>
+            <div class="value" id="radiusA">80px</div>
+          </div>
+          <div class="status-item red">
+            <h3>🔴 Pelotas Rojas</h3>
+            <div class="value" id="radiusB">80px</div>
+          </div>
+          <div class="status-item operation">
+            <h3>Distancia entre centros</h3>
+            <div class="value" id="distance">--</div>
+          </div>
+        </div>
+        
+        <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+          <h3 style="color: #ffd700; margin-bottom: 8px; font-size: 1.1em;">📊 Situación Actual:</h3>
+          <p id="currentOperation" style="font-size: 0.95em; line-height: 1.5;"></p>
+        </div>
+
+        <div class="controls">
+          <button onclick="resetPositions()">🔄 Restablecer</button>
+          <button onclick="showUnion()">A ∪ B</button>
+          <button onclick="showIntersection()">A ∩ B</button>
+          <button onclick="showDisjoint()">Disjuntos</button>
+          <button onclick="showSubset()">A ⊆ B</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-panel">
+      <h3 style="color: #ffd700; margin-bottom: 15px; font-size: 1.4em;">📚 Operaciones Posibles:</h3>
+      <div class="operations-grid">
+        <div class="operation-card">
+          <h4>A ∪ B (Unión)</h4>
+          <p>Todos los elementos que pertenecen a A, a B, o a ambos. Los círculos se superponen.</p>
+        </div>
+        <div class="operation-card">
+          <h4>A ∩ B (Intersección)</h4>
+          <p>Elementos que pertenecen simultáneamente a A y B. Zona de superposición visible.</p>
+        </div>
+        <div class="operation-card">
+          <h4>A − B (Diferencia)</h4>
+          <p>Elementos en A pero no en B. Parte de A que no se superpone con B.</p>
+        </div>
+        <div class="operation-card">
+          <h4>Disjuntos (∅)</h4>
+          <p>No tienen elementos en común. Los círculos no se tocan (intersección vacía).</p>
+        </div>
+        <div class="operation-card">
+          <h4>A ⊆ B (Subconjunto)</h4>
+          <p>Todos los elementos de A están en B. El círculo A está completamente dentro de B.</p>
+        </div>
+        <div class="operation-card">
+          <h4>A = B (Igualdad)</h4>
+          <p>Ambos conjuntos tienen exactamente los mismos elementos. Círculos completamente superpuestos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-blue">
+  <h3>🧩 Ejemplos — Operaciones entre Eventos</h3>
+
+  <p>
+    En probabilidad, las <strong>operaciones entre eventos</strong> permiten combinar o relacionar conjuntos del espacio muestral.  
+    A continuación se muestran varios ejemplos prácticos para entender cómo funcionan:
+  </p>
+
+  <h4>1️⃣ Unión de eventos — \( A \cup B \)</h4>
+  <p>
+    Representa que ocurre <strong>A o B o ambos</strong>.  
+    Es la unión de los elementos de ambos conjuntos.
+  </p>
+  <ul>
+    <li>Ejemplo: A = {1, 2, 3}, B = {3, 4, 5}</li>
+    <li>→ \( A \cup B = \{1, 2, 3, 4, 5\} \)</li>
+    <li>→ \( P(A \cup B) = P(A) + P(B) - P(A \cap B) \)</li>
+  </ul>
+
+  <div class="formula-box">
+    \( P(A \cup B) = P(A) + P(B) - P(A \cap B) \)
+  </div>
+
+  <h4>2️⃣ Intersección de eventos — \( A \cap B \)</h4>
+  <p>
+    Representa que ocurren <strong>ambos eventos al mismo tiempo</strong>.  
+    Corresponde a los elementos comunes de A y B.
+  </p>
+  <ul>
+    <li>Ejemplo: A = {1, 2, 3}, B = {3, 4, 5}</li>
+    <li>→ \( A \cap B = \{3\} \)</li>
+  </ul>
+  <div class="formula-box">
+    \( P(A \cap B) = P(A) \cdot P(B|A) = P(B) \cdot P(A|B) \)
+  </div>
+
+  <h4>3️⃣ Complemento — \( A^c \) o \( \overline{A} \)</h4>
+  <p>
+    Representa que <strong>A no ocurre</strong>.  
+    Contiene todos los elementos del espacio muestral que no están en A.
+  </p>
+  <ul>
+    <li>Ejemplo: Si Ω = {1, 2, 3, 4, 5, 6} y A = {2, 4, 6}</li>
+    <li>→ \( A^c = \{1, 3, 5\} \)</li>
+    <li>→ \( P(A^c) = 1 - P(A) \)</li>
+  </ul>
+
+  <h4>4️⃣ Diferencia — \( A - B \)</h4>
+  <p>
+    Representa que ocurre <strong>A pero no B</strong>.  
+    Es el conjunto de los elementos que están en A y no en B.
+  </p>
+  <ul>
+    <li>Ejemplo: A = {1, 2, 3, 4}, B = {3, 4, 5}</li>
+    <li>→ \( A - B = \{1, 2\} \)</li>
+  </ul>
+
+  <h4>5️⃣ Disyunción exclusiva — \( A \oplus B \)</h4>
+  <p>
+    Representa que ocurre <strong>uno u otro, pero no ambos</strong>.  
+    Es decir, los elementos que pertenecen solo a A o solo a B.
+  </p>
+  <ul>
+    <li>Ejemplo: A = {1, 2, 3}, B = {3, 4, 5}</li>
+    <li>→ \( A \oplus B = \{1, 2, 4, 5\} \)</li>
+  </ul>
+  <div class="formula-box">
+    \( A \oplus B = (A - B) \cup (B - A) \)
+  </div>
+
+  <h4>6️⃣ Ejemplo combinado — lanzamiento de dado</h4>
+  <p>
+    Sea el espacio muestral \( Ω = \{1, 2, 3, 4, 5, 6\} \):  
+  </p>
+
+  <div class="ej-table-wrapper">
+    <table class="ej-table">
+      <thead>
+        <tr>
+          <th>Evento</th>
+          <th>Definición</th>
+          <th>Elementos</th>
+          <th>Probabilidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>A</td>
+          <td>Sale número par</td>
+          <td>{2, 4, 6}</td>
+          <td>3/6 = 0.5</td>
+        </tr>
+        <tr>
+          <td>B</td>
+          <td>Sale número mayor que 3</td>
+          <td>{4, 5, 6}</td>
+          <td>3/6 = 0.5</td>
+        </tr>
+        <tr>
+          <td>A ∩ B</td>
+          <td>Par y mayor que 3</td>
+          <td>{4, 6}</td>
+          <td>2/6 ≈ 0.33</td>
+        </tr>
+        <tr>
+          <td>A ∪ B</td>
+          <td>Par o mayor que 3</td>
+          <td>{2, 4, 5, 6}</td>
+          <td>4/6 ≈ 0.67</td>
+        </tr>
+        <tr>
+          <td>A<sup>c</sup></td>
+          <td>No es par</td>
+          <td>{1, 3, 5}</td>
+          <td>3/6 = 0.5</td>
+        </tr>
+        <tr>
+          <td>A - B</td>
+          <td>Par pero no mayor que 3</td>
+          <td>{2}</td>
+          <td>1/6 ≈ 0.17</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="highlight-box" style="background: rgba(120,200,255,0.08); border: 1px solid rgba(100,180,255,0.35); margin-top: 25px;">
+    <h4>💡 En resumen:</h4>
+    <ul>
+      <li><strong>Unión (A ∪ B):</strong> ocurre A o B o ambos.</li>
+      <li><strong>Intersección (A ∩ B):</strong> ocurren ambos simultáneamente.</li>
+      <li><strong>Complemento (A<sup>c</sup>):</strong> A no ocurre.</li>
+      <li><strong>Diferencia (A - B):</strong> ocurre A pero no B.</li>
+      <li><strong>Disyunción exclusiva (A ⊕ B):</strong> ocurre solo uno de los dos.</li>
+    </ul>
+  </div>
+</div>
+  </div>
+</section>
 
 <!-- Sección 6: Probabilidad condicional -->
 <section id="condicional" class="content-section">
@@ -1527,6 +2219,259 @@ window.MathJax = {
 </script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
+  <script>
+    const canvas = document.getElementById('vennCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    let circleA = { x: 200, y: 200, radius: 80, color: 'rgba(100,150,255,0.6)', dragging: false };
+    let circleB = { x: 350, y: 200, radius: 80, color: 'rgba(255,120,120,0.6)', dragging: false };
+    let dragOffset = { x: 0, y: 0 };
+    let activeCircle = null;
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+      draw();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    function getDistance(x1, y1, x2, y2) {
+      return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    }
+
+    function isPointInCircle(x, y, circle) {
+      return getDistance(x, y, circle.x, circle.y) < circle.radius;
+    }
+
+    function analyzeRelationship() {
+      const dist = getDistance(circleA.x, circleA.y, circleB.x, circleB.y);
+      const sumRadii = circleA.radius + circleB.radius;
+      const diffRadii = Math.abs(circleA.radius - circleB.radius);
+      
+      document.getElementById('distance').textContent = Math.round(dist) + 'px';
+      document.getElementById('radiusA').textContent = circleA.radius + 'px';
+      document.getElementById('radiusB').textContent = circleB.radius + 'px';
+      
+      const opText = document.getElementById('currentOperation');
+      
+      if (dist < 5 && Math.abs(circleA.radius - circleB.radius) < 5) {
+        opText.innerHTML = '<span class="highlight">A = B</span> — Los conjuntos son <strong>iguales</strong>: tienen exactamente los mismos elementos. Los círculos están completamente superpuestos.';
+      } else if (dist + Math.min(circleA.radius, circleB.radius) <= Math.max(circleA.radius, circleB.radius)) {
+        if (circleA.radius < circleB.radius) {
+          opText.innerHTML = '<span class="highlight">A ⊂ B</span> — A es un <strong>subconjunto propio</strong> de B: todos los elementos de A están en B, pero B tiene elementos adicionales.';
+        } else {
+          opText.innerHTML = '<span class="highlight">B ⊂ A</span> — B es un <strong>subconjunto propio</strong> de A: todos los elementos de B están en A, pero A tiene elementos adicionales.';
+        }
+      } else if (dist > sumRadii) {
+        opText.innerHTML = '<span class="highlight">A ∩ B = ∅</span> — Los conjuntos son <strong>disjuntos</strong>: no tienen elementos en común. La intersección es vacía.';
+      } else if (dist === sumRadii) {
+        opText.innerHTML = '<span class="highlight">A y B tangentes</span> — Los conjuntos se <strong>tocan exactamente</strong> en un punto. Técnicamente disjuntos, pero en el límite.';
+      } else if (dist < sumRadii && dist > diffRadii) {
+        const overlap = ((circleA.radius + circleB.radius - dist) / Math.min(circleA.radius, circleB.radius) * 100).toFixed(0);
+        opText.innerHTML = `<span class="highlight">A ∩ B ≠ ∅</span> — Hay <strong>intersección</strong>: algunos elementos pertenecen a ambos conjuntos (~${overlap}% de superposición). <strong>A ∪ B</strong> incluye todos los elementos de ambos.`;
+      } else {
+        opText.innerHTML = 'Los conjuntos tienen una <strong>relación de superposición parcial</strong>. Explorá las operaciones moviendo los círculos.';
+      }
+    }
+
+    function drawCircle(circle, isActive = false) {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = circle.color;
+      ctx.strokeStyle = isActive ? '#fff' : 'rgba(255,255,255,0.6)';
+      ctx.lineWidth = isActive ? 4 : 2;
+      
+      ctx.beginPath();
+      ctx.arc(circle.x, circle.y, circle.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+      
+      // Sombra cuando se arrastra
+      if (isActive) {
+        ctx.shadowColor = circle.color;
+        ctx.shadowBlur = 20;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    function drawIntersection() {
+      const dist = getDistance(circleA.x, circleA.y, circleB.x, circleB.y);
+      if (dist < circleA.radius + circleB.radius && dist > Math.abs(circleA.radius - circleB.radius)) {
+        ctx.globalCompositeOperation = 'source-atop';
+        ctx.fillStyle = 'rgba(180,100,255,0.8)';
+        ctx.beginPath();
+        ctx.arc(circleB.x, circleB.y, circleB.radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function drawLabels() {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 24px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      
+      // Sombra para texto
+      ctx.shadowColor = 'rgba(0,0,0,0.7)';
+      ctx.shadowBlur = 4;
+      
+      ctx.fillText('A', circleA.x, circleA.y);
+      ctx.fillText('B', circleB.x, circleB.y);
+      
+      ctx.shadowBlur = 0;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Dibujar círculos
+      drawCircle(circleA, activeCircle === circleA);
+      drawIntersection();
+      drawCircle(circleB, activeCircle === circleB);
+      
+      // Etiquetas
+      drawLabels();
+      
+      analyzeRelationship();
+    }
+
+    // Event Listeners
+    canvas.addEventListener('mousedown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      if (isPointInCircle(x, y, circleA)) {
+        activeCircle = circleA;
+        dragOffset.x = x - circleA.x;
+        dragOffset.y = y - circleA.y;
+      } else if (isPointInCircle(x, y, circleB)) {
+        activeCircle = circleB;
+        dragOffset.x = x - circleB.x;
+        dragOffset.y = y - circleB.y;
+      }
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      if (activeCircle) {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        activeCircle.x = Math.max(activeCircle.radius, Math.min(canvas.width - activeCircle.radius, x - dragOffset.x));
+        activeCircle.y = Math.max(activeCircle.radius, Math.min(canvas.height - activeCircle.radius, y - dragOffset.y));
+        
+        draw();
+      }
+    });
+
+    canvas.addEventListener('mouseup', () => {
+      activeCircle = null;
+      draw();
+    });
+
+    canvas.addEventListener('mouseleave', () => {
+      activeCircle = null;
+      draw();
+    });
+
+    // Touch events para móviles
+    canvas.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      const rect = canvas.getBoundingClientRect();
+      const touch = e.touches[0];
+      const x = touch.clientX - rect.left;
+      const y = touch.clientY - rect.top;
+      
+      if (isPointInCircle(x, y, circleA)) {
+        activeCircle = circleA;
+        dragOffset.x = x - circleA.x;
+        dragOffset.y = y - circleA.y;
+      } else if (isPointInCircle(x, y, circleB)) {
+        activeCircle = circleB;
+        dragOffset.x = x - circleB.x;
+        dragOffset.y = y - circleB.y;
+      }
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      if (activeCircle) {
+        const rect = canvas.getBoundingClientRect();
+        const touch = e.touches[0];
+        const x = touch.clientX - rect.left;
+        const y = touch.clientY - rect.top;
+        
+        activeCircle.x = Math.max(activeCircle.radius, Math.min(canvas.width - activeCircle.radius, x - dragOffset.x));
+        activeCircle.y = Math.max(activeCircle.radius, Math.min(canvas.height - activeCircle.radius, y - dragOffset.y));
+        
+        draw();
+      }
+    });
+
+    canvas.addEventListener('touchend', () => {
+      activeCircle = null;
+      draw();
+    });
+
+    // Funciones de control
+    function resetPositions() {
+      circleA.x = canvas.width * 0.35;
+      circleA.y = canvas.height / 2;
+      circleB.x = canvas.width * 0.65;
+      circleB.y = canvas.height / 2;
+      circleA.radius = 80;
+      circleB.radius = 80;
+      draw();
+    }
+
+    function showUnion() {
+      circleA.x = canvas.width * 0.4;
+      circleA.y = canvas.height / 2;
+      circleB.x = canvas.width * 0.6;
+      circleB.y = canvas.height / 2;
+      circleA.radius = 80;
+      circleB.radius = 80;
+      draw();
+    }
+
+    function showIntersection() {
+      circleA.x = canvas.width / 2 - 40;
+      circleA.y = canvas.height / 2;
+      circleB.x = canvas.width / 2 + 40;
+      circleB.y = canvas.height / 2;
+      circleA.radius = 80;
+      circleB.radius = 80;
+      draw();
+    }
+
+    function showDisjoint() {
+      circleA.x = canvas.width * 0.3;
+      circleA.y = canvas.height / 2;
+      circleB.x = canvas.width * 0.7;
+      circleB.y = canvas.height / 2;
+      circleA.radius = 70;
+      circleB.radius = 70;
+      draw();
+    }
+
+    function showSubset() {
+      circleA.x = canvas.width / 2;
+      circleA.y = canvas.height / 2;
+      circleB.x = canvas.width / 2;
+      circleB.y = canvas.height / 2;
+      circleA.radius = 50;
+      circleB.radius = 90;
+      draw();
+    }
+
+    // Dibujo inicial
+    draw();
+  </script>
 
 </body>
 </html>

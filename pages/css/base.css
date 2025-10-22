@@ -833,3 +833,160 @@ h1, h2, h3, h4 {
 }
 
 
+
+.info-gold {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(255, 215, 0, 0.4);
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.15);
+  padding: 40px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.info-gold::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255, 255, 200, 0.15), transparent 70%);
+  animation: goldPulse 6s infinite linear;
+  z-index: 0;
+  pointer-events: none; 
+}
+
+@keyframes goldPulse {
+  0% { transform: rotate(0deg); opacity: 0.5; }
+  50% { opacity: 0.8; }
+  100% { transform: rotate(360deg); opacity: 0.5; }
+}
+
+.info-gold:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 40px rgba(255, 215, 0, 0.3);
+}
+
+.info-gold p {
+  position: relative;
+  z-index: 1;
+  color: #fff9d6;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 25px;
+}
+
+.info-gold a.nav-button {
+  background: linear-gradient(135deg, #FFD700, #FFF3B0);
+  color: #000;
+  font-weight: 600;
+  border: none;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.info-gold a.nav-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+}
+
+/* ======== Estilo Celeste Tipo info-gold ======== */
+.info-blue {
+  background: linear-gradient(135deg, rgba(120, 200, 255, 0.12), rgba(255, 255, 255, 0.05));
+  border: 1px solid rgba(100, 180, 255, 0.45);
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(100, 180, 255, 0.15);
+  padding: 40px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  margin: 30px 0;
+}
+
+.info-blue::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(150, 220, 255, 0.18), transparent 70%);
+  animation: bluePulse 6s infinite linear;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes bluePulse {
+  0% { transform: rotate(0deg); opacity: 0.4; }
+  50% { opacity: 0.8; }
+  100% { transform: rotate(360deg); opacity: 0.4; }
+}
+
+.info-blue:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 40px rgba(100, 200, 255, 0.3);
+}
+
+.info-blue h3 {
+  color: #b7e5ff;
+  font-weight: 500;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.info-blue p, 
+.info-blue li {
+  position: relative;
+  z-index: 1;
+  color: #e3f4ff;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.info-blue ul {
+  margin-left: 25px;
+  margin-bottom: 15px;
+}
+
+.info-blue .formula-box {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(100, 180, 255, 0.3);
+  border-radius: 12px;
+  text-align: center;
+  padding: 12px 16px;
+  font-family: "Courier New", monospace;
+  color: #bde9ff;
+  margin: 20px 0;
+}
+
+.ej-table-wrapper {
+  overflow-x: auto;
+  margin-top: 25px;
+}
+
+.ej-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.ej-table th, .ej-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  color: #e8f7ff;
+}
+
+.ej-table th {
+  background: rgba(255,255,255,0.08);
+  color: #bce8ff;
+  font-weight: 600;
+}
+
+.ej-table tbody tr:hover {
+  background: rgba(150,220,255,0.06);
+}

@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unidad 5: Estimación de Parámetros</title>
+  <link rel="icon" type="image/png" href="../../src/img/logo.png">
+  <link rel="stylesheet" href="../css/base.css">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+    <style>
+        
+/* Layout principal */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+                            padding: 120px 10px 20px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar de navegación */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 2px 2px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border-left: 2px solid transparent;
+        }
+
+        .nav-item a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-item a.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: #ffffff;
+        }
+
+        /* Contenido principal */
+        .content-wrapper {
+            max-width: 1200px;
+        }
+
+
+        .page-header {
+            margin-bottom: 60px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #ffffff;
+        }
+
+        .breadcrumb-separator {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        /* Secciones de contenido */
+        .content-section {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+            opacity: 0.8;
+        }
+
+        .section-content {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 20px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .section-content strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Listas */
+        .content-section ul,
+        .content-section ol {
+            margin: 20px 0;
+            padding-left: 25px;
+        }
+
+        .content-section li {
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Ejemplos */
+        .example-box {
+            background: rgba(120, 119, 198, 0.1);
+            border-left: 3px solid rgba(120, 119, 198, 0.5);
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: rgba(120, 119, 198, 1);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Fórmulas */
+        .formula-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Destacados */
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+        }
+
+        .highlight-box h4 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* Grid de conceptos */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .concept-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .concept-card h4 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .concept-card p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Botones de navegación */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-button {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #ffffff, #e0e0e0);
+            color: #000000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-button.secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 100px 30px 40px;
+            }
+
+            .sidebar {
+                position: static;
+                top: auto;
+            }
+
+            .content-wrapper {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                padding: 100px 20px 40px;
+            }
+
+            .section-content {
+                padding: 25px 20px;
+            }
+
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Tabla */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        td {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="" class="logo">PyE - Unidad 5</a>
+      <ul class="nav-menu">
+        <li><a href="../temario.html" class="nav-link">Temario</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="scroll-progress-bar"></div>
+
+  <div class="main-layout">
+
+    <!-- Contenido principal -->
+    <main class="content-wrapper">
+      <header class="page-header">
+        <nav class="breadcrumb">
+          <a href="../../index.html">Inicio</a>
+          <span class="breadcrumb-separator">›</span>
+          <a href="../temario.html">Temario</a>
+          <span class="breadcrumb-separator">›</span>
+          <span>Unidad 5</span>
+        </nav>
+        <h1 class="page-title">Estimación de Parámetros</h1>
+          <p class="page-description">
+            En esta unidad aprendemos a <strong>estimar parámetros poblacionales</strong> (media, proporción y varianza) a partir de muestras. 
+            Estudiaremos <strong>estimadores puntuales</strong> y sus propiedades (sesgo, varianza y MSE), las <strong>distribuciones muestrales</strong> 
+            y la construcción de <strong>intervalos de confianza</strong>: para la media con <strong>Z</strong> (σ conocida) y <strong>t-Student</strong> (σ desconocida), 
+            para <strong>proporciones</strong> y para <strong>varianzas</strong> (χ²). 
+            El <strong>Teorema Central del Límite</strong> será la base para aproximaciones normales y para definir <strong>tamaños de muestra</strong> según una precisión deseada.
+          </p>
+
+
+      </header>
+
+
+      <section id="introduccion" class="content-section">
+        <h2 class="section-title"><span class="section-icon">📊</span>Estimación de una Proporción</h2>
+        <div class="section-content">
+          <p>
+            En probabilidades conocíamos la <strong>probabilidad de éxito</strong> de un ensayo, lo que permitía calcular la posibilidad 
+            de obtener cierto número de éxitos en una muestra.  
+            Sin embargo, en estadística ese valor <em>no se conoce</em>, y buscamos <strong>estimar la probabilidad de éxito poblacional (p)</strong> 
+            a partir de una muestra aleatoria.
+          </p>
+
+          <p>
+            Si realizamos <strong>n ensayos independientes</strong> y contamos el número de éxitos \( X \), la <strong>proporción muestral</strong> se define como:
+          </p>
+
+          <div class="formula-box">
+            $$\hat{p} = \frac{X}{n}$$
+          </div>
+
+          <p>
+            La proporción muestral \( \hat{p} \) es un <strong>estimador</strong> de la probabilidad real \( p \).  
+            Dado que depende de la muestra, su valor <strong>varía aleatoriamente</strong>, y por tanto tiene <strong>sesgo</strong> e <strong>incertidumbre</strong>.
+          </p>
+
+          <p>
+            El estimador \( \hat{p} \) es <strong>insesgado</strong> si su esperanza matemática coincide con \( p \):
+          </p>
+
+          <div class="formula-box">
+            $$E[\hat{p}] = p \quad \Rightarrow \quad \text{Sesgo} = 0$$
+          </div>
+
+          <p>
+            Su incertidumbre está asociada a la <strong>desviación estándar</strong>:
+          </p>
+
+          <div class="formula-box">
+            $$\sigma_{\hat{p}} = \sqrt{\frac{p(1 - p)}{n}}$$
+          </div>
+
+          <p>
+            En la práctica, como el valor de \( p \) es desconocido, se utiliza su estimación \( \hat{p} \) para aproximar la incertidumbre:
+          </p>
+
+          <div class="formula-box">
+            $$\sigma_{\hat{p}} \approx \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}$$
+          </div>
+
+          <!-- Ejemplo -->
+          <div class="example-box">
+            <h4>🧮 Ejemplo:</h4>
+            <p>
+              En una gran ciudad se quiere estimar la proporción de edificios que violan el código de incendio.  
+              Se elige una muestra aleatoria de 40 edificios, de los cuales 4 no cumplen con el código.
+            </p>
+            <p>
+              <strong>Solución:</strong><br>
+              \(\hat{p} = 4/40 = 0.1\)
+            </p>
+            <p>
+              Suponiendo una distribución binomial y reemplazando \( p \) por \( \hat{p} \):
+            </p>
+
+            <div class="formula-box">
+              $$\sigma_{\hat{p}} = \sqrt{\frac{0.1(1-0.1)}{40}} = 0.047$$
+            </div>
+
+            <p>
+              Para una incertidumbre deseada de 2%, el tamaño muestral necesario sería:
+            </p>
+
+            <div class="formula-box">
+              $$n = \frac{0.1(1-0.1)}{0.02^2} = 225$$
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <!-- =========================
+        Teorema Central del Límite
+        ========================= -->
+    <section id="tcl" class="content-section">
+      <h2 class="section-title"><span class="section-icon">🔄</span>Teorema Central del Límite (TCL)</h2>
+      <div class="section-content">
+        <p>
+          El <strong>Teorema Central del Límite (TCL)</strong> establece que, si se toma una muestra lo suficientemente grande de una población, 
+          la distribución de la <strong>media muestral</strong> \( \bar{X} \) tiende a una <strong>distribución normal</strong>, sin importar la forma de la población original.
+        </p>
+
+        <div class="formula-box">
+          $$\bar{X} = \frac{X_1 + X_2 + \cdots + X_n}{n} \quad \Rightarrow \quad \bar{X} \sim N\left(\mu, \frac{\sigma^2}{n}\right)$$
+        </div>
+
+        <p>
+          Esto permite calcular probabilidades sobre medias muestrales utilizando la <strong>tabla Z</strong>.
+          En la práctica, la aproximación normal es adecuada cuando \( n \ge 30 \).
+        </p>
+
+        <div class="example-box">
+          <h4>🧮 Ejemplo:</h4>
+          <p>
+            Sea \( X \) el número de imperfecciones en una pulgada de alambre de cobre.  
+            De una muestra de 100 alambres se quiere hallar la probabilidad de que el promedio sea menor a 0.5.
+          </p>
+          <p>
+            Dado que \( \mu = 0.66 \) y \( \sigma^2 = 0.5244 \):
+          </p>
+          <div class="formula-box">
+            $$\bar{X} \sim N(0.66, 0.5244 / 100)$$
+          </div>
+
+          <p>Normalizando:</p>
+
+          <div class="formula-box">
+            $$P(Z < (0.5 - 0.66) / \sqrt{0.5244 / 100}) = P(Z < -2.21) = 0.0136$$
+          </div>
+
+          <p>Es decir, solo el <strong>1.36%</strong> de las muestras tendrán un promedio menor a 0.5.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+     Intervalos de Confianza
+     ========================= -->
+<section id="intervalos-confianza" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📏</span>Intervalos de Confianza</h2>
+  <div class="section-content">
+    <p>
+      En lugar de estimar un parámetro desconocido con un único valor (<strong>estimador puntual</strong>),
+      se puede construir un <strong>intervalo de valores posibles</strong> que contenga al verdadero parámetro con una
+      determinada probabilidad. A este rango se lo denomina <strong>Intervalo de Confianza (IC)</strong>.
+    </p>
+
+    <div class="formula-box">
+      $$P(\theta \in [\hat{\theta}_1 , \hat{\theta}_2]) = 1 - \alpha$$
+    </div>
+
+    <p>
+      Donde:
+    </p>
+    <ul>
+      <li>\( \theta \): parámetro poblacional desconocido.</li>
+      <li>\( 1 - \alpha \): <strong>nivel de confianza</strong> (por ejemplo, 95% o 99%).</li>
+      <li>\( \hat{\theta}_1 \) y \( \hat{\theta}_2 \): límites inferior y superior del intervalo.</li>
+    </ul>
+
+    <h3>🔹 Intervalo de Confianza para una Proporción</h3>
+    <p>
+      Si \( X \sim B(n, p) \), y usamos \( \hat{p} = X/n \) como estimador de \( p \), 
+      por el <strong>Teorema Central del Límite</strong> podemos estandarizar:
+    </p>
+
+    <div class="formula-box">
+      $$z = \frac{\hat{p} - p}{\sqrt{p(1 - p)/n}}$$
+    </div>
+
+    <p>
+      Con nivel de confianza \( 1 - \alpha \):
+    </p>
+
+    <div class="formula-box">
+      $$P(-z_{0} \le z \le z_{0}) = 1 - \alpha$$
+      $$\Rightarrow \Phi(z_0) = 1 - \frac{\alpha}{2} \ \ \text{→ } z_{0} = z_{\alpha/2}$$
+    </div>
+
+    <p>Despejando \( p \), obtenemos el intervalo de confianza:</p>
+
+    <div class="formula-box">
+      $$\hat{p} \pm z_{\alpha/2} \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>📘 Interpretación:</h4>
+      <p>
+        Si se repitiera el muestreo muchas veces, aproximadamente el <strong>95% de los intervalos</strong>
+        construidos de esta forma contendrían al verdadero valor de \( p \).
+      </p>
+    </div>
+
+    <h3>📈 Longitud del Intervalo</h3>
+    <div class="formula-box">
+      $$L = 2 z_{\alpha/2} \frac{\sigma}{\sqrt{n}}$$
+    </div>
+    <p>
+      Si queremos un intervalo más corto (mayor precisión), necesitamos aumentar el tamaño de la muestra \( n \).
+    </p>
+
+    <h3>📏 Tamaño de muestra requerido</h3>
+    <p>
+      Para una longitud de intervalo deseada \( l \):
+    </p>
+
+    <div class="formula-box">
+      $$n \ge \left( \frac{2 z_{\alpha/2}}{l} \right)^2 \hat{p}(1 - \hat{p})$$
+    </div>
+
+    <!-- Ejemplo -->
+    <div class="example-box">
+      <h4>🧮 Ejemplo:</h4>
+      <p>
+        Un fabricante prueba 140 dispositivos usados y encuentra que 35 están fallados.
+        Calcular un intervalo de confianza del 99% para la proporción poblacional \( p \).
+      </p>
+      <p>
+        Datos: \( n = 140 \), \( X = 35 \Rightarrow \hat{p} = 0.25 \), \( 1 - \alpha = 0.99 \Rightarrow z_{0.005} = 2.58 \)
+      </p>
+
+      <div class="formula-box">
+        $$IC_{99\%} = [0.25 \pm 2.58 \sqrt{(0.25)(1 - 0.25)/140}] = [0.25 \pm 0.091]$$
+      </div>
+
+      <p>
+        Ahora, ¿qué tamaño de muestra se necesita para que \( \hat{p} \) difiera de \( p \) en menos de 0.03 con 95% de confianza?
+      </p>
+
+      <div class="formula-box">
+        $$n \ge \left(\frac{2 \times 1.96}{2 \times 0.03}\right)^2 (0.25)(0.75) = 801$$
+      </div>
+
+      <p>
+        Por lo tanto, se necesita una muestra de al menos <strong>801 elementos</strong>.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     Estimadores e Intervalos de Confianza
+     ========================= -->
+<section id="estimadores" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📐</span>Estimadores e Intervalos de Confianza</h2>
+  <div class="section-content">
+    <p>
+      Cuando el parámetro poblacional \( \mu \) es desconocido, usamos como <strong>estimador puntual</strong> la <strong>media muestral</strong>:
+    </p>
+
+    <div class="formula-box">
+      $$\hat{\mu} = \bar{X} = \frac{\sum_{i=1}^n x_i}{n}$$
+    </div>
+
+    <h3>📘 Intervalo de Confianza para la Media (σ conocida)</h3>
+    <p>
+      Sea \( X_1, \dots, X_n \) una muestra aleatoria de una variable aleatoria \( X \sim N(\mu, \sigma^2) \) con varianza conocida.  
+      Se construye el siguiente estadístico:
+    </p>
+
+    <div class="formula-box">
+      $$z = \frac{\bar{X} - \mu}{\sigma / \sqrt{n}} \quad \text{donde} \quad z \sim N(0, 1)$$
+    </div>
+
+    <p>
+      Para un nivel de confianza \( 1 - \alpha \):
+    </p>
+
+    <div class="formula-box">
+      $$P(-z_0 \le z \le z_0) = 1 - \alpha \Rightarrow \Phi(z_0) = 1 - \frac{\alpha}{2}$$
+    </div>
+
+    <p>
+      Despejando \( \mu \), obtenemos el intervalo de confianza:
+    </p>
+
+    <div class="formula-box">
+      $$\bar{X} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}}$$
+    </div>
+
+    <p>
+      Este intervalo es válido cuando la varianza poblacional \( \sigma^2 \) es conocida.
+    </p>
+
+    <h3>📗 Intervalo de Confianza para la Varianza (σ²)</h3>
+    <p>
+      Si \( \sigma^2 \) es desconocida, usamos como estimador puntual la <strong>varianza muestral</strong>:
+    </p>
+
+    <div class="formula-box">
+      $$S^2 = \frac{\sum_{i=1}^n (x_i - \bar{X})^2}{n - 1}$$
+    </div>
+
+    <p>
+      El estadístico asociado sigue una <strong>distribución Chi-Cuadrado</strong> con \( n - 1 \) grados de libertad:
+    </p>
+
+    <div class="formula-box">
+      $$\chi^2 = \frac{(n - 1) S^2}{\sigma^2} \quad \text{donde} \quad \chi^2 \sim \chi^2_{(n-1)}$$
+    </div>
+
+    <p>
+      Para un nivel de confianza \( 1 - \alpha \):
+    </p>
+
+    <div class="formula-box">
+      $$P\left( \chi^2_{1 - \alpha/2, n-1} \le \frac{(n - 1) S^2}{\sigma^2} \le \chi^2_{\alpha/2, n-1} \right) = 1 - \alpha$$
+    </div>
+
+    <p>
+      Despejando, obtenemos el intervalo de confianza para la varianza poblacional:
+    </p>
+
+    <div class="formula-box">
+      $$\left[ \frac{(n - 1) S^2}{\chi^2_{1 - \alpha/2, n-1}}, \; \frac{(n - 1) S^2}{\chi^2_{\alpha/2, n-1}} \right]$$
+    </div>
+
+    <h3>📙 Intervalo de Confianza para la Media (σ desconocida)</h3>
+    <p>
+      Si \( \sigma \) es desconocido, usamos \( S \) como estimador y el estadístico \( T \) de <strong>Student</strong>:
+    </p>
+
+    <div class="formula-box">
+      $$T = \frac{\bar{X} - \mu}{S / \sqrt{n}} \quad \text{donde} \quad T \sim t_{(n - 1)}$$
+    </div>
+
+    <p>
+      Para un nivel de confianza \( 1 - \alpha \):
+    </p>
+
+    <div class="formula-box">
+      $$P(-t_{\alpha/2, n-1} \le T \le t_{\alpha/2, n-1}) = 1 - \alpha$$
+    </div>
+
+    <p>
+      De donde se obtiene el intervalo de confianza para la media con varianza desconocida:
+    </p>
+
+    <div class="formula-box">
+      $$\bar{X} \pm t_{\alpha/2, n-1} \frac{S}{\sqrt{n}}$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>💡 Resumen de Intervalos Clave:</h4>
+      <ul>
+        <li><strong>Media (σ conocida):</strong> \( \bar{X} \pm z_{\alpha/2} \frac{\sigma}{\sqrt{n}} \)</li>
+        <li><strong>Media (σ desconocida):</strong> \( \bar{X} \pm t_{\alpha/2, n-1} \frac{S}{\sqrt{n}} \)</li>
+        <li><strong>Varianza:</strong> \( \left[ \frac{(n - 1) S^2}{\chi^2_{1 - \alpha/2}}, \frac{(n - 1) S^2}{\chi^2_{\alpha/2}} \right] \)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+    <!-- =========================
+        Aproximación Normal-Binomial
+        ========================= -->
+    <section id="aprox-normal-binomial" class="content-section">
+      <h2 class="section-title"><span class="section-icon">🔸</span>Aproximación Normal a la Binomial</h2>
+      <div class="section-content">
+        <p>
+          El TCL también permite aproximar la distribución <strong>Binomial</strong> a una <strong>Normal</strong> cuando el número de ensayos es grande.  
+          Si \( X \sim B(n, p) \), entonces:
+        </p>
+
+        <div class="formula-box">
+          $$\hat{p} = \frac{X}{n} \sim N\left(p, \frac{p(1 - p)}{n}\right)$$
+        </div>
+
+        <p>
+          Esta aproximación es válida cuando \( np > 10 \) y \( n(1-p) > 10 \).  
+          Como la Binomial es discreta y la Normal es continua, se aplica una <strong>corrección por continuidad</strong>:
+        </p>
+
+        <div class="formula-box">
+          \[
+          \begin{aligned}
+          P(X = k) &\approx P(k - 0.5 \le X \le k + 0.5) \\
+          P(X \le k) &\approx P(X \le k + 0.5) \\
+          P(X \ge k) &\approx P(X \ge k - 0.5)
+          \end{aligned}
+          \]
+        </div>
+
+        <div class="example-box">
+          <h4>🧮 Ejemplo:</h4>
+          <p>
+            Se lanza una moneda 100 veces. ¿Cuál es la probabilidad de obtener entre 45 y 55 caras (inclusive)?
+          </p>
+          <p>
+            Con \( n = 100 \) y \( p = 0.5 \):
+          </p>
+
+          <div class="formula-box">
+            $$P(45 \le X \le 55) \approx P(45.5 \le X \le 55.5)$$
+            $$= P(-1.1 \le Z \le 1.1) = 2\Phi(1.1) - 1 = 0.7286$$
+          </div>
+
+          <p>
+            Por lo tanto, existe una <strong>probabilidad del 73%</strong> de obtener entre 45 y 55 caras.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================
+     Resumen del Capítulo
+     ========================= -->
+<section id="resumen-cap5" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📚</span>Resumen del Capítulo</h2>
+  <div class="section-content">
+
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <h4>🎯 Objetivo</h4>
+        <p>
+          Estimar <strong>parámetros poblacionales</strong> (media, proporción, varianza) 
+          a partir de <strong>muestras</strong> y cuantificar la <strong>incertidumbre</strong> 
+          asociada a esas estimaciones.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h4>📊 Estimadores Puntuales</h4>
+        <p>
+          Un <strong>estimador puntual</strong> es una función de los datos que estima un parámetro:
+          <br><br>
+          <strong>Media:</strong> \( \hat{\mu} = \bar{X} = \frac{\sum x_i}{n} \)<br>
+          <strong>Proporción:</strong> \( \hat{p} = \frac{X}{n} \)<br>
+          <strong>Varianza:</strong> \( S^2 = \frac{\sum (x_i - \bar{X})^2}{n-1} \)
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h4>⚖️ Propiedades de un buen estimador</h4>
+        <ul>
+          <li><strong>Insesgado:</strong> \( E[\hat{\theta}] = \theta \)</li>
+          <li><strong>Eficiente:</strong> mínima varianza</li>
+          <li><strong>Consistente:</strong> mejora con \( n \)</li>
+        </ul>
+      </div>
+
+      <div class="concept-card">
+        <h4>📈 Intervalos de Confianza</h4>
+        <p>
+          Rango que contiene al parámetro con probabilidad \( 1 - \alpha \):  
+        </p>
+        <div class="formula-box">
+          $$P(\theta \in [\hat{\theta}_1 , \hat{\theta}_2]) = 1 - \alpha$$
+        </div>
+        <p>
+          Ejemplo general:  
+          \( \hat{\theta} \pm z_{\alpha/2} \cdot \text{error estándar} \)
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h4>📏 Casos más comunes</h4>
+        <ul>
+          <li><strong>Media (σ conocida):</strong> \( \bar{X} \pm z_{\alpha/2}\frac{\sigma}{\sqrt{n}} \)</li>
+          <li><strong>Media (σ desconocida):</strong> \( \bar{X} \pm t_{\alpha/2,n-1}\frac{S}{\sqrt{n}} \)</li>
+          <li><strong>Proporción:</strong> \( \hat{p} \pm z_{\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \)</li>
+          <li><strong>Varianza:</strong> \( \left[\frac{(n-1)S^2}{\chi^2_{1-\alpha/2}},\frac{(n-1)S^2}{\chi^2_{\alpha/2}}\right] \)</li>
+        </ul>
+      </div>
+
+      <div class="concept-card">
+        <h4>🔄 Teorema Central del Límite</h4>
+        <p>
+          A medida que \( n \) aumenta, la distribución de \( \bar{X} \) se aproxima a una <strong>Normal</strong>:
+        </p>
+        <div class="formula-box">
+          $$\bar{X} \sim N\left(\mu, \frac{\sigma^2}{n}\right)$$
+        </div>
+        <p>
+          Permite usar la <strong>tabla Z</strong> para estimaciones y pruebas.
+        </p>
+      </div>
+
+      <div class="concept-card">
+        <h4>🔸 Aproximación Normal–Binomial</h4>
+        <p>
+          Si \( np > 10 \) y \( n(1-p) > 10 \),  
+          \( X \sim B(n, p) \) puede aproximarse por \( N(np, np(1-p)) \).
+        </p>
+        <p>Usar <strong>corrección por continuidad</strong> al convertir entre discreta y continua.</p>
+      </div>
+
+      <div class="concept-card">
+        <h4>📐 Tamaño Muestral</h4>
+        <p>
+          Para lograr precisión deseada \( l \):  
+        </p>
+        <div class="formula-box">
+          $$n \ge \left( \frac{2 z_{\alpha/2}}{l} \right)^2 \hat{p}(1 - \hat{p})$$
+        </div>
+        <p>
+          Mayor \( n \) → menor error e intervalos más estrechos.
+        </p>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>💡 En resumen:</h4>
+      <ul>
+        <li>Los parámetros poblacionales se estiman con valores muestrales (estimadores).</li>
+        <li>Los intervalos de confianza indican el rango probable del parámetro real.</li>
+        <li>El TCL permite aplicar la Normal a distribuciones muestrales grandes.</li>
+        <li>El tamaño de muestra afecta la precisión y confiabilidad de las estimaciones.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+
+      <!-- Navegación -->
+      <div class="navigation-buttons">
+        <a href="./cap4.html" class="nav-button secondary">← Unidad 4</a>
+        <a href="./cap6.html" class="nav-button">Unidad 6 →</a>
+      </div>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+  <div class="sidebar-title">Unidad 5</div>
+  <ul class="nav-list">
+    <li class="nav-item"><a href="#introduccion">Estimación de una Proporción</a></li>
+    <li class="nav-item"><a href="#tcl">Teorema Central del Límite (TCL)</a></li>
+    <li class="nav-item"><a href="#intervalos-confianza">Intervalos de Confianza</a></li>
+<li class="nav-item"><a href="#estimadores">Estimadores e Intervalos (Media y Varianza)</a></li>
+
+    <li class="nav-item"><a href="#aprox-normal-binomial">Aproximación Normal-Binomial</a></li>
+    <li class="nav-item"><a href="#resumen-cap5">Resumen</a></li>
+  </ul>
+</aside>
+
+  </div>
+
+  <script>
+    // Sidebar activo y scroll suave
+    const sections = document.querySelectorAll('.content-section');
+    const navLinks = document.querySelectorAll('.nav-item a');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${id}`) link.classList.add('active');
+          });
+        }
+      });
+    }, { rootMargin: '-100px 0px -70% 0px' });
+    sections.forEach(section => observer.observe(section));
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+      <script>
+  // 🔹 Barra de progreso scroll
+  const progressBar = document.querySelector('.scroll-progress-bar');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    progressBar.style.width = `${scrollPercent}%`;
+  });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // 🔹 Agregar checkbox de estudio a cada sección
+  document.querySelectorAll('.content-section').forEach(section => {
+    const id = section.id;
+    const checkDiv = document.createElement('div');
+    checkDiv.className = 'study-check';
+    checkDiv.innerHTML = `
+      <input type="checkbox" class="study-checkbox" id="check-${id}">
+      <label for="check-${id}">Estudiado</label>
+    `;
+    const content = section.querySelector('.section-content');
+    if (content) content.prepend(checkDiv);
+  });
+
+  // 🔹 Sincronizar checkbox con sidebar + localStorage
+  document.querySelectorAll('.study-checkbox').forEach(checkbox => {
+    const id = checkbox.id.replace('check-', '');
+    const key = `tema_estudiado_${id}`;
+    const section = document.getElementById(id);
+    const navLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+    const saved = localStorage.getItem(key);
+
+    // Restaurar estado guardado
+    if (saved === 'true') {
+      checkbox.checked = true;
+      section.classList.add('section-studied');
+      if (navLink) navLink.classList.add('studied');
+    }
+
+    // Escuchar cambios
+    checkbox.addEventListener('change', () => {
+      localStorage.setItem(key, checkbox.checked);
+      if (checkbox.checked) {
+        section.classList.add('section-studied');
+        if (navLink) navLink.classList.add('studied');
+      } else {
+        section.classList.remove('section-studied');
+        if (navLink) navLink.classList.remove('studied');
+      }
+    });
+  });
+});
+</script>
+<!-- 🔢 MathJax para renderizar fórmulas -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' },
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+</body>
+</html>

@@ -197,8 +197,7 @@
     <div class="nav-container">
       <a href="../../index.html" class="logo">PyE</a>
       <ul class="nav-menu">
-        <li><a href="../temario.html" class="nav-link">Temario</a></li>
-        <li><a href="../ejercicios.html" class="nav-link">Ejercicios</a></li>
+  <li><a id="back-btn" class="nav-link">Volver</a></li>
       </ul>
     </div>
   </nav>
@@ -347,5 +346,15 @@
       }
     }
   </script>
+    <script>
+  // Botón "Volver" dinámico
+  document.getElementById('back-btn').addEventListener('click', () => {
+    if (document.referrer && document.referrer !== window.location.href) {
+      history.back();
+    } else {
+      window.location.href = './ej_2_cap1.html'; // fallback si se abre directo
+    }
+  });
+</script>
 </body>
 </html>

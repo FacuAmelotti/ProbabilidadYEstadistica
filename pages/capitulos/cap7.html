@@ -1,0 +1,1230 @@
+  <!DOCTYPE html>
+  <html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unidad 7: Correlación y Regresión</title>
+    <link rel="icon" type="image/png" href="../../src/img/logo.png">
+    <link rel="stylesheet" href="../css/base.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+      <style>
+          
+  /* Layout principal */
+          .main-layout {
+              display: grid;
+              grid-template-columns: 1fr 280px;
+              gap: 60px;
+              max-width: 1400px;
+              margin: 0 auto;
+                              padding: 120px 10px 20px;
+              min-height: 100vh;
+          }
+
+          /* Sidebar de navegación */
+          .sidebar {
+              position: sticky;
+              top: 100px;
+              height: fit-content;
+              background: rgba(255, 255, 255, 0.03);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              border-radius: 20px;
+              padding: 30px 20px;
+              backdrop-filter: blur(10px);
+          }
+
+          .sidebar-title {
+              font-size: 0.85rem;
+              text-transform: uppercase;
+              letter-spacing: 1.5px;
+              color: rgba(255, 255, 255, 0.5);
+              margin-bottom: 20px;
+              font-weight: 600;
+          }
+
+          .nav-list {
+              list-style: none;
+          }
+
+          .nav-item {
+              margin-bottom: 8px;
+          }
+
+          .nav-item a {
+              display: block;
+              padding: 2px 2px;
+              color: rgba(255, 255, 255, 0.6);
+              text-decoration: none;
+              font-size: 0.9rem;
+              border-radius: 10px;
+              transition: all 0.3s ease;
+              border-left: 2px solid transparent;
+          }
+
+          .nav-item a:hover {
+              color: #ffffff;
+              background: rgba(255, 255, 255, 0.05);
+              border-left-color: rgba(255, 255, 255, 0.5);
+          }
+
+          .nav-item a.active {
+              color: #ffffff;
+              background: rgba(255, 255, 255, 0.1);
+              border-left-color: #ffffff;
+          }
+
+          /* Contenido principal */
+          .content-wrapper {
+              max-width: 1200px;
+          }
+
+
+          .page-header {
+              margin-bottom: 60px;
+          }
+
+          .breadcrumb {
+              display: flex;
+              gap: 10px;
+              font-size: 0.9rem;
+              color: rgba(255, 255, 255, 0.5);
+              margin-bottom: 20px;
+              flex-wrap: wrap;
+          }
+
+          .breadcrumb a {
+              color: rgba(255, 255, 255, 0.5);
+              text-decoration: none;
+              transition: color 0.3s ease;
+          }
+
+          .breadcrumb a:hover {
+              color: #ffffff;
+          }
+
+          .breadcrumb-separator {
+              color: rgba(255, 255, 255, 0.3);
+          }
+
+          .page-title {
+              font-size: clamp(2.5rem, 5vw, 4rem);
+              font-weight: 300;
+              margin-bottom: 15px;
+              background: linear-gradient(135deg, #ffffff, #a0a0a0);
+              -webkit-background-clip: text;
+              -webkit-text-fill-color: transparent;
+              background-clip: text;
+          }
+
+          .page-description {
+              font-size: 1.2rem;
+              color: rgba(255, 255, 255, 0.6);
+              line-height: 1.6;
+          }
+
+          /* Secciones de contenido */
+          .content-section {
+              margin-bottom: 60px;
+              scroll-margin-top: 100px;
+          }
+
+          .section-title {
+              font-size: 2rem;
+              font-weight: 400;
+              margin-bottom: 10px;
+              color: #ffffff;
+              display: flex;
+              align-items: center;
+              gap: 15px;
+          }
+
+          .section-icon {
+              font-size: 2.5rem;
+              opacity: 0.8;
+          }
+
+          .section-content {
+              background: rgba(255, 255, 255, 0.03);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              border-radius: 20px;
+              padding: 35px;
+              margin-top: 20px;
+          }
+
+          .section-content p {
+              margin-bottom: 15px;
+              line-height: 1.8;
+          }
+
+          .section-content strong {
+              color: #ffffff;
+              font-weight: 600;
+          }
+
+          /* Listas */
+          .content-section ul,
+          .content-section ol {
+              margin: 20px 0;
+              padding-left: 25px;
+          }
+
+          .content-section li {
+              margin-bottom: 12px;
+              color: rgba(255, 255, 255, 0.7);
+              line-height: 1.6;
+          }
+
+          /* Ejemplos */
+          .example-box {
+              background: rgba(120, 119, 198, 0.1);
+              border-left: 3px solid rgba(120, 119, 198, 0.5);
+              padding: 20px 25px;
+              margin: 20px 0;
+              border-radius: 10px;
+          }
+
+          .example-title {
+              font-weight: 600;
+              color: rgba(120, 119, 198, 1);
+              margin-bottom: 10px;
+              font-size: 0.95rem;
+              text-transform: uppercase;
+              letter-spacing: 1px;
+          }
+
+          /* Fórmulas */
+          .formula-box {
+              background: rgba(255, 255, 255, 0.05);
+              border: 1px solid rgba(255, 255, 255, 0.15);
+              padding: 25px;
+              margin: 25px 0;
+              border-radius: 15px;
+              text-align: center;
+              font-size: 1.1rem;
+          }
+
+          /* Destacados */
+          .highlight-box {
+              background: rgba(255, 255, 255, 0.08);
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              padding: 25px;
+              margin: 25px 0;
+              border-radius: 15px;
+          }
+
+          .highlight-box h4 {
+              color: #ffffff;
+              margin-bottom: 15px;
+              font-size: 1.2rem;
+          }
+
+          /* Grid de conceptos */
+          .concepts-grid {
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              gap: 20px;
+              margin: 30px 0;
+          }
+
+          .concept-card {
+              background: rgba(255, 255, 255, 0.05);
+              border: 1px solid rgba(255, 255, 255, 0.1);
+              padding: 25px;
+              border-radius: 15px;
+              transition: all 0.3s ease;
+          }
+
+          .concept-card:hover {
+              transform: translateY(-5px);
+              background: rgba(255, 255, 255, 0.08);
+              border-color: rgba(255, 255, 255, 0.2);
+          }
+
+          .concept-card h4 {
+              color: #ffffff;
+              margin-bottom: 10px;
+              font-size: 1.1rem;
+          }
+
+          .concept-card p {
+              font-size: 0.95rem;
+              color: rgba(255, 255, 255, 0.6);
+          }
+
+          /* Botones de navegación */
+          .navigation-buttons {
+              display: flex;
+              justify-content: space-between;
+              margin-top: 80px;
+              padding-top: 40px;
+              border-top: 1px solid rgba(255, 255, 255, 0.1);
+          }
+
+          .nav-button {
+              padding: 15px 35px;
+              background: linear-gradient(135deg, #ffffff, #e0e0e0);
+              color: #000000;
+              text-decoration: none;
+              border-radius: 50px;
+              font-weight: 500;
+              transition: all 0.3s ease;
+              display: inline-flex;
+              align-items: center;
+              gap: 10px;
+          }
+
+          .nav-button:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+          }
+
+          .nav-button.secondary {
+              background: transparent;
+              color: #ffffff;
+              border: 2px solid rgba(255, 255, 255, 0.3);
+          }
+
+          .nav-button.secondary:hover {
+              background: rgba(255, 255, 255, 0.1);
+          }
+
+          /* Responsive */
+          @media (max-width: 1024px) {
+              .main-layout {
+                  grid-template-columns: 1fr;
+                  gap: 40px;
+                  padding: 100px 30px 40px;
+              }
+
+              .sidebar {
+                  position: static;
+                  top: auto;
+              }
+
+              .content-wrapper {
+                  max-width: 100%;
+              }
+          }
+
+          @media (max-width: 768px) {
+              .main-layout {
+                  padding: 100px 20px 40px;
+              }
+
+              .section-content {
+                  padding: 25px 20px;
+              }
+
+              .concepts-grid {
+                  grid-template-columns: 1fr;
+              }
+
+              .navigation-buttons {
+                  flex-direction: column;
+                  gap: 15px;
+              }
+
+              .nav-button {
+                  width: 100%;
+                  justify-content: center;
+              }
+          }
+
+          /* Tabla */
+          .table-wrapper {
+              overflow-x: auto;
+              margin: 25px 0;
+          }
+
+          table {
+              width: 100%;
+              border-collapse: collapse;
+              background: rgba(255, 255, 255, 0.03);
+              border-radius: 10px;
+              overflow: hidden;
+          }
+
+          th, td {
+              padding: 15px;
+              text-align: left;
+              border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          }
+
+          th {
+              background: rgba(255, 255, 255, 0.05);
+              color: #ffffff;
+              font-weight: 600;
+          }
+
+          td {
+              color: rgba(255, 255, 255, 0.7);
+          }
+      </style>
+      <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+
+  </head>
+  <body>
+    <div class="animated-bg"></div>
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="" class="logo">PyE - Unidad 7</a>
+        <ul class="nav-menu">
+          <li><a href="../temario.html" class="nav-link">Temario</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="scroll-progress-bar"></div>
+
+    <div class="main-layout">
+
+      <!-- Contenido principal -->
+      <main class="content-wrapper">
+        <header class="page-header">
+          <nav class="breadcrumb">
+            <a href="../../index.html">Inicio</a>
+            <span class="breadcrumb-separator">›</span>
+            <a href="../temario.html">Temario</a>
+            <span class="breadcrumb-separator">›</span>
+            <span>Unidad 7</span>
+          </nav>
+          <h1 class="page-title">Correlación y Regresión</h1>
+          <p class="page-description">
+            En esta unidad se estudia la <strong>relación entre dos variables cuantitativas</strong>.  
+            Aprenderás a medir el grado de asociación mediante el <strong>coeficiente de correlación</strong>  
+            y a predecir valores usando <strong>modelos de regresión lineal</strong>.  
+            Analizaremos también cómo interpretar la pendiente, el intercepto y el coeficiente de determinación \( R^2 \).
+          </p>
+        </header>
+
+        <!-- =========================
+     Introducción a la Correlación
+     ========================= -->
+<section id="introduccion-correlacion" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🔗</span>Introducción a la Correlación</h2>
+  <div class="section-content">
+
+    <p>
+      En muchos estudios estadísticos, dos variables pueden estar relacionadas.  
+      Por ejemplo, el peso y la altura de una persona, la cantidad de horas de estudio y la nota obtenida, o la temperatura y el consumo eléctrico.
+    </p>
+
+    <p>
+      El análisis de correlación busca <strong>medir la fuerza y la dirección de una relación lineal</strong> entre dos variables cuantitativas.
+    </p>
+
+    <div class="highlight-box">
+      <h4>📘 Conceptos básicos:</h4>
+      <ul>
+        <li><strong>Covarianza:</strong> mide cómo varían conjuntamente dos variables.  
+          Si tienden a aumentar o disminuir juntas, la covarianza es positiva.</li>
+        <li><strong>Correlación:</strong> es una versión estandarizada de la covarianza que no depende de las unidades de medida.</li>
+      </ul>
+    </div>
+
+    <div class="formula-box">
+      $$r = \frac{S_{xy}}{\sqrt{S_{xx} S_{yy}}} = \frac{\sum (x_i - \bar{x})(y_i - \bar{y})}{\sqrt{\sum (x_i - \bar{x})^2 \sum (y_i - \bar{y})^2}}$$
+    </div>
+
+    <p>
+      donde:
+    </p>
+    <ul>
+      <li>\( r \): coeficiente de correlación lineal de Pearson</li>
+      <li>\( S_{xy} \): covarianza muestral</li>
+      <li>\( S_{xx}, S_{yy} \): sumas de cuadrados de \( x \) y \( y \)</li>
+    </ul>
+
+    <div class="highlight-box">
+      <h4>📈 Interpretación de \( r \):</h4>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Valor de \( r \)</th>
+              <th>Tipo de relación</th>
+              <th>Descripción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>\( r = +1 \)</td>
+              <td>Correlación positiva perfecta</td>
+              <td>Los puntos caen exactamente sobre una línea ascendente.</td>
+            </tr>
+            <tr>
+              <td>\( 0 < r < 1 \)</td>
+              <td>Correlación positiva</td>
+              <td>Valores de \( y \) aumentan con \( x \), pero con dispersión.</td>
+            </tr>
+            <tr>
+              <td>\( r = 0 \)</td>
+              <td>Sin correlación lineal</td>
+              <td>No existe relación lineal aparente entre \( x \) e \( y \).</td>
+            </tr>
+            <tr>
+              <td>\( -1 < r < 0 \)</td>
+              <td>Correlación negativa</td>
+              <td>Valores de \( y \) disminuyen a medida que \( x \) aumenta.</td>
+            </tr>
+            <tr>
+              <td>\( r = -1 \)</td>
+              <td>Correlación negativa perfecta</td>
+              <td>Los puntos caen sobre una línea descendente exacta.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="example-box">
+      <h4>🧮 Ejemplo:</h4>
+      <p>
+        En un grupo de estudiantes, al comparar las horas de estudio (\( x \)) con las calificaciones (\( y \)):  
+        si \( r = 0.92 \), existe una <strong>correlación positiva fuerte</strong>: a mayor cantidad de estudio, mayor nota promedio.
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>💡 Importante:</h4>
+      <ul>
+        <li>Una alta correlación no implica causalidad:  
+          que dos variables estén relacionadas no significa que una cause a la otra.</li>
+        <li>El coeficiente \( r \) mide solo <strong>relaciones lineales</strong>.  
+          Si la relación es curva o no lineal, \( r \) puede ser cercano a 0 aunque exista dependencia.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+        <!-- =========================
+     Regresión Lineal Simple
+     ========================= -->
+<section id="regresion-lineal" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📈</span>Regresión Lineal Simple</h2>
+  <div class="section-content">
+
+    <p>
+      En muchos problemas del mundo real, existe una relación entre dos variables cuantitativas.  
+      El objetivo del análisis de regresión es <strong>modelar esa relación</strong> y 
+      <strong>predecir el comportamiento</strong> de una variable en función de otra.
+    </p>
+
+    <p>
+      Por ejemplo, en un resorte, la longitud bajo carga \( l_i \) se relaciona con la fuerza aplicada \( x_i \)
+      según la <strong>Ley de Hooke</strong>:
+    </p>
+
+    <div class="formula-box">
+      $$l_i = β_0 + β_1 x_i$$
+    </div>
+
+    <p>
+      donde:
+    </p>
+
+    <ul>
+      <li>\( l_i \): longitud del resorte bajo carga</li>
+      <li>\( x_i \): carga aplicada</li>
+      <li>\( β_1 \): pendiente (constante de proporcionalidad del resorte)</li>
+      <li>\( β_0 \): longitud natural sin carga (ordenada al origen)</li>
+    </ul>
+
+    <div class="highlight-box">
+      <h4>💡 Considerando el error experimental:</h4>
+      <p>
+        En la práctica, las mediciones no son perfectas.  
+        Se introduce un término de error \( ϵ_i \) que representa desviaciones o ruido en los datos.
+      </p>
+      <div class="formula-box">
+        $$y_i = β_0 + β_1 x_i + ϵ_i$$
+      </div>
+      <p>
+        donde \( y_i \) es la variable observada (dependiente) y \( x_i \) es la variable independiente.  
+        El término \( ϵ_i \) es aleatorio y se asume que:
+      </p>
+      <div class="formula-box">
+        $$E[ϵ_i] = 0 \quad \text{y} \quad V[ϵ_i] = σ^2$$
+      </div>
+    </div>
+
+    <p>
+      Así, la variable \( y \) es aleatoria, con:
+    </p>
+    <div class="formula-box">
+      $$E[y|x] = β_0 + β_1 x \quad \text{y} \quad V[y|x] = σ^2$$
+    </div>
+
+    <hr>
+
+    <!-- =========================
+         Estimación de Parámetros
+         ========================= -->
+    <h3>📊 Estimación de Parámetros (Método de Mínimos Cuadrados)</h3>
+    <p>
+      Dado un conjunto de observaciones \((x_1, y_1), (x_2, y_2), \dots, (x_n, y_n)\),
+      queremos estimar los parámetros \( β_0 \) y \( β_1 \) de la recta que mejor se ajusta a los datos.
+    </p>
+
+    <p>
+      El <strong>método de mínimos cuadrados</strong> busca minimizar la suma de los cuadrados de los errores (residuos):
+    </p>
+
+    <div class="formula-box">
+      $$\min_{β_0, β_1} \sum_{i=1}^{n} (y_i - (β_0 + β_1 x_i))^2$$
+    </div>
+
+    <p>
+      Las soluciones estimadas son:
+    </p>
+
+    <div class="formula-box">
+      $$\hat{β_1} = \frac{S_{xy}}{S_{xx}} \quad , \quad \hat{β_0} = \bar{y} - \hat{β_1} \bar{x}$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>🧩 Donde:</h4>
+      <ul>
+        <li>\( S_{xx} = \sum (x_i - \bar{x})^2 \)</li>
+        <li>\( S_{yy} = \sum (y_i - \bar{y})^2 \)</li>
+        <li>\( S_{xy} = \sum (x_i - \bar{x})(y_i - \bar{y}) \)</li>
+      </ul>
+    </div>
+
+    <div class="example-box">
+      <h4>📘 Ejemplo conceptual:</h4>
+      <p>
+        Supongamos que queremos estimar la relación entre el tiempo de estudio (horas) y la nota obtenida.  
+        El modelo lineal nos permitirá predecir la nota esperada para un determinado tiempo de estudio.
+      </p>
+    </div>
+
+    <hr>
+
+    <!-- =========================
+         Propiedades de los Estimadores
+         ========================= -->
+    <h3>📐 Propiedades de los Estimadores</h3>
+    <p>
+      Los estimadores de mínimos cuadrados poseen las siguientes propiedades:
+    </p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Estimador</th>
+            <th>Esperanza</th>
+            <th>Varianza</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>\( \hat{β_1} \)</td>
+            <td>\( E[\hat{β_1}] = β_1 \)</td>
+            <td>\( V[\hat{β_1}] = \frac{σ^2}{S_{xx}} \)</td>
+          </tr>
+          <tr>
+            <td>\( \hat{β_0} \)</td>
+            <td>\( E[\hat{β_0}] = β_0 \)</td>
+            <td>\( V[\hat{β_0}] = σ^2 \left(\frac{1}{n} + \frac{\bar{x}^2}{S_{xx}}\right) \)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      Dado que sus esperanzas coinciden con los parámetros verdaderos, ambos son <strong>estimadores insesgados</strong>.
+    </p>
+
+    <hr>
+
+    <!-- =========================
+         Estimación de la Varianza
+         ========================= -->
+    <h3>📉 Estimación de la Varianza del Error</h3>
+    <p>
+      Los residuos \( e_i = y_i - \hat{y_i} \) representan la diferencia entre los valores observados y los ajustados por el modelo.
+    </p>
+
+    <div class="formula-box">
+      $$SS_R = \sum e_i^2 = \sum (y_i - \hat{y_i})^2$$
+    </div>
+
+    <p>
+      Bajo las hipótesis del modelo lineal, se cumple:
+    </p>
+
+    <div class="formula-box">
+      $$E\left[\frac{SS_R}{σ^2}\right] = n - 2 \quad \Rightarrow \quad \hat{σ^2} = \frac{SS_R}{n - 2}$$
+    </div>
+
+    <p>
+      Además, reemplazando expresiones equivalentes, se obtiene:
+    </p>
+
+    <div class="formula-box">
+      $$\hat{σ^2} = \frac{S_{yy} - \frac{S_{xy}^2}{S_{xx}}}{n - 2}$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>💡 Interpretación:</h4>
+      <ul>
+        <li>Un valor pequeño de \( \hat{σ^2} \) indica un buen ajuste (errores pequeños).</li>
+        <li>La cantidad \( n - 2 \) aparece porque se estimaron dos parámetros (\( β_0 \) y \( β_1 \)).</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <h3>📊 Evaluación del Modelo</h3>
+    <p>
+      Una vez estimados los parámetros, el modelo de regresión puede expresarse como:
+    </p>
+
+    <div class="formula-box">
+      $$\hat{y} = \hat{β_0} + \hat{β_1} x$$
+    </div>
+
+    <p>
+      El grado de ajuste del modelo se mide con el <strong>coeficiente de determinación</strong> \( R^2 \):
+    </p>
+
+    <div class="formula-box">
+      $$R^2 = 1 - \frac{SS_R}{S_{yy}}$$
+    </div>
+
+    <p>
+      donde:
+    </p>
+    <ul>
+      <li>\( R^2 = 0 \): el modelo no explica la variabilidad de los datos.</li>
+      <li>\( R^2 = 1 \): el modelo explica completamente la variabilidad observada.</li>
+    </ul>
+
+    <div class="example-box">
+      <h4>🧮 Ejemplo:</h4>
+      <p>
+        Si \( R^2 = 0.82 \), significa que el <strong>82% de la variabilidad</strong> de \( y \) 
+        puede explicarse por la relación lineal con \( x \).
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================
+     Inferencia en la Regresión Lineal Simple
+     ========================= -->
+<section id="inferencia-regresion" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🧠</span>Inferencia e Intervalos de Confianza en la Regresión Lineal Simple</h2>
+  <div class="section-content">
+
+    <p>
+      En la regresión lineal simple no solo buscamos ajustar una recta a los datos,  
+      sino también <strong>inferir propiedades de los parámetros</strong> del modelo
+      y evaluar si la relación observada es estadísticamente significativa.
+    </p>
+
+    <p>
+      Recordemos el modelo:
+    </p>
+
+    <div class="formula-box">
+      $$y_i = β_0 + β_1 x_i + ϵ_i \quad \text{con } ϵ_i \sim N(0, σ^2)$$
+    </div>
+
+    <p>
+      Los parámetros \( β_0 \) (intercepto) y \( β_1 \) (pendiente) se estiman mediante mínimos cuadrados.
+      Ahora estudiaremos cómo realizar **pruebas de hipótesis** e **intervalos de confianza** para ellos.
+    </p>
+
+    <hr>
+
+    <!-- =========================
+         Inferencia para β1
+         ========================= -->
+    <h3>📈 Inferencia sobre la Pendiente \( β_1 \)</h3>
+
+    <p>
+      El parámetro \( β_1 \) mide el <strong>efecto promedio de un cambio en \( x \)</strong> sobre el valor esperado de \( y \).  
+      Por tanto, nos interesa saber si la pendiente difiere significativamente de un valor teórico (por ejemplo, 0).
+    </p>
+
+    <div class="highlight-box">
+      <h4>🔹 Hipótesis:</h4>
+      <div class="formula-box">
+        \[
+        H_0 : β_1 = β_{c1} \quad\text{vs}\quad H_1 : β_1 ≠ β_{c1}
+        \]
+      </div>
+    </div>
+
+    <p>
+      El estadístico de prueba es:
+    </p>
+
+    <div class="formula-box">
+      $$T = \frac{\hat{β_1} - β_{c1}}{\sqrt{\hat{σ}^2 / S_{xx}}} \quad , \quad T \sim t_{(n-2)}$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>📘 Regla de decisión:</h4>
+      <ul>
+        <li><strong>Prueba bilateral:</strong> Rechazar \( H_0 \) si \( |T| > t_{α/2,\, n-2} \)</li>
+        <li><strong>Unilateral derecha:</strong> \( H_1 : β_1 > β_{c1} \Rightarrow \) rechazar si \( T > t_{α,\, n-2} \)</li>
+        <li><strong>Unilateral izquierda:</strong> \( H_1 : β_1 < β_{c1} \Rightarrow \) rechazar si \( T < -t_{α,\, n-2} \)</li>
+      </ul>
+    </div>
+
+    <h4>📏 Intervalo de confianza para \( β_1 \)</h4>
+    <p>
+      Dado que:
+      $$T = \frac{\hat{β_1} - β_1}{\sqrt{\hat{σ}^2 / S_{xx}}} \sim t_{(n-2)}$$
+      el intervalo de confianza al nivel \( 1 - α \) es:
+    </p>
+
+    <div class="formula-box">
+      \[
+      \hat{β_1} \pm t_{α/2,\, n-2} \sqrt{\frac{\hat{σ}^2}{S_{xx}}}
+      \]
+    </div>
+
+    <div class="example-box">
+      <h4>🧮 Ejemplo:</h4>
+      <p>
+        Supongamos que en una regresión obtenemos \( \hat{β_1} = 0.82 \),  
+        \( \hat{σ}^2 = 0.09 \), \( S_{xx} = 20 \), y \( n = 12 \).  
+        Con \( t_{0.025,10} = 2.228 \):
+      </p>
+      <div class="formula-box">
+        \( IC_{95\%}(β_1) = 0.82 \pm 2.228 \sqrt{0.09/20} = 0.82 \pm 0.15 \)
+      </div>
+      <p>
+        Es decir, \( 0.67 < β_1 < 0.97 \).  
+        El intervalo no incluye 0 → existe evidencia de relación lineal significativa.
+      </p>
+    </div>
+
+    <hr>
+
+    <!-- =========================
+         Inferencia para β0
+         ========================= -->
+    <h3>📉 Inferencia sobre el Intercepto \( β_0 \)</h3>
+
+    <p>
+      De manera análoga, se pueden realizar pruebas e intervalos de confianza para \( β_0 \).
+    </p>
+
+    <div class="highlight-box">
+      <h4>🔹 Hipótesis:</h4>
+      <div class="formula-box">
+        \[
+        H_0 : β_0 = β_{c0} \quad\text{vs}\quad H_1 : β_0 ≠ β_{c0}
+        \]
+      </div>
+    </div>
+
+    <p>
+      El estadístico de prueba es:
+    </p>
+
+    <div class="formula-box">
+      $$T = \frac{\hat{β_0} - β_{c0}}{\sqrt{\hat{σ}^2 ( \frac{x̄^2}{S_{xx}} + \frac{1}{n} )}} \quad , \quad T \sim t_{(n-2)}$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>📘 Regla de decisión:</h4>
+      <ul>
+        <li><strong>Bilateral:</strong> Rechazar \( H_0 \) si \( |T| > t_{α/2, n-2} \)</li>
+        <li><strong>Unilateral derecha:</strong> Rechazar si \( T > t_{α, n-2} \)</li>
+        <li><strong>Unilateral izquierda:</strong> Rechazar si \( T < -t_{α, n-2} \)</li>
+      </ul>
+    </div>
+
+    <h4>📏 Intervalo de confianza para \( β_0 \)</h4>
+    <div class="formula-box">
+      \[
+      \hat{β_0} \pm t_{α/2,\, n-2} \sqrt{\hat{σ}^2 \left( \frac{x̄^2}{S_{xx}} + \frac{1}{n} \right)}
+      \]
+    </div>
+
+    <hr>
+
+    <!-- =========================
+         Intervalo para la respuesta media
+         ========================= -->
+    <h3>📊 Intervalo de Confianza para la Respuesta Media</h3>
+
+    <p>
+      A menudo interesa estimar el valor medio de la variable dependiente para un valor específico \( x_0 \):
+    </p>
+
+    <div class="formula-box">
+      $$E[Y|x_0] = β_0 + β_1 x_0$$
+    </div>
+
+    <p>
+      Un estimador puntual adecuado es:
+    </p>
+
+    <div class="formula-box">
+      $$\hat{Y_0} = \hat{β_0} + \hat{β_1} x_0$$
+    </div>
+
+    <p>
+      Su varianza es:
+    </p>
+
+    <div class="formula-box">
+      $$V(\hat{Y_0}) = σ^2 \left[\frac{1}{n} + \frac{(x_0 - \bar{x})^2}{S_{xx}}\right]$$
+    </div>
+
+    <p>
+      Como \( σ^2 \) es desconocido, se reemplaza por su estimador \( \hat{σ^2} = \frac{SS_R}{n - 2} \).  
+      El estadístico correspondiente sigue una distribución \( t_{(n-2)} \).
+    </p>
+
+    <h4>📏 Intervalo de confianza para la respuesta media:</h4>
+
+    <div class="formula-box">
+      \[
+      \hat{Y_0} \pm t_{α/2, n-2} \sqrt{\hat{σ^2} \left( \frac{1}{n} + \frac{(x_0 - \bar{x})^2}{S_{xx}} \right)}
+      \]
+    </div>
+
+    <div class="example-box">
+      <h4>🧮 Ejemplo:</h4>
+      <p>
+        Para un modelo con \( n = 15 \), \( \hat{β_0} = 2.1 \), \( \hat{β_1} = 0.85 \), \( \hat{σ^2} = 0.16 \),
+        \( \bar{x} = 10 \), \( S_{xx} = 200 \) y \( x_0 = 12 \):
+      </p>
+      <div class="formula-box">
+        \( \hat{Y_0} = 2.1 + 0.85(12) = 12.3 \)
+      </div>
+      <p>
+        Con \( t_{0.025,13} = 2.160 \), el intervalo de confianza al 95% es:
+      </p>
+      <div class="formula-box">
+        \( 12.3 \pm 2.160 \sqrt{0.16(1/15 + (12 - 10)^2/200)} = 12.3 \pm 0.4 \)
+      </div>
+      <p>
+        Es decir: \( 11.9 < E[Y|x_0=12] < 12.7 \)
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>💡 En resumen:</h4>
+      <ul>
+        <li>Las pruebas de hipótesis sobre \( β_1 \) determinan si la relación entre \( x \) e \( y \) es significativa.</li>
+        <li>Los intervalos de confianza permiten estimar rangos plausibles para los parámetros o la respuesta media.</li>
+        <li>El modelo es más confiable cuanto menores sean los errores y mayor el número de observaciones.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================
+     Intervalo de Predicción Individual
+     ========================= -->
+<section id="prediccion-individual" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🎯</span>Intervalo de Predicción Individual</h2>
+  <div class="section-content">
+
+    <p>
+      Además de estimar el valor medio esperado \( E[Y|x_0] \), en muchas aplicaciones
+      nos interesa <strong>predecir el valor individual de una nueva observación</strong> \( Y_0 \)
+      correspondiente a un valor específico \( x_0 \).
+    </p>
+
+    <p>
+      El valor observado \( Y_0 \) no solo varía debido a la incertidumbre en los parámetros \( β_0 \) y \( β_1 \),
+      sino también por el propio <strong>error aleatorio</strong> \( ϵ_0 \) del nuevo dato.
+      Por ello, el intervalo de predicción es siempre <strong>más amplio</strong> que el intervalo de confianza
+      para la media.
+    </p>
+
+    <div class="formula-box">
+      $$Y_0 = β_0 + β_1 x_0 + ϵ_0 \quad\text{con } ϵ_0 \sim N(0, σ^2)$$
+    </div>
+
+    <h3>📏 Estimador puntual</h3>
+    <p>
+      El mejor estimador puntual del valor esperado es:
+    </p>
+
+    <div class="formula-box">
+      $$\hat{Y_0} = \hat{β_0} + \hat{β_1} x_0$$
+    </div>
+
+    <h3>📊 Varianza de la predicción</h3>
+    <p>
+      La varianza asociada a la predicción de un nuevo valor individual es:
+    </p>
+
+    <div class="formula-box">
+      $$V(Y_0 - \hat{Y_0}) = σ^2 \left[ 1 + \frac{1}{n} + \frac{(x_0 - \bar{x})^2}{S_{xx}} \right]$$
+    </div>
+
+    <p>
+      Observá que incluye el término adicional “1”, que representa la
+      variabilidad propia de la nueva observación.
+    </p>
+
+    <h3>📈 Intervalo de predicción para un nuevo valor</h3>
+    <p>
+      Reemplazando \( σ^2 \) por su estimador \( \hat{σ^2} = \frac{SS_R}{n - 2} \),
+      el intervalo de predicción individual de nivel \( 1 - α \) es:
+    </p>
+
+    <div class="formula-box">
+      \[
+      \hat{Y_0} \pm t_{α/2,\, n-2} 
+      \sqrt{\,\hat{σ^2}\left( 1 + \frac{1}{n} + \frac{(x_0 - \bar{x})^2}{S_{xx}} \right)}
+      \]
+    </div>
+
+    <p>
+      Este intervalo indica el rango dentro del cual es probable que caiga una **nueva observación** de \( Y \)
+      para un valor dado de \( x_0 \), considerando tanto el error del modelo como la variabilidad natural.
+    </p>
+
+    <div class="example-box">
+      <h4>🧮 Ejemplo:</h4>
+      <p>
+        Usando el mismo modelo anterior con:
+        \( n = 15 \), \( \hat{β_0} = 2.1 \), \( \hat{β_1} = 0.85 \),
+        \( \hat{σ^2} = 0.16 \), \( \bar{x} = 10 \), \( S_{xx} = 200 \), y \( x_0 = 12 \):
+      </p>
+
+      <div class="formula-box">
+        \( \hat{Y_0} = 2.1 + 0.85(12) = 12.3 \)
+      </div>
+
+      <p>
+        Con \( t_{0.025,13} = 2.160 \), el intervalo de predicción individual es:
+      </p>
+
+      <div class="formula-box">
+        \[
+        12.3 \pm 2.160 \sqrt{0.16\left(1 + \frac{1}{15} + \frac{(12 - 10)^2}{200}\right)} 
+        = 12.3 \pm 0.92
+        \]
+      </div>
+
+      <p>
+        Por lo tanto:
+        <strong>\( 11.38 < Y_0 < 13.22 \)</strong>.
+        Este rango es más amplio que el intervalo de confianza para la media, reflejando mayor incertidumbre.
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>💡 Diferencias clave entre intervalos:</h4>
+      <ul>
+        <li><strong>Intervalo de confianza:</strong> estima la media esperada de \( Y \) para un \( x_0 \) fijo.</li>
+        <li><strong>Intervalo de predicción:</strong> estima el valor que podría tomar un nuevo \( Y \) observado.</li>
+        <li>El intervalo de predicción siempre es <strong>más ancho</strong> porque incluye la variabilidad del error individual.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =========================
+     Resumen del Capítulo
+     ========================= -->
+<section id="resumen-cap7" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📚</span>Resumen del Capítulo</h2>
+  <div class="section-content">
+
+    <p>
+      En esta unidad exploramos cómo medir y modelar la relación entre dos variables numéricas, 
+      desde la correlación hasta la construcción e interpretación de modelos de regresión lineal simple.
+    </p>
+
+    <div class="concepts-grid">
+      <div class="concept-card">
+        <h4>🔗 Correlación</h4>
+        <p>
+          Mide la <strong>fuerza y dirección</strong> de la relación lineal entre dos variables.  
+          El coeficiente de Pearson \( r \) toma valores entre -1 y +1.
+        </p>
+        <ul>
+          <li>\( r > 0 \): relación directa</li>
+          <li>\( r < 0 \): relación inversa</li>
+          <li>\( r = 0 \): sin relación lineal</li>
+        </ul>
+      </div>
+
+      <div class="concept-card">
+        <h4>📈 Regresión Lineal Simple</h4>
+        <p>
+          Permite estimar el valor medio de una variable dependiente \( y \)
+          a partir de una independiente \( x \):  
+          \( \hat{y} = \hat{β_0} + \hat{β_1}x \)
+        </p>
+        <ul>
+          <li>\( β_1 \): pendiente o tasa de cambio</li>
+          <li>\( β_0 \): valor esperado cuando \( x = 0 \)</li>
+        </ul>
+      </div>
+
+      <div class="concept-card">
+        <h4>🧮 Evaluación del Modelo</h4>
+        <p>
+          El coeficiente de determinación \( R^2 \) indica el grado de ajuste:
+          \( R^2 = 1 - \frac{SS_R}{S_{yy}} \)
+        </p>
+        <ul>
+          <li>\( R^2 \) cercano a 1 → excelente ajuste</li>
+          <li>\( R^2 \) cercano a 0 → modelo poco explicativo</li>
+        </ul>
+      </div>
+
+      <div class="concept-card">
+        <h4>🧠 Inferencia</h4>
+        <p>
+          Se pueden construir pruebas e intervalos de confianza para \( β_0 \), \( β_1 \)
+          y estimaciones de la respuesta media o individual.
+        </p>
+        <ul>
+          <li>\( T = \frac{\hat{β_i} - β_i}{SE(\hat{β_i})} \sim t_{n-2} \)</li>
+          <li>\( IC(β_i) = \hat{β_i} \pm t_{α/2,n-2} SE(\hat{β_i}) \)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight-box">
+      <h4>💡 En resumen:</h4>
+      <ul>
+        <li>La <strong>correlación</strong> cuantifica la asociación entre dos variables.</li>
+        <li>La <strong>regresión</strong> permite estimar y predecir valores.</li>
+        <li>El <strong>coeficiente \( R^2 \)</strong> mide la calidad del ajuste.</li>
+        <li>Los <strong>intervalos de confianza</strong> y <strong>de predicción</strong> evalúan la precisión de las estimaciones.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+        <!-- Navegación -->
+        <div class="navigation-buttons">
+          <a href="./cap6.html" class="nav-button secondary">← Unidad 6</a>
+          <a href="./cap8.html" class="nav-button">Unidad 8 →</a>
+        </div>
+      </main>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-title">Unidad 7</div>
+        <ul class="nav-list">  
+          <li class="nav-item"><a href="#introduccion-correlacion">Introducción a la Correlación</a></li>
+
+          <li class="nav-item"><a href="#regresion-lineal">Regresión Lineal Simple</a></li>
+<li class="nav-item"><a href="#inferencia-regresion">Inferencia e Intervalos</a></li>
+<li class="nav-item"><a href="#prediccion-individual">Intervalo de Predicción</a></li>
+
+          <li class="nav-item"><a href="#resumen-cap7">Resumen</a></li>
+        </ul>
+      </aside>
+
+    </div>
+
+
+
+    <script>
+      // Sidebar activo y scroll suave
+      const sections = document.querySelectorAll('.content-section');
+      const navLinks = document.querySelectorAll('.nav-item a');
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach(link => {
+              link.classList.remove('active');
+              if (link.getAttribute('href') === `#${id}`) link.classList.add('active');
+            });
+          }
+        });
+      }, { rootMargin: '-100px 0px -70% 0px' });
+      sections.forEach(section => observer.observe(section));
+      navLinks.forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const target = document.querySelector(link.getAttribute('href'));
+          target.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    </script>
+        <script>
+    // 🔹 Barra de progreso scroll
+    const progressBar = document.querySelector('.scroll-progress-bar');
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      progressBar.style.width = `${scrollPercent}%`;
+    });
+  </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // 🔹 Agregar checkbox de estudio a cada sección
+    document.querySelectorAll('.content-section').forEach(section => {
+      const id = section.id;
+      const checkDiv = document.createElement('div');
+      checkDiv.className = 'study-check';
+      checkDiv.innerHTML = `
+        <input type="checkbox" class="study-checkbox" id="check-${id}">
+        <label for="check-${id}">Estudiado</label>
+      `;
+      const content = section.querySelector('.section-content');
+      if (content) content.prepend(checkDiv);
+    });
+
+    // 🔹 Sincronizar checkbox con sidebar + localStorage
+    document.querySelectorAll('.study-checkbox').forEach(checkbox => {
+      const id = checkbox.id.replace('check-', '');
+      const key = `tema_estudiado_${id}`;
+      const section = document.getElementById(id);
+      const navLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+      const saved = localStorage.getItem(key);
+
+      // Restaurar estado guardado
+      if (saved === 'true') {
+        checkbox.checked = true;
+        section.classList.add('section-studied');
+        if (navLink) navLink.classList.add('studied');
+      }
+
+      // Escuchar cambios
+      checkbox.addEventListener('change', () => {
+        localStorage.setItem(key, checkbox.checked);
+        if (checkbox.checked) {
+          section.classList.add('section-studied');
+          if (navLink) navLink.classList.add('studied');
+        } else {
+          section.classList.remove('section-studied');
+          if (navLink) navLink.classList.remove('studied');
+        }
+      });
+    });
+  });
+  </script>
+  <!-- 🔢 MathJax para renderizar fórmulas -->
+  <script>
+  window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+    svg: { fontCache: 'global' },
+  };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+  </body>
+  </html>

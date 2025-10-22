@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unidad 6: Pruebas de Hipótesis</title>
+  <link rel="icon" type="image/png" href="../../src/img/logo.png">
+  <link rel="stylesheet" href="../css/base.css">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+    <style>
+        
+/* Layout principal */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+                            padding: 120px 10px 20px;
+            min-height: 100vh;
+        }
+
+        /* Sidebar de navegación */
+        .sidebar {
+            position: sticky;
+            top: 100px;
+            height: fit-content;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .sidebar-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 8px;
+        }
+
+        .nav-item a {
+            display: block;
+            padding: 2px 2px;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            border-left: 2px solid transparent;
+        }
+
+        .nav-item a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.05);
+            border-left-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-item a.active {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.1);
+            border-left-color: #ffffff;
+        }
+
+        /* Contenido principal */
+        .content-wrapper {
+            max-width: 1200px;
+        }
+
+
+        .page-header {
+            margin-bottom: 60px;
+        }
+
+        .breadcrumb {
+            display: flex;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: #ffffff;
+        }
+
+        .breadcrumb-separator {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 300;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ffffff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-description {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        /* Secciones de contenido */
+        .content-section {
+            margin-bottom: 60px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 10px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            font-size: 2.5rem;
+            opacity: 0.8;
+        }
+
+        .section-content {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 20px;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .section-content strong {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        /* Listas */
+        .content-section ul,
+        .content-section ol {
+            margin: 20px 0;
+            padding-left: 25px;
+        }
+
+        .content-section li {
+            margin-bottom: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+
+        /* Ejemplos */
+        .example-box {
+            background: rgba(120, 119, 198, 0.1);
+            border-left: 3px solid rgba(120, 119, 198, 0.5);
+            padding: 20px 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .example-title {
+            font-weight: 600;
+            color: rgba(120, 119, 198, 1);
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Fórmulas */
+        .formula-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        /* Destacados */
+        .highlight-box {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 15px;
+        }
+
+        .highlight-box h4 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        /* Grid de conceptos */
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .concept-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .concept-card h4 {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .concept-card p {
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Botones de navegación */
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-button {
+            padding: 15px 35px;
+            background: linear-gradient(135deg, #ffffff, #e0e0e0);
+            color: #000000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-button.secondary {
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-button.secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 100px 30px 40px;
+            }
+
+            .sidebar {
+                position: static;
+                top: auto;
+            }
+
+            .content-wrapper {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                padding: 100px 20px 40px;
+            }
+
+            .section-content {
+                padding: 25px 20px;
+            }
+
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Tabla */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 25px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        td {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="" class="logo">PyE - Unidad 6</a>
+      <ul class="nav-menu">
+        <li><a href="../temario.html" class="nav-link">Temario</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="scroll-progress-bar"></div>
+
+  <div class="main-layout">
+
+    <!-- Contenido principal -->
+    <main class="content-wrapper">
+      <header class="page-header">
+        <nav class="breadcrumb">
+          <a href="../../index.html">Inicio</a>
+          <span class="breadcrumb-separator">›</span>
+          <a href="../temario.html">Temario</a>
+          <span class="breadcrumb-separator">›</span>
+          <span>Unidad 6</span>
+        </nav>
+        <h1 class="page-title">Pruebas de Hipótesis</h1>
+        <p class="page-description">
+          En esta unidad se introducen las <strong>hipótesis estadísticas</strong>, 
+          que permiten tomar decisiones basadas en muestras. 
+          Aprenderás a formular hipótesis nula y alternativa, definir regiones críticas 
+          y calcular la <strong>probabilidad de error tipo I y II</strong>.
+          Además, conocerás cómo aplicar las pruebas más comunes: para la <strong>media</strong>, 
+          <strong>proporción</strong> y <strong>varianza</strong>, usando las distribuciones 
+          <strong>Z</strong>, <strong>t de Student</strong> y <strong>χ²</strong>.
+        </p>
+      </header>
+
+      <!-- =========================
+     Introducción a las Hipótesis
+     ========================= -->
+<section id="introduccion" class="content-section">
+  <h2 class="section-title"><span class="section-icon">⚖️</span>Introducción a las Hipótesis Estadísticas</h2>
+  <div class="section-content">
+    <p>
+      En muchas situaciones prácticas, no basta con <strong>estimar un parámetro</strong> de una población.  
+      A menudo necesitamos <strong>tomar una decisión</strong>: por ejemplo, determinar si una nueva vacuna es más efectiva que la anterior,  
+      o si el promedio de producción ha cambiado con respecto al año pasado.
+    </p>
+    <p>
+      Para este tipo de problemas se emplean las <strong>pruebas de hipótesis estadísticas</strong>,  
+      que consisten en un <strong>procedimiento de decisión</strong> basado en los datos muestrales.  
+      El objetivo es evaluar si la evidencia es suficiente para <strong>aceptar o rechazar una afirmación</strong> sobre la población.
+    </p>
+
+    <div class="highlight-box">
+      <h4>💡 Definición:</h4>
+      <p>
+        Una <strong>hipótesis estadística</strong> es una afirmación o conjetura sobre uno o más <strong>parámetros poblacionales</strong>  
+        o sobre la forma de una distribución.
+      </p>
+    </div>
+
+    <p>
+      La verdad o falsedad de una hipótesis nunca se conoce con absoluta certeza,  
+      ya que rara vez se observa a toda la población.  
+      En cambio, se utiliza una <strong>muestra aleatoria</strong> para reunir evidencia estadística que apoye o contradiga la afirmación.
+    </p>
+  </div>
+</section>
+
+
+<!-- =========================
+     Hipótesis Nula y Alternativa
+     ========================= -->
+<section id="hipotesis" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🧩</span>Hipótesis Nula y Alternativa</h2>
+  <div class="section-content">
+    <p>
+      En toda prueba estadística se plantean dos hipótesis opuestas:
+    </p>
+
+    <div class="formula-box">
+      $$H_0 : \text{Hipótesis Nula} \quad \text{y} \quad H_1 : \text{Hipótesis Alternativa}$$
+    </div>
+
+    <ul>
+      <li><strong>Hipótesis Nula (H₀):</strong> es la afirmación que se somete a prueba.  
+      Se asume verdadera hasta que los datos indiquen lo contrario.</li>
+
+      <li><strong>Hipótesis Alternativa (H₁):</strong> representa la afirmación que se acepta si la evidencia contradice a H₀.  
+      Es la “competencia” estadística de la hipótesis nula.</li>
+    </ul>
+
+    <div class="example-box">
+      <h4>⚖️ Ejemplo Analógico (Juicio):</h4>
+      <p>
+        Imaginemos un juicio:
+      </p>
+
+      <div class="formula-box">
+        $$H_0 : \text{El acusado es inocente}$$
+        $$H_1 : \text{El acusado es culpable}$$
+      </div>
+
+      <p>
+        El jurado parte del supuesto de inocencia (<strong>H₀</strong>) y solo lo rechaza si la evidencia (<strong>datos</strong>)
+        es suficientemente fuerte.  
+        Si la evidencia no alcanza, el jurado “no rechaza H₀”, lo cual no significa que el acusado sea inocente,  
+        sino que no hay pruebas suficientes para condenarlo.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================
+     Errores Tipo I y Tipo II
+     ========================= -->
+<section id="errores" class="content-section">
+  <h2 class="section-title"><span class="section-icon">⚠️</span>Errores Tipo I y Tipo II</h2>
+  <div class="section-content">
+    <p>
+      Toda prueba de hipótesis implica el riesgo de cometer errores.  
+      Dado que la decisión se basa en una muestra (y no en toda la población), los resultados pueden ser incorrectos.
+    </p>
+
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Decisión</th>
+            <th>H₀ verdadera</th>
+            <th>H₀ falsa</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>No rechazar H₀</td>
+            <td>✅ Decisión correcta</td>
+            <td>❌ Error Tipo II (β)</td>
+          </tr>
+          <tr>
+            <td>Rechazar H₀</td>
+            <td>❌ Error Tipo I (α)</td>
+            <td>✅ Decisión correcta</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ul>
+      <li><strong>Error Tipo I (α):</strong> Rechazar H₀ cuando en realidad es verdadera.  
+      Es decir, llegar a una conclusión falsa debido a una muestra atípica.</li>
+
+      <li><strong>Error Tipo II (β):</strong> No rechazar H₀ cuando en realidad es falsa.  
+      Es decir, no detectar un efecto o diferencia que realmente existe.</li>
+    </ul>
+
+    <div class="highlight-box">
+      <h4>🎯 Interpretación:</h4>
+      <p>
+        El valor <strong>α</strong> se conoce como <strong>nivel de significancia</strong> y se fija antes del análisis (por ejemplo, 0.05 o 5%).  
+        Cuanto menor sea α, más estricta será la prueba, pero aumenta la probabilidad de cometer un error tipo II (β).
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<section id="region-critica" class="content-section">
+  <h2 class="section-title"><span class="section-icon">⚖️</span>Región Crítica y Nivel de Significancia</h2>
+  <div class="section-content">
+    <p>
+      En una <strong>prueba de hipótesis</strong>, el objetivo es tomar una decisión basada en los datos de una muestra:
+      <em>¿rechazamos o no rechazamos la hipótesis nula \( H_0 \)?</em>
+    </p>
+
+    <p>
+      Para ello se define una <strong>región crítica</strong> (o región de rechazo) que contiene todos los valores del estadístico de prueba
+      que llevan a <strong>rechazar \( H_0 \)</strong>.  
+      Los valores fuera de esa zona corresponden a la <strong>región de aceptación</strong>.
+    </p>
+
+    <div class="highlight-box">
+      <h4>📘 Definición:</h4>
+      <p>
+        La <strong>región crítica</strong> se determina de modo que la probabilidad de cometer un
+        <strong>error tipo I</strong> (rechazar \( H_0 \) siendo verdadera) sea igual al <strong>nivel de significancia</strong> \( \alpha \).
+      </p>
+    </div>
+
+    <div class="formula-box">
+      $$P(\text{Rechazar } H_0 \mid H_0 \text{ es verdadera}) = \alpha$$
+    </div>
+
+    <p>
+      En general:
+    </p>
+    <ul>
+      <li>\( \alpha \) suele elegirse entre 0.01, 0.05 o 0.10.</li>
+      <li>Un valor pequeño de \( \alpha \) implica ser más “exigente” para rechazar \( H_0 \).</li>
+      <li>El límite crítico depende del tipo de prueba: una cola o dos colas.</li>
+    </ul>
+
+    <div class="example-box">
+      <h4>🧮 Ejemplo:</h4>
+      <p>
+        Si queremos comprobar si una media difiere de 100, con nivel de significancia \( \alpha = 0.05 \),
+        la región crítica (para una prueba bilateral) se encuentra en los valores donde \( |z| > 1.96 \).
+      </p>
+
+      <div class="formula-box">
+        $$\text{Rechazar } H_0 \text{ si } z < -1.96 \text{ o } z > 1.96$$
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- =========================
+     Estadístico de Prueba y Decisión
+     ========================= -->
+<section id="estadistico-prueba" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📈</span>Estadístico de Prueba y Toma de Decisión</h2>
+  <div class="section-content">
+    <p>
+      El <strong>estadístico de prueba</strong> es un valor calculado a partir de la muestra, 
+      que se compara con la distribución teórica bajo \( H_0 \).
+    </p>
+
+    <p>
+      Según el tipo de variable y el conocimiento de la varianza, el estadístico puede seguir una distribución:
+    </p>
+    <ul>
+      <li>Normal estándar \( Z \)</li>
+      <li>t de Student \( t_{(n-1)} \)</li>
+      <li>Chi-cuadrado \( χ^2_{(n-1)} \)</li>
+      <li>F de Fisher \( F_{(v_1, v_2)} \)</li>
+    </ul>
+
+    <div class="highlight-box">
+      <h4>📘 Procedimiento general:</h4>
+      <ol>
+        <li>Formular \( H_0 \) y \( H_1 \).</li>
+        <li>Elegir nivel de significancia \( α \).</li>
+        <li>Determinar el estadístico de prueba adecuado.</li>
+        <li>Definir región crítica o calcular el valor p.</li>
+        <li>Tomar una decisión y redactar la conclusión.</li>
+      </ol>
+    </div>
+
+    <div class="example-box">
+      <h4>🧮 Ejemplo (Vacuna):</h4>
+      <p>
+        En un estudio con 20 personas, la vacuna tradicional protege al 25% (\( p=0.25 \)).
+        La nueva vacuna se considera mejor si más de 8 personas se mantienen sanas tras dos años.
+      </p>
+
+      <p>
+        Hipótesis:
+      </p>
+
+      <div class="formula-box">
+        \( H_0: p = 0.25 \) &nbsp;&nbsp;&nbsp;&nbsp; \( H_1: p > 0.25 \)
+      </div>
+
+      <p>
+        Estadístico: \( X \sim B(20, 0.25) \)
+      </p>
+      <p>
+        Región crítica: Rechazar \( H_0 \) si \( X > 8 \).
+      </p>
+      <p>
+        <strong>Error tipo I:</strong> α = P(X > 8 | p = 0.25)  
+        <strong>Error tipo II:</strong> β = P(X ≤ 8 | p = 0.5)
+      </p>
+
+      <p>
+        Aumentar \( n \) reduce ambas probabilidades y mejora la potencia de la prueba.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     Pruebas para la Media y Proporción
+     ========================= -->
+<section id="pruebas-media-proporcion" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🧮</span>Pruebas para Media y Proporción</h2>
+  <div class="section-content">
+    <h3>📏 Prueba para la Media (σ conocida)</h3>
+    <p>
+      Si la variable \( X \) sigue una distribución normal con varianza conocida \( σ^2 \),
+      el estadístico de prueba es:
+    </p>
+
+    <div class="formula-box">
+      $$z = \frac{\bar{X} - μ_0}{σ / \sqrt{n}}$$
+    </div>
+
+    <p>
+      Según \( H_1 \), se puede usar una prueba:
+    </p>
+    <ul>
+      <li>Unilateral derecha: \( H_1: μ > μ_0 \Rightarrow \text{rechazar si } z > z_α \)</li>
+      <li>Unilateral izquierda: \( H_1: μ < μ_0 \Rightarrow \text{rechazar si } z < -z_α \)</li>
+      <li>Bilateral: \( H_1: μ ≠ μ_0 \Rightarrow \text{rechazar si } |z| > z_{α/2} \)</li>
+    </ul>
+
+    <h3>📐 Prueba para la Media (σ desconocida)</h3>
+    <p>
+      Cuando la varianza es desconocida, se usa la distribución t de Student:
+    </p>
+
+    <div class="formula-box">
+      $$t = \frac{\bar{X} - μ_0}{S / \sqrt{n}} \quad \text{donde} \quad t \sim t_{(n-1)}$$
+    </div>
+
+    <h3>📊 Prueba para una Proporción</h3>
+    <p>
+      Si la variable sigue una binomial con parámetro \( p \), se usa el estimador \( \hat{p} = X/n \):
+    </p>
+
+    <div class="formula-box">
+      $$z = \frac{\hat{p} - p_0}{\sqrt{p_0 (1 - p_0)/n}}$$
+    </div>
+
+    <p>
+      La decisión se basa en comparar el valor de \( z \) con el valor crítico de la tabla normal.
+    </p>
+  </div>
+</section>
+
+<!-- =========================
+     Valor p y Conclusión
+     ========================= -->
+<section id="valor-p" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🧾</span>Valor p y Conclusión</h2>
+  <div class="section-content">
+    <p>
+      El <strong>valor p</strong> representa la probabilidad de obtener un valor del estadístico de prueba
+      igual o más extremo que el observado, asumiendo que \( H_0 \) es verdadera.
+    </p>
+
+    <div class="formula-box">
+      $$p\text{-valor} = P(|Z| > |z_{\text{obs}}| \mid H_0)$$
+    </div>
+
+    <p>
+      Es una medida del grado de evidencia contra \( H_0 \):
+    </p>
+    <ul>
+      <li>Si \( p \le α \): <strong>rechazamos \( H_0 \)</strong> (evidencia significativa).</li>
+      <li>Si \( p > α \): <strong>no rechazamos \( H_0 \)</strong> (no hay evidencia suficiente).</li>
+    </ul>
+
+    <div class="example-box">
+      <h4>🧮 Ejemplo:</h4>
+      <p>
+        En una prueba bilateral con \( α = 0.05 \), se obtiene \( z_{\text{obs}} = 2.10 \).
+      </p>
+      <div class="formula-box">
+        $$p = 2(1 - Φ(2.10)) = 0.0356$$
+      </div>
+      <p>
+        Como \( p = 0.0356 < 0.05 \), se <strong>rechaza \( H_0 \)</strong>.  
+        Existe evidencia significativa para aceptar \( H_1 \).
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>💡 En resumen:</h4>
+      <ul>
+        <li>El valor p permite decidir sin depender de valores críticos fijos.</li>
+        <li>Cuanto menor sea p, mayor es la evidencia contra \( H_0 \).</li>
+        <li>El nivel de significancia \( α \) actúa como umbral de decisión.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     Pruebas Específicas de Hipótesis
+     ========================= -->
+<section id="pruebas-especificas" class="content-section">
+  <h2 class="section-title"><span class="section-icon">🧠</span>Pruebas Específicas de Hipótesis</h2>
+
+  <div class="section-content">
+    <p>
+      A continuación se presentan los casos más frecuentes en los que se aplican las pruebas de hipótesis.
+      En todos ellos el objetivo es contrastar una afirmación sobre un parámetro poblacional (media o proporción)
+      utilizando información obtenida a partir de una muestra.
+    </p>
+
+    <!-- =========================
+         MEDIA CON VARIANZA CONOCIDA
+         ========================= -->
+    <h3>📏 Prueba de Hipótesis sobre la Media (σ conocida)</h3>
+
+    <p>
+      Supongamos que una variable aleatoria \( X \) tiene distribución normal con media \( μ \) y varianza conocida \( σ^2 \):
+      $$X \sim N(μ, σ^2)$$
+      Queremos contrastar si la media poblacional es igual a un valor específico \( μ_0 \).
+    </p>
+
+    <div class="formula-box">
+      $$H_0 : μ = μ_0 \quad\text{vs}\quad H_1 : μ \ne μ_0$$
+    </div>
+
+    <p>
+      El estimador adecuado es la media muestral \( \bar{X} \), la cual se distribuye normalmente:
+      $$\bar{X} \sim N\left( μ, \frac{σ^2}{n} \right)$$
+      El estadístico de prueba es:
+    </p>
+
+    <div class="formula-box">
+      $$Z = \frac{\bar{X} - μ_0}{σ / \sqrt{n}} \quad \text{con} \quad Z \sim N(0,1)$$
+    </div>
+
+    <p>
+      La región de aceptación se establece de modo que:
+      $$P(-z_{α/2} \le Z \le z_{α/2}) = 1 - α$$
+    </p>
+
+    <div class="highlight-box">
+      <h4>🧭 Regla de decisión (prueba bilateral):</h4>
+      <ul>
+        <li>Si \( |Z| \le z_{α/2} \) → <strong>no se rechaza</strong> \( H_0 \)</li>
+        <li>Si \( |Z| > z_{α/2} \) → <strong>se rechaza</strong> \( H_0 \)</li>
+      </ul>
+    </div>
+
+    <div class="example-box">
+      <h4>🧮 Demostración del error tipo I:</h4>
+      <p>
+        Bajo \( H_0 \) verdadera, la probabilidad de rechazarla (error tipo I) es:
+      </p>
+      <div class="formula-box">
+        \[
+        P(\text{rechazar } H_0 | H_0 \text{ verdadera}) =
+        P(|Z| > z_{α/2}) = α
+        \]
+      </div>
+    </div>
+
+    <p>
+      Este método es la base de todas las pruebas sobre medias cuando la desviación estándar poblacional es conocida.
+    </p>
+
+    <!-- =========================
+         MEDIA CON VARIANZA DESCONOCIDA (n grande)
+         ========================= -->
+    <h3>📐 Prueba de Hipótesis sobre la Media (σ desconocida, muestra grande)</h3>
+
+    <p>
+      En la mayoría de los casos prácticos la varianza poblacional \( σ^2 \) es desconocida.
+      Si el tamaño muestral es suficientemente grande (\( n ≥ 30 \)), se puede usar la varianza muestral \( S^2 \)
+      como aproximación de \( σ^2 \).
+    </p>
+
+    <div class="formula-box">
+      $$Z = \frac{\bar{X} - μ_0}{S / \sqrt{n}} \approx N(0,1)$$
+    </div>
+
+    <p>
+      El procedimiento y la regla de decisión son idénticos al caso anterior,
+      simplemente reemplazando \( σ \) por \( S \).
+    </p>
+
+    <!-- =========================
+         MEDIA CON VARIANZA DESCONOCIDA (n pequeño)
+         ========================= -->
+    <h3>📊 Prueba de Hipótesis sobre la Media (σ desconocida, muestra pequeña)</h3>
+
+    <p>
+      Cuando \( n < 30 \) y la varianza poblacional \( σ^2 \) es desconocida, se debe suponer que la variable
+      sigue una distribución normal. En este caso el estadístico de prueba se basa en la
+      <strong>distribución t de Student</strong>.
+    </p>
+
+    <div class="formula-box">
+      $$T = \frac{\bar{X} - μ_0}{S / \sqrt{n}} \quad \text{donde} \quad T \sim t_{(n-1)}$$
+    </div>
+
+    <p>
+      Los grados de libertad son \( n - 1 \), y la regla de decisión depende de la hipótesis alternativa:
+    </p>
+
+    <div class="highlight-box">
+      <h4>🧭 Reglas de decisión:</h4>
+      <ul>
+        <li><strong>Bilateral:</strong> \( H_1 : μ \ne μ_0 \)
+          <br>Rechazar \( H_0 \) si \( |T| > t_{α/2,\, n-1} \)
+        </li>
+        <li><strong>Unilateral derecha:</strong> \( H_1 : μ > μ_0 \)
+          <br>Rechazar \( H_0 \) si \( T > t_{α,\, n-1} \)
+        </li>
+        <li><strong>Unilateral izquierda:</strong> \( H_1 : μ < μ_0 \)
+          <br>Rechazar \( H_0 \) si \( T < -t_{α,\, n-1} \)
+        </li>
+      </ul>
+    </div>
+
+    <div class="example-box">
+      <h4>🧮 Ejemplo:</h4>
+      <p>
+        Se selecciona una muestra de \( n = 12 \) productos de una máquina.  
+        Se conoce que la media requerida es \( μ_0 = 100 \), y se obtiene \( \bar{X} = 102.4 \) y \( S = 3.6 \).  
+        Con \( α = 0.05 \):
+      </p>
+      <div class="formula-box">
+        \( T = \frac{102.4 - 100}{3.6 / \sqrt{12}} = 2.31 \)
+      </div>
+      <p>
+        De la tabla t con 11 grados de libertad: \( t_{0.025,11} = 2.201 \).  
+        Como \( |T| = 2.31 > 2.201 \) → <strong>rechazamos H₀</strong>.  
+        Existe evidencia significativa de que la media difiere de 100.
+      </p>
+    </div>
+
+    <!-- =========================
+         PRUEBA DE HIPÓTESIS SOBRE UNA PROPORCIÓN
+         ========================= -->
+    <h3>📈 Prueba de Hipótesis sobre una Proporción</h3>
+
+    <p>
+      Muchos problemas involucran variables binarias (éxito/fracaso, defectuoso/no defectuoso, etc.)
+      que se modelan mediante una distribución binomial.
+      En este caso interesa contrastar el parámetro \( p \) (proporción de éxitos).
+    </p>
+
+    <div class="formula-box">
+      $$H_0 : p = p_0 \quad\text{vs}\quad H_1 : p \ne p_0$$
+    </div>
+
+    <p>
+      Como \( p \) es desconocido, se estima con \( \hat{p} = X/n \),
+      y para \( n \) grande la distribución binomial se aproxima por la normal.
+      El estadístico de prueba es:
+    </p>
+
+    <div class="formula-box">
+      $$Z = \frac{\hat{p} - p_0}{\sqrt{p_0 (1 - p_0) / n}}$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>🧭 Reglas de decisión:</h4>
+      <ul>
+        <li><strong>Bilateral:</strong> \( H_1 : p \ne p_0 \)
+          <br>Rechazar \( H_0 \) si \( |Z| > z_{α/2} \)
+        </li>
+        <li><strong>Unilateral derecha:</strong> \( H_1 : p > p_0 \)
+          <br>Rechazar \( H_0 \) si \( Z > z_{α} \)
+        </li>
+        <li><strong>Unilateral izquierda:</strong> \( H_1 : p < p_0 \)
+          <br>Rechazar \( H_0 \) si \( Z < -z_{α} \)
+        </li>
+      </ul>
+    </div>
+
+    <div class="example-box">
+      <h4>🧮 Ejemplo:</h4>
+      <p>
+        Una fábrica produce componentes y afirma que solo el 5 % son defectuosos.  
+        En una muestra de 400 unidades se encuentran 30 defectuosos.
+      </p>
+
+      <p>
+        \( \hat{p} = 30/400 = 0.075 \)  
+        Hipótesis: \( H_0 : p = 0.05 \), \( H_1 : p > 0.05 \)
+      </p>
+
+      <div class="formula-box">
+        \( Z = \frac{0.075 - 0.05}{\sqrt{0.05(0.95)/400}} = 2.29 \)
+      </div>
+
+      <p>
+        Con \( α = 0.05 \), \( z_{0.05} = 1.645 \).  
+        Como \( 2.29 > 1.645 \) → <strong>rechazamos H₀</strong>.  
+        Hay evidencia de que la proporción real de defectuosos supera el 5 %.
+      </p>
+    </div>
+
+    <div class="highlight-box">
+      <h4>💡 Conclusión general:</h4>
+      <p>
+        Las pruebas sobre la <strong>media</strong> y la <strong>proporción</strong> constituyen la base del análisis inferencial.
+        Permiten validar o refutar afirmaciones sobre parámetros poblacionales con un nivel de confianza cuantificado
+        por \( α \). La elección entre distribución Z o t depende de si la varianza poblacional es conocida y del tamaño de muestra.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     Prueba de Hipótesis sobre una Varianza
+     ========================= -->
+<section id="prueba-varianza" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📉</span>Prueba de Hipótesis sobre una Varianza</h2>
+
+  <div class="section-content">
+    <p>
+      Este método se utiliza cuando se desea probar si el valor supuesto de una <strong>varianza poblacional</strong> es correcto o no.  
+      Es una herramienta fundamental para evaluar la <strong>consistencia o variabilidad</strong> de un proceso respecto a un valor esperado.
+    </p>
+
+    <p>
+      Sea una muestra aleatoria \( X_1, X_2, \dots, X_n \) proveniente de una población normal \( X \sim N(μ, σ^2) \).  
+      La varianza poblacional \( σ^2 \) puede estimarse mediante la varianza muestral:
+    </p>
+
+    <div class="formula-box">
+      $$S^2 = \frac{1}{n - 1} \sum_{i=1}^{n} (X_i - \bar{X})^2$$
+    </div>
+
+    <p>
+      El estadístico que se emplea para contrastar hipótesis sobre \( σ^2 \) es:
+    </p>
+
+    <div class="formula-box">
+      $$\chi^2 = \frac{(n - 1) S^2}{σ^2}$$
+    </div>
+
+    <p>
+      Si la hipótesis nula \( H_0 : σ^2 = σ_0^2 \) es verdadera, entonces el estadístico se distribuye como una
+      <strong>Ji-Cuadrado</strong> con \( n - 1 \) grados de libertad:
+    </p>
+
+    <div class="formula-box">
+      $$\chi^2 \sim \chi^2_{(n-1)}$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>📘 Hipótesis posibles:</h4>
+      <ul>
+        <li><strong>Bilateral:</strong> \( H_0 : σ^2 = σ_0^2 \) &nbsp;&nbsp; vs &nbsp;&nbsp; \( H_1 : σ^2 ≠ σ_0^2 \)</li>
+        <li><strong>Unilateral derecha:</strong> \( H_0 : σ^2 = σ_0^2 \) &nbsp;&nbsp; vs &nbsp;&nbsp; \( H_1 : σ^2 > σ_0^2 \)</li>
+        <li><strong>Unilateral izquierda:</strong> \( H_0 : σ^2 = σ_0^2 \) &nbsp;&nbsp; vs &nbsp;&nbsp; \( H_1 : σ^2 < σ_0^2 \)</li>
+      </ul>
+    </div>
+
+    <div class="highlight-box">
+      <h4>🧭 Regla de decisión:</h4>
+      <ul>
+        <li>
+          <strong>Para \( H_1 : σ^2 ≠ σ_0^2 \):</strong>  
+          Rechazar \( H_0 \) si \( χ^2 < χ^2_{(1 - α/2; n-1)} \) o \( χ^2 > χ^2_{(α/2; n-1)} \)
+        </li>
+        <li>
+          <strong>Para \( H_1 : σ^2 > σ_0^2 \):</strong>  
+          Rechazar \( H_0 \) si \( χ^2 > χ^2_{(α; n-1)} \)
+        </li>
+        <li>
+          <strong>Para \( H_1 : σ^2 < σ_0^2 \):</strong>  
+          Rechazar \( H_0 \) si \( χ^2 < χ^2_{(1 - α; n-1)} \)
+        </li>
+      </ul>
+    </div>
+
+    <div class="example-box">
+      <h4>🧮 Ejemplo:</h4>
+      <p>
+        Una máquina produce tornillos cuyo diámetro debería tener una varianza máxima de \( σ_0^2 = 0.01 \, \text{mm}^2 \).  
+        Se toma una muestra de \( n = 10 \) piezas y se obtiene \( S^2 = 0.015 \).
+      </p>
+      <p>
+        Hipótesis:
+      </p>
+      <div class="formula-box">
+        \( H_0 : σ^2 = 0.01 \), &nbsp;&nbsp; \( H_1 : σ^2 > 0.01 \)
+      </div>
+      <p>
+        Estadístico:
+      </p>
+      <div class="formula-box">
+        \( χ^2 = \frac{(10 - 1)(0.015)}{0.01} = 13.5 \)
+      </div>
+      <p>
+        Con \( n - 1 = 9 \) grados de libertad y \( α = 0.05 \), el valor crítico es \( χ^2_{(0.05;9)} = 16.92 \).  
+        Como \( 13.5 < 16.92 \), <strong>no se rechaza H₀</strong>.  
+        No hay evidencia suficiente para afirmar que la varianza exceda el valor especificado.
+      </p>
+    </div>
+
+    <!-- =========================
+         P-VALOR
+         ========================= -->
+    <h3>📊 Cálculo e Interpretación del Valor p</h3>
+    <p>
+      El <strong>p-valor</strong> representa la probabilidad de obtener un valor del estadístico de prueba
+      tan extremo o más extremo que el observado, suponiendo que \( H_0 \) es verdadera.
+    </p>
+
+    <div class="formula-box">
+      $$p\text{-valor} = P(|χ^2| > |χ^2_{\text{obs}}| \mid H_0)$$
+    </div>
+
+    <p>
+      Su interpretación es análoga a las pruebas anteriores:
+    </p>
+    <ul>
+      <li>Si \( p \le α \): se <strong>rechaza \( H_0 \)</strong>.</li>
+      <li>Si \( p > α \): se <strong>no rechaza \( H_0 \)</strong>.</li>
+    </ul>
+
+    <div class="highlight-box">
+      <h4>🧠 Interpretación práctica:</h4>
+      <p>
+        Un p-valor pequeño indica una fuerte evidencia en contra de \( H_0 \),  
+        mientras que un p-valor grande sugiere que los datos son compatibles con la hipótesis nula.
+      </p>
+    </div>
+
+    <p>
+      En este caso, debido a que la distribución \( χ^2 \) no es simétrica, el cálculo del p-valor depende de la hipótesis alternativa:
+    </p>
+
+    <div class="formula-box">
+      \[
+      \begin{aligned}
+      \text{Si } H_1 : σ^2 > σ_0^2 &\Rightarrow p = P(χ^2 > χ^2_0) \\
+      \text{Si } H_1 : σ^2 < σ_0^2 &\Rightarrow p = P(χ^2 < χ^2_0) \\
+      \text{Si } H_1 : σ^2 ≠ σ_0^2 &\Rightarrow p = 2 \min[P(χ^2 < χ^2_0), P(χ^2 > χ^2_0)]
+      \end{aligned}
+      \]
+    </div>
+
+    <!-- =========================
+         ERROR TIPO II Y TAMAÑO DE MUESTRA
+         ========================= -->
+    <h3>📈 Error Tipo II y Tamaño de Muestra</h3>
+    <p>
+      El <strong>error tipo II (β)</strong> ocurre cuando no se rechaza \( H_0 \) siendo falsa.  
+      Este error depende de la diferencia real entre \( μ \) y \( μ_0 \), el nivel de significancia \( α \)
+      y el tamaño de muestra \( n \).
+    </p>
+
+    <div class="formula-box">
+      $$β(μ) = Φ\left(z_{α/2} - \frac{μ - μ_0}{σ / \sqrt{n}}\right)
+               - Φ\left(-z_{α/2} - \frac{μ - μ_0}{σ / \sqrt{n}}\right)$$
+    </div>
+
+    <p>
+      Para lograr una potencia deseada \( 1 - β_0 \), se determina el tamaño mínimo de muestra necesario:
+    </p>
+
+    <div class="formula-box">
+      $$n > \frac{(z_{α/2} + z_{β_0})^2 σ^2}{(μ - μ_0)^2}$$
+    </div>
+
+    <div class="highlight-box">
+      <h4>💡 En resumen:</h4>
+      <ul>
+        <li>Un mayor tamaño muestral reduce simultáneamente α y β.</li>
+        <li>El cálculo de \( n \) permite diseñar experimentos con la potencia estadística deseada.</li>
+        <li>La forma de la hipótesis (bilateral o unilateral) determina el valor crítico correspondiente.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+      <!-- =========================
+           Resumen del Capítulo
+           ========================= -->
+      <section id="resumen-cap6" class="content-section">
+        <h2 class="section-title"><span class="section-icon">📚</span>Resumen del Capítulo</h2>
+        <div class="section-content">
+
+          <div class="concepts-grid">
+            <div class="concept-card">
+              <h4>🎯 Objetivo</h4>
+              <p>
+                Comprender el proceso de <strong>prueba de hipótesis</strong> para evaluar afirmaciones sobre parámetros poblacionales
+                utilizando datos muestrales y niveles de significancia.
+              </p>
+            </div>
+
+            <div class="concept-card">
+              <h4>⚖️ Conceptos Clave</h4>
+              <ul>
+                <li><strong>Hipótesis nula (H₀):</strong> afirmación inicial que se somete a prueba.</li>
+                <li><strong>Hipótesis alternativa (H₁):</strong> lo que se concluye si se rechaza H₀.</li>
+                <li><strong>Estadístico de prueba:</strong> valor que resume la evidencia de la muestra.</li>
+                <li><strong>Errores:</strong> tipo I (α) y tipo II (β).</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="highlight-box">
+            <h4>💡 En resumen:</h4>
+            <ul>
+              <li>Se formulan hipótesis sobre parámetros poblacionales.</li>
+              <li>El resultado del muestreo se traduce en un estadístico de prueba.</li>
+              <li>Se define una región crítica según el nivel de significancia (α).</li>
+              <li>El resultado permite <strong>rechazar o no rechazar H₀</strong> con cierto grado de confianza.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="herramienta">
+        <div class="info-gold">
+  <h2 class="section-title"><span class="section-icon">🧰</span>Herramienta Interactiva</h2>
+
+    <p>Explorá las <strong>Tablas Estadísticas Interactivas</strong> para obtener valores críticos de Z, t y χ² según el nivel de significancia de tu prueba.</p>
+    <a href="../tablas.html" class="nav-button">Abrir Tablas Interactivas →</a>
+
+        </div>
+</section>
+
+      <!-- Navegación -->
+      <div class="navigation-buttons">
+        <a href="./cap5.html" class="nav-button secondary">← Unidad 5</a>
+        <a href="./cap7.html" class="nav-button">Unidad 7 →</a>
+      </div>
+    </main>
+
+    <!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-title">Unidad 6</div>
+  <ul class="nav-list">
+    <li class="nav-item"><a href="#introduccion">Introducción</a></li>
+    <li class="nav-item"><a href="#hipotesis">H₀ y H₁</a></li>
+    <li class="nav-item"><a href="#errores">Errores Tipo I y II</a></li>
+    <li class="nav-item"><a href="#region-critica">Región Crítica</a></li>
+    <li class="nav-item"><a href="#estadistico-prueba">Estadístico y Decisión</a></li>
+    <li class="nav-item"><a href="#pruebas-media-proporcion">Pruebas de Media y Proporción</a></li>
+    <li class="nav-item"><a href="#valor-p">Valor p y Conclusión</a></li>
+    <li class="nav-item"><a href="#pruebas-especificas">Pruebas Específicas</a></li>
+<li class="nav-item"><a href="#prueba-varianza">Prueba sobre una Varianza</a></li>
+
+    <li class="nav-item"><a href="#resumen-cap6">Resumen</a></li>
+  </ul>
+</aside>
+
+
+  </div>
+
+  <script>
+    // Sidebar activo y scroll suave
+    const sections = document.querySelectorAll('.content-section');
+    const navLinks = document.querySelectorAll('.nav-item a');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${id}`) link.classList.add('active');
+          });
+        }
+      });
+    }, { rootMargin: '-100px 0px -70% 0px' });
+    sections.forEach(section => observer.observe(section));
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+      <script>
+  // 🔹 Barra de progreso scroll
+  const progressBar = document.querySelector('.scroll-progress-bar');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    progressBar.style.width = `${scrollPercent}%`;
+  });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // 🔹 Agregar checkbox de estudio a cada sección
+  document.querySelectorAll('.content-section').forEach(section => {
+    const id = section.id;
+    const checkDiv = document.createElement('div');
+    checkDiv.className = 'study-check';
+    checkDiv.innerHTML = `
+      <input type="checkbox" class="study-checkbox" id="check-${id}">
+      <label for="check-${id}">Estudiado</label>
+    `;
+    const content = section.querySelector('.section-content');
+    if (content) content.prepend(checkDiv);
+  });
+
+  // 🔹 Sincronizar checkbox con sidebar + localStorage
+  document.querySelectorAll('.study-checkbox').forEach(checkbox => {
+    const id = checkbox.id.replace('check-', '');
+    const key = `tema_estudiado_${id}`;
+    const section = document.getElementById(id);
+    const navLink = document.querySelector(`.sidebar a[href="#${id}"]`);
+    const saved = localStorage.getItem(key);
+
+    // Restaurar estado guardado
+    if (saved === 'true') {
+      checkbox.checked = true;
+      section.classList.add('section-studied');
+      if (navLink) navLink.classList.add('studied');
+    }
+
+    // Escuchar cambios
+    checkbox.addEventListener('change', () => {
+      localStorage.setItem(key, checkbox.checked);
+      if (checkbox.checked) {
+        section.classList.add('section-studied');
+        if (navLink) navLink.classList.add('studied');
+      } else {
+        section.classList.remove('section-studied');
+        if (navLink) navLink.classList.remove('studied');
+      }
+    });
+  });
+});
+</script>
+<!-- 🔢 MathJax para renderizar fórmulas -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  svg: { fontCache: 'global' },
+};
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+</body>
+</html>

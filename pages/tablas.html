@@ -280,8 +280,7 @@ tr:hover td {
         <img src="../src/img/logo.png" alt="PyE Logo">PyE
       </a>
             <ul class="nav-menu">
-                            <li><a href="./temario.html" class="nav-link">Temario</a></li>
-                <li><a href="./herramientas.html" class="nav-link">Herramientas</a></li>
+  <li><a id="back-btn" class="nav-link">Volver</a></li>
             </ul>
         </div>
     </nav>
@@ -548,5 +547,17 @@ tr:hover td {
     } else resultado.textContent = "Valor fuera del rango.";
   });
   </script>
+
+  
+<script>
+  // Botón "Volver" dinámico
+  document.getElementById('back-btn').addEventListener('click', () => {
+    if (document.referrer && document.referrer !== window.location.href) {
+      history.back();
+    } else {
+      window.location.href = './tablas.html'; // fallback si se abre directo
+    }
+  });
+</script>
 </body>
 </html>

@@ -1,0 +1,2018 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratorio de Probabilidad - Capítulo 1 Completo</title>
+  <script defer src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ <style>
+    /* ===========================
+       RESET & BASE
+       =========================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Manrope', sans-serif;
+      background: #0a0a0a;
+      color: #ffffff;
+      overflow: hidden;
+    }
+
+    /* ===========================
+       ANIMATED BACKGROUND
+       =========================== */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: 
+        radial-gradient(circle at 20% 30%, rgba(120, 119, 198, 0.08), transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(79, 172, 254, 0.06), transparent 50%);
+      animation: breathe 8s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+
+    /* ===========================
+       HEADER
+       =========================== */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(10, 10, 10, 0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      height: 52px;
+    }
+
+    header h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      font-family: 'Space Grotesk', sans-serif;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .header-controls {
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    button {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #fff;
+      border-radius: 20px;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    /* ===========================
+       NAVEGACIÓN DE TABS
+       =========================== */
+    .tab-nav {
+      position: fixed;
+      top: 52px;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      display: flex;
+      gap: 6px;
+      padding: 8px 16px;
+      background: rgba(15, 15, 25, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .tab-nav::-webkit-scrollbar {
+      height: 3px;
+    }
+
+    .tab-nav::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+
+    .tab-btn {
+      padding: 7px 14px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      color: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #ffffff;
+    }
+
+    .tab-btn.active {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(0, 255, 170, 0.4);
+      color: #00ffaa;
+    }
+
+    /* ===========================
+       CONTENEDOR PRINCIPAL
+       =========================== */
+    main {
+      position: fixed;
+      top: 96px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 16px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+    }
+
+    main::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    main::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===========================
+       SECCIONES
+       =========================== */
+    section {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+    }
+
+    section:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      color: #00ffaa;
+      font-weight: 600;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(0, 255, 170, 0.2);
+    }
+
+    h3 {
+      font-size: 0.95rem;
+      margin: 12px 0 8px;
+      color: #4facfe;
+      font-weight: 600;
+    }
+
+    p {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      margin-bottom: 8px;
+      opacity: 0.9;
+    }
+
+    /* ===========================
+       GRID LAYOUTS
+       =========================== */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    /* ===========================
+       CANVAS
+       =========================== */
+    canvas {
+      width: 100%;
+      height: auto;
+      max-height: 280px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin: 10px 0;
+    }
+
+    /* ===========================
+       INPUTS
+       =========================== */
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0;
+      font-size: 0.8rem;
+      gap: 10px;
+    }
+
+    input[type="range"] {
+      flex: 1;
+      max-width: 160px;
+      accent-color: #00ffaa;
+      cursor: pointer;
+      height: 3px;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      width: 70px;
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 5px 8px;
+      font-size: 0.8rem;
+    }
+
+    input[type="text"] {
+      width: 100%;
+    }
+
+    select {
+      background: rgba(255, 255, 255, 0.04);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #00ffaa;
+      cursor: pointer;
+    }
+
+    /* ===========================
+       RESULTADOS
+       =========================== */
+    .result-box {
+      background: rgba(0, 255, 170, 0.04);
+      border: 1px solid rgba(0, 255, 170, 0.15);
+      border-radius: 8px;
+      padding: 12px;
+      margin: 10px 0;
+    }
+
+    .result-box p {
+      margin: 6px 0;
+      font-size: 0.85rem;
+    }
+
+    .highlight {
+      color: #00ffaa;
+      font-weight: 600;
+    }
+
+    /* ===========================
+       TABLA
+       =========================== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 0.8rem;
+    }
+
+    table th, table td {
+      padding: 8px 10px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    table th {
+      background: rgba(0, 255, 170, 0.08);
+      color: #00ffaa;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+
+    table tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* ===========================
+       ALERTAS
+       =========================== */
+    .alert {
+      padding: 10px 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .alert-info {
+      background: rgba(79, 172, 254, 0.08);
+      border: 1px solid rgba(79, 172, 254, 0.2);
+      color: #4facfe;
+    }
+
+    .alert-warning {
+      background: rgba(255, 170, 0, 0.08);
+      border: 1px solid rgba(255, 170, 0, 0.2);
+      color: #ffaa00;
+    }
+
+    /* ===========================
+       STATS CARDS
+       =========================== */
+    .stat-card {
+      background: rgba(0, 255, 170, 0.04);
+      border: 1px solid rgba(0, 255, 170, 0.15);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 255, 170, 0.15);
+    }
+
+    .stat-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #00ffaa;
+      margin: 6px 0;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: #aaa;
+      font-weight: 500;
+    }
+
+    /* ===========================
+       FOOTER
+       =========================== */
+    footer {
+      text-align: center;
+      padding: 16px;
+      background: rgba(15, 15, 25, 0.8);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.75rem;
+      color: #888;
+    }
+
+    footer p {
+      margin: 4px 0;
+    }
+
+    /* ===========================
+       RESPONSIVE
+       =========================== */
+    @media (max-width: 768px) {
+      header {
+        padding: 8px 12px;
+        height: 48px;
+      }
+
+      header h1 { 
+        font-size: 0.95rem; 
+      }
+
+      .tab-nav { 
+        padding: 6px 10px;
+        top: 48px;
+      }
+
+      .tab-btn {
+        padding: 6px 11px;
+        font-size: 0.75rem;
+      }
+
+      main { 
+        padding: 12px;
+        top: 86px;
+      }
+
+      section { 
+        padding: 12px; 
+      }
+
+      .grid-2, .grid-3 { 
+        grid-template-columns: 1fr; 
+      }
+
+      canvas {
+        max-height: 220px;
+      }
+
+      button {
+        padding: 5px 11px;
+        font-size: 0.75rem;
+      }
+
+      h2 {
+        font-size: 1rem;
+      }
+
+      h3 {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stat-value {
+        font-size: 1.2rem;
+      }
+
+      table th, table td {
+        padding: 6px 8px;
+        font-size: 0.75rem;
+      }
+    }
+    </style>
+</head>
+<body>
+
+<header>
+  <h1>🎲 Laboratorio Interactivo de Probabilidad — (En desarrollo) </h1>
+  <div class="header-controls">
+    <button id="btnReset">↻ Reset Todo</button>
+    <button id="btnReset"><a id="back-btn" class="nav-link">Volver</a></button>
+    
+</header>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-tab="experimento">1. Experimento Aleatorio</button>
+  <button class="tab-btn" data-tab="venn">2. Eventos y Venn</button>
+  <button class="tab-btn" data-tab="condicional">3. Prob. Condicional</button>
+  <button class="tab-btn" data-tab="frecuencia">4. Frecuencia y Ley LGN</button>
+  <button class="tab-btn" data-tab="variables">5. Variables Aleatorias</button>
+  <button class="tab-btn" data-tab="bayes">6. Teorema de Bayes</button>
+</nav>
+
+<main>
+  <!-- TAB 1: EXPERIMENTO ALEATORIO -->
+  <div class="tab-content active" id="tab-experimento">
+    <section>
+      <h2>🎯 Experimento Aleatorio y Espacio Muestral</h2>
+      <p>Un <strong>experimento aleatorio</strong> es un proceso cuyo resultado no puede predecirse con certeza. El conjunto de todos los resultados posibles se llama <strong>espacio muestral (Ω)</strong>.</p>
+      
+      <div class="grid-2" style="margin-top: 20px;">
+        <div>
+          <h3>Selecciona un experimento:</h3>
+          <select id="expSelect">
+            <option value="moneda">Lanzar una moneda</option>
+            <option value="dado">Lanzar un dado</option>
+            <option value="dos-monedas">Lanzar dos monedas</option>
+            <option value="dos-dados">Lanzar dos dados</option>
+            <option value="urna">Urna con bolas (3R, 2A, 1V)</option>
+          </select>
+          
+          <div style="margin-top: 20px;">
+            <button id="btnSimExp">🎲 Realizar experimento</button>
+            <button id="btnSimExpMulti">⚡ 100 experimentos</button>
+          </div>
+
+          <div class="result-box" id="expResult">
+            <p><strong>Resultado:</strong> <span id="expOutcome">—</span></p>
+            <p><strong>Espacio muestral Ω:</strong> <span id="expSpace">—</span></p>
+            <p><strong>|Ω|:</strong> <span id="expSize">—</span></p>
+          </div>
+        </div>
+
+        <div>
+          <h3>Visualización del Experimento</h3>
+          <canvas id="expCanvas" width="400" height="300"></canvas>
+        </div>
+      </div>
+
+      <div id="expFreqTable" style="margin-top: 20px;"></div>
+    </section>
+  </div>
+
+  <!-- TAB 2: DIAGRAMA DE VENN -->
+  <div class="tab-content" id="tab-venn">
+    <section>
+      <h2>📊 Eventos, Operaciones y Diagrama de Venn</h2>
+      
+      <div class="grid-2">
+        <div>
+          <h3>Parámetros de los eventos</h3>
+          
+          <label>
+            <span>P(A):</span>
+            <input id="pa" type="range" min="0" max="1" step="0.01" value="0.40">
+            <input id="paNum" type="number" min="0" max="1" step="0.01" value="0.40">
+          </label>
+          
+          <label>
+            <span>P(B):</span>
+            <input id="pb" type="range" min="0" max="1" step="0.01" value="0.50">
+            <input id="pbNum" type="number" min="0" max="1" step="0.01" value="0.50">
+          </label>
+          
+          <label>
+            <span>P(A∩B):</span>
+            <input id="pab" type="range" min="0" max="1" step="0.01" value="0.20">
+            <input id="pabNum" type="number" min="0" max="1" step="0.01" value="0.20">
+          </label>
+          
+          <label>
+            <input id="indep" type="checkbox">
+            <span>Marcar independencia (P(A∩B) = P(A)·P(B))</span>
+          </label>
+
+          <div style="margin-top: 16px;">
+            <button id="btnVennRandom">🎲 Valores aleatorios</button>
+            <button id="btnVennReset">↻ Reset</button>
+          </div>
+
+          <div id="vennWarnings" class="alert alert-warning" style="display: none;"></div>
+        </div>
+
+        <div>
+          <h3>Diagrama de Venn</h3>
+          <canvas id="venn" width="500" height="350"></canvas>
+        </div>
+      </div>
+
+      <div class="result-box" id="vennResults"></div>
+
+      <section style="background: rgba(79, 172, 254, 0.05); margin-top: 20px;">
+        <h3>📐 Operaciones con Eventos</h3>
+        <div class="grid-3">
+          <div class="stat-card">
+            <div class="stat-label">Unión (A∪B)</div>
+            <div class="stat-value" id="statUnion">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Complemento A^c</div>
+            <div class="stat-value" id="statCompA">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Complemento B^c</div>
+            <div class="stat-value" id="statCompB">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">A \ B</div>
+            <div class="stat-value" id="statAnotB">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">B \ A</div>
+            <div class="stat-value" id="statBnotA">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Ninguno</div>
+            <div class="stat-value" id="statNone">—</div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </div>
+
+  <!-- TAB 3: PROBABILIDAD CONDICIONAL -->
+  <div class="tab-content" id="tab-condicional">
+    <section>
+      <h2>🌳 Probabilidad Condicional e Independencia</h2>
+      
+      <div class="alert alert-info">
+        <strong>Fórmula:</strong> P(A|B) = P(A∩B) / P(B), cuando P(B) > 0<br>
+        <strong>Independencia:</strong> A y B son independientes si P(A∩B) = P(A)·P(B)
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3>Parámetros (usa los del Diagrama de Venn)</h3>
+          <div class="result-box">
+            <p>P(A) = <span class="highlight" id="condPA">—</span></p>
+            <p>P(B) = <span class="highlight" id="condPB">—</span></p>
+            <p>P(A∩B) = <span class="highlight" id="condPAB">—</span></p>
+          </div>
+
+          <h3>Probabilidades Condicionales</h3>
+          <div class="result-box">
+            <p><strong>P(A|B)</strong> = <span class="highlight" id="condPAgivenB">—</span></p>
+            <p><em>Probabilidad de A dado que ocurrió B</em></p>
+            <hr style="margin: 12px 0; opacity: 0.3;">
+            <p><strong>P(B|A)</strong> = <span class="highlight" id="condPBgivenA">—</span></p>
+            <p><em>Probabilidad de B dado que ocurrió A</em></p>
+          </div>
+
+          <div class="alert" id="condIndepStatus">
+            —
+          </div>
+        </div>
+
+        <div>
+          <h3>Árbol de Probabilidades</h3>
+          <canvas id="treeCanvas" width="500" height="400"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>🎯 Teorema de Probabilidad Total</h2>
+      <p>Si {B₁, B₂, ..., Bₙ} es una partición del espacio muestral, entonces:</p>
+      <p style="text-align: center; font-size: 1.1rem; margin: 16px 0;">
+        P(A) = Σ P(A|Bᵢ)·P(Bᵢ)
+      </p>
+      
+      <div class="alert alert-info">
+        <strong>Ejemplo:</strong> Con 3 máquinas (B₁, B₂, B₃) que producen piezas, cada una con diferente tasa de defectos (A), podemos calcular la probabilidad total de que una pieza sea defectuosa.
+      </div>
+    </section>
+  </div>
+
+  <!-- TAB 4: FRECUENCIA Y LEY DE GRANDES NÚMEROS -->
+  <div class="tab-content" id="tab-frecuencia">
+    <section>
+      <h2>📈 Frecuencia Relativa y Ley de Grandes Números</h2>
+      
+      <p>La <strong>frecuencia relativa</strong> de un evento A en n ensayos es: f(A) = n(A)/n</p>
+      <p>La <strong>Ley de los Grandes Números</strong> establece que cuando n → ∞, f(A) → P(A)</p>
+
+      <div class="grid-2" style="margin-top: 20px;">
+        <div>
+          <h3>Configuración de la Simulación</h3>
+          
+          <label>
+            <span>Probabilidad teórica P(A):</span>
+            <input id="freqP" type="range" min="0" max="1" step="0.01" value="0.35">
+            <input id="freqPNum" type="number" min="0" max="1" step="0.01" value="0.35">
+          </label>
+
+          <label>
+            <span>Número de ensayos:</span>
+            <input id="freqN" type="number" min="10" max="100000" step="10" value="1000">
+          </label>
+
+          <div style="margin-top: 16px;">
+            <button id="btnFreqSim">▶ Simular convergencia</button>
+            <button id="btnFreqReset">↻ Reset gráfico</button>
+          </div>
+
+          <div class="result-box" style="margin-top: 16px;">
+            <p><strong>Probabilidad teórica:</strong> <span class="highlight" id="freqTheoretical">—</span></p>
+            <p><strong>Frecuencia observada:</strong> <span class="highlight" id="freqObserved">—</span></p>
+            <p><strong>Diferencia absoluta:</strong> <span class="highlight" id="freqDiff">—</span></p>
+            <p><strong>Ensayos realizados:</strong> <span class="highlight" id="freqTrials">—</span></p>
+          </div>
+
+          <div class="alert alert-info">
+            💡 <strong>Observa:</strong> A medida que aumentan los ensayos, la frecuencia relativa se aproxima a la probabilidad teórica.
+          </div>
+        </div>
+
+        <div>
+          <h3>Convergencia: Frecuencia vs Probabilidad</h3>
+          <canvas id="freqChart" width="500" height="350"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>🔢 Clasificación de Sucesos</h2>
+      <div class="grid-3">
+        <div class="result-box">
+          <h3>Seguro</h3>
+          <p>P(A) = 1</p>
+          <p><em>Siempre ocurre</em></p>
+        </div>
+        <div class="result-box">
+          <h3>Imposible</h3>
+          <p>P(A) = 0</p>
+          <p><em>Nunca ocurre</em></p>
+        </div>
+        <div class="result-box">
+          <h3>Aleatorio</h3>
+          <p>0 < P(A) < 1</p>
+          <p><em>Puede o no ocurrir</em></p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- TAB 5: VARIABLES ALEATORIAS -->
+  <div class="tab-content" id="tab-variables">
+    <section>
+      <h2>🎰 Variables Aleatorias Discretas</h2>
+      
+      <p>Una <strong>variable aleatoria</strong> X es una función que asigna un número real a cada resultado del espacio muestral.</p>
+
+      <div class="grid-2" style="margin-top: 20px;">
+        <div>
+          <h3>Distribución de Probabilidad</h3>
+          
+          <label>
+            <span>Tipo de distribución:</span>
+            <select id="varType">
+              <option value="custom">Personalizada</option>
+              <option value="uniform">Uniforme</option>
+              <option value="bernoulli">Bernoulli</option>
+              <option value="binomial">Binomial</option>
+            </select>
+          </label>
+
+          <div id="varCustom">
+            <h3>Valores y Probabilidades</h3>
+            <p style="font-size: 0.85rem; color: #aaa;">Ingresa valores separados por coma</p>
+            <label>
+              <span>Valores X:</span>
+              <input id="varValues" type="text" value="1,2,3,4,5,6" style="width: 100%; padding: 8px;">
+            </label>
+            <label>
+              <span>P(X=x):</span>
+              <input id="varProbs" type="text" value="0.1,0.2,0.3,0.2,0.1,0.1" style="width: 100%; padding: 8px;">
+            </label>
+          </div>
+
+          <div id="varBernoulli" style="display: none;">
+            <label>
+              <span>p (probabilidad de éxito):</span>
+              <input id="varBernP" type="range" min="0" max="1" step="0.01" value="0.5">
+              <input id="varBernPNum" type="number" min="0" max="1" step="0.01" value="0.5">
+            </label>
+          </div>
+
+          <div id="varBinomial" style="display: none;">
+            <label>
+              <span>n (ensayos):</span>
+              <input id="varBinN" type="number" min="1" max="30" value="10">
+            </label>
+            <label>
+              <span>p (probabilidad):</span>
+              <input id="varBinP" type="range" min="0" max="1" step="0.01" value="0.5">
+              <input id="varBinPNum" type="number" min="0" max="1" step="0.01" value="0.5">
+            </label>
+          </div>
+
+          <button id="btnVarUpdate" style="margin-top: 16px;">📊 Actualizar distribución</button>
+
+          <div class="result-box" style="margin-top: 16px;">
+            <p><strong>E(X) - Esperanza:</strong> <span class="highlight" id="varExpected">—</span></p>
+            <p><strong>Var(X) - Varianza:</strong> <span class="highlight" id="varVariance">—</span></p>
+            <p><strong>σ - Desv. Estándar:</strong> <span class="highlight" id="varStdDev">—</span></p>
+          </div>
+
+          <div id="varWarning" class="alert alert-warning" style="display: none;"></div>
+        </div>
+
+        <div>
+          <h3>Función de Probabilidad</h3>
+          <canvas id="varChart" width="500" height="350"></canvas>
+          
+          <div style="margin-top: 16px;">
+            <button id="btnVarSimulate">🎲 Simular 1000 valores</button>
+          </div>
+          <div class="result-box" id="varSimResult" style="display: none;">
+            <p><strong>Media muestral:</strong> <span id="varSimMean">—</span></p>
+            <p><strong>Comparación con E(X):</strong> <span id="varSimComp">—</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- TAB 6: TEOREMA DE BAYES -->
+  <div class="tab-content" id="tab-bayes">
+    <section>
+      <h2>🔮 Teorema de Bayes</h2>
+      
+      <div class="alert alert-info">
+        <strong>Teorema de Bayes:</strong> P(Bᵢ|A) = [P(A|Bᵢ)·P(Bᵢ)] / [Σ P(A|Bⱼ)·P(Bⱼ)]
+        <br><br>
+        <strong>Interpretación:</strong> Permite calcular probabilidades "inversas" - actualizar nuestras creencias sobre las causas dado que observamos un efecto.
+      </div>
+
+      <div class="grid-2" style="margin-top: 20px;">
+        <div>
+          <h3>Ejemplo: Test Médico</h3>
+          <p style="font-size: 0.9rem; color: #aaa; margin-bottom: 16px;">
+            Calcularemos P(Enfermo|Test+) dados los parámetros del test
+          </p>
+
+          <label>
+            <span>P(Enfermo) - Prevalencia:</span>
+            <input id="bayesPrior" type="range" min="0" max="1" step="0.001" value="0.01">
+            <input id="bayesPriorNum" type="number" min="0" max="1" step="0.001" value="0.01">
+          </label>
+
+          <label>
+            <span>P(Test+|Enfermo) - Sensibilidad:</span>
+            <input id="bayesSens" type="range" min="0" max="1" step="0.01" value="0.95">
+            <input id="bayesSensNum" type="number" min="0" max="1" step="0.01" value="0.95">
+          </label>
+
+          <label>
+            <span>P(Test+|Sano) - Falso positivo:</span>
+            <input id="bayesFP" type="range" min="0" max="1" step="0.01" value="0.05">
+            <input id="bayesFPNum" type="number" min="0" max="1" step="0.01" value="0.05">
+          </label>
+
+          <button id="btnBayesCalc" style="margin-top: 16px;">🧮 Calcular probabilidades</button>
+
+          <div class="result-box" style="margin-top: 16px;">
+            <h3>Resultados</h3>
+            <p><strong>P(Test+)</strong> = <span class="highlight" id="bayesTestPos">—</span></p>
+            <p style="font-size: 1.2rem; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.2);">
+              <strong>P(Enfermo|Test+)</strong> = <span class="highlight" id="bayesPosterior">—</span>
+            </p>
+            <p style="font-size: 0.85rem; color: #aaa; margin-top: 8px;" id="bayesInterpret">—</p>
+          </div>
+
+          <div class="alert alert-info" style="margin-top: 16px;">
+            💡 <strong>Paradoja:</strong> Aunque el test sea muy preciso, si la enfermedad es rara, la mayoría de los positivos pueden ser falsos positivos.
+          </div>
+        </div>
+
+        <div>
+          <h3>Visualización Paso a Paso</h3>
+          <div id="bayesSteps" style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 12px; font-family: monospace; font-size: 0.9rem; line-height: 1.8;">
+            <p>Presiona "Calcular probabilidades" para ver el desarrollo completo del Teorema de Bayes...</p>
+          </div>
+
+          <h3 style="margin-top: 24px;">Distribución de Resultados</h3>
+          <canvas id="bayesChart" width="500" height="300"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>🎯 Simulación Interactiva del Test</h2>
+      <div style="text-align: center; margin: 20px 0;">
+        <label>
+          <span>Tamaño de población:</span>
+          <input id="bayesPopSize" type="number" min="100" max="100000" step="100" value="10000">
+        </label>
+        <button id="btnBayesSim" style="margin-left: 12px;">🧪 Simular población</button>
+      </div>
+
+      <div class="grid-2">
+        <div class="stat-card">
+          <div class="stat-label">Enfermos detectados correctamente</div>
+          <div class="stat-value" id="bayesSimTP">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Falsos positivos</div>
+          <div class="stat-value" id="bayesSimFP">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Enfermos no detectados</div>
+          <div class="stat-value" id="bayesSimFN">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Sanos correctamente</div>
+          <div class="stat-value" id="bayesSimTN">—</div>
+        </div>
+      </div>
+
+      <div class="result-box" style="margin-top: 20px;">
+        <h3>Análisis de la simulación</h3>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Enfermo (real)</th>
+              <th>Sano (real)</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Test +</strong></td>
+              <td id="bayesTableTP">—</td>
+              <td id="bayesTableFP">—</td>
+              <td id="bayesTablePosTotal">—</td>
+            </tr>
+            <tr>
+              <td><strong>Test -</strong></td>
+              <td id="bayesTableFN">—</td>
+              <td id="bayesTableTN">—</td>
+              <td id="bayesTableNegTotal">—</td>
+            </tr>
+            <tr>
+              <td><strong>Total</strong></td>
+              <td id="bayesTableSickTotal">—</td>
+              <td id="bayesTableHealthyTotal">—</td>
+              <td id="bayesTableGrandTotal">—</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 12px;">
+          <strong>P(Enfermo|Test+) empírico:</strong> 
+          <span class="highlight" id="bayesEmpiricalPost">—</span>
+        </p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <p>🎓 Laboratorio Interactivo de Probabilidad | Visualización completa del Capítulo 1</p>
+  <p style="margin-top: 8px; font-size: 0.8rem;">
+    Experimentos • Eventos • Venn • Condicional • Frecuencia • LGN • Variables Aleatorias • Bayes
+  </p>
+</footer>
+
+<script>
+// ============================================================================
+// UTILIDADES GLOBALES (FIX)
+// ============================================================================
+const $  = (sel, ctx = document) => ctx.querySelector(sel);
+const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
+const clamp  = (x, a, b) => Math.max(a, Math.min(b, x));
+const rand   = (a, b) => a + Math.random() * (b - a);
+const randInt= (a, b) => Math.floor(rand(a, b + 1));
+const fmt    = (x, d = 4) => Number.isFinite(x) ? x.toFixed(d) : '—';
+
+
+// ============================================================================
+// SISTEMA DE TABS (FIX)
+// ============================================================================
+const tabBtns = $$('.tab-btn');
+const tabContents = $$('.tab-content');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tabId = btn.dataset.tab;
+    tabBtns.forEach(b => b.classList.remove('active'));
+    tabContents.forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    $(`#tab-${tabId}`).classList.add('active');
+  });
+});
+
+
+// ============================================================================
+// TAB 1: EXPERIMENTO ALEATORIO
+// ============================================================================
+const expSelect = $('#expSelect');
+const btnSimExp = $('#btnSimExp');
+const btnSimExpMulti = $('#btnSimExpMulti');
+const expCanvas = $('#expCanvas');
+const expCtx = expCanvas.getContext('2d');
+
+const experiments = {
+  moneda: {
+    name: 'Lanzar una moneda',
+    space: ['Cara', 'Sello'],
+    sample: () => Math.random() < 0.5 ? 'Cara' : 'Sello'
+  },
+  dado: {
+    name: 'Lanzar un dado',
+    space: ['1', '2', '3', '4', '5', '6'],
+    sample: () => String(randInt(1, 6))
+  },
+  'dos-monedas': {
+    name: 'Lanzar dos monedas',
+    space: ['CC', 'CS', 'SC', 'SS'],
+    sample: () => {
+      const m1 = Math.random() < 0.5 ? 'C' : 'S';
+      const m2 = Math.random() < 0.5 ? 'C' : 'S';
+      return m1 + m2;
+    }
+  },
+  'dos-dados': {
+    name: 'Lanzar dos dados',
+    space: (() => {
+      const arr = [];
+      for (let i = 1; i <= 6; i++)
+        for (let j = 1; j <= 6; j++)
+          arr.push(`(${i},${j})`);
+      return arr;
+    })(),
+    sample: () => `(${randInt(1,6)},${randInt(1,6)})`
+  },
+  urna: {
+    name: 'Urna con bolas (3R, 2A, 1V)',
+    space: ['Roja', 'Azul', 'Verde'],
+    sample: () => {
+      const u = Math.random();
+      if (u < 3/6) return 'Roja';
+      if (u < 5/6) return 'Azul';
+      return 'Verde';
+    }
+  }
+};
+
+let expFreqData = {};
+
+function updateExpInfo() {
+  const exp = experiments[expSelect.value];
+  $('#expSpace').textContent = exp.space.join(', ');
+  $('#expSize').textContent = exp.space.length;
+}
+
+function drawExpVisualization(outcome) {
+  const W = expCanvas.width, H = expCanvas.height;
+  expCtx.clearRect(0, 0, W, H);
+  
+  expCtx.fillStyle = '#00ffaa';
+  expCtx.font = 'bold 48px sans-serif';
+  expCtx.textAlign = 'center';
+  expCtx.textBaseline = 'middle';
+  expCtx.fillText(outcome, W/2, H/2);
+  
+  expCtx.strokeStyle = 'rgba(0, 255, 170, 0.5)';
+  expCtx.lineWidth = 3;
+  expCtx.strokeRect(20, 20, W-40, H-40);
+}
+
+btnSimExp.addEventListener('click', () => {
+  const exp = experiments[expSelect.value];
+  const outcome = exp.sample();
+  $('#expOutcome').textContent = outcome;
+  drawExpVisualization(outcome);
+  
+  expFreqData[outcome] = (expFreqData[outcome] || 0) + 1;
+  updateExpFreqTable();
+});
+
+btnSimExpMulti.addEventListener('click', () => {
+  const exp = experiments[expSelect.value];
+  for (let i = 0; i < 100; i++) {
+    const outcome = exp.sample();
+    expFreqData[outcome] = (expFreqData[outcome] || 0) + 1;
+  }
+  $('#expOutcome').textContent = '100 experimentos realizados';
+  updateExpFreqTable();
+});
+
+function updateExpFreqTable() {
+  const exp = experiments[expSelect.value];
+  const total = Object.values(expFreqData).reduce((a, b) => a + b, 0);
+  
+  if (total === 0) {
+    $('#expFreqTable').innerHTML = '';
+    return;
+  }
+  
+  let html = '<h3>Frecuencias Observadas</h3><table><thead><tr><th>Resultado</th><th>Frecuencia</th><th>Frec. Relativa</th></tr></thead><tbody>';
+  
+  exp.space.forEach(outcome => {
+    const freq = expFreqData[outcome] || 0;
+    const relFreq = total > 0 ? (freq / total) : 0;
+    html += `<tr><td>${outcome}</td><td>${freq}</td><td>${fmt(relFreq, 3)}</td></tr>`;
+  });
+  
+  html += `</tbody></table><p style="margin-top: 12px;"><strong>Total de experimentos:</strong> ${total}</p>`;
+  $('#expFreqTable').innerHTML = html;
+}
+
+expSelect.addEventListener('change', () => {
+  expFreqData = {};
+  $('#expOutcome').textContent = '—';
+  updateExpInfo();
+  updateExpFreqTable();
+  expCtx.clearRect(0, 0, expCanvas.width, expCanvas.height);
+});
+
+updateExpInfo();
+
+// ============================================================================
+// TAB 2: DIAGRAMA DE VENN
+// ============================================================================
+const venn = $('#venn');
+const vennCtx = venn.getContext('2d');
+const pa = $('#pa'), pb = $('#pb'), pab = $('#pab');
+const paNum = $('#paNum'), pbNum = $('#pbNum'), pabNum = $('#pabNum');
+const indep = $('#indep');
+
+const vennState = {
+  pA: 0.40,
+  pB: 0.50,
+  pAB: 0.20,
+  indep: false
+};
+
+function feasibleIntersection(pA, pB) {
+  return { 
+    min: Math.max(0, pA + pB - 1), 
+    max: Math.min(pA, pB) 
+  };
+}
+
+function projectPab(pA, pB, pAB) {
+  const {min, max} = feasibleIntersection(pA, pB);
+  return clamp(pAB, min, max);
+}
+
+function syncVennInputs() {
+  pa.value = vennState.pA.toFixed(2);
+  paNum.value = vennState.pA.toFixed(2);
+  pb.value = vennState.pB.toFixed(2);
+  pbNum.value = vennState.pB.toFixed(2);
+  pab.value = vennState.pAB.toFixed(2);
+  pabNum.value = vennState.pAB.toFixed(2);
+  indep.checked = vennState.indep;
+  pab.disabled = pabNum.disabled = vennState.indep;
+}
+
+function updateVennFromInputs() {
+  let pA = parseFloat(paNum.value);
+  let pB = parseFloat(pbNum.value);
+  pA = clamp(isNaN(pA) ? 0.4 : pA, 0, 1);
+  pB = clamp(isNaN(pB) ? 0.5 : pB, 0, 1);
+
+  let pAB;
+  if (indep.checked) {
+    pAB = pA * pB;
+  } else {
+    pAB = parseFloat(pabNum.value);
+    pAB = clamp(isNaN(pAB) ? 0.2 : pAB, 0, 1);
+    pAB = projectPab(pA, pB, pAB);
+  }
+
+  vennState.pA = pA;
+  vennState.pB = pB;
+  vennState.pAB = pAB;
+  vennState.indep = indep.checked;
+
+  syncVennInputs();
+  renderVenn();
+  updateVennResults();
+  updateConditional();
+}
+
+[pa, paNum].forEach(el => el.addEventListener('input', updateVennFromInputs));
+[pb, pbNum].forEach(el => el.addEventListener('input', updateVennFromInputs));
+[pab, pabNum].forEach(el => el.addEventListener('input', updateVennFromInputs));
+indep.addEventListener('change', updateVennFromInputs);
+
+$('#btnVennRandom').addEventListener('click', () => {
+  const pA = +(rand(0.05, 0.90).toFixed(2));
+  const pB = +(rand(0.05, 0.90).toFixed(2));
+  const indepFlag = Math.random() < 0.5;
+
+  let pAB;
+  if (indepFlag) {
+    pAB = +(pA * pB).toFixed(2);
+  } else {
+    const {min, max} = feasibleIntersection(pA, pB);
+    pAB = +(rand(min, max).toFixed(2));
+  }
+
+  vennState.pA = pA;
+  vennState.pB = pB;
+  vennState.pAB = pAB;
+  vennState.indep = indepFlag;
+  syncVennInputs();
+  renderVenn();
+  updateVennResults();
+  updateConditional();
+});
+
+$('#btnVennReset').addEventListener('click', () => {
+  vennState.pA = 0.40;
+  vennState.pB = 0.50;
+  vennState.pAB = 0.20;
+  vennState.indep = false;
+  syncVennInputs();
+  renderVenn();
+  updateVennResults();
+  updateConditional();
+});
+
+function circleOverlapArea(r1, r2, d) {
+  if (d >= r1 + r2) return 0;
+  if (d <= Math.abs(r1 - r2)) {
+    const rmin = Math.min(r1, r2);
+    return Math.PI * rmin * rmin;
+  }
+  const alpha = Math.acos((d*d + r1*r1 - r2*r2) / (2*d*r1)) * 2;
+  const beta = Math.acos((d*d + r2*r2 - r1*r1) / (2*d*r2)) * 2;
+  const area1 = 0.5 * r1*r1 * (alpha - Math.sin(alpha));
+  const area2 = 0.5 * r2*r2 * (beta - Math.sin(beta));
+  return area1 + area2;
+}
+
+function findDistanceForOverlap(r1, r2, targetArea) {
+  const minD = Math.max(0, Math.abs(r1 - r2));
+  const maxD = r1 + r2;
+  if (targetArea < 1e-6) return maxD + 1;
+  const maxOverlap = Math.PI * Math.min(r1, r2) ** 2;
+  if (Math.abs(targetArea - maxOverlap) < 1e-4) return minD;
+
+  let lo = minD, hi = maxD;
+  for (let it = 0; it < 40; it++) {
+    const mid = 0.5 * (lo + hi);
+    const a = circleOverlapArea(r1, r2, mid);
+    if (a > targetArea) lo = mid;
+    else hi = mid;
+  }
+  return 0.5 * (lo + hi);
+}
+
+function renderVenn() {
+  const W = venn.width, H = venn.height;
+  vennCtx.clearRect(0, 0, W, H);
+
+  const {pA, pB, pAB} = vennState;
+  const usableArea = 0.6 * W * 0.7 * H;
+  const k = Math.sqrt(usableArea / Math.PI);
+
+  const rA = k * Math.sqrt(pA);
+  const rB = k * Math.sqrt(pB);
+  const targetOverlapArea = Math.PI * (k * k) * pAB;
+  let d = findDistanceForOverlap(rA, rB, targetOverlapArea);
+
+  const cxA = W * 0.5 - d * 0.5;
+  const cxB = W * 0.5 + d * 0.5;
+  const cy = H * 0.52;
+
+  // Círculos con relleno
+  vennCtx.globalAlpha = 0.25;
+  vennCtx.fillStyle = '#4facfe';
+  vennCtx.beginPath();
+  vennCtx.arc(cxA, cy, rA, 0, 2 * Math.PI);
+  vennCtx.fill();
+  
+  vennCtx.fillStyle = '#00ffaa';
+  vennCtx.beginPath();
+  vennCtx.arc(cxB, cy, rB, 0, 2 * Math.PI);
+  vennCtx.fill();
+  vennCtx.globalAlpha = 1;
+
+  // Contornos
+  vennCtx.strokeStyle = '#ffffff';
+  vennCtx.lineWidth = 2;
+  vennCtx.beginPath();
+  vennCtx.arc(cxA, cy, rA, 0, 2 * Math.PI);
+  vennCtx.stroke();
+  vennCtx.beginPath();
+  vennCtx.arc(cxB, cy, rB, 0, 2 * Math.PI);
+  vennCtx.stroke();
+
+  // Etiquetas
+  vennCtx.fillStyle = '#ffffff';
+  vennCtx.font = 'bold 20px sans-serif';
+  vennCtx.fillText('A', cxA - rA - 15, cy - rA - 10);
+  vennCtx.fillText('B', cxB + rB + 5, cy - rB - 10);
+
+  // Porcentajes
+  const toPct = x => (x * 100).toFixed(1) + '%';
+  vennCtx.font = '16px sans-serif';
+
+  const pAnotB = Math.max(0, pA - pAB);
+  const pBnotA = Math.max(0, pB - pAB);
+  const pNone = 1 - (pA + pB - pAB);
+
+  if (pAnotB > 0.01) {
+    vennCtx.fillText(toPct(pAnotB), cxA - rA * 0.4, cy);
+  }
+  if (pBnotA > 0.01) {
+    vennCtx.fillText(toPct(pBnotA), cxB + rB * 0.2, cy);
+  }
+  if (pAB > 0.01) {
+    vennCtx.fillText(toPct(pAB), (cxA + cxB) / 2 - 18, cy);
+  }
+  if (pNone > 0.01) {
+    vennCtx.fillText('ninguno: ' + toPct(pNone), 15, H - 15);
+  }
+
+  // Warnings
+  const {min, max} = feasibleIntersection(pA, pB);
+  const warnings = [];
+  if (Math.abs(pAB - projectPab(pA, pB, pAB)) > 1e-10) {
+    warnings.push('P(A∩B) ajustada al rango factible');
+  }
+  const pUnion = pA + pB - pAB;
+  if (pUnion > 1.01 || pUnion < -0.01) {
+    warnings.push('⚠ P(A∪B) fuera de [0,1]');
+  }
+
+  if (warnings.length > 0) {
+    $('#vennWarnings').textContent = warnings.join(' • ');
+    $('#vennWarnings').style.display = 'block';
+  } else {
+    $('#vennWarnings').style.display = 'none';
+  }
+}
+
+function updateVennResults() {
+  const {pA, pB, pAB} = vennState;
+  const pAc = 1 - pA;
+  const pBc = 1 - pB;
+  const pUnion = pA + pB - pAB;
+  const pAnotB = pA - pAB;
+  const pBnotA = pB - pAB;
+  const pNone = 1 - pUnion;
+
+  $('#vennResults').innerHTML = `
+    <h3>Probabilidades Calculadas</h3>
+    <div class="grid-3">
+      <p><strong>P(A):</strong> ${fmt(pA, 4)}</p>
+      <p><strong>P(B):</strong> ${fmt(pB, 4)}</p>
+      <p><strong>P(A∩B):</strong> ${fmt(pAB, 4)}</p>
+      <p><strong>P(A∪B):</strong> ${fmt(pUnion, 4)}</p>
+      <p><strong>P(A^c):</strong> ${fmt(pAc, 4)}</p>
+      <p><strong>P(B^c):</strong> ${fmt(pBc, 4)}</p>
+    </div>
+    <p style="margin-top: 12px;"><em>Fórmula: P(A∪B) = P(A) + P(B) - P(A∩B) = ${fmt(pUnion, 4)}</em></p>
+  `;
+
+  $('#statUnion').textContent = fmt(pUnion, 3);
+  $('#statCompA').textContent = fmt(pAc, 3);
+  $('#statCompB').textContent = fmt(pBc, 3);
+  $('#statAnotB').textContent = fmt(pAnotB, 3);
+  $('#statBnotA').textContent = fmt(pBnotA, 3);
+  $('#statNone').textContent = fmt(pNone, 3);
+}
+
+// ============================================================================
+// TAB 3: PROBABILIDAD CONDICIONAL
+// ============================================================================
+const treeCanvas = $('#treeCanvas');
+const treeCtx = treeCanvas.getContext('2d');
+
+function updateConditional() {
+  const {pA, pB, pAB} = vennState;
+  
+  $('#condPA').textContent = fmt(pA, 4);
+  $('#condPB').textContent = fmt(pB, 4);
+  $('#condPAB').textContent = fmt(pAB, 4);
+
+  const pAgivenB = pB > 0 ? pAB / pB : NaN;
+  const pBgivenA = pA > 0 ? pAB / pA : NaN;
+
+  $('#condPAgivenB').textContent = fmt(pAgivenB, 4);
+  $('#condPBgivenA').textContent = fmt(pBgivenA, 4);
+
+  // Verificar independencia
+  const indepDiff = Math.abs(pAB - pA * pB);
+  const isIndep = indepDiff < 0.001;
+  
+  const statusEl = $('#condIndepStatus');
+  if (isIndep) {
+    statusEl.className = 'alert alert-info';
+    statusEl.innerHTML = `✓ <strong>Eventos independientes:</strong> P(A∩B) ≈ P(A)·P(B)<br>Diferencia: ${fmt(indepDiff, 6)}`;
+  } else {
+    statusEl.className = 'alert alert-warning';
+    const assoc = pAB > pA * pB ? 'positiva' : 'negativa';
+    statusEl.innerHTML = `⚠ <strong>Eventos dependientes:</strong> Asociación ${assoc}<br>P(A∩B) = ${fmt(pAB, 4)} vs P(A)·P(B) = ${fmt(pA * pB, 4)}`;
+  }
+
+  drawProbabilityTree();
+}
+
+function drawProbabilityTree() {
+  const W = treeCanvas.width, H = treeCanvas.height;
+  treeCtx.clearRect(0, 0, W, H);
+
+  const {pA, pB, pAB} = vennState;
+  const pAc = 1 - pA;
+  const pBgivenA = pA > 0 ? pAB / pA : 0;
+  const pBcgivenA = 1 - pBgivenA;
+  const pBgivenAc = pAc > 0 ? (pB - pAB) / pAc : 0;
+  const pBcgivenAc = 1 - pBgivenAc;
+
+  // Configuración del árbol
+  const x0 = 50, y0 = H / 2;
+  const x1 = 200, x2 = 380;
+  const spacing = 80;
+
+  treeCtx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+  treeCtx.lineWidth = 2;
+  treeCtx.fillStyle = '#ffffff';
+  treeCtx.font = '14px sans-serif';
+
+  // Raíz
+  treeCtx.beginPath();
+  treeCtx.arc(x0, y0, 6, 0, 2 * Math.PI);
+  treeCtx.fill();
+
+  // Primera rama: A y A^c
+  const yA = y0 - spacing;
+  const yAc = y0 + spacing;
+
+  treeCtx.beginPath();
+  treeCtx.moveTo(x0, y0);
+  treeCtx.lineTo(x1, yA);
+  treeCtx.stroke();
+  
+  treeCtx.beginPath();
+  treeCtx.moveTo(x0, y0);
+  treeCtx.lineTo(x1, yAc);
+  treeCtx.stroke();
+
+  treeCtx.fillStyle = '#4facfe';
+  treeCtx.beginPath();
+  treeCtx.arc(x1, yA, 6, 0, 2 * Math.PI);
+  treeCtx.fill();
+  treeCtx.fillStyle = '#ffffff';
+  treeCtx.fillText(`A (${fmt(pA, 2)})`, x1 - 40, yA - 12);
+
+  treeCtx.fillStyle = '#ff8888';
+  treeCtx.beginPath();
+  treeCtx.arc(x1, yAc, 6, 0, 2 * Math.PI);
+  treeCtx.fill();
+  treeCtx.fillStyle = '#ffffff';
+  treeCtx.fillText(`A^c (${fmt(pAc, 2)})`, x1 - 40, yAc + 20);
+
+  // Segunda rama desde A: B|A y B^c|A
+  const yAB = yA - 40;
+  const yABc = yA + 40;
+
+  treeCtx.strokeStyle = 'rgba(0, 255, 170, 0.6)';
+  treeCtx.beginPath();
+  treeCtx.moveTo(x1, yA);
+  treeCtx.lineTo(x2, yAB);
+  treeCtx.stroke();
+  
+  treeCtx.beginPath();
+  treeCtx.moveTo(x1, yA);
+  treeCtx.lineTo(x2, yABc);
+  treeCtx.stroke();
+
+  treeCtx.fillStyle = '#00ffaa';
+  treeCtx.beginPath();
+  treeCtx.arc(x2, yAB, 5, 0, 2 * Math.PI);
+  treeCtx.fill();
+  treeCtx.fillStyle = '#ffffff';
+  treeCtx.fillText(`B|A (${fmt(pBgivenA, 2)})`, x2 + 10, yAB - 5);
+  treeCtx.fillText(`→ P(A∩B)=${fmt(pAB, 3)}`, x2 + 10, yAB + 10);
+
+  treeCtx.fillStyle = '#888888';
+  treeCtx.beginPath();
+  treeCtx.arc(x2, yABc, 5, 0, 2 * Math.PI);
+  treeCtx.fill();
+  treeCtx.fillStyle = '#ffffff';
+  treeCtx.fillText(`B^c|A (${fmt(pBcgivenA, 2)})`, x2 + 10, yABc + 5);
+
+  // Segunda rama desde A^c: B|A^c y B^c|A^c
+  const yAcB = yAc - 40;
+  const yAcBc = yAc + 40;
+
+  treeCtx.strokeStyle = 'rgba(255, 170, 0, 0.6)';
+  treeCtx.beginPath();
+  treeCtx.moveTo(x1, yAc);
+  treeCtx.lineTo(x2, yAcB);
+  treeCtx.stroke();
+  
+  treeCtx.beginPath();
+  treeCtx.moveTo(x1, yAc);
+  treeCtx.lineTo(x2, yAcBc);
+  treeCtx.stroke();
+
+  treeCtx.fillStyle = '#ffaa00';
+  treeCtx.beginPath();
+  treeCtx.arc(x2, yAcB, 5, 0, 2 * Math.PI);
+  treeCtx.fill();
+  treeCtx.fillStyle = '#ffffff';
+  treeCtx.fillText(`B|A^c (${fmt(pBgivenAc, 2)})`, x2 + 10, yAcB - 5);
+
+  treeCtx.fillStyle = '#666666';
+  treeCtx.beginPath();
+  treeCtx.arc(x2, yAcBc, 5, 0, 2 * Math.PI);
+  treeCtx.fill();
+  treeCtx.fillStyle = '#ffffff';
+  treeCtx.fillText(`B^c|A^c (${fmt(pBcgivenAc, 2)})`, x2 + 10, yAcBc + 5);
+
+  // Título
+  treeCtx.font = 'bold 16px sans-serif';
+  treeCtx.fillText('Árbol de Probabilidades', W / 2 - 80, 25);
+}
+
+// ============================================================================
+// TAB 4: FRECUENCIA Y LEY DE GRANDES NÚMEROS
+// ============================================================================
+const freqP = $('#freqP');
+const freqPNum = $('#freqPNum');
+const freqN = $('#freqN');
+const btnFreqSim = $('#btnFreqSim');
+const btnFreqReset = $('#btnFreqReset');
+const freqChart = $('#freqChart');
+
+let freqChartInstance = null;
+
+[freqP, freqPNum].forEach(el => {
+  el.addEventListener('input', () => {
+    const val = parseFloat(el.value);
+    freqP.value = val;
+    freqPNum.value = val;
+  });
+});
+
+btnFreqSim.addEventListener('click', () => {
+  const p = parseFloat(freqPNum.value);
+  const n = parseInt(freqN.value);
+
+  // Simular n ensayos
+  const results = [];
+  let successes = 0;
+  const frequencies = [];
+
+  for (let i = 1; i <= n; i++) {
+    if (Math.random() < p) successes++;
+    if (i % Math.max(1, Math.floor(n / 200)) === 0 || i === n) {
+      frequencies.push({ trial: i, freq: successes / i });
+    }
+  }
+
+  const finalFreq = successes / n;
+  const diff = Math.abs(finalFreq - p);
+
+  $('#freqTheoretical').textContent = fmt(p, 4);
+  $('#freqObserved').textContent = fmt(finalFreq, 4);
+  $('#freqDiff').textContent = fmt(diff, 4);
+  $('#freqTrials').textContent = n;
+
+  // Actualizar gráfico
+  if (freqChartInstance) freqChartInstance.destroy();
+
+  freqChartInstance = new Chart(freqChart, {
+    type: 'line',
+    data: {
+      labels: frequencies.map(f => f.trial),
+      datasets: [
+        {
+          label: 'Frecuencia Relativa',
+          data: frequencies.map(f => f.freq),
+          borderColor: '#00ffaa',
+          backgroundColor: 'rgba(0, 255, 170, 0.1)',
+          borderWidth: 2,
+          tension: 0.1,
+          pointRadius: 0
+        },
+        {
+          label: 'Probabilidad Teórica',
+          data: frequencies.map(() => p),
+          borderColor: '#ff6b6b',
+          borderWidth: 2,
+          borderDash: [5, 5],
+          pointRadius: 0
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: '#ffffff' } },
+        title: {
+          display: true,
+          text: 'Convergencia de la Frecuencia Relativa',
+          color: '#ffffff'
+        }
+      },
+      scales: {
+        x: {
+          title: { display: true, text: 'Número de ensayos', color: '#aaa' },
+          ticks: { color: '#aaa' },
+          grid: { color: 'rgba(255, 255, 255, 0.1)' }
+        },
+        y: {
+          title: { display: true, text: 'Frecuencia / Probabilidad', color: '#aaa' },
+          ticks: { color: '#aaa' },
+          grid: { color: 'rgba(255, 255, 255, 0.1)' },
+          min: 0,
+          max: 1
+        }
+      }
+    }
+  });
+});
+
+btnFreqReset.addEventListener('click', () => {
+  if (freqChartInstance) {
+    freqChartInstance.destroy();
+    freqChartInstance = null;
+  }
+  $('#freqTheoretical').textContent = '—';
+  $('#freqObserved').textContent = '—';
+  $('#freqDiff').textContent = '—';
+  $('#freqTrials').textContent = '—';
+});
+
+// ============================================================================
+// TAB 5: VARIABLES ALEATORIAS
+// ============================================================================
+const varType = $('#varType');
+const varCustom = $('#varCustom');
+const varBernoulli = $('#varBernoulli');
+const varBinomial = $('#varBinomial');
+const varValues = $('#varValues');
+const varProbs = $('#varProbs');
+const varBernP = $('#varBernP');
+const varBernPNum = $('#varBernPNum');
+const varBinN = $('#varBinN');
+const varBinP = $('#varBinP');
+const varBinPNum = $('#varBinPNum');
+const btnVarUpdate = $('#btnVarUpdate');
+const btnVarSimulate = $('#btnVarSimulate');
+const varChart = $('#varChart');
+
+let varChartInstance = null;
+let currentDistribution = { values: [], probs: [] };
+
+varType.addEventListener('change', () => {
+  varCustom.style.display = 'none';
+  varBernoulli.style.display = 'none';
+  varBinomial.style.display = 'none';
+
+  if (varType.value === 'custom') varCustom.style.display = 'block';
+  if (varType.value === 'bernoulli') varBernoulli.style.display = 'block';
+  if (varType.value === 'binomial') varBinomial.style.display = 'block';
+});
+
+[varBernP, varBernPNum].forEach(el => {
+  el.addEventListener('input', () => {
+    const val = parseFloat(el.value);
+    varBernP.value = val;
+    varBernPNum.value = val;
+  });
+});
+
+[varBinP, varBinPNum].forEach(el => {
+  el.addEventListener('input', () => {
+    const val = parseFloat(el.value);
+    varBinP.value = val;
+    varBinPNum.value = val;
+  });
+});
+
+btnVarUpdate.addEventListener('click', () => {
+  const type = varType.value;
+  let values = [], probs = [];
+
+  try {
+    if (type === 'custom') {
+      values = varValues.value.split(',').map(v => parseFloat(v.trim()));
+      probs = varProbs.value.split(',').map(p => parseFloat(p.trim()));
+
+      if (values.length !== probs.length) {
+        throw new Error('Los vectores deben tener la misma longitud');
+      }
+
+      const sum = probs.reduce((a, b) => a + b, 0);
+      if (Math.abs(sum - 1) > 0.01) {
+        $('#varWarning').textContent = `⚠ Las probabilidades suman ${fmt(sum, 3)}. Se normalizarán a 1.`;
+        $('#varWarning').style.display = 'block';
+        probs = probs.map(p => p / sum);
+      } else {
+        $('#varWarning').style.display = 'none';
+      }
+    } else if (type === 'uniform') {
+      values = [1, 2, 3, 4, 5, 6];
+      probs = values.map(() => 1 / values.length);
+    } else if (type === 'bernoulli') {
+      const p = parseFloat(varBernPNum.value);
+      values = [0, 1];
+      probs = [1 - p, p];
+    } else if (type === 'binomial') {
+      const n = parseInt(varBinN.value);
+      const p = parseFloat(varBinPNum.value);
+      values = [];
+      probs = [];
+
+      for (let k = 0; k <= n; k++) {
+        values.push(k);
+        const binomCoef = factorial(n) / (factorial(k) * factorial(n - k));
+        probs.push(binomCoef * Math.pow(p, k) * Math.pow(1 - p, n - k));
+      }
+    }
+
+    currentDistribution = { values, probs };
+    updateVarChart();
+    calculateVarStats();
+  } catch (error) {
+    $('#varWarning').textContent = '⚠ Error: ' + error.message;
+    $('#varWarning').style.display = 'block';
+  }
+});
+
+function factorial(n) {
+  if (n <= 1) return 1;
+  let result = 1;
+  for (let i = 2; i <= n; i++) result *= i;
+  return result;
+}
+
+function updateVarChart() {
+  if (varChartInstance) varChartInstance.destroy();
+
+  varChartInstance = new Chart(varChart, {
+    type: 'bar',
+    data: {
+      labels: currentDistribution.values.map(v => v.toString()),
+      datasets: [{
+        label: 'P(X = x)',
+        data: currentDistribution.probs,
+        backgroundColor: 'rgba(0, 255, 170, 0.6)',
+        borderColor: '#00ffaa',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: '#ffffff' } },
+        title: {
+          display: true,
+          text: 'Distribución de Probabilidad',
+          color: '#ffffff'
+        }
+      },
+      scales: {
+        x: {
+          title: { display: true, text: 'Valores de X', color: '#aaa' },
+          ticks: { color: '#aaa' },
+          grid: { color: 'rgba(255, 255, 255, 0.1)' }
+        },
+        y: {
+          title: { display: true, text: 'P(X = x)', color: '#aaa' },
+          ticks: { color: '#aaa' },
+          grid: { color: 'rgba(255, 255, 255, 0.1)' },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+function calculateVarStats() {
+  const { values, probs } = currentDistribution;
+  
+  let E = 0, E2 = 0;
+  for (let i = 0; i < values.length; i++) {
+    E += values[i] * probs[i];
+    E2 += values[i] * values[i] * probs[i];
+  }
+
+  const variance = E2 - E * E;
+  const stdDev = Math.sqrt(variance);
+
+  $('#varExpected').textContent = fmt(E, 4);
+  $('#varVariance').textContent = fmt(variance, 4);
+  $('#varStdDev').textContent = fmt(stdDev, 4);
+}
+
+btnVarSimulate.addEventListener('click', () => {
+  const { values, probs } = currentDistribution;
+  const n = 1000;
+  let sum = 0;
+
+  // Crear acumulada para samplear
+  const cumProbs = [];
+  let acc = 0;
+  for (let p of probs) {
+    acc += p;
+    cumProbs.push(acc);
+  }
+
+  // Simular
+  for (let i = 0; i < n; i++) {
+    const u = Math.random();
+    for (let j = 0; j < cumProbs.length; j++) {
+      if (u < cumProbs[j]) {
+        sum += values[j];
+        break;
+      }
+    }
+  }
+
+  const sampleMean = sum / n;
+  const E = parseFloat($('#varExpected').textContent);
+
+  $('#varSimMean').textContent = fmt(sampleMean, 4);
+  $('#varSimComp').textContent = `Diferencia con E(X): ${fmt(Math.abs(sampleMean - E), 4)}`;
+  $('#varSimResult').style.display = 'block';
+});
+
+// ============================================================================
+// TAB 6: TEOREMA DE BAYES
+// ============================================================================
+const bayesPrior = $('#bayesPrior');
+const bayesPriorNum = $('#bayesPriorNum');
+const bayesSens = $('#bayesSens');
+const bayesSensNum = $('#bayesSensNum');
+const bayesFP = $('#bayesFP');
+const bayesFPNum = $('#bayesFPNum');
+const btnBayesCalc = $('#btnBayesCalc');
+const btnBayesSim = $('#btnBayesSim');
+const bayesPopSize = $('#bayesPopSize');
+const bayesChart = $('#bayesChart');
+
+let bayesChartInstance = null;
+
+[bayesPrior, bayesPriorNum].forEach(el => {
+  el.addEventListener('input', () => {
+    const val = parseFloat(el.value);
+    bayesPrior.value = val;
+    bayesPriorNum.value = val;
+  });
+});
+
+[bayesSens, bayesSensNum].forEach(el => {
+  el.addEventListener('input', () => {
+    const val = parseFloat(el.value);
+    bayesSens.value = val;
+    bayesSensNum.value = val;
+  });
+});
+
+[bayesFP, bayesFPNum].forEach(el => {
+  el.addEventListener('input', () => {
+    const val = parseFloat(el.value);
+    bayesFP.value = val;
+    bayesFPNum.value = val;
+  });
+});
+
+btnBayesCalc.addEventListener('click', () => {
+  const prior = parseFloat(bayesPriorNum.value);
+  const sens = parseFloat(bayesSensNum.value);
+  const fp = parseFloat(bayesFPNum.value);
+
+  // P(Test+) = P(Test+|Enfermo)·P(Enfermo) + P(Test+|Sano)·P(Sano)
+  const pTestPos = sens * prior + fp * (1 - prior);
+
+  // P(Enfermo|Test+) = P(Test+|Enfermo)·P(Enfermo) / P(Test+)
+  const posterior = (sens * prior) / pTestPos;
+
+  $('#bayesTestPos').textContent = fmt(pTestPos, 4);
+  $('#bayesPosterior').textContent = fmt(posterior, 4);
+
+  const posteriorPct = (posterior * 100).toFixed(1);
+  $('#bayesInterpret').textContent = `Si el test da positivo, hay un ${posteriorPct}% de probabilidad de estar realmente enfermo.`;
+
+  // Mostrar cálculo paso a paso
+  $('#bayesSteps').innerHTML = `
+    <p><strong>Paso 1:</strong> Calcular P(Test+)</p>
+    <p>P(Test+) = P(Test+|Enfermo)·P(Enfermo) + P(Test+|Sano)·P(Sano)</p>
+    <p>P(Test+) = ${fmt(sens, 3)}·${fmt(prior, 3)} + ${fmt(fp, 3)}·${fmt(1-prior, 3)}</p>
+    <p>P(Test+) = ${fmt(sens*prior, 4)} + ${fmt(fp*(1-prior), 4)} = <strong>${fmt(pTestPos, 4)}</strong></p>
+    <br>
+    <p><strong>Paso 2:</strong> Aplicar Teorema de Bayes</p>
+    <p>P(Enfermo|Test+) = [P(Test+|Enfermo)·P(Enfermo)] / P(Test+)</p>
+    <p>P(Enfermo|Test+) = [${fmt(sens, 3)}·${fmt(prior, 3)}] / ${fmt(pTestPos, 4)}</p>
+    <p>P(Enfermo|Test+) = ${fmt(sens*prior, 4)} / ${fmt(pTestPos, 4)} = <strong>${fmt(posterior, 4)}</strong></p>
+  `;
+
+  // Actualizar gráfico
+  if (bayesChartInstance) bayesChartInstance.destroy();
+
+  bayesChartInstance = new Chart(bayesChart, {
+    type: 'bar',
+    data: {
+      labels: ['P(Enfermo)', 'P(Enfermo|Test+)'],
+      datasets: [{
+        label: 'Probabilidad',
+        data: [prior, posterior],
+        backgroundColor: ['rgba(255, 107, 107, 0.6)', 'rgba(0, 255, 170, 0.6)'],
+        borderColor: ['#ff6b6b', '#00ffaa'],
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Antes vs Después del Test',
+          color: '#ffffff'
+        }
+      },
+      scales: {
+        x: { ticks: { color: '#aaa' }, grid: { color: 'rgba(255, 255, 255, 0.1)' } },
+        y: {
+          ticks: { color: '#aaa' },
+          grid: { color: 'rgba(255, 255, 255, 0.1)' },
+          beginAtZero: true,
+          max: 1
+        }
+      }
+    }
+  });
+});
+
+btnBayesSim.addEventListener('click', () => {
+  const popSize = parseInt(bayesPopSize.value);
+  const prior = parseFloat(bayesPriorNum.value);
+  const sens = parseFloat(bayesSensNum.value);
+  const fp = parseFloat(bayesFPNum.value);
+
+  let TP = 0, FP = 0, FN = 0, TN = 0;
+
+  for (let i = 0; i < popSize; i++) {
+    const isSick = Math.random() < prior;
+    const testPos = isSick ? (Math.random() < sens) : (Math.random() < fp);
+
+    if (isSick && testPos) TP++;
+    else if (!isSick && testPos) FP++;
+    else if (isSick && !testPos) FN++;
+    else TN++;
+  }
+
+  $('#bayesSimTP').textContent = TP;
+  $('#bayesSimFP').textContent = FP;
+  $('#bayesSimFN').textContent = FN;
+  $('#bayesSimTN').textContent = TN;
+
+  // Tabla
+  $('#bayesTableTP').textContent = TP;
+  $('#bayesTableFP').textContent = FP;
+  $('#bayesTableFN').textContent = FN;
+  $('#bayesTableTN').textContent = TN;
+  $('#bayesTablePosTotal').textContent = TP + FP;
+  $('#bayesTableNegTotal').textContent = FN + TN;
+  $('#bayesTableSickTotal').textContent = TP + FN;
+  $('#bayesTableHealthyTotal').textContent = FP + TN;
+  $('#bayesTableGrandTotal').textContent = popSize;
+
+  const empiricalPost = (TP + FP) > 0 ? TP / (TP + FP) : 0;
+  $('#bayesEmpiricalPost').textContent = fmt(empiricalPost, 4);
+});
+
+// ============================================================================
+// BOTÓN RESET TODO
+// ============================================================================
+$('#btnReset').addEventListener('click', () => {
+  location.reload();
+});
+
+// ============================================================================
+// INICIALIZACIÓN
+// ============================================================================
+syncVennInputs();
+renderVenn();
+updateVennResults();
+updateConditional();
+btnVarUpdate.click(); // Inicializar distribución por defecto
+
+</script>
+<script>
+  // Botón "Volver" dinámico
+  document.getElementById('back-btn').addEventListener('click', () => {
+    if (document.referrer && document.referrer !== window.location.href) {
+      history.back();
+    } else {
+      window.location.href = '../temario.html'; // fallback si se abre directo
+    }
+  });
+</script>
+</body>
+</html>

@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unidad 1: Conceptos Fundamentales</title>
     <link rel="stylesheet" href="../css/base.css">
-            <link rel="icon" type="image/png" href="../../src/img/logo.png">
+    <link rel="icon" type="image/png" href="../../src/img/logo.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+    
     <style>
         
 /* Layout principal */
@@ -16,14 +17,14 @@
             gap: 60px;
             max-width: 1400px;
             margin: 0 auto;
-                            padding: 120px 10px 20px;
+            padding: 120px 10px 20px;
             min-height: 100vh;
         }
 
 
         /* Contenido principal */
         .content-wrapper {
-            max-width: 1200px;
+            max-width: 1100px;
         }
 
         .page-header {
@@ -316,7 +317,7 @@
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
+<style> 
 .section-icon {
   font-size: 2.2rem;
   opacity: 0.9;
@@ -324,16 +325,7 @@
   font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", sans-serif !important;
   filter: drop-shadow(0 0 2px rgba(255,255,255,0.3));
 }
-   .container {
-      max-width: 1400px;
-      width: 100%;
-    }
-    .main-layout {
-      display: grid;
-      grid-template-columns: 1fr 400px;
-      gap: 20px;
-      align-items: start;
-    }
+
     @media (max-width: 968px) {
       .main-layout {
         grid-template-columns: 1fr;
@@ -481,8 +473,17 @@
     }
 
 </style>
+    <link rel="stylesheet" href="../css/capResponsive.css">
 </head>
 <body>
+  <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Overlay oscuro -->
+    <div class="menu-overlay" id="menuOverlay"></div>
     <!-- Animated Background -->
     <div class="animated-bg"></div>
     <div class="floating-elements">
@@ -541,6 +542,7 @@
         determinadas variables, y el resultado de la experiencia <strong>no es siempre el mismo</strong>.
         Estos experimentos son los que denominamos <strong>aleatorios</strong>.
       </p>
+      <p>Un experimento aleatorio es aquel cuyo resultado no se puede predecir con certeza, aunque sí se conocen todos los posibles resultados antes de realizarlo.</p>
       <div class="example-box">
         <div class="example-title">Ejemplo</div>
         <p>
@@ -611,6 +613,7 @@
     </div>
   </section>
 
+  
   <!-- 🔹 Probabilidad -->
   <section id="probabilidad" class="content-section">
     <h2 class="section-title"><span class="section-icon">〽️</span>Probabilidad</h2>
@@ -624,6 +627,118 @@
           <li>Si A y B son excluyentes: <strong>P(A ∪ B) = P(A) + P(B)</strong></li>
         </ul>
       </div>
+<!-- 🔹 Casos de Probabilidad -->
+<div class="highlight-box">
+  <h4>🎯 Casos de probabilidad — Simple vs. General</h4>
+  <p>
+    Según la cantidad de eventos involucrados, podemos distinguir entre el <strong>caso simple</strong> (un solo evento)
+    y el <strong>caso general</strong> (varios eventos simultáneos).  
+    A continuación se resumen ambos casos:
+  </p>
+
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Caso</th>
+          <th>Descripción</th>
+          <th>Fórmula general</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Simple</strong></td>
+          <td>Un solo evento con resultados equiprobables</td>
+          <td>$$P(A) = \frac{\text{casos favorables}}{\text{casos posibles}}$$</td>
+        </tr>
+        <tr>
+          <td><strong>General</strong></td>
+          <td>Combinación de varios eventos (A, B, C, ...)</td>
+          <td>$$P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)$$</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 🟢 Ejemplo visual: caso simple -->
+<div class="example-box">
+  <div class="example-title">Ejemplo 1 — Caso simple: números pares en un dado</div>
+  <p>
+    Si lanzamos un dado justo (Ω = {1,2,3,4,5,6}), el evento A = “sale número par” tiene tres casos favorables: {2, 4, 6}.  
+    Por lo tanto:
+  </p>
+  <div class="formula-box">$$P(A) = \frac{3}{6} = 0.5$$</div>
+
+  <!-- Dibujo visual -->
+  <div style="display:flex; justify-content:center; gap:15px; margin-top:15px; flex-wrap:wrap;">
+    <div style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;">1</div>
+    <div style="width:50px;height:50px;border-radius:50%;background:#6cf;display:flex;align-items:center;justify-content:center;">2</div>
+    <div style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;">3</div>
+    <div style="width:50px;height:50px;border-radius:50%;background:#6cf;display:flex;align-items:center;justify-content:center;">4</div>
+    <div style="width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;">5</div>
+    <div style="width:50px;height:50px;border-radius:50%;background:#6cf;display:flex;align-items:center;justify-content:center;">6</div>
+  </div>
+  <p style="text-align:center;margin-top:10px;">🔵 Pelotas azules → casos favorables (números pares)</p>
+</div>
+
+<!-- 🔵 Ejemplo visual: caso general -->
+<div class="example-box">
+  <div class="example-title">Ejemplo 2 — Caso general: alumnos que hacen Arte, Música y Deporte</div>
+  <p>
+    En una escuela, algunos alumnos participan en <strong>Arte (A)</strong>, <strong>Música (B)</strong> y <strong>Deporte (C)</strong>.  
+    Algunos hacen más de una actividad. La probabilidad de que un alumno participe en al menos una se calcula como:
+  </p>
+
+  <div class="formula-box">
+    $$P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(A \cap C) - P(B \cap C) + P(A \cap B \cap C)$$
+  </div>
+
+  <p>
+    Ejemplo numérico:  
+    P(A)=0.4, P(B)=0.3, P(C)=0.5,  
+    P(A∩B)=0.1, P(A∩C)=0.2, P(B∩C)=0.15, P(A∩B∩C)=0.05  
+  </p>
+  <div class="formula-box">
+    \( P(A∪B∪C)=0.4+0.3+0.5−0.1−0.2−0.15+0.05=0.8 \)
+  </div>
+
+  <!-- Diagrama visual -->
+  <div style="display:flex;justify-content:center;margin-top:25px;position:relative;width:280px;height:180px;margin:auto;">
+    <div style="position:absolute;top:40px;left:50px;width:100px;height:100px;border-radius:50%;background:rgba(100,150,255,0.4);display:flex;align-items:center;justify-content:center;">A</div>
+    <div style="position:absolute;top:40px;left:110px;width:100px;height:100px;border-radius:50%;background:rgba(255,120,120,0.4);display:flex;align-items:center;justify-content:center;">B</div>
+    <div style="position:absolute;top:60px;left:80px;width:100px;height:100px;border-radius:50%;background:rgba(120,255,150,0.4);display:flex;align-items:center;justify-content:center;">C</div>
+  </div>
+  <p style="text-align:center;margin-top:10px;">🟦 Arte | 🟥 Música | 🟩 Deporte</p>
+</div>
+
+      <div class="highlight-box">
+  <h4>📏 Regla de Laplace (Probabilidad Clásica)</h4>
+  <p>
+    Cuando todos los resultados del experimento son <strong>equiprobables</strong> (es decir, igualmente posibles), 
+    la probabilidad de un evento A se calcula con la fórmula:
+  </p>
+  <div class="formula-box">
+    $$P(A) = \frac{\text{casos favorables}}{\text{casos posibles}}$$
+  </div>
+  <div class="formula-caption">
+    👉 Se lee: “Probabilidad de A es igual al número de casos favorables sobre el número total de casos posibles”.
+  </div>
+
+  <div class="example-box">
+    <div class="example-title">Ejemplo</div>
+    <p>
+      Si lanzamos un dado justo de seis caras y queremos saber la probabilidad de que salga un número par:
+    </p>
+    <ul>
+      <li>Casos posibles: 6 → {1, 2, 3, 4, 5, 6}</li>
+      <li>Casos favorables: 3 → {2, 4, 6}</li>
+    </ul>
+    <p>Entonces:</p>
+    <div class="formula-box">$$P(A) = \frac{3}{6} = 0.5$$</div>
+  </div>
+</div>
+
 
       <div class="highlight-box">
         <h4>🚫 ¿Qué significa “mutuamente excluyentes (disjuntos)”?</h4>
@@ -755,6 +870,8 @@
       Si un dado estuviera cargado o una moneda sesgada, los resultados ya <strong>no serían equiprobables</strong>, 
       porque algunos tendrían más probabilidad que otros.
     </p>
+    <p>  En situaciones reales o experimentales (por ejemplo, monedas cargadas o datos observados),
+    se deben usar otros enfoques como el <strong>frecuentista</strong> o el <strong>bayesiano</strong>.</p>
   </div>
 
   <div class="ej-table-wrapper">
@@ -815,391 +932,514 @@
   </div>
   </section>
 
-  <!-- 🔹 Tipos de probabilidad -->
-<section id="tipos" class="content-section">
-  <h2 class="section-title">
-    <span class="section-icon">🧭</span>
-    Tipos de probabilidad
-  </h2>
+  <section id="ej-1" class="content-section">
   <div class="section-content">
-    <p>
-      A lo largo de la historia, surgieron diferentes formas de entender qué significa “probabilidad”.
-      Cada enfoque ofrece una manera particular de medir la incertidumbre y se aplica en contextos distintos:
-      <strong>Clásico</strong> (Laplace), <strong>Frecuentista</strong>, <strong>Axiomático</strong> (Kolmogórov) y <strong>Bayesiano</strong>.
-    </p>
+        <h2 class="section-title">Ejercicio N° 1</h2>
+    <div class="example-content">
+      <h3>📘 Ejemplo práctico</h3>
+        <p>Se trabaja con un dado justo (1–6) para practicar nociones básicas de probabilidad mediante las siguientes tareas:</p>
 
-    <p>
-      En términos simples:
-      <ul>
-        <li><strong>Clásico:</strong> usa conteos de casos posibles, ideal para juegos de azar.</li>
-        <li><strong>Frecuentista:</strong> se basa en la repetición de experimentos.</li>
-        <li><strong>Axiomático:</strong> establece las reglas matemáticas que toda probabilidad debe cumplir.</li>
-        <li><strong>Bayesiano:</strong> interpreta la probabilidad como un grado de creencia que se actualiza con nueva información.</li>
-      </ul>
-    </p>
+<ol>
+  <li><strong>Espacio muestral (Ω):</strong> escribir todos los posibles resultados del lanzamiento.</li>
+  <li><strong>Eventos:</strong> definir A como “sale número par” y B como “sale número mayor que 4”.</li>
+  <li><strong>Probabilidades:</strong> calcular P(A), P(B), P(A∩B), P(A∪B) y P(Aᶜ).</li>
+  <li><strong>Inclusión–exclusión:</strong> verificar que se cumpla la fórmula P(A∪B) = P(A) + P(B) − P(A∩B).</li>
+  <li><strong>Independencia:</strong> analizar si los eventos A y B son independientes comprobando si P(A∩B) = P(A)·P(B).</li>
+</ol>
 
-    <p>
-      Cada tipo es útil según el propósito: el clásico para problemas simples, el frecuentista para experimentos repetitivos,
-      el axiomático para teoría matemática y el bayesiano para análisis de datos o decisiones con incertidumbre.
-    </p>
-
-  <div class="section-content">
-
-    <!-- 1. Clásica -->
-    <h4 style="color: #fff; margin-bottom: 10px;">1. Clásica (Laplace)</h4>
-    <div class="formula-box">
-      $$P(A) = \frac{\text{casos favorables}}{\text{casos posibles}}$$
-    </div>
-    <div class="formula-caption">
-      👉 Se lee: “Casos favorables sobre casos posibles”.
-    </div>
-    <p>
-      Requiere <strong>resultados equiprobables</strong> (por ejemplo, dados ideales, cartas o urnas simétricas).
-    </p>
-
-    <!-- 2. Frecuentista -->
-    <h4 style="color: #fff; margin: 30px 0 10px;">2. Frecuentista</h4>
-    <div class="formula-box">
-      $$P(A) = \lim_{n \to \infty} f_n(A)$$
-    </div>
-    <div class="formula-caption">
-      👉 Se lee: “Probabilidad de A como límite de la frecuencia relativa cuando el número de repeticiones tiende al infinito”.
-    </div>
-    <p>
-      Interpreta la probabilidad como el <strong>límite de las frecuencias relativas</strong> en un número muy grande de repeticiones del experimento.
-    </p>
-
-    <!-- 3. Axiomática -->
-    <h4 style="color: #fff; margin: 30px 0 10px;">3. Axiomática (Kolmogórov)</h4>
-    <p>
-      Define \(P(\cdot)\) como una <strong>medida</strong> sobre los eventos que cumple las siguientes propiedades:
-    </p>
-    <ul>
-      <li>\(0 \le P(A) \le 1\)</li>
-      <li>\(P(\Omega) = 1\)</li>
-      <li><strong>Aditividad:</strong> si \(A \cap B = \emptyset\), entonces \(P(A \cup B) = P(A) + P(B)\)</li>
-    </ul>
-
-    <!-- 4. Bayesiana -->
-    <h4 style="color: #fff; margin: 30px 0 10px;">4. Bayesiana o Subjetiva</h4>
-    <div class="formula-box">
-      $$P(\theta | \text{datos}) \propto P(\text{datos}|\theta) \, P(\theta)$$
-    </div>
-    <div class="formula-caption">
-      👉 Se lee: “Probabilidad posterior es proporcional a la verosimilitud por la probabilidad previa”.
-    </div>
-    <p>
-      Interpreta \(P(A)\) como un <strong>grado de creencia</strong> que se actualiza con nueva evidencia mediante el teorema de Bayes.
-    </p>
-
-    <div class="info-blue">
-  <h3>🎯 Ejemplo — Tipos de Probabilidad</h3>
-
-  <p>
-    Existen tres enfoques principales para asignar probabilidades a los eventos: 
-    <strong>clásico, frecuencial y subjetivo</strong>.  
-    Cada uno se usa en distintos contextos según la información disponible.
-  </p>
-
-  <div class="ej-table-wrapper">
-    <table class="ej-table">
-      <thead>
-        <tr>
-          <th>Tipo de probabilidad</th>
-          <th>Descripción</th>
-          <th>Ejemplo</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>Clásica</strong></td>
-          <td>
-            Se basa en la suposición de que <strong>todos los resultados son equiprobables</strong>.  
-            Se usa cuando conocemos el número total de casos posibles.
-          </td>
-          <td>
-            Al lanzar un dado justo, la probabilidad de obtener un “3” es  
-            \( P(3) = \frac{1}{6} \).
-          </td>
-        </tr>
-
-        <tr>
-          <td><strong>Frecuencial</strong></td>
-          <td>
-            Se calcula a partir de la <strong>frecuencia relativa</strong> observada en experimentos repetidos muchas veces.  
-            Cuanto mayor sea el número de repeticiones, más se aproxima al valor real.
-          </td>
-          <td>
-            Si lanzamos una moneda 1000 veces y sale “cara” 510 veces,  
-            \( P(\text{cara}) = \frac{510}{1000} = 0.51 \).
-          </td>
-        </tr>
-
-        <tr>
-          <td><strong>Subjetiva</strong></td>
-          <td>
-            Surge de la <strong>opinión o creencia personal</strong> sobre la ocurrencia de un evento, 
-            basada en experiencia, conocimiento o intuición.
-          </td>
-          <td>
-            Un meteorólogo estima que hay un 70% de probabilidad de lluvia mañana  
-            \( P(\text{lluvia}) = 0.7 \).
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="highlight-box" style="background: rgba(120,200,255,0.08); border: 1px solid rgba(100,180,255,0.35);">
-    <h4>💡 En resumen:</h4>
-    <ul>
-      <li><strong>Clásica:</strong> se usa cuando todos los casos posibles son conocidos y equivalentes.</li>
-      <li><strong>Frecuencial:</strong> depende de la repetición del experimento.</li>
-      <li><strong>Subjetiva:</strong> se basa en el juicio o experiencia del observador.</li>
-    </ul>
-  </div>
-</div>
-
-
-    <!-- Video explicativo -->
-    <div class="video-box" style="margin-top: 40px;">
-      <iframe
-        src="https://www.youtube.com/embed/066g15Z0cGk"
-        title="Tipos de probabilidad - Video explicativo"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
-
-  </div>
-    </div>
-</section>
-
-
-  <!-- 🔹 Teoremas -->
-  <section id="teoremas" class="content-section">
-    <h2 class="section-title"><span class="section-icon">📘</span>Teoremas de probabilidad</h2>
-<div class="section-content">
-  <div class="highlight-box">
-    <h4>📘 Teoremas Fundamentales de Probabilidad</h4>
-    <ul>
-      <li><strong>T1)</strong> Inclusión de eventos:
-        <div>
-<div class="formula-box with-image">
-  <div class="formula-left">
-    $$A_1 ⊂ A_2 \Rightarrow P(A_1) ≤ P(A_2)$$
-  </div>
-  <div class="formula-right">
-    <img src="../../src/img/visuales/cap1_1.png" alt="Relación entre A1 y A2">
-  </div>
-</div>
-<div class="formula-caption">☝️ Se lee: “Si A₁ está contenido en A₂, su probabilidad es menor o igual”.</div>
-
-          
-        <div class="formula-box">$$P(A_2 − A_1) = P(A_2) − P(A_1)$$</div>
-        <div class="formula-caption">☝️ Se lee: “La diferencia entre eventos tiene probabilidad igual a la diferencia de sus probabilidades”.</div>
-      </li>
-
-      <li><strong>T2)</strong> Cotas de probabilidad:
-        <div class="formula-box">$$0 ≤ P(A) ≤ 1$$</div>
-        <div class="formula-caption">👉 Se lee: “Toda probabilidad está entre 0 y 1 inclusive”.</div>
-      </li>
-
-      <li><strong>T3)</strong> Evento imposible:
-        <div class="formula-box">$$P(∅) = 0$$</div>
-        <div class="formula-caption">👉 Se lee: “El evento imposible tiene probabilidad nula”.</div>
-      </li>
-
-      <li><strong>T4)</strong> Complemento:
-        <div class="formula-box">$$P(Aᶜ) = 1 − P(A)$$</div>
-        <div class="formula-caption">👉 Se lee: “La probabilidad de que no ocurra A es: 1 menos la probabilidad de A”.</div>
-      </li>
-
-      <li><strong>T5)</strong> Eventos mutuamente excluyentes:
-        <div class="formula-box">$$A = A_1 ∪ A_2 ∪ … ∪ A_n \Rightarrow P(A) = P(A_1) + P(A_2) + ⋯ + P(A_n)$$</div>
-        <div class="formula-caption">👉 Se lee: “Si los eventos no se superponen, la probabilidad total es la suma de cada uno”.</div>
-        <div class="formula-box">$$\text{Si } A = Ω, \text{ entonces } P(A_1)+P(A_2)+⋯+P(A_n)=1$$</div>
-        <div class="formula-caption">👉 Se lee: “La suma de probabilidades de todos los casos posibles es uno”.</div>
-      </li>
-
-<li><strong>T6)</strong> Unión de eventos:
-  <div class="formula-box with-image">
-    <div class="formula-left">
-      $$P(A ∪ B) = P(A) + P(B) - P(A ∩ B)$$
-    </div>
-    <div class="formula-right">
-      <img src="../../src/img/visuales/cap1_2.png" alt="Unión de A y B">
+      <a href="../ejerciciosResueltos/ej_1_cap1.html" class="nav-button">Ver el Ejercicio</a>
     </div>
   </div>
-  <div class="formula-caption">👉 Se lee: “Probabilidad de A o B es la suma de ambas menos su intersección”.</div>
-</li>
-
-
-      <li><strong>T7)</strong> Descomposición:
-        <div class="formula-box">$$P(A) = P(A ∩ B) + P(A ∩ Bᶜ)$$</div>
-        <div class="formula-caption">👉 Se lee: “La probabilidad de A se reparte entre ocurrir con B o sin B”.</div>
-      </li>
-
-      <li><strong>T8)</strong> Partición de un evento:
-        <div class="formula-box">$$P(A) = P(A ∩ A_1) + P(A ∩ A_2) + ⋯ + P(A ∩ A_n)$$</div>
-        <div class="formula-caption">👉 Se lee: “Si A puede ocurrir junto a varios eventos excluyentes, su probabilidad total es la suma de cada caso”.</div>
-      </li>
-
-      <li><strong>T9)</strong> Probabilidad condicional:
-        <div class="formula-box">$$P(B|A) = \frac{P(A ∩ B)}{P(A)}$$</div>
-        <div class="formula-caption">👉 Se lee: “Probabilidad de B dado A es la probabilidad de ambos sobre la de A”.</div>
-
-        <div class="formula-box">$$P(A ∩ B) = P(A) \cdot P(B|A)$$</div>
-        <div class="formula-caption">👉 Se lee: “La probabilidad conjunta se obtiene multiplicando la de A por la de B dado A”.</div>
-
-        <div class="formula-box">$$P(A ∩ B) = P(A) \cdot P(B)$$</div>
-        <div class="formula-caption">👉 Se lee: “Si A y B son independientes, la conjunta es el producto de ambas”.</div>
-
-        <div class="formula-box">$$P(A_1 ∩ A_2 ∩ A_3) = P(A_1) P(A_2|A_1) P(A_3|(A_1 ∩ A_2))$$</div>
-        <div class="formula-caption">👉 Se lee: “La probabilidad conjunta de tres eventos se calcula en cadena”.</div>
-
-        <div class="formula-box">$$\text{Si son independientes: } P(A_1 ∩ A_2 ∩ A_3) = P(A_1) P(A_2) P(A_3)$$</div>
-        <div class="formula-caption">👉 Se lee: “Si los tres son independientes, basta multiplicar sus probabilidades”.</div>
-      </li>
-
-      <li><strong>T10)</strong> Probabilidad total:
-        <div class="formula-box">$$P(A) = P(A_1)P(A|A_1) + P(A_2)P(A|A_2) + ⋯ + P(A_n)P(A|A_n)$$</div>
-        <div class="formula-caption">👉 Se lee: “La probabilidad total se obtiene sumando cada caso ponderado por su probabilidad”.</div>
-      </li>
-    </ul>
-  </div>
-
-<div class="highlight-box">
-  <h4>🧮 Teorema de Bayes</h4>
-  <div class="formula-box">
-    $$P(A_k|A) = \frac{P(A_k) \, P(A|A_k)}{\sum_{j=1}^{n} P(A_j) \, P(A|A_j)}$$
-  </div>
-  <div class="formula-caption">👉 Se lee: “Probabilidad de Aₖ dado A es igual a su probabilidad previa multiplicada por la verosimilitud, dividida por la suma total”.</div>
-
-  <div class="info-blue">
-  <h3>🧠 Ejemplo — Teorema de Bayes</h3>
-
-  <p>
-    El <strong>Teorema de Bayes</strong> permite actualizar una probabilidad inicial (llamada 
-    <em>probabilidad a priori</em>) cuando se dispone de nueva información.  
-    Es decir, nos ayuda a calcular una <em>probabilidad a posteriori</em> con base en evidencia observada.
-  </p>
-
-  <div class="formula-box">
-    \( P(A|B) = \dfrac{P(B|A) \cdot P(A)}{P(B)} \)
-  </div>
-
-  <h4>🔹 Ejemplo práctico:</h4>
-
-  <p>
-    Una prueba médica se usa para detectar una enfermedad que afecta al 
-    <strong>1% de la población</strong>.
-  </p>
-
-  <ul>
-    <li>Si una persona <strong>está enferma (E)</strong>, la prueba da positivo el <strong>99%</strong> de las veces.<br>→ \( P(+|E) = 0.99 \)</li>
-    <li>Si una persona <strong>no está enferma (¬E)</strong>, la prueba da positivo el <strong>2%</strong> de las veces.<br>→ \( P(+|¬E) = 0.02 \)</li>
-  </ul>
-
-  <p>
-    Si una persona recibe un resultado positivo, queremos saber:
-    <strong>¿Cuál es la probabilidad de que realmente esté enferma?</strong>
-    Es decir, calcular \( P(E|+) \).
-  </p>
-
-  <div class="formula-box">
-    \( P(E|+) = \dfrac{P(+|E) \cdot P(E)}{P(+)} \)
-  </div>
-
-  <p>
-    Primero, calculamos \( P(+) \) —la probabilidad total de obtener un resultado positivo—  
-    considerando ambos casos (personas enfermas y sanas):
-  </p>
-
-  <div class="formula-box">
-    \( P(+) = P(+|E)P(E) + P(+|¬E)P(¬E) \)
-  </div>
-
-  <p>
-    Sustituyendo los valores:
-  </p>
-
-  <div class="formula-box">
-    \( P(+) = (0.99)(0.01) + (0.02)(0.99) = 0.0099 + 0.0198 = 0.0297 \)
-  </div>
-
-  <p>
-    Ahora aplicamos el teorema:
-  </p>
-
-  <div class="formula-box">
-    \( P(E|+) = \dfrac{(0.99)(0.01)}{0.0297} = \dfrac{0.0099}{0.0297} ≈ 0.333 \)
-  </div>
-
-  <p>
-    📊 <strong>Interpretación:</strong>  
-    Aunque la prueba tiene un 99% de precisión, si el resultado es positivo, la probabilidad de estar realmente enfermo es sólo del <strong>33.3%</strong>.  
-    Esto ocurre porque la enfermedad es poco frecuente (1%), y los falsos positivos influyen mucho más.
-  </p>
-
-  <div class="highlight-box" style="background: rgba(120,200,255,0.08); border: 1px solid rgba(100,180,255,0.35); margin-top: 25px;">
-    <h4>💡 En resumen:</h4>
-    <ul>
-      <li><strong>Probabilidad a priori:</strong> información previa (ej. 1% tiene la enfermedad).</li>
-      <li><strong>Evidencia:</strong> el resultado del test (positivo o negativo).</li>
-      <li><strong>Probabilidad a posteriori:</strong> probabilidad actualizada con la evidencia → \( P(E|+) = 33.3\% \).</li>
-    </ul>
-  </div>
-
-  <div class="ej-table-wrapper">
-    <table class="ej-table">
-      <thead>
-        <tr>
-          <th>Escenario</th>
-          <th>Evento</th>
-          <th>Probabilidad</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Persona enferma y test positivo</td>
-          <td>\( P(+|E) \cdot P(E) \)</td>
-          <td>0.0099</td>
-        </tr>
-        <tr>
-          <td>Persona sana y test positivo</td>
-          <td>\( P(+|¬E) \cdot P(¬E) \)</td>
-          <td>0.0198</td>
-        </tr>
-        <tr>
-          <td>Total de positivos</td>
-          <td>\( P(+) \)</td>
-          <td>0.0297</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-
-  <!-- 🎥 Video explicativo -->
-  <div class="video-box">
-    <iframe
-      src="https://www.youtube.com/embed/bDfCURXoKkU?si=s3kUpMTML_FVWRDG"
-      title="Video explicativo del Teorema de Bayes"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
-  </div>
-</div>
-
-
-
-</div>
-
   </section>
+
+    <!-- 🔹 Tipos de probabilidad -->
+  <section id="tipos" class="content-section">
+    <h2 class="section-title">
+      <span class="section-icon">🧭</span>
+      Tipos de probabilidad
+    </h2>
+    <div class="section-content">
+      <p>
+        A lo largo de la historia, surgieron diferentes formas de entender qué significa “probabilidad”.
+        Cada enfoque ofrece una manera particular de medir la incertidumbre y se aplica en contextos distintos:
+        <strong>Clásico</strong> (Laplace), <strong>Frecuentista</strong>, <strong>Axiomático</strong> (Kolmogórov) y <strong>Bayesiano</strong>.
+      </p>
+
+      <p>
+        En términos simples:
+        <ul>
+          <li><strong>Clásico:</strong> usa conteos de casos posibles, ideal para juegos de azar.</li>
+          <li><strong>Frecuentista:</strong> se basa en la repetición de experimentos.</li>
+          <li><strong>Axiomático:</strong> establece las reglas matemáticas que toda probabilidad debe cumplir.</li>
+          <li><strong>Bayesiano:</strong> interpreta la probabilidad como un grado de creencia que se actualiza con nueva información.</li>
+        </ul>
+      </p>
+
+      <p>
+        Cada tipo es útil según el propósito: el clásico para problemas simples, el frecuentista para experimentos repetitivos,
+        el axiomático para teoría matemática y el bayesiano para análisis de datos o decisiones con incertidumbre.
+      </p>
+
+    <div class="section-content">
+
+      <!-- 1. Clásica -->
+      <h4 style="color: #fff; margin-bottom: 10px;">1. Clásica (Laplace)</h4>
+      <div class="formula-box">
+        $$P(A) = \frac{\text{casos favorables}}{\text{casos posibles}}$$
+      </div>
+      <div class="formula-caption">
+        👉 Se lee: “Casos favorables sobre casos posibles”.
+      </div>
+      <p>
+        Requiere <strong>resultados equiprobables</strong> (por ejemplo, dados ideales, cartas o urnas simétricas).
+      </p>
+
+      <!-- 2. Frecuentista -->
+      <h4 style="color: #fff; margin: 30px 0 10px;">2. Frecuentista</h4>
+      <div class="formula-box">
+        $$P(A) = \lim_{n \to \infty} f_n(A)$$
+      </div>
+      <div class="formula-caption">
+        👉 Se lee: “Probabilidad de A como límite de la frecuencia relativa cuando el número de repeticiones tiende al infinito”.
+      </div>
+      <p>
+        Interpreta la probabilidad como el <strong>límite de las frecuencias relativas</strong> en un número muy grande de repeticiones del experimento.
+      </p>
+
+      
+
+      <!-- 3. Axiomática -->
+      <h4 style="color: #fff; margin: 30px 0 10px;">3. Axiomática (Kolmogórov)</h4>
+      <p>
+        Define \(P(\cdot)\) como una <strong>medida</strong> sobre los eventos que cumple las siguientes propiedades:
+      </p>
+      <ul>
+        <li>\(0 \le P(A) \le 1\)</li>
+        <li>\(P(\Omega) = 1\)</li>
+        <li><strong>Aditividad:</strong> si \(A \cap B = \emptyset\), entonces \(P(A \cup B) = P(A) + P(B)\)</li>
+      </ul>
+
+      <!-- 4. Bayesiana -->
+      <h4 style="color: #fff; margin: 30px 0 10px;">4. Bayesiana o Subjetiva</h4>
+          <p>
+        Interpreta \(P(A)\) como un <strong>grado de creencia</strong> que se actualiza con nueva evidencia mediante el teorema de Bayes.
+      </p>
+      <div class="formula-box">
+        $$P(\theta | \text{datos}) \propto P(\text{datos}|\theta) \, P(\theta)$$
+      </div>
+      <div class="formula-caption">
+        👉 Se lee: “Probabilidad posterior es proporcional a la verosimilitud por la probabilidad previa”.
+      </div>
+
+
+      <div class="info-blue">
+    <h3>🎯 Ejemplo — Tipos de Probabilidad</h3>
+
+    <p>
+      Existen tres enfoques principales para asignar probabilidades a los eventos: 
+      <strong>clásico, frecuencial y subjetivo</strong>.  
+      Cada uno se usa en distintos contextos según la información disponible.
+    </p>
+
+    <div class="ej-table-wrapper">
+      <table class="ej-table">
+        <thead>
+          <tr>
+            <th>Tipo de probabilidad</th>
+            <th>Descripción</th>
+            <th>Ejemplo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Clásica</strong></td>
+            <td>
+              Se basa en la suposición de que <strong>todos los resultados son equiprobables</strong>.  
+              Se usa cuando conocemos el número total de casos posibles.
+            </td>
+            <td>
+              Al lanzar un dado justo, la probabilidad de obtener un “3” es  
+              \( P(3) = \frac{1}{6} \).
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Frecuencial</strong></td>
+            <td>
+              Se calcula a partir de la <strong>frecuencia relativa</strong> observada en experimentos repetidos muchas veces.  
+              Cuanto mayor sea el número de repeticiones, más se aproxima al valor real.
+            </td>
+            <td>
+              Si lanzamos una moneda 1000 veces y sale “cara” 510 veces,  
+              \( P(\text{cara}) = \frac{510}{1000} = 0.51 \).
+            </td>
+          </tr>
+
+          <tr>
+            <td><strong>Subjetiva</strong></td>
+            <td>
+              Surge de la <strong>opinión o creencia personal</strong> sobre la ocurrencia de un evento, 
+              basada en experiencia, conocimiento o intuición.
+            </td>
+            <td>
+              Un meteorólogo estima que hay un 70% de probabilidad de lluvia mañana  
+              \( P(\text{lluvia}) = 0.7 \).
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box" style="background: rgba(120,200,255,0.08); border: 1px solid rgba(100,180,255,0.35);">
+      <h4>💡 En resumen:</h4>
+      <ul>
+        <li><strong>Clásica:</strong> se usa cuando todos los casos posibles son conocidos y equivalentes.</li>
+        <li><strong>Frecuencial:</strong> depende de la repetición del experimento.</li>
+        <li><strong>Subjetiva:</strong> se basa en el juicio o experiencia del observador.</li>
+      </ul>
+    </div>
+  </div>
+
+
+      <!-- Video explicativo -->
+      <div class="video-box" style="margin-top: 40px;">
+        <iframe
+          src="https://www.youtube.com/embed/066g15Z0cGk"
+          title="Tipos de probabilidad - Video explicativo"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+
+    </div>
+      </div>
+  </section>
+
+
+<!-- 🔹 Teoremas -->
+<section id="teoremas" class="content-section">
+  <h2 class="section-title"><span class="section-icon">📘</span>Teoremas de probabilidad</h2>
+  <div class="section-content">
+    <div class="highlight-box">
+      <h4>📘 Teoremas Fundamentales de Probabilidad</h4>
+      <ul>
+        <li><strong>T1)</strong> Inclusión de eventos:
+          <div class="formula-box with-image">
+            <div class="formula-left">
+              $$A_1 ⊂ A_2 \Rightarrow P(A_1) ≤ P(A_2)$$
+            </div>
+            <div class="formula-right">
+              <img src="../../src/img/visuales/cap1_1.png" alt="Relación entre A1 y A2">
+            </div>
+          </div>
+          <div class="formula-caption">☝️ Se lee: "Si A₁ está contenido en A₂, su probabilidad es menor o igual".</div>
+          
+          <div class="formula-box">$$P(A_2 − A_1) = P(A_2) − P(A_1)$$</div>
+          <div class="formula-caption">☝️ Se lee: "La diferencia entre eventos tiene probabilidad igual a la diferencia de sus probabilidades".</div>
+        </li>
+
+        <li><strong>T2)</strong> Cotas de probabilidad:
+          <div class="formula-box">$$0 ≤ P(A) ≤ 1$$</div>
+          <div class="formula-caption">👉 Se lee: "Toda probabilidad está entre 0 y 1 inclusive".</div>
+        </li>
+
+        <li><strong>T3)</strong> Evento imposible:
+          <div class="formula-box">$$P(∅) = 0$$</div>
+          <div class="formula-caption">👉 Se lee: "El evento imposible tiene probabilidad nula".</div>
+        </li>
+
+        <li><strong>T4)</strong> Complemento:
+          <div class="formula-box">$$P(Aᶜ) = 1 − P(A)$$</div>
+          <div class="formula-caption">👉 Se lee: "La probabilidad de que no ocurra A es: 1 menos la probabilidad de A".</div>
+        </li>
+
+        <li><strong>T5)</strong> Eventos mutuamente excluyentes:
+          <div class="formula-box">$$A = A_1 ∪ A_2 ∪ … ∪ A_n \Rightarrow P(A) = P(A_1) + P(A_2) + ⋯ + P(A_n)$$</div>
+          <div class="formula-caption">👉 Se lee: "Si los eventos no se superponen, la probabilidad total es la suma de cada uno".</div>
+          <div class="formula-box">$$\text{Si } A = Ω, \text{ entonces } P(A_1)+P(A_2)+⋯+P(A_n)=1$$</div>
+          <div class="formula-caption">👉 Se lee: "La suma de probabilidades de todos los casos posibles es uno".</div>
+        </li>
+
+        <li><strong>T6)</strong> Unión de eventos:
+          <div class="formula-box with-image">
+            <div class="formula-left">
+              $$P(A ∪ B) = P(A) + P(B) - P(A ∩ B)$$
+            </div>
+            <div class="formula-right">
+              <img src="../../src/img/visuales/cap1_2.png" alt="Unión de A y B">
+            </div>
+          </div>
+          <div class="formula-caption">👉 Se lee: "Probabilidad de A o B es la suma de ambas menos su intersección".</div>
+        </li>
+
+        <li><strong>T7)</strong> Descomposición:
+          <div class="formula-box">$$P(A) = P(A ∩ B) + P(A ∩ Bᶜ)$$</div>
+          <div class="formula-caption">👉 Se lee: "La probabilidad de A se reparte entre ocurrir con B o sin B".</div>
+        </li>
+
+        <li><strong>T8)</strong> Partición de un evento:
+          <div class="formula-box">$$P(A) = P(A ∩ A_1) + P(A ∩ A_2) + ⋯ + P(A ∩ A_n)$$</div>
+          <div class="formula-caption">👉 Se lee: "Si A puede ocurrir junto a varios eventos excluyentes, su probabilidad total es la suma de cada caso".</div>
+        </li>
+
+        <li><strong>T9)</strong> Probabilidad condicional:
+          <div class="formula-box">$$P(B|A) = \frac{P(A ∩ B)}{P(A)}$$</div>
+          <div class="formula-caption">👉 Se lee: "Probabilidad de B dado A es la probabilidad de ambos sobre la de A".</div>
+
+          <div class="formula-box">$$P(A ∩ B) = P(A) \cdot P(B|A)$$</div>
+          <div class="formula-caption">👉 Se lee: "La probabilidad conjunta se obtiene multiplicando la de A por la de B dado A".</div>
+
+          <div class="formula-box">$$P(A ∩ B) = P(A) \cdot P(B)$$</div>
+          <div class="formula-caption">👉 Se lee: "Si A y B son independientes, la conjunta es el producto de ambas".</div>
+
+          <div class="formula-box">$$P(A_1 ∩ A_2 ∩ A_3) = P(A_1) P(A_2|A_1) P(A_3|(A_1 ∩ A_2))$$</div>
+          <div class="formula-caption">👉 Se lee: "La probabilidad conjunta de tres eventos se calcula en cadena".</div>
+
+          <div class="formula-box">$$\text{Si son independientes: } P(A_1 ∩ A_2 ∩ A_3) = P(A_1) P(A_2) P(A_3)$$</div>
+          <div class="formula-caption">👉 Se lee: "Si los tres son independientes, basta multiplicar sus probabilidades".</div>
+        </li>
+
+        <li><strong>T10)</strong> Probabilidad total:
+          <div class="formula-box">$$P(A) = P(A_1)P(A|A_1) + P(A_2)P(A|A_2) + ⋯ + P(A_n)P(A|A_n)$$</div>
+          <div class="formula-caption">👉 Se lee: "La probabilidad total se obtiene sumando cada caso ponderado por su probabilidad".</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Tabla de ejemplos -->
+    <div style="margin-top: 40px;">
+      <p style="margin-bottom:12px;">
+        Ejemplos sencillos para recordar los <strong>10 teoremas principales</strong> de probabilidad sin memorizarlos de memoria, sino entendiendo la lógica detrás.
+      </p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Ejemplo real</th>
+              <th>Fórmula</th>
+              <th>Truco mental</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Suceso seguro</td>
+              <td>"Sacar una carta del mazo" → seguro pasa algo.</td>
+              <td>\( P(\Omega)=1 \)</td>
+              <td>Lo seguro vale 1.</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Suceso imposible</td>
+              <td>"Sacar el número 7 en un dado" → nunca pasa.</td>
+              <td>\( P(\varnothing)=0 \)</td>
+              <td>Imposible = 0.</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Complemento</td>
+              <td>Si \(P(\text{llueva})=0.3\), entonces \(P(\text{no llueva})=0.7\).</td>
+              <td>\( P(A^c)=1-P(A) \)</td>
+              <td>Sí + No = 1.</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Unión sin cruce</td>
+              <td>"Número par o impar en un dado" → no se superponen.</td>
+              <td>\( P(A\cup B)=P(A)+P(B) \)</td>
+              <td>Sin cruce = suma.</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Unión con cruce</td>
+              <td>"Alumnos que hacen Música o Deporte" → algunos hacen ambas.</td>
+              <td>\( P(A\cup B)=P(A)+P(B)-P(A\cap B) \)</td>
+              <td>Sumá todo, restá el cruce.</td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Unión de 3 eventos</td>
+              <td>"Arte, Música y Deporte" → algunos repiten actividades.</td>
+              <td>\( P(A\cup B\cup C)=P(A)+P(B)+P(C)-P(AB)-P(AC)-P(BC)+P(ABC) \)</td>
+              <td>+ + + − − − +</td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>Condicional</td>
+              <td>"Sacar un número par sabiendo que es mayor a 3."</td>
+              <td>\( P(A\mid B)=\frac{P(A\cap B)}{P(B)} \)</td>
+              <td>B ya pasó, miro dentro de B.</td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>Regla del producto</td>
+              <td>"Extraer una bola roja y luego una azul del bolso."</td>
+              <td>\( P(A\cap B)=P(A)\,P(B\mid A) \)</td>
+              <td>Y = por.</td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>Independencia</td>
+              <td>"Tirar una moneda y un dado" → no se afectan.</td>
+              <td>\( P(A\cap B)=P(A)\,P(B) \)</td>
+              <td>Multiplicá directo.</td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>Bayes</td>
+              <td>"Test positivo" → probabilidad real de estar enfermo.</td>
+              <td>\( P(A\mid B)=\frac{P(B\mid A)P(A)}{P(B)} \)</td>
+              <td>El túnel de causa ↔ efecto.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="highlight-box" style="margin-top:18px;">
+        <h4>🧩 Bonus: Regla de probabilidad total</h4>
+        <p>
+          Si el espacio muestral se divide en partes \(B_1, B_2, ... B_n\):
+        </p>
+        <p style="text-align:center;">
+          \( P(A) = \sum_i P(B_i)\,P(A \mid B_i) \)
+        </p>
+        <p>
+          Ejemplo: distintas causas posibles de una enfermedad.
+        </p>
+      </div>
+    </div>
+
+    <!-- Teorema de Bayes -->
+    <div class="highlight-box" style="margin-top: 40px;">
+      <h4>🧮 Teorema de Bayes</h4>
+      <div class="formula-box">
+        $$P(A_k|A) = \frac{P(A_k) \, P(A|A_k)}{\sum_{j=1}^{n} P(A_j) \, P(A|A_j)}$$
+      </div>
+      <div class="formula-caption">👉 Se lee: "Probabilidad de Aₖ dado A es igual a su probabilidad previa multiplicada por la verosimilitud, dividida por la suma total".</div>
+
+      <div class="info-blue">
+        <h3>🧠 Ejemplo — Teorema de Bayes</h3>
+
+        <p>
+          El <strong>Teorema de Bayes</strong> permite actualizar una probabilidad inicial (llamada 
+          <em>probabilidad a priori</em>) cuando se dispone de nueva información.  
+          Es decir, nos ayuda a calcular una <em>probabilidad a posteriori</em> con base en evidencia observada.
+        </p>
+
+        <div class="formula-box">
+          \( P(A|B) = \dfrac{P(B|A) \cdot P(A)}{P(B)} \)
+        </div>
+
+        <h4>🔹 Ejemplo práctico:</h4>
+
+        <p>
+          Una prueba médica se usa para detectar una enfermedad que afecta al 
+          <strong>1% de la población</strong>.
+        </p>
+
+        <ul>
+          <li>Si una persona <strong>está enferma (E)</strong>, la prueba da positivo el <strong>99%</strong> de las veces.<br>→ \( P(+|E) = 0.99 \)</li>
+          <li>Si una persona <strong>no está enferma (¬E)</strong>, la prueba da positivo el <strong>2%</strong> de las veces.<br>→ \( P(+|¬E) = 0.02 \)</li>
+        </ul>
+
+        <p>
+          Si una persona recibe un resultado positivo, queremos saber:
+          <strong>¿Cuál es la probabilidad de que realmente esté enferma?</strong>
+          Es decir, calcular \( P(E|+) \).
+        </p>
+
+        <div class="formula-box">
+          \( P(E|+) = \dfrac{P(+|E) \cdot P(E)}{P(+)} \)
+        </div>
+
+        <p>
+          Primero, calculamos \( P(+) \) —la probabilidad total de obtener un resultado positivo—  
+          considerando ambos casos (personas enfermas y sanas):
+        </p>
+
+        <div class="formula-box">
+          \( P(+) = P(+|E)P(E) + P(+|¬E)P(¬E) \)
+        </div>
+
+        <p>
+          Sustituyendo los valores:
+        </p>
+
+        <div class="formula-box">
+          \( P(+) = (0.99)(0.01) + (0.02)(0.99) = 0.0099 + 0.0198 = 0.0297 \)
+        </div>
+
+        <p>
+          Ahora aplicamos el teorema:
+        </p>
+
+        <div class="formula-box">
+          \( P(E|+) = \dfrac{(0.99)(0.01)}{0.0297} = \dfrac{0.0099}{0.0297} ≈ 0.333 \)
+        </div>
+
+        <p>
+          📊 <strong>Interpretación:</strong>  
+          Aunque la prueba tiene un 99% de precisión, si el resultado es positivo, la probabilidad de estar realmente enfermo es sólo del <strong>33.3%</strong>.  
+          Esto ocurre porque la enfermedad es poco frecuente (1%), y los falsos positivos influyen mucho más.
+        </p>
+
+        <div class="highlight-box" style="background: rgba(120,200,255,0.08); border: 1px solid rgba(100,180,255,0.35); margin-top: 25px;">
+          <h4>💡 En resumen:</h4>
+          <ul>
+            <li><strong>Probabilidad a priori:</strong> información previa (ej. 1% tiene la enfermedad).</li>
+            <li><strong>Evidencia:</strong> el resultado del test (positivo o negativo).</li>
+            <li><strong>Probabilidad a posteriori:</strong> probabilidad actualizada con la evidencia → \( P(E|+) = 33.3\% \).</li>
+          </ul>
+        </div>
+
+        <div class="ej-table-wrapper">
+          <table class="ej-table">
+            <thead>
+              <tr>
+                <th>Escenario</th>
+                <th>Evento</th>
+                <th>Probabilidad</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Persona enferma y test positivo</td>
+                <td>\( P(+|E) \cdot P(E) \)</td>
+                <td>0.0099</td>
+              </tr>
+              <tr>
+                <td>Persona sana y test positivo</td>
+                <td>\( P(+|¬E) \cdot P(¬E) \)</td>
+                <td>0.0198</td>
+              </tr>
+              <tr>
+                <td>Total de positivos</td>
+                <td>\( P(+) \)</td>
+                <td>0.0297</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Video explicativo -->
+      <div class="video-box">
+        <iframe
+          src="https://www.youtube.com/embed/bDfCURXoKkU?si=s3kUpMTML_FVWRDG"
+          title="Video explicativo del Teorema de Bayes"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 
   <!-- Sección 5: Operaciones -->
@@ -1469,6 +1709,31 @@
   </div>
 </section>
 
+
+  <section id="ej-2" class="content-section">
+  <div class="section-content">
+    <h2 class="section-title">Ejercicio N° 2</h2>
+    <div class="example-content">
+      <h3>🎯 Contexto</h3>
+      <p>
+        Lanzamos dos monedas ideales al mismo tiempo. Cada moneda puede dar 
+        <strong>Cara (C)</strong> o <strong>Cruz (X)</strong> con probabilidad 1/2.
+      </p>
+
+      <h3>📘 Tareas</h3>
+      <ol>
+        <li><strong>Espacio muestral (Ω):</strong> escribir todos los pares ordenados posibles (Moneda1, Moneda2).</li>
+        <li><strong>Eventos:</strong> definir C como “exactamente una cara” y D como “al menos una cara”.</li>
+        <li><strong>Probabilidades:</strong> calcular P(C), P(D), P(C∩D) y P(C∪D).</li>
+        <li><strong>Independencia (extra):</strong> analizar si C y D son independientes verificando si P(C∩D) = P(C)·P(D).</li>
+      </ol>
+
+      <a href="../ejerciciosResueltos/ej_2_cap1.html" class="nav-button">Ver el Ejercicio</a>
+    </div>
+  </div>
+</section>
+
+
 <!-- Sección 6: Probabilidad condicional -->
 <section id="condicional" class="content-section">
   <h2 class="section-title">
@@ -1663,7 +1928,7 @@
       </p>
     </div>
 
-    <div class="highlight-box" style="margin-top:20px;">
+    <div class="example-box" style="margin-top:20px;">
       <h4>🎲 Ejemplo:</h4>
       <p>
         En una fábrica hay dos máquinas que producen tornillos:
@@ -1699,56 +1964,97 @@
   </div>
 </section>
 
-  <!-- 🔹 Frecuencia relativa -->
-  <section id="frecuencia" class="content-section">
-<h2 class="section-title"><span class="section-icon">📊</span>Frecuencia</h2>
-<div class="section-content">
-  
-  <h4 style="color:#fff;margin-bottom:10px;">1️⃣ Frecuencia absoluta</h4>
-  <div class="formula-box">
-    $$f(A) = \text{número de veces que ocurre A}$$
-  </div>
-  <div class="formula-caption">
-    👉 Se lee: “Frecuencia absoluta es cuántas veces aparece un evento o valor”.
-  </div>
+<!-- 🔹 Frecuencia -->
+<section id="frecuencia" class="content-section">
+  <h2 class="section-title">
+    <span class="section-icon">📊</span>
+    Frecuencia
+  </h2>
 
-  <h4 style="color:#fff;margin:25px 0 10px;">2️⃣ Frecuencia relativa</h4>
-  <div class="formula-box">
-    $$f_n(A) = \frac{\text{n° de veces que ocurre A}}{n}$$
-  </div>
-  <div class="formula-caption">
-    👉 Se lee: “Frecuencia relativa de A es la proporción entre ocurrencias y total de observaciones”.
-  </div>
+  <div class="section-content">
+    <p>
+      En estadística, la <strong>frecuencia</strong> indica <strong>cuántas veces ocurre un determinado valor o evento</strong> 
+      dentro de un conjunto de observaciones o repeticiones de un experimento.
+    </p>
+    <p>
+      Es la base del enfoque <strong>frecuentista</strong> de la probabilidad: 
+      a medida que repetimos un experimento muchas veces, la frecuencia con que aparece un evento 
+      nos aproxima a su probabilidad real.
+    </p>
 
-  <h4 style="color:#fff;margin:25px 0 10px;">3️⃣ Frecuencia acumulada</h4>
-  <div class="formula-box">
-    $$F(A_i) = \sum_{j=1}^{i} f(A_j)$$
-  </div>
-  <div class="formula-caption">
-    👉 Se lee: “Frecuencia acumulada es la suma de todas las frecuencias desde el primer valor hasta el actual”.
-  </div>
+    <div class="highlight-box" style="margin-top:20px;">
+      <h4>💡 En palabras simples:</h4>
+      <p>
+        Si un evento ocurre varias veces en una serie de ensayos, su frecuencia nos dice 
+        <strong>cuán común o probable parece ser</strong>.  
+        Cuantas más repeticiones hacemos, más estable se vuelve ese valor.
+      </p>
+    </div>
 
-  <div class="example-box" style="margin-top:25px;">
-    <div class="example-title">Ejemplo</div>
-    <p>Si tirás un dado 10 veces y el número 3 salió 4 veces, entonces:</p>
-    <ul>
-      <li>Frecuencia absoluta: f(3) = 4</li>
-      <li>Frecuencia relativa: f₁₀(3) = 4 / 10 = 0.4</li>
-      <li>Frecuencia acumulada (hasta el 3): F(3) = f(1) + f(2) + f(3)</li>
-    </ul>
-  </div>
+    <h4 style="color:#fff;margin:25px 0 10px;">1️⃣ Frecuencia absoluta</h4>
+    <div class="formula-box">
+      $$f(A) = \text{número de veces que ocurre A}$$
+    </div>
+    <div class="formula-caption">
+      👉 Se lee: “Frecuencia absoluta es cuántas veces aparece un evento o valor”.
+    </div>
 
-    <div class="video-box">
-  <iframe
-    src="https://www.youtube.com/embed/a4cI02iW_zQ?list=PLeySRPnY35dFcEmQDGrPxwJVXiIeu_9cl"
-    title="Video explicativo: ¿qué tipo de tabla de frecuencias debo hacer?"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen>
-  </iframe>
-</div>
-</div>
-  </section>
+    <h4 style="color:#fff;margin:25px 0 10px;">2️⃣ Frecuencia relativa</h4>
+    <div class="formula-box">
+      $$f_n(A) = \frac{\text{n° de veces que ocurre A}}{n}$$
+    </div>
+    <div class="formula-caption">
+      👉 Se lee: “Frecuencia relativa de A es la proporción entre ocurrencias y total de observaciones”.
+    </div>
+
+    <div class="info-blue" style="margin-top:20px;">
+      <h3>📈 Frecuencia y Probabilidad</h3>
+      <p>
+        A medida que el número de repeticiones \( n \) crece, la frecuencia relativa se estabiliza 
+        y tiende a la <strong>probabilidad teórica</strong> del evento:
+      </p>
+      <div class="formula-box">
+        $$P(A) = \lim_{n \to \infty} f_n(A)$$
+      </div>
+      <p>
+        Esto significa que la <strong>probabilidad</strong> es el <em>valor límite</em> 
+        al que se aproxima la frecuencia relativa cuando realizamos el experimento infinitas veces.
+      </p>
+    </div>
+
+    <h4 style="color:#fff;margin:25px 0 10px;">3️⃣ Frecuencia acumulada</h4>
+    <div class="formula-box">
+      $$F(A_i) = \sum_{j=1}^{i} f(A_j)$$
+    </div>
+    <div class="formula-caption">
+      👉 Se lee: “Frecuencia acumulada es la suma de todas las frecuencias desde el primer valor hasta el actual”.
+    </div>
+
+    <div class="example-box" style="margin-top:25px;">
+      <div class="example-title">Ejemplo</div>
+      <p>Si tirás un dado 10 veces y el número 3 salió 4 veces, entonces:</p>
+      <ul>
+        <li>Frecuencia absoluta: f(3) = 4</li>
+        <li>Frecuencia relativa: f₁₀(3) = 4 / 10 = 0.4</li>
+        <li>Frecuencia acumulada (hasta el 3): F(3) = f(1) + f(2) + f(3)</li>
+      </ul>
+      <p>
+        Si aumentás el número de lanzamientos, el valor 0.4 se acercará cada vez más a la probabilidad teórica de que salga un 3 (\(P(3)=\frac{1}{6}\)).
+      </p>
+    </div>
+
+    <div class="video-box" style="margin-top:25px;">
+      <iframe
+        src="https://www.youtube.com/embed/a4cI02iW_zQ?list=PLeySRPnY35dFcEmQDGrPxwJVXiIeu_9cl"
+        title="Video explicativo: ¿qué tipo de tabla de frecuencias debo hacer?"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</section>
+
 <!-- 🔹 Clasificación de sucesos -->
 <section id="clasificacion" class="content-section">
   <h2 class="section-title">
@@ -2079,6 +2385,37 @@
   </div>
 </section>
 
+<section id="tablas-z" class="content-section">
+      <h2 class="section-title">
+    <span class="section-icon">🟡</span>Herramienta Interactivas — Laboratorio de Probabilidad
+  </h2>
+  <div class="info-gold">
+<p>
+  El <strong>Laboratorio Interactivo de Probabilidad</strong> permite explorar de forma visual y dinámica
+  los conceptos fundamentales del azar, la frecuencia y la inferencia estadística.
+  Cada módulo del Capítulo 1 presenta simulaciones, gráficos y cálculos automáticos que facilitan
+  la comprensión intuitiva de la probabilidad.
+</p>
+
+<ul style="margin:10px 0 0 20px; font-size:0.9rem; line-height:1.5; color:#ccc;">
+  <li>🎯 <strong>Experimento Aleatorio:</strong> genera resultados y espacios muestrales.</li>
+  <li>📊 <strong>Eventos y Venn:</strong> visualiza las relaciones entre P(A), P(B) y P(A∩B).</li>
+  <li>🌳 <strong>Probabilidad Condicional:</strong> calcula P(A|B), P(B|A) e interpreta independencia.</li>
+  <li>📈 <strong>Frecuencia y Ley de los Grandes Números:</strong> muestra la convergencia entre frecuencia y probabilidad.</li>
+  <li>🎰 <strong>Variables Aleatorias:</strong> construye distribuciones, calcula esperanza y varianza.</li>
+  <li>🔮 <strong>Teorema de Bayes:</strong> explica cómo actualizar creencias ante nueva información.</li>
+</ul>
+
+    <div style="text-align:center; margin-top: 12px;">
+      <a href="../herramientas/ProbLab.html" 
+         class="nav-button">
+        🔗 Ir a "Laboratorio de Probabilidad"
+      </a>
+      <p>Aun se encuentra en desarrollo... Puede que encuentres algun que otro error :)</p>
+    </div>
+  </div>
+</section>
+
 <!-- Navegación -->
 <div class="navigation-buttons">
   <a href="../temario.html" class="nav-button secondary">← Volver al Temario</a>
@@ -2087,28 +2424,30 @@
 </main>
 
     <!-- Sidebar -->
-<!-- Sidebar -->
-<aside class="sidebar">
-  <div class="sidebar-title">Unidad 1</div>
-  <ul class="nav-list">
-    <li class="nav-item"><a href="#intro-aleatoriedad">Introducción</a></li>
-    <li class="nav-item"><a href="#exp-aleatorio">Experimento aleatorio</a></li>
-    <li class="nav-item"><a href="#espacio-muestral">Espacio muestral</a></li>
-    <li class="nav-item"><a href="#evento">Evento</a></li>
-    <li class="nav-item"><a href="#probabilidad">Probabilidad</a></li>
-        <li class="nav-item"><a href="#tipos">Tipos de probabilidad</a></li>
-    <li class="nav-item"><a href="#teoremas">Teoremas de probabilidad</a></li>
-        <li class="nav-item"><a href="#operaciones">Operaciones con eventos</a></li>                   
-            <li class="nav-item"><a href="#condicional">Prob. condicional e independencia</a></li>
-            <li class="nav-item"><a href="#prob-total">Probabilidad total</a></li>
-                <li class="nav-item"><a href="#frecuencia">Frecuencia</a></li>
-    <li class="nav-item"><a href="#clasificacion">Clasificación de sucesos</a></li>
-    <li class="nav-item"><a href="#ley-grandes">Ley de los grandes números</a></li>
-    <li class="nav-item"><a href="#var-aleatorias">Variables aleatorias</a></li>
-        <li class="nav-item"><a href="#conclusion">conclusion</a></li>
-    <li class="nav-item"><a href="#resumen">Resumen</a></li>
-  </ul>
-</aside>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-title">Unidad 1</div>
+      <ul class="nav-list">
+        <li class="nav-item"><a href="#intro-aleatoriedad">Introducción</a></li>
+        <li class="nav-item"><a href="#exp-aleatorio">Experimento aleatorio</a></li>
+        <li class="nav-item"><a href="#espacio-muestral">Espacio muestral</a></li>
+        <li class="nav-item"><a href="#evento">Evento</a></li>
+        <li class="nav-item"><a href="#probabilidad">Probabilidad</a></li>
+                <li class="nav-item"><a href="#ej-1">Ejercicio N° 1</a></li>
+            <li class="nav-item"><a href="#tipos">Tipos de probabilidad</a></li>
+        <li class="nav-item"><a href="#teoremas">Teoremas de probabilidad</a></li>
+            <li class="nav-item"><a href="#operaciones">Operaciones con eventos</a></li>   
+                    <li class="nav-item"><a href="#ej-2">Ejercicio N° 2</a></li>                
+                <li class="nav-item"><a href="#condicional">Prob. condicional e independencia</a></li>
+                <li class="nav-item"><a href="#prob-total">Probabilidad total</a></li>
+                    <li class="nav-item"><a href="#frecuencia">Frecuencia</a></li>
+        <li class="nav-item"><a href="#clasificacion">Clasificación de sucesos</a></li>
+        <li class="nav-item"><a href="#ley-grandes">Ley de los grandes números</a></li>
+        <li class="nav-item"><a href="#var-aleatorias">Variables aleatorias</a></li>
+            <li class="nav-item"><a href="#conclusion">conclusion</a></li>
+        <li class="nav-item"><a href="#resumen">Resumen</a></li>
+      </ul>
+    </aside>
 
 
     <script>
@@ -2472,6 +2811,42 @@ window.MathJax = {
     // Dibujo inicial
     draw();
   </script>
+<script>
+// 🔹 Funcionalidad del menú lateral móvil
+document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.getElementById('menuToggle');
+  const menuOverlay = document.getElementById('menuOverlay');
+  const sidebar = document.querySelector('.sidebar');
 
+  if (menuToggle && sidebar) {
+    // Abrir/cerrar menú
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      sidebar.classList.toggle('active');
+      menuOverlay.classList.toggle('active');
+      document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Cerrar al hacer click en overlay
+    menuOverlay.addEventListener('click', () => {
+      menuToggle.classList.remove('active');
+      sidebar.classList.remove('active');
+      menuOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    // Cerrar al hacer click en un enlace del sidebar
+    const sidebarLinks = sidebar.querySelectorAll('.nav-item a');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        sidebar.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+});
+</script>
 </body>
 </html>

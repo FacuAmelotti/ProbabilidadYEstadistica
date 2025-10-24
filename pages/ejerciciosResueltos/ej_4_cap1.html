@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto 4 - Par de dados</title>
+  <link rel="icon" type="image/png" href="../../src/img/logo.png">
+  <link rel="stylesheet" href="../css/base.css" />
+  <style>
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .context-box ul {
+      margin-left: 25px;
+      list-style: disc;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(120, 119, 198, 0.7);
+      background: rgba(120, 119, 198, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p, .step-content ul {
+      margin-bottom: 10px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #a0e0ff;
+    }
+
+    .dice-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+    }
+
+    .dice-cell {
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .dice-cell.header {
+      background: rgba(120, 119, 198, 0.3);
+      color: #fff;
+    }
+
+    .dice-cell.outcome {
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .dice-cell.outcome:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .dice-cell.highlight-a {
+      background: rgba(255, 100, 100, 0.3);
+      border-color: rgba(255, 100, 100, 0.6);
+    }
+
+    .dice-cell.highlight-b {
+      background: rgba(100, 200, 255, 0.3);
+      border-color: rgba(100, 200, 255, 0.6);
+    }
+
+    .dice-cell.highlight-c {
+      background: rgba(100, 255, 150, 0.3);
+      border-color: rgba(100, 255, 150, 0.6);
+    }
+
+    .event-list {
+      background: rgba(255, 255, 255, 0.03);
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+    }
+
+    .check-panel {
+      margin-top: 40px;
+      padding: 25px;
+      border-radius: 16px;
+      background: rgba(120, 119, 198, 0.15);
+      border: 1px solid rgba(120, 119, 198, 0.4);
+      text-align: center;
+    }
+
+    .check-panel h3 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .check-panel input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      width: 120px;
+      text-align: center;
+      font-size: 1rem;
+      margin: 0 5px;
+    }
+
+    .check-btn {
+      margin-top: 15px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #7877c6, #6564b5);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .check-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(120, 119, 198, 0.4);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .correct { color: #8fffa0; }
+    .incorrect { color: #ff8f8f; }
+
+    .legend {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .dice-grid { font-size: 0.8rem; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../../index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto 4</h1>
+      <p class="exercise-subtitle">Par de dados (verde y rojo)</p>
+    </div>
+
+    <div class="context-box">
+      <h3>🎲 Contexto</h3>
+      <p>Se lanzan <strong>dos dados</strong>: uno <strong style="color: #8fffa0">verde</strong> y uno <strong style="color: #ff8f8f">rojo</strong>. Se registran los números que salen.</p>
+      <p>Sea <strong>x</strong> = resultado del dado verde, <strong>y</strong> = resultado del dado rojo.</p>
+
+      <h3>📘 Tareas</h3>
+      <ul>
+        <li>1️⃣ <strong>Espacio muestral S:</strong>
+          <ul>
+            <li>a) Por extensión (listar todos los pares).</li>
+            <li>b) Por comprensión (descripción matemática).</li>
+          </ul>
+        </li>
+        <li>2️⃣ <strong>Eventos:</strong>
+          <ul>
+            <li>A: la suma de los números es mayor que 8.</li>
+            <li>B: sale un 2 en cualquiera de los dados.</li>
+            <li>C: sale un número mayor a 4 en el verde.</li>
+          </ul>
+        </li>
+        <li>3️⃣ <strong>Probabilidades:</strong> calcular P(A), P(B) y P(C).</li>
+      </ul>
+
+      <div class="hint-box">
+        💡 <strong>Tip:</strong> Hay 36 resultados posibles (6×6). Usá la tabla para visualizar mejor los eventos.
+      </div>
+    </div>
+
+    <!-- Paso 1a -->
+    <div class="step">
+      <div class="step-header">1️⃣a Espacio muestral S por extensión</div>
+      <div class="step-content">
+        <p>Cada dado tiene 6 caras (1, 2, 3, 4, 5, 6). El espacio muestral tiene <strong>6 × 6 = 36</strong> resultados posibles.</p>
+        <p>Formato: <span class="math">(x, y)</span> donde x = dado verde, y = dado rojo.</p>
+        
+        <div class="dice-grid" id="sampleSpace">
+          <div class="dice-cell header"></div>
+          <div class="dice-cell header">1</div>
+          <div class="dice-cell header">2</div>
+          <div class="dice-cell header">3</div>
+          <div class="dice-cell header">4</div>
+          <div class="dice-cell header">5</div>
+          <div class="dice-cell header">6</div>
+        </div>
+        
+        <p style="text-align: center; margin-top: 15px; font-size: 0.9rem; color: rgba(255, 255, 255, 0.6);">
+          <strong>Verde</strong> (filas) × <strong>Rojo</strong> (columnas)
+        </p>
+      </div>
+    </div>
+
+    <!-- Paso 1b -->
+    <div class="step">
+      <div class="step-header">1️⃣b Espacio muestral S por comprensión</div>
+      <div class="step-content">
+        <p><span class="math">S = {(x, y) : x ∈ {1,2,3,4,5,6}, y ∈ {1,2,3,4,5,6}}</span></p>
+        <p>O también: <span class="math">S = {(x, y) : 1 ≤ x ≤ 6, 1 ≤ y ≤ 6, x,y ∈ ℕ}</span></p>
+        <p>Total de elementos: <strong>|S| = 36</strong></p>
+      </div>
+    </div>
+
+    <!-- Paso 2a -->
+    <div class="step">
+      <div class="step-header">2️⃣a Listado de eventos</div>
+      <div class="step-content">
+        <h4 style="color: #ff8f8f; margin-top: 20px;">🔴 Evento A: suma > 8</h4>
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background: rgba(255, 100, 100, 0.3);"></div>
+            <span>Suma mayor a 8</span>
+          </div>
+        </div>
+        <div class="dice-grid" id="eventA"></div>
+        <div class="event-list">
+          <strong>A = </strong><span id="eventAList"></span>
+          <p style="margin-top: 10px;"><strong>|A| = 10 elementos</strong></p>
+        </div>
+
+        <h4 style="color: #8fa0ff; margin-top: 30px;">🔵 Evento B: sale un 2</h4>
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background: rgba(100, 200, 255, 0.3);"></div>
+            <span>Tiene un 2</span>
+          </div>
+        </div>
+        <div class="dice-grid" id="eventB"></div>
+        <div class="event-list">
+          <strong>B = </strong><span id="eventBList"></span>
+          <p style="margin-top: 10px;"><strong>|B| = 11 elementos</strong></p>
+        </div>
+
+        <h4 style="color: #8fffa0; margin-top: 30px;">🟢 Evento C: verde > 4</h4>
+        <div class="legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background: rgba(100, 255, 150, 0.3);"></div>
+            <span>Verde es 5 o 6</span>
+          </div>
+        </div>
+        <div class="dice-grid" id="eventC"></div>
+        <div class="event-list">
+          <strong>C = </strong><span id="eventCList"></span>
+          <p style="margin-top: 10px;"><strong>|C| = 12 elementos</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2b -->
+    <div class="step">
+      <div class="step-header">2️⃣b Cálculo de probabilidades</div>
+      <div class="step-content">
+        <p><strong>P(A)</strong> = casos favorables / casos totales = 10/36 = <strong>5/18 ≈ 0.278 = 27.8%</strong></p>
+        <p><strong>P(B)</strong> = 11/36 ≈ <strong>0.306 = 30.6%</strong></p>
+        <p><strong>P(C)</strong> = 12/36 = <strong>1/3 ≈ 0.333 = 33.3%</strong></p>
+
+        <div class="check-panel">
+          <h3>Verificá las probabilidades 🧮</h3>
+          <p>P(A) = <input type="number" id="pA" step="0.001" placeholder="0.278"></p>
+          <p>P(B) = <input type="number" id="pB" step="0.001" placeholder="0.306"></p>
+          <p>P(C) = <input type="number" id="pC" step="0.001" placeholder="0.333"></p>
+          <button class="check-btn" onclick="checkProbabilities()">Verificar</button>
+          <div id="checkResult" class="result"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Generar espacio muestral
+    function generateSampleSpace(containerId, highlightFn = null) {
+      const container = document.getElementById(containerId);
+      
+      // Headers de filas
+      for (let x = 1; x <= 6; x++) {
+        const header = document.createElement('div');
+        header.className = 'dice-cell header';
+        header.textContent = x;
+        container.appendChild(header);
+        
+        // Columnas
+        for (let y = 1; y <= 6; y++) {
+          const cell = document.createElement('div');
+          cell.className = 'dice-cell outcome';
+          cell.textContent = `(${x},${y})`;
+          
+          if (highlightFn) {
+            highlightFn(cell, x, y);
+          }
+          
+          container.appendChild(cell);
+        }
+      }
+    }
+
+    // Evento A: suma > 8
+    generateSampleSpace('eventA', (cell, x, y) => {
+      if (x + y > 8) cell.classList.add('highlight-a');
+    });
+
+    // Evento B: sale un 2
+    generateSampleSpace('eventB', (cell, x, y) => {
+      if (x === 2 || y === 2) cell.classList.add('highlight-b');
+    });
+
+    // Evento C: verde > 4
+    generateSampleSpace('eventC', (cell, x, y) => {
+      if (x > 4) cell.classList.add('highlight-c');
+    });
+
+    // Espacio muestral básico
+    generateSampleSpace('sampleSpace');
+
+    // Listar elementos de eventos
+    const eventA = [];
+    const eventB = [];
+    const eventC = [];
+
+    for (let x = 1; x <= 6; x++) {
+      for (let y = 1; y <= 6; y++) {
+        if (x + y > 8) eventA.push(`(${x},${y})`);
+        if (x === 2 || y === 2) eventB.push(`(${x},${y})`);
+        if (x > 4) eventC.push(`(${x},${y})`);
+      }
+    }
+
+    document.getElementById('eventAList').textContent = `{${eventA.join(', ')}}`;
+    document.getElementById('eventBList').textContent = `{${eventB.join(', ')}}`;
+    document.getElementById('eventCList').textContent = `{${eventC.join(', ')}}`;
+
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Verificación de probabilidades
+    function checkProbabilities() {
+      const pA = parseFloat(document.getElementById('pA').value);
+      const pB = parseFloat(document.getElementById('pB').value);
+      const pC = parseFloat(document.getElementById('pC').value);
+      const resultDiv = document.getElementById('checkResult');
+
+      const correctA = Math.abs(pA - 10/36) < 0.01;
+      const correctB = Math.abs(pB - 11/36) < 0.01;
+      const correctC = Math.abs(pC - 12/36) < 0.01;
+
+      if (correctA && correctB && correctC) {
+        resultDiv.innerHTML = `✅ <span class="correct">¡Todas correctas!</span>`;
+      } else {
+        let msg = '❌ <span class="incorrect">Revisá:</span> ';
+        if (!correctA) msg += 'P(A) ';
+        if (!correctB) msg += 'P(B) ';
+        if (!correctC) msg += 'P(C) ';
+        resultDiv.innerHTML = msg;
+      }
+    }
+
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html';
+      }
+    });
+  </script>
+</body>
+</html>

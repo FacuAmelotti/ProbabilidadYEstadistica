@@ -990,3 +990,250 @@ h1, h2, h3, h4 {
 .ej-table tbody tr:hover {
   background: rgba(150,220,255,0.06);
 }
+
+/* ======== Estilo Blanco Tipo Example ======== */
+.example-content {
+  background: linear-gradient(135deg, rgba(216, 215, 215, 0.9), rgba(240, 240, 240, 0.85));
+  border: 1px solid rgba(220, 220, 220, 0.6);
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(200, 200, 200, 0.25);
+  padding: 40px;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+  margin: 30px 0;
+  color: #222;
+}
+
+.example-content::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.6), transparent 70%);
+  animation: whitePulse 7s infinite linear;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes whitePulse {
+  0% { transform: rotate(0deg); opacity: 0.4; }
+  50% { opacity: 0.8; }
+  100% { transform: rotate(360deg); opacity: 0.4; }
+}
+
+.example-content:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.4);
+}
+
+.example-content h3 {
+  color: #1a1a1a;
+  font-weight: 600;
+  margin-bottom: 15px;
+  position: relative;
+  z-index: 1;
+}
+
+.example-content ol li,
+.example-content p strong {
+    color: #676565;
+}
+.example-content p, 
+.example-content li,
+.example-content ol strong {
+  position: relative;
+  z-index: 1;
+  color: #333;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.example-content ul {
+  margin-left: 25px;
+  margin-bottom: 15px;
+}
+
+.example-content .formula-box {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(200, 200, 200, 0.4);
+  border-radius: 12px;
+  text-align: center;
+  padding: 12px 16px;
+  font-family: "Courier New", monospace;
+  color: #222;
+  margin: 20px 0;
+}
+
+.example-table-wrapper {
+  overflow-x: auto;
+  margin-top: 25px;
+}
+
+.example-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.example-table th, .example-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  color: #222;
+}
+
+.example-table th {
+  background: rgba(255,255,255,0.9);
+  color: #111;
+  font-weight: 600;
+}
+
+.example-table tbody tr:hover {
+  background: rgba(0,0,0,0.03);
+}
+
+
+
+      /* ===========================
+   🔹 BURGER BUTTON
+   =========================== */
+.burger {
+  width: 28px;
+  height: 22px;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 4000; /* 🔹 Por encima del side-menu */
+  position: relative;
+}
+
+.burger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  transition: all 0.4s ease;
+}
+
+/* animación al abrir */
+.burger.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+.burger.active span:nth-child(2) {
+  opacity: 0;
+}
+.burger.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* ===========================
+   🔹 SIDE MENU (NAV DERECHO)
+   =========================== */
+.side-menu {
+  position: absolute; /* ✅ se mueve con el scroll */
+  top: 0;
+  right: -100%;
+  width: 280px;
+  height: 100vh;
+  background: rgba(15, 15, 20, 0.95);
+  backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+  transition: right 0.5s ease;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Cuando se abre */
+.side-menu.open {
+  right: 0;
+}
+
+/* Contenido */
+.side-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.side-menu li {
+  margin: 5px 0;
+}
+
+.side-menu a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.86rem;
+  transition: color 0.3s;
+}
+
+.side-menu a:hover {
+  color: white;
+}
+
+/* ===========================
+   🔹 RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+  }
+  .burger {
+    display: flex;
+  }
+}
+
+@media (max-width: 900px) {
+  /* 🔹 Oculta todo el menú y subnav */
+  .nav-menu {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  .nav-subbar {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  /* 🔹 Solo muestra el botón burger */
+  .burger {
+    display: flex !important;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  /* 🔹 Ajusta el contenedor principal del nav */
+  .nav-container {
+    padding: 18px 24px;
+    justify-content: space-between;
+  }
+
+  /* 🔹 Asegura que el logo se mantenga visible */
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo img {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+
+.menu-toggle { 
+  display: flex;
+}
+

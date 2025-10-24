@@ -415,6 +415,142 @@
 </style>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
 
+    <style>
+      /* ===========================
+   🔹 BURGER BUTTON
+   =========================== */
+.burger {
+  width: 28px;
+  height: 22px;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  z-index: 4000; /* 🔹 Por encima del side-menu */
+  position: relative;
+}
+
+.burger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: white;
+  border-radius: 10px;
+  transition: all 0.4s ease;
+}
+
+/* animación al abrir */
+.burger.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+.burger.active span:nth-child(2) {
+  opacity: 0;
+}
+.burger.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
+/* ===========================
+   🔹 SIDE MENU (NAV DERECHO)
+   =========================== */
+.side-menu {
+  position: absolute; /* ✅ se mueve con el scroll */
+  top: 0;
+  right: -100%;
+  width: 280px;
+  height: 100vh;
+  background: rgba(15, 15, 20, 0.95);
+  backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: -4px 0 20px rgba(0, 0, 0, 0.3);
+  transition: right 0.5s ease;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Cuando se abre */
+.side-menu.open {
+  right: 0;
+}
+
+/* Contenido */
+.side-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+}
+
+.side-menu li {
+  margin: 5px 0;
+}
+
+.side-menu a {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.86rem;
+  transition: color 0.3s;
+}
+
+.side-menu a:hover {
+  color: white;
+}
+
+/* ===========================
+   🔹 RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+  }
+  .burger {
+    display: flex;
+  }
+}
+
+@media (max-width: 900px) {
+  /* 🔹 Oculta todo el menú y subnav */
+  .nav-menu {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  .nav-subbar {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
+
+  /* 🔹 Solo muestra el botón burger */
+  .burger {
+    display: flex !important;
+    visibility: visible;
+    opacity: 1;
+  }
+
+  /* 🔹 Ajusta el contenedor principal del nav */
+  .nav-container {
+    padding: 18px 24px;
+    justify-content: space-between;
+  }
+
+  /* 🔹 Asegura que el logo se mantenga visible */
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo img {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+    </style>
 </head>
 <body>
     <!-- Animated Background -->
@@ -428,22 +564,26 @@
     </div>
 
     <!-- Navigation -->
+<!-- Navigation -->
 <nav class="navbar">
-
   <div class="nav-container">
-<a href="../index.html" class="logo">
-        <img src="../src/img/logo.png" alt="PyE Logo">PyE
-      </a>
+    <a href="../index.html" class="logo">
+      <img src="../src/img/logo.png" alt="PyE Logo">PyE
+    </a>
+
     <ul class="nav-menu">
       <li><a href="./../pages/ejercicios.html" class="nav-link">Ejercicios resueltos</a></li>
       <li><a href="./../pages/herramientas.html" class="nav-link">Herramientas</a></li>
-       <li><a href="./../pages/randomPreg.html" class="nav-link">Quiz</a></li>
-      <!--
-      <li><a href="./../pages/pregs.html" class="nav-link">Evaluador</a></li>
-            <li><a href="./../pages/pizarra.html" class="nav-link">Pizarra</a></li>
-            -->
-                        <li><a href="./../pages/games/batallaProbabilistica.html" class="nav-link">Batalla de Probabilidad</a></li>
+      <li><a href="./../pages/randomPreg.html" class="nav-link">Quiz</a></li>
+      <li><a href="./../pages/games/batallaProbabilistica.html" class="nav-link">Batalla de Probabilidad</a></li>
     </ul>
+
+    <!-- 🔹 Botón hamburguesa -->
+    <div class="burger" id="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
 
   <!-- 🔹 Mini-nav integrada -->
@@ -458,8 +598,29 @@
       <a href="#unidad7">7) Regresión Lineal Simple</a>
     </div>
   </div>
-
 </nav>
+
+<!-- 🔹 Panel lateral (para responsive) -->
+<div class="side-menu" id="side-menu">
+  <ul>
+    Menu
+      <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
+    <li><a href="./../pages/ejercicios.html">Ejercicios resueltos</a></li>
+    <li><a href="./../pages/herramientas.html">Herramientas</a></li>
+    <li><a href="./../pages/randomPreg.html">Quiz</a></li>
+    <li><a href="./../pages/games/batallaProbabilistica.html">Batalla de Probabilidad</a></li>
+    <hr style="border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 15px 0;">
+    <li><strong style="color:rgba(255,255,255,0.6);font-size:0.8rem;">Unidades</strong></li>
+    <li><a href="#unidad1">Unidad 1</a></li>
+    <li><a href="#unidad2">Unidad 2</a></li>
+    <li><a href="#unidad3">Unidad 3</a></li>
+    <li><a href="#unidad4">Unidad 4</a></li>
+    <li><a href="#unidad5">Unidad 5</a></li>
+    <li><a href="#unidad6">Unidad 6</a></li>
+    <li><a href="#unidad7">Unidad 7</a></li>
+  </ul>
+</div>
+
 
 
     <!-- Main Content -->
@@ -794,6 +955,44 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 });
+</script>
+
+<script>
+  const burger = document.getElementById('burger');
+  const sideMenu = document.getElementById('side-menu');
+
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('active');
+    sideMenu.classList.toggle('open');
+
+    // Posicionarlo según el scroll actual
+    if (sideMenu.classList.contains('open')) {
+      sideMenu.style.top = `${window.scrollY}px`;
+    }
+  });
+
+  // Cerrar menú al hacer clic en un enlace
+  sideMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger.classList.remove('active');
+      sideMenu.classList.remove('open');
+    });
+  });
+
+  // Mantener panel visible al scrollear
+  window.addEventListener('scroll', () => {
+    if (sideMenu.classList.contains('open')) {
+      sideMenu.style.top = `${window.scrollY}px`;
+    }
+  });
+
+  // Ocultar el panel al agrandar la pantalla
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 900) {
+      burger.classList.remove('active');
+      sideMenu.classList.remove('open');
+    }
+  });
 </script>
 
 

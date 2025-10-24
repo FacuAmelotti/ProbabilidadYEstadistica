@@ -362,9 +362,17 @@
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="../css/capResponsive.css">
 </head>
 <body>
+   <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- Overlay oscuro -->
+    <div class="menu-overlay" id="menuOverlay"></div>
   <div class="animated-bg"></div>
   <nav class="navbar">
     <div class="nav-container">
@@ -1130,6 +1138,42 @@ window.MathJax = {
 };
 </script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<script>
+// 🔹 Funcionalidad del menú lateral móvil
+document.addEventListener('DOMContentLoaded', () => {
+  const menuToggle = document.getElementById('menuToggle');
+  const menuOverlay = document.getElementById('menuOverlay');
+  const sidebar = document.querySelector('.sidebar');
 
+  if (menuToggle && sidebar) {
+    // Abrir/cerrar menú
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      sidebar.classList.toggle('active');
+      menuOverlay.classList.toggle('active');
+      document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Cerrar al hacer click en overlay
+    menuOverlay.addEventListener('click', () => {
+      menuToggle.classList.remove('active');
+      sidebar.classList.remove('active');
+      menuOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+
+    // Cerrar al hacer click en un enlace del sidebar
+    const sidebarLinks = sidebar.querySelectorAll('.nav-item a');
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        sidebar.classList.remove('active');
+        menuOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+});
+</script>
 </body>
 </html>

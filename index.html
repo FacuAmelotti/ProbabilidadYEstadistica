@@ -353,17 +353,35 @@ h1, h2, h3, h4, h5, h6 {
   </div>
 
   <!-- Navigation -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <a href="index.html" class="logo">
-        <img src="./src/img/logo.png" alt="PyE Logo">PyE
-      </a>
-      <ul class="nav-menu">
-        <li><a href="./pages/temario.html" class="nav-link">Temario</a></li>
-        <li><a href="#about" class="nav-link">Acerca</a></li>
-      </ul>
+<!-- Navigation -->
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">
+      <img src="./src/img/logo.png" alt="PyE Logo">PyE
+    </a>
+
+    <ul class="nav-menu">
+      <li><a href="./pages/temario.html" class="nav-link">Temario</a></li>
+      <li><a href="#about" class="nav-link">Acerca</a></li>
+    </ul>
+
+    <!-- 🔹 Botón hamburguesa -->
+    <div class="burger" id="burger">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
-  </nav>
+  </div>
+</nav>
+
+<!-- 🔹 Menú lateral responsive -->
+<div class="side-menu" id="side-menu">
+  <ul>
+    <li><a href="./pages/temario.html">Temario</a></li>
+    <li><a href="#about">Acerca</a></li>
+  </ul>
+</div>
+
 
   <!-- Hero Section -->
   <div class="hero-container">
@@ -497,6 +515,46 @@ h1, h2, h3, h4, h5, h6 {
     }, { threshold: 0.2 });
     document.querySelectorAll('.section').forEach(sec => observer.observe(sec));
   </script>
+
+<script>
+  const burger = document.getElementById('burger');
+  const sideMenu = document.getElementById('side-menu');
+
+  // 🔹 Abrir / cerrar menú
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('active');
+    sideMenu.classList.toggle('open');
+
+    // Cuando se abre, se alinea a la posición actual del scroll
+    if (sideMenu.classList.contains('open')) {
+      sideMenu.style.top = `${window.scrollY}px`;
+    }
+  });
+
+  // 🔹 Cerrar el menú al hacer clic en un enlace
+  sideMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      burger.classList.remove('active');
+      sideMenu.classList.remove('open');
+    });
+  });
+
+  // 🔹 Mantener el panel visible al scrollear
+  window.addEventListener('scroll', () => {
+    if (sideMenu.classList.contains('open')) {
+      sideMenu.style.top = `${window.scrollY}px`;
+    }
+  });
+
+  // 🔹 Si la pantalla se agranda (por ejemplo, pasa a modo desktop), se cierra el menú automáticamente
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      burger.classList.remove('active');
+      sideMenu.classList.remove('open');
+    }
+  });
+</script>
+
 </body>
 
 </html>

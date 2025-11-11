@@ -82,6 +82,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .feature-card::before {
@@ -102,6 +103,7 @@
         .feature-card:hover {
             transform: translateY(-10px);
             border-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(52, 24, 54, 0.288);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
@@ -250,6 +252,90 @@
                 gap: 30px;
             }
         }
+
+        /* ===== Batalla de Probabilidad Promo ===== */
+.promo-section {
+  padding: 100px 40px;
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  justify-content: center;
+}
+
+.promo-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 1200px;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.promo-text {
+  flex: 1;
+  min-width: 280px;
+}
+
+.promo-text h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #ffffff, #a0a0a0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.promo-text p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 1rem;
+  margin-bottom: 30px;
+  max-width: 500px;
+  line-height: 1.7;
+}
+
+.promo-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  min-width: 240px;
+}
+
+.promo-image img {
+  width: 280px;
+  height: 280px;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .promo-card {
+    flex-direction: column;
+    padding: 30px;
+  }
+
+  .promo-image img {
+    width: 240px;
+    height: 240px;
+  }
+}
+
+/* Fade entre imágenes */
+#batallaImage {
+  transition: opacity 1s ease-in-out;
+  opacity: 1;
+}
+#batallaImage.fade-out {
+  opacity: 0;
+}
+
+
     </style>
 
     <style>
@@ -361,8 +447,7 @@ h1, h2, h3, h4, h5, h6 {
     </a>
 
     <ul class="nav-menu">
-      <li><a href="./pages/temario.html" class="nav-link">Temario</a></li>
-      <li><a href="#about" class="nav-link">Acerca</a></li>
+      <li><a href="./pages/temario.html" class="nav-link">Ir al Temario</a></li>
     </ul>
 
     <!-- 🔹 Botón hamburguesa -->
@@ -387,13 +472,16 @@ h1, h2, h3, h4, h5, h6 {
   <div class="hero-container">
     <div class="hero-content">
       <h1 class="hero-title">Probabilidad y Estadística</h1>
-      <p class="hero-subtitle">Comprendé el azar, dominá los datos y aprendé a pensar con lógica.</p>
+      <p class="hero-subtitle">  Comprendé el azar, dominá los datos y aprendé a pensar con lógica...</p>
       <p class="hero-description">
-        Este espacio fue creado para acompañarte paso a paso en el fascinante mundo de la probabilidad y la estadística.  
-        Desde las bases del pensamiento aleatorio hasta la interpretación de resultados en situaciones reales, aprenderás a analizar, razonar y tomar decisiones basadas en evidencia.
-      </p>
+       Este espacio lo pensé para acompañarte paso a paso en el mundo de la probabilidad y la estadística.  
+  No solo para que entiendas los conceptos, sino para que veas cómo todo lo que pasa a nuestro alrededor  
+  tiene un componente de azar, patrones y datos que se pueden interpretar.  
+  Desde las ideas más básicas del pensamiento aleatorio hasta cómo leer y analizar resultados reales,  
+  la idea es que aprendas a razonar, a cuestionar y a tomar decisiones con fundamento.
+ </p>
       <div class="cta-buttons">
-        <a href="./pages/temario.html" class="btn btn-primary">Comenzar el recorrido</a>
+        <a href="./pages/temario.html" class="btn btn-primary">¡Comenzar a aprender!</a>
       </div>
     </div>
   </div>
@@ -402,22 +490,31 @@ h1, h2, h3, h4, h5, h6 {
   <section class="section" id="intro">
     <div class="content text-center">
       <h2 class="section-title">¿Por qué estudiar Probabilidad y Estadística?</h2>
-      <p style="max-width: 900px; margin: 0 auto; color: rgba(255,255,255,0.7); line-height:1.8;">
-        La probabilidad y la estadística son herramientas esenciales para comprender el mundo que nos rodea.  
-        Nos permiten estimar, predecir, analizar y tomar decisiones informadas en presencia de incertidumbre.  
-        Desde la inteligencia artificial hasta la medicina, desde los negocios hasta la ingeniería, el pensamiento estadístico está en el centro de la innovación moderna.
-      </p>
-      <br>
-      <p style="max-width: 850px; margin: 0 auto; color: rgba(255,255,255,0.6); line-height:1.8;">
-        Aprender estas disciplinas no es solo aprender fórmulas: es desarrollar una forma de razonar, cuestionar y validar información.  
-        En esta plataforma encontrarás explicaciones accesibles, ejercicios interactivos y herramientas que te ayudarán a construir tu propio entendimiento paso a paso.
-      </p>
+<p style="max-width: 900px; margin: 0 auto; color: rgba(255,255,255,0.7); line-height:1.8;">
+  Porque entender probabilidad y estadística es, básicamente, entender cómo funciona el mundo real.  
+  Todo lo que hacemos —desde tomar decisiones, analizar datos o predecir resultados— está lleno de incertidumbre,  
+  y estas herramientas nos ayudan a darle sentido a todo eso.
+</p>
+<br>
+<p style="max-width: 850px; margin: 0 auto; color: rgba(255,255,255,0.6); line-height:1.8;">
+  No se trata solo de fórmulas o cálculos. Se trata de aprender a pensar de manera lógica, a cuestionar lo que vemos,  
+  a no tragarnos cualquier dato sin entender de dónde viene. Es una forma de entrenar la mente para razonar mejor,  
+  para analizar con criterio y tomar decisiones más inteligentes.
+</p>
+<br>
+<p style="max-width: 850px; margin: 0 auto; color: rgba(255,255,255,0.6); line-height:1.8;">
+  Y lo mejor es que sirve para todo: desde la inteligencia artificial hasta la medicina, los negocios o la ingeniería.  
+  En cualquier lugar donde haya información, la probabilidad y la estadística son la base para innovar, mejorar  
+  y entender lo que realmente está pasando.
+</p>
+
     </div>
   </section>
 
     <!-- Features Section -->
     <section id="features" class="features-section">
         <h2 class="section-title">¿Qué encontrarás aqui?</h2>
+        
         <div class="features-grid">
             <div class="feature-card" id="feature-teoria">
                 <div class="feature-icon">∫</div>
@@ -445,28 +542,37 @@ h1, h2, h3, h4, h5, h6 {
         </div>
     </section>
 
-
-  <!-- Stats Section -->
-  <section id="about" class="stats-section">
-    <h2 class="section-title">Aprendizaje Estructurado</h2>
-    <div class="stats-grid">
-      <div class="stat-item">
-        <div class="stat-number">+7</div>
-        <div class="stat-label">Capítulos</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number">+15</div>
-        <div class="stat-label">Ejercicios Resueltos</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number">100%</div>
-        <div class="stat-label">Interactivo</div>
-      </div>
+<section id="batalla" class="promo-section">
+  <div class="promo-card">
+    <div class="promo-text">
+      <h2>🎲 Juega a la Batalla de Probabilidad</h2>
+      <p>Entrená y refuerza tus conocimientos en esta batalla de preguntas y respuestas.</p>
+      <a href="./pages/games/batallaProbabilistica.html" class="btn btn-primary">¡Jugar ahora!</a>
     </div>
-  </section>
+<div class="promo-image">
+  <img id="batallaImage" src="./src/img/visuales/pj_2.jpg" alt="Personajes Batalla de Probabilidad">
+</div>
+
+  </div>
+</section>
+
+
+<section id="batalla" class="promo-section" style="margin-top: 52px;">
+  <div class="promo-card">
+    <div class="promo-text">
+      <h2>🎲 ¿Una preguntita?</h2>
+      <p>Responde preguntas aleatorias y pone a prueba tus conocimientos.. tomate todo el tiempo que quieras para responder.</p>
+      <a href="./pages/randomPreg.html" class="btn btn-primary">¡Jugar ahora!</a>
+    </div>
+<div class="promo-image">
+  <img src="./src/img/logo.png" alt="Personajes Batalla de Probabilidad">
+</div>
+
+  </div>
+</section>
 
   <!-- Footer -->
-  <footer class="site-footer">
+  <footer id="footer" class="site-footer">
     <div class="footer-container">
       <div class="footer-author">
         <img src="./src/img/Facu2.png" alt="Facundo Amelotti" class="footer-photo">
@@ -477,8 +583,8 @@ h1, h2, h3, h4, h5, h6 {
       <div class="footer-university">
         <img src="./src/img/ucalp.jpg" alt="Universidad Católica de La Plata" class="footer-photo">
         <a style="text-decoration: none; color: rgb(138, 138, 138);" href="https://www.ucalp.edu.ar/">
-          Para la asignatura <strong>Probabilidad y Estadística</strong><br>
-          <span>Universidad Católica de La Plata</span>
+          Para la asignatura <strong>Probabilidad y Estadística</strong><br> de la 
+          <span><strong>Universidad Católica de La Plata</strong></span>
         </a>
       </div>
       <div class="footer-year">
@@ -553,6 +659,33 @@ h1, h2, h3, h4, h5, h6 {
       sideMenu.classList.remove('open');
     }
   });
+</script>
+
+<script>
+  const batallaImage = document.getElementById("batallaImage");
+  const imagePaths = [
+    "./src/img/visuales/pj_2.jpg",
+    "./src/img/visuales/pj_3.jpg",
+    "./src/img/visuales/pj_4.jpg",
+    "./src/img/visuales/pj_5.jpg",
+        "./src/img/visuales/pj_6.jpg",
+            "./src/img/visuales/pj_7.jpg",
+  ];
+  let currentIndex = 0;
+
+  setInterval(() => {
+    // Efecto fade-out
+    batallaImage.classList.add("fade-out");
+
+    setTimeout(() => {
+      // Cambiar imagen después del fade-out
+      currentIndex = (currentIndex + 1) % imagePaths.length;
+      batallaImage.src = imagePaths[currentIndex];
+
+      // Efecto fade-in
+      batallaImage.classList.remove("fade-out");
+    }, 1000); // debe coincidir con el tiempo del fade-out
+  }, 5000); // Cambia cada 5 segundos
 </script>
 
 </body>

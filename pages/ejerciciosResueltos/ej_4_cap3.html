@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Resortes Helicoidales</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <style>
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: white;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .formula-reference {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .formula-card {
+      background: rgba(255, 150, 100, 0.1);
+      border: 1px solid rgba(255, 150, 100, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .formula-card:hover {
+      background: rgba(255, 150, 100, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .formula-card h4 {
+      color: #ffa066;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .formula-card .formula {
+      font-family: monospace;
+      color: #fff;
+      font-size: 1.1rem;
+      margin: 8px 0;
+    }
+
+    .formula-card .description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(255, 150, 100, 0.7);
+      background: rgba(255, 150, 100, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p, .step-content ul {
+      margin-bottom: 10px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #ffa066;
+    }
+
+    .math-display {
+      text-align: center;
+      font-size: 1.1rem;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .formula {
+      font-family: 'Times New Roman', serif;
+      font-size: 1.2rem;
+      color: #ffa066;
+    }
+
+    .answer-box {
+      background: linear-gradient(135deg, rgba(255, 150, 100, 0.2), rgba(255, 150, 100, 0.1));
+      border: 2px solid rgba(255, 150, 100, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .answer-box h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .answer {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #8fffa0;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .chart-container h4 {
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    #binomialChart {
+      display: block;
+      width: 100% !important;
+      max-width: 700px;
+      height: 320px !important;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+    }
+
+    .analysis-box {
+      background: rgba(255, 150, 100, 0.15);
+      border: 2px solid rgba(255, 150, 100, 0.4);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px 0;
+    }
+
+    .analysis-box h4 {
+      color: #ffa066;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .analysis-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+    }
+
+    .analysis-item h5 {
+      color: #ffa066;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .probability-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 0.9rem;
+    }
+
+    .probability-table th,
+    .probability-table td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .probability-table th {
+      background: rgba(255, 150, 100, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .probability-table td {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .highlight-row {
+      background: rgba(255, 150, 100, 0.2);
+      font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .math-display { font-size: 1rem; }
+      .formula-reference { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto</h1>
+      <p class="exercise-subtitle">Distribución Binomial - Control de Calidad de Resortes Helicoidales</p>
+    </div>
+
+    <!-- Contexto y enunciado -->
+    <div class="context-box">
+      <h3>🔧 Contexto del Problema</h3>
+      <p>En un proceso de producción se examinan <strong>lotes de 50 resortes helicoidales</strong> para determinar si cumplen con los requerimientos del cliente. El <strong>número promedio de resortes helicoidales que no cumplen</strong> con los requerimientos es de <strong>5 por lote</strong>.</p>
+      
+      <p>Suponga que el número de resortes que no cumplen con los requerimientos en un lote, denotado por <strong>X</strong>, es una variable aleatoria binomial.</p>
+
+      <h3>📘 Tareas</h3>
+      <ul>
+        <li><strong>a)</strong> ¿Qué valor tienen <strong>n</strong> y <strong>p</strong>?</li>
+        <li><strong>b)</strong> Calcular <strong>P(X ≤ 3)</strong> y <strong>P(X ≥ 8)</strong></li>
+      </ul>
+
+      <div class="hint-box">
+        💡 <strong>Recordatorio:</strong> En una distribución binomial X ~ B(n, p), donde n es el número de ensayos y p es la probabilidad de éxito (en este caso, "defecto"). La media es μ = n·p
+      </div>
+    </div>
+
+    <!-- Referencia de fórmulas -->
+    <div class="context-box">
+      <h3>📊 Fórmulas de referencia - Distribución Binomial</h3>
+      <div class="formula-reference">
+        <div class="formula-card">
+          <h4>📈 Función de probabilidad</h4>
+          <div class="formula">P(X = k) = C(n,k) · p^k · (1-p)^(n-k)</div>
+          <div class="description">Probabilidad de exactamente k éxitos en n ensayos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📏 Media (Esperanza)</h4>
+          <div class="formula">E(X) = μ = n · p</div>
+          <div class="description">Valor esperado de la distribución binomial</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📐 Varianza</h4>
+          <div class="formula">Var(X) = σ² = n · p · (1-p)</div>
+          <div class="description">Medida de dispersión de la distribución</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📊 Probabilidad acumulada</h4>
+          <div class="formula">P(X ≤ k) = Σ P(X = i) para i = 0 hasta k</div>
+          <div class="description">Suma de probabilidades hasta k</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 1: Identificar parámetros -->
+    <div class="step">
+      <div class="step-header">1️⃣ Parte a) Identificar los parámetros n y p</div>
+      <div class="step-content">
+        <p><strong>Datos del problema:</strong></p>
+        <ul>
+          <li>Tamaño del lote: 50 resortes</li>
+          <li>Promedio de resortes defectuosos: 5 por lote</li>
+          <li>X ~ Binomial(n, p)</li>
+        </ul>
+
+        <p><strong>Paso 1: Identificar n (número de ensayos)</strong></p>
+        <p>El valor de <span class="math">n</span> corresponde al número de resortes examinados en cada lote:</p>
+        
+        <div class="math-display">
+          <div class="formula">n = 50 resortes</div>
+        </div>
+
+        <p><strong>Paso 2: Calcular p (probabilidad de defecto)</strong></p>
+        <p>Sabemos que la media de una distribución binomial es <span class="math">μ = n · p</span></p>
+        <p>Como el promedio de defectos es 5:</p>
+        
+        <div class="math-display">
+          <div class="formula">μ = 5 = n · p</div>
+          <div class="formula">5 = 50 · p</div>
+          <div class="formula">p = 5/50 = 0.1</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta Parte a)</h4>
+          <div class="answer">n = 50 (número de resortes por lote)</div>
+          <div class="answer">p = 0.1 (probabilidad de defecto = 10%)</div>
+        </div>
+
+        <div class="analysis-box">
+          <h4>📋 Interpretación</h4>
+          <div class="analysis-item">
+            <h5>¿Qué significa esto?</h5>
+            <p>Cada lote tiene 50 resortes (n = 50), y cada resorte tiene una probabilidad del 10% (p = 0.1) de no cumplir con los requerimientos. En promedio, esperamos 5 resortes defectuosos por lote.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2: Calcular P(X ≤ 3) -->
+    <div class="step">
+      <div class="step-header">2️⃣ Parte b.1) Calcular P(X ≤ 3)</div>
+      <div class="step-content">
+        <p><strong>Objetivo:</strong> Calcular la probabilidad de que <strong>3 o menos resortes</strong> sean defectuosos</p>
+
+        <p><strong>Paso 1: Entender qué calcular</strong></p>
+        <div class="math-display">
+          <div class="formula">P(X ≤ 3) = P(X = 0) + P(X = 1) + P(X = 2) + P(X = 3)</div>
+        </div>
+
+        <p><strong>Paso 2: Aplicar la fórmula binomial para cada valor</strong></p>
+        <p>Usando: <span class="math">P(X = k) = C(50,k) · (0.1)^k · (0.9)^(50-k)</span></p>
+
+        <table class="probability-table">
+          <thead>
+            <tr>
+              <th>k</th>
+              <th>C(50,k)</th>
+              <th>(0.1)^k</th>
+              <th>(0.9)^(50-k)</th>
+              <th>P(X = k)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>1</td>
+              <td>1</td>
+              <td>0.00515</td>
+              <td>0.00515</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>50</td>
+              <td>0.1</td>
+              <td>0.00572</td>
+              <td>0.02861</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>1,225</td>
+              <td>0.01</td>
+              <td>0.00636</td>
+              <td>0.07789</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>19,600</td>
+              <td>0.001</td>
+              <td>0.00706</td>
+              <td>0.13835</td>
+            </tr>
+            <tr class="highlight-row">
+              <td colspan="4"><strong>SUMA P(X ≤ 3)</strong></td>
+              <td><strong>0.2500</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta</h4>
+          <div class="answer">P(X ≤ 3) = 0.2500 = 25.00%</div>
+        </div>
+
+        <div class="analysis-box">
+          <h4>📋 Interpretación</h4>
+          <div class="analysis-item">
+            <h5>¿Qué significa este resultado?</h5>
+            <p>Hay una probabilidad del <strong>25%</strong> de que un lote tenga 3 o menos resortes defectuosos. Esto es relativamente bajo, ya que el promedio esperado es 5 defectos por lote.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 3: Calcular P(X ≥ 8) -->
+    <div class="step">
+      <div class="step-header">3️⃣ Parte b.2) Calcular P(X ≥ 8)</div>
+      <div class="step-content">
+        <p><strong>Objetivo:</strong> Calcular la probabilidad de que <strong>8 o más resortes</strong> sean defectuosos</p>
+
+        <p><strong>Paso 1: Usar el complemento para facilitar el cálculo</strong></p>
+        <p>Es más fácil calcular:</p>
+        <div class="math-display">
+          <div class="formula">P(X ≥ 8) = 1 - P(X ≤ 7)</div>
+          <div class="formula">P(X ≥ 8) = 1 - [P(X=0) + P(X=1) + ... + P(X=7)]</div>
+        </div>
+
+        <p><strong>Paso 2: Calcular P(X ≤ 7)</strong></p>
+        <p>Sumando las probabilidades desde X = 0 hasta X = 7:</p>
+
+        <table class="probability-table">
+          <thead>
+            <tr>
+              <th>X = k</th>
+              <th>P(X = k)</th>
+              <th>P acumulada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>0</td><td>0.00515</td><td>0.00515</td></tr>
+            <tr><td>1</td><td>0.02861</td><td>0.03376</td></tr>
+            <tr><td>2</td><td>0.07789</td><td>0.11165</td></tr>
+            <tr><td>3</td><td>0.13835</td><td>0.25000</td></tr>
+            <tr><td>4</td><td>0.18046</td><td>0.43046</td></tr>
+            <tr><td>5</td><td>0.18465</td><td>0.61511</td></tr>
+            <tr><td>6</td><td>0.15462</td><td>0.76973</td></tr>
+            <tr><td>7</td><td>0.10887</td><td>0.87860</td></tr>
+            <tr class="highlight-row">
+              <td colspan="2"><strong>P(X ≤ 7)</strong></td>
+              <td><strong>0.8786</strong></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p><strong>Paso 3: Calcular el complemento</strong></p>
+        <div class="math-display">
+          <div class="formula">P(X ≥ 8) = 1 - P(X ≤ 7)</div>
+          <div class="formula">P(X ≥ 8) = 1 - 0.8786</div>
+          <div class="formula">P(X ≥ 8) = 0.1214</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta</h4>
+          <div class="answer">P(X ≥ 8) = 0.1214 = 12.14%</div>
+        </div>
+
+        <div class="analysis-box">
+          <h4>📋 Interpretación</h4>
+          <div class="analysis-item">
+            <h5>¿Qué significa este resultado?</h5>
+            <p>Hay una probabilidad del <strong>12.14%</strong> de que un lote tenga 8 o más resortes defectuosos. Esto indica que es poco probable tener muchos más defectos que el promedio esperado (5), pero no imposible.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visualización de la distribución -->
+    <div class="step">
+      <div class="step-header">4️⃣ Visualización de la Distribución Binomial</div>
+      <div class="step-content">
+        <p><strong>Distribución completa de probabilidades</strong></p>
+        <p>La siguiente gráfica muestra la distribución binomial con n = 50 y p = 0.1:</p>
+
+        <div class="chart-container">
+          <h4>📊 Distribución Binomial - Resortes Defectuosos</h4>
+          <canvas id="binomialChart"></canvas>
+        </div>
+
+        <div class="analysis-box">
+          <h4>📋 Análisis de la Distribución</h4>
+          <div class="analysis-item">
+            <h5>Características observadas:</h5>
+            <ul>
+              <li>La distribución está centrada alrededor de μ = 5 (valor esperado)</li>
+              <li>Es asimétrica hacia la derecha (sesgo positivo)</li>
+              <li>La mayor probabilidad se encuentra en X = 5 (18.46%)</li>
+              <li>Los valores extremos (muy pocos o muchos defectos) tienen baja probabilidad</li>
+              <li>Aproximadamente el 88% de los lotes tendrán 7 o menos defectos</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resumen final -->
+    <div class="step">
+      <div class="step-header">📝 Resumen de Resultados</div>
+      <div class="step-content">
+      <div class="answer-box">
+        <h4>Parte a) Parámetros de la Distribución</h4>
+        <div class="answer">n = 50 resortes por lote</div>
+        <div class="answer">p = 0.1 (10% de probabilidad de defecto)</div>
+      </div>
+
+      <div class="answer-box">
+        <h4>Parte b) Probabilidades Calculadas</h4>
+        <div class="answer">P(X ≤ 3) = 0.2500 = 25.00%</div>
+        <div class="answer">P(X ≥ 8) = 0.1214 = 12.14%</div>
+      </div>
+
+      <div class="hint-box">
+        💡 <strong>Conclusión práctica:</strong> En el proceso de control de calidad, podemos esperar que aproximadamente 1 de cada 4 lotes tenga 3 o menos defectos (situación favorable), mientras que aproximadamente 1 de cada 8 lotes tendrá 8 o más defectos (situación desfavorable que podría requerir revisión del proceso).
+      </div>
+    </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Función para calcular combinaciones
+    function combination(n, k) {
+      if (k > n) return 0;
+      if (k === 0 || k === n) return 1;
+      let result = 1;
+      for (let i = 1; i <= k; i++) {
+        result = result * (n - i + 1) / i;
+      }
+      return result;
+    }
+
+    // Función para calcular probabilidad binomial
+    function binomialProbability(n, k, p) {
+      const comb = combination(n, k);
+      const prob = comb * Math.pow(p, k) * Math.pow(1 - p, n - k);
+      return prob;
+    }
+
+    // Crear gráfica de distribución binomial
+    function createBinomialChart() {
+      const ctx = document.getElementById('binomialChart').getContext('2d');
+      const n = 50;
+      const p = 0.1;
+      
+      // Generar datos para k = 0 hasta k = 15 (suficiente rango)
+      const labels = [];
+      const probabilities = [];
+      const colors = [];
+      
+      for (let k = 0; k <= 15; k++) {
+        labels.push(k.toString());
+        const prob = binomialProbability(n, k, p);
+        probabilities.push(prob);
+        
+        // Colorear barras según las regiones de interés
+        if (k <= 3) {
+          colors.push('rgba(100, 255, 150, 0.7)'); // Verde para X ≤ 3
+        } else if (k >= 8) {
+          colors.push('rgba(255, 100, 100, 0.7)'); // Rojo para X ≥ 8
+        } else {
+          colors.push('rgba(255, 150, 100, 0.7)'); // Naranja para medio
+        }
+      }
+      
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'P(X = k)',
+          data: probabilities,
+          backgroundColor: colors,
+          borderColor: colors.map(c => c.replace('0.7', '1')),
+          borderWidth: 2,
+          borderRadius: 5
+        }]
+      };
+      
+      const config = {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Distribución Binomial (n=50, p=0.1)',
+              font: {
+                size: 16,
+                weight: 'bold'
+              },
+              color: '#fff'
+            },
+            legend: {
+              display: true,
+              labels: {
+                color: '#fff'
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `P(X = ${context.label}) = ${(context.parsed.y * 100).toFixed(2)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 0.20,
+              title: {
+                display: true,
+                text: 'Probabilidad',
+                font: {
+                  size: 14,
+                  weight: 'bold'
+                },
+                color: '#fff'
+              },
+              ticks: {
+                color: '#fff'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            }
+          }
+        }
+      };
+      
+      new Chart(ctx, config);
+    }
+
+    // Inicializar
+    window.addEventListener('load', () => {
+      createBinomialChart();
+    });
+
+
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html'; // fallback si se abre directo
+      }
+    });
+  </script>
+</body>
+</html>

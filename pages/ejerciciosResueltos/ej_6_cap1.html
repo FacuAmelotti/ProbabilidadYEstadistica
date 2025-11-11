@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Comisiones de Vendedor</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <style>
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .context-box ul {
+      margin-left: 25px;
+      list-style: disc;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(120, 119, 198, 0.7);
+      background: rgba(120, 119, 198, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p, .step-content ul {
+      margin-bottom: 10px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #a0e0ff;
+    }
+
+    .math-display {
+      text-align: center;
+      font-size: 1.1rem;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .formula {
+      font-family: 'Times New Roman', serif;
+      font-size: 1.2rem;
+      color: #a0e0ff;
+    }
+
+    .answer-box {
+      background: linear-gradient(135deg, rgba(120, 119, 198, 0.2), rgba(120, 119, 198, 0.1));
+      border: 2px solid rgba(120, 119, 198, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .answer-box h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .answer {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #8fffa0;
+    }
+
+    .table-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+
+    .table-container h4 {
+      color: #fff;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    .probability-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+
+    .probability-table th,
+    .probability-table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .probability-table th {
+      background: rgba(120, 119, 198, 0.3);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .probability-table td {
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .probability-table .total {
+      background: rgba(120, 119, 198, 0.2);
+      font-weight: 600;
+      color: #a0e0ff;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .chart-container h4 {
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    #commissionChart {
+      max-width: 100%;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+    }
+
+    .check-panel {
+      margin-top: 40px;
+      padding: 25px;
+      border-radius: 16px;
+      background: rgba(120, 119, 198, 0.15);
+      border: 1px solid rgba(120, 119, 198, 0.4);
+      text-align: center;
+    }
+
+    .check-panel h3 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .check-panel input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      width: 120px;
+      text-align: center;
+      font-size: 1rem;
+      margin: 0 5px;
+    }
+
+    .check-btn {
+      margin-top: 15px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #7877c6, #6564b5);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .check-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(120, 119, 198, 0.4);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .correct { color: #8fffa0; }
+    .incorrect { color: #ff8f8f; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .math-display { font-size: 1rem; }
+      .probability-table { font-size: 0.9rem; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../../index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+  <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto</h1>
+      <p class="exercise-subtitle">Comisiones de Vendedor - Variables Aleatorias Discretas</p>
+    </div>
+
+    <!-- Contexto y enunciado -->
+    <div class="context-box">
+      <h3>🎯 Contexto</h3>
+      <p>Un <strong>vendedor de aparatos médicos</strong> tiene <strong>dos citas</strong> el mismo día. Los resultados de las citas son <strong>independientes</strong>:</p>
+      
+      <ul>
+        <li><strong>Cita 1:</strong> 70% probabilidad de cerrar venta, comisión de $1000</li>
+        <li><strong>Cita 2:</strong> 40% probabilidad de cerrar venta, comisión de $1500</li>
+      </ul>
+
+      <h3>📘 Tareas</h3>
+      <ul>
+        <li>1️⃣ <strong>Identificar:</strong> las variables aleatorias y sus distribuciones.</li>
+        <li>2️⃣ <strong>Construir:</strong> la tabla de distribución conjunta de comisiones.</li>
+        <li>3️⃣ <strong>Calcular:</strong> la comisión esperada E(C).</li>
+        <li>4️⃣ <strong>Interpretar:</strong> el significado del resultado.</li>
+        <li>5️⃣ <strong>Verificar:</strong> usando propiedades de esperanza.</li>
+      </ul>
+
+      <div class="hint-box">
+        💡 <strong>Tip:</strong> Como las citas son independientes, P(A∩B) = P(A)·P(B). La comisión total es la suma de las comisiones individuales.
+      </div>
+    </div>
+
+    <!-- Paso 1: Definir variables aleatorias -->
+    <div class="step">
+      <div class="step-header">1️⃣ Definición de variables aleatorias</div>
+      <div class="step-content">
+        <p>Definimos las variables aleatorias para cada cita:</p>
+        
+        <div class="math-display">
+          <div class="formula">X₁ = Comisión de la Cita 1</div>
+          <div class="formula">X₂ = Comisión de la Cita 2</div>
+        </div>
+        
+        <h4>Distribución de X₁ (Cita 1):</h4>
+        <div class="math-display">
+          <div class="formula">X₁ = 0 con probabilidad P(no venta) = 0.3</div>
+          <div class="formula">X₁ = 1000 con probabilidad P(venta) = 0.7</div>
+        </div>
+        
+        <h4>Distribución de X₂ (Cita 2):</h4>
+        <div class="math-display">
+          <div class="formula">X₂ = 0 con probabilidad P(no venta) = 0.6</div>
+          <div class="formula">X₂ = 1500 con probabilidad P(venta) = 0.4</div>
+        </div>
+        
+        <p>Como las citas son independientes: <span class="math">P(X₁ = a, X₂ = b) = P(X₁ = a) · P(X₂ = b)</span></p>
+      </div>
+    </div>
+
+    <!-- Paso 2: Tabla de distribución conjunta -->
+    <div class="step">
+      <div class="step-header">2️⃣ Tabla de distribución conjunta</div>
+      <div class="step-content">
+        <p>La comisión total es <span class="math">C = X₁ + X₂</span>. Como las variables son independientes, calculamos la distribución conjunta:</p>
+        
+        <div class="table-container">
+          <h4>📊 Tabla de distribución conjunta de comisiones</h4>
+          <table class="probability-table">
+            <thead>
+              <tr>
+                <th>Cita 1 \ Cita 2</th>
+                <th>X₂ = 0<br>(P = 0.6)</th>
+                <th>X₂ = 1500<br>(P = 0.4)</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>X₁ = 0</strong><br>(P = 0.3)</td>
+                <td>C = $0<br>P = 0.3×0.6 = <strong>0.18</strong></td>
+                <td>C = $1500<br>P = 0.3×0.4 = <strong>0.12</strong></td>
+                <td class="total">0.30</td>
+              </tr>
+              <tr>
+                <td><strong>X₁ = 1000</strong><br>(P = 0.7)</td>
+                <td>C = $1000<br>P = 0.7×0.6 = <strong>0.42</strong></td>
+                <td>C = $2500<br>P = 0.7×0.4 = <strong>0.28</strong></td>
+                <td class="total">0.70</td>
+              </tr>
+              <tr>
+                <td class="total"><strong>Total</strong></td>
+                <td class="total">0.60</td>
+                <td class="total">0.40</td>
+                <td class="total">1.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <p>✅ <strong>Verificación:</strong> La suma de todas las probabilidades es 1, confirmando que es una distribución válida.</p>
+      </div>
+    </div>
+
+    <!-- Paso 3: Distribución marginal de C -->
+    <div class="step">
+      <div class="step-header">3️⃣ Distribución marginal de la comisión total</div>
+      <div class="step-content">
+        <p>Obtenemos la distribución de la comisión total <span class="math">C = X₁ + X₂</span> sumando las probabilidades de todos los casos que dan la misma comisión:</p>
+        
+        <div class="math-display">
+          <div class="formula">C = $0: P(C = 0) = P(X₁ = 0, X₂ = 0) = 0.18</div>
+          <div class="formula">C = $1000: P(C = 1000) = P(X₁ = 1000, X₂ = 0) = 0.42</div>
+          <div class="formula">C = $1500: P(C = 1500) = P(X₁ = 0, X₂ = 1500) = 0.12</div>
+          <div class="formula">C = $2500: P(C = 2500) = P(X₁ = 1000, X₂ = 1500) = 0.28</div>
+        </div>
+        
+        <div class="table-container">
+          <h4>📈 Distribución marginal de C</h4>
+          <table class="probability-table">
+            <thead>
+              <tr>
+                <th>Comisión C</th>
+                <th>$0</th>
+                <th>$1000</th>
+                <th>$1500</th>
+                <th>$2500</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>P(C = c)</strong></td>
+                <td>0.18</td>
+                <td>0.42</td>
+                <td>0.12</td>
+                <td>0.28</td>
+                <td>1.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 4: Cálculo de la esperanza -->
+    <div class="step">
+      <div class="step-header">4️⃣ Cálculo de la comisión esperada</div>
+      <div class="step-content">
+        <p>La esperanza de la comisión total es:</p>
+        
+        <div class="math-display">
+          <div class="formula">E(C) = Σ[c · P(C = c)]</div>
+          <div class="formula">= 0·P(C=0) + 1000·P(C=1000) + 1500·P(C=1500) + 2500·P(C=2500)</div>
+          <div class="formula">= 0·(0.18) + 1000·(0.42) + 1500·(0.12) + 2500·(0.28)</div>
+          <div class="formula">= 0 + 420 + 180 + 700</div>
+          <div class="formula">= $1,300</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>🎯 Resultado Final</h4>
+          <div class="answer">E(C) = $1,300</div>
+          <p>El vendedor puede <strong>esperar ganar $1,300</strong> en comisiones de estas dos citas.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 5: Verificación con propiedades -->
+    <div class="step">
+      <div class="step-header">5️⃣ Verificación usando propiedades de esperanza</div>
+      <div class="step-content">
+        <p>Como <span class="math">C = X₁ + X₂</span> y las variables son independientes, podemos usar:</p>
+        
+        <div class="math-display">
+          <div class="formula">E(C) = E(X₁ + X₂) = E(X₁) + E(X₂)</div>
+        </div>
+        
+        <h4>Calculando E(X₁):</h4>
+        <div class="math-display">
+          <div class="formula">E(X₁) = 0·0.3 + 1000·0.7 = $700</div>
+        </div>
+        
+        <h4>Calculando E(X₂):</h4>
+        <div class="math-display">
+          <div class="formula">E(X₂) = 0·0.6 + 1500·0.4 = $600</div>
+        </div>
+        
+        <h4>Verificación:</h4>
+        <div class="math-display">
+          <div class="formula">E(C) = E(X₁) + E(X₂) = 700 + 600 = $1,300</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>✅ Verificación</h4>
+          <p>Ambos métodos dan el <strong>mismo resultado</strong>, confirmando la correctitud del cálculo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 6: Interpretación -->
+    <div class="step">
+      <div class="step-header">6️⃣ Interpretación del resultado</div>
+      <div class="step-content">
+        <div class="math-display">
+          <div class="formula">E(C) = $1,300</div>
+        </div>
+        
+        <p><strong>¿Qué significa este valor?</strong></p>
+        <ul>
+          <li>Si el vendedor repitiera este escenario muchas veces, <strong>el promedio de sus ganancias sería $1,300</strong></li>
+          <li>No significa que ganará exactamente $1,300 en un día específico</li>
+          <li>Es el <strong>valor esperado</strong> a largo plazo</li>
+        </ul>
+        
+        <p><strong>Probabilidades de los diferentes escenarios:</strong></p>
+        <ul>
+          <li>18% de probabilidad de ganar $0</li>
+          <li>42% de probabilidad de ganar $1,000</li>
+          <li>12% de probabilidad de ganar $1,500</li>
+          <li>28% de probabilidad de ganar $2,500</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Verificación de esperanza
+    function checkExpectedValue() {
+      const expected = parseFloat(document.getElementById('expectedValue').value);
+      const correctExpected = 1300; // $1,300
+      const resultDiv = document.getElementById('checkResult');
+      
+      if (Math.abs(expected - correctExpected) < 1) {
+        resultDiv.innerHTML = `✅ <span class="correct">¡Correcto!</span> La comisión esperada es $${correctExpected}.`;
+      } else {
+        resultDiv.innerHTML = `❌ <span class="incorrect">Incorrecto.</span> El valor correcto es $${correctExpected}.`;
+      }
+    }
+
+    // Calculadora personalizada
+    function calculateCustom() {
+      const p1 = parseFloat(document.getElementById('p1').value);
+      const c1 = parseFloat(document.getElementById('c1').value);
+      const p2 = parseFloat(document.getElementById('p2').value);
+      const c2 = parseFloat(document.getElementById('c2').value);
+      const resultDiv = document.getElementById('customResult');
+      
+      if (p1 < 0 || p1 > 1 || p2 < 0 || p2 > 1) {
+        resultDiv.innerHTML = `❌ <span class="incorrect">Las probabilidades deben estar entre 0 y 1.</span>`;
+        return;
+      }
+      
+      // E(C) = E(X₁) + E(X₂) = c1·p1 + c2·p2
+      const expected = c1 * p1 + c2 * p2;
+      
+      // Mostrar distribución
+      const p1_no = 1 - p1;
+      const p2_no = 1 - p2;
+      
+      resultDiv.innerHTML = `
+        <div style="text-align: left; margin-top: 15px;">
+          <p><strong>Distribución de comisiones:</strong></p>
+          <p>• C = $0: P = ${(p1_no * p2_no).toFixed(3)}</p>
+          <p>• C = $${c1}: P = ${(p1 * p2_no).toFixed(3)}</p>
+          <p>• C = $${c2}: P = ${(p1_no * p2).toFixed(3)}</p>
+          <p>• C = $${c1 + c2}: P = ${(p1 * p2).toFixed(3)}</p>
+          <p style="margin-top: 15px;"><strong>E(C) = $${expected.toFixed(0)}</strong></p>
+        </div>
+      `;
+    }
+
+    // Crear gráfico
+    function createChart() {
+      const ctx = document.getElementById('commissionChart').getContext('2d');
+      
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['$0', '$1000', '$1500', '$2500'],
+          datasets: [{
+            label: 'Probabilidad',
+            data: [0.18, 0.42, 0.12, 0.28],
+            backgroundColor: [
+              'rgba(255, 99, 132, 0.7)',
+              'rgba(54, 162, 235, 0.7)',
+              'rgba(255, 205, 86, 0.7)',
+              'rgba(75, 192, 192, 0.7)'
+            ],
+            borderColor: [
+              'rgba(255, 99, 132, 1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 205, 86, 1)',
+              'rgba(75, 192, 192, 1)'
+            ],
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Probabilidad',
+                color: 'white'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              },
+              ticks: {
+                color: 'white'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Comisión ($)',
+                color: 'white'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              },
+              ticks: {
+                color: 'white'
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: 'white'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Inicializar
+    window.addEventListener('load', () => {
+      createChart();
+    });
+
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html'; // fallback si se abre directo
+      }
+    });
+  </script>
+</body>
+</html>

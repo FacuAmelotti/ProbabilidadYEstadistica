@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Calibración de Transductor</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <style>
+    
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: white;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+
+    .context-box p {
+      margin-bottom: 15px;
+    }
+
+    .context-box ul {
+      margin-left: 25px;
+      margin-bottom: 15px;
+    }
+
+    .context-box li {
+      margin-bottom: 10px;
+    }
+
+    .formula-reference {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .formula-card {
+      background: rgba(255, 150, 100, 0.1);
+      border: 1px solid rgba(255, 150, 100, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .formula-card:hover {
+      background: rgba(255, 150, 100, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .formula-card h4 {
+      color: #ffa066;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .formula-card .formula {
+      font-family: 'Courier New', monospace;
+      color: #fff;
+      font-size: 1.1rem;
+      margin: 8px 0;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    .formula-card .description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(255, 150, 100, 0.7);
+      background: rgba(255, 150, 100, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-header::after {
+      content: '▼';
+      transition: transform 0.3s ease;
+    }
+
+    .step.open .step-header::after {
+      transform: rotate(180deg);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p {
+      margin-bottom: 15px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      color: #ffa066;
+    }
+
+    .math-display {
+      text-align: center;
+      font-size: 1.2rem;
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .formula {
+      font-family: 'Courier New', monospace;
+      font-size: 1.2rem;
+      color: #ffa066;
+      margin: 10px 0;
+    }
+
+    .answer-box {
+      background: linear-gradient(135deg, rgba(255, 150, 100, 0.2), rgba(255, 150, 100, 0.1));
+      border: 2px solid rgba(255, 150, 100, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .answer-box h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .answer {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #8fffa0;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 20px 0;
+    }
+
+    .chart-container h4 {
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+
+    canvas {
+      display: block;
+      width: 100% !important;
+      max-width: 700px;
+      height: 350px !important;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+    }
+
+    .prob-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .prob-table th,
+    .prob-table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .prob-table th {
+      background: rgba(255, 150, 100, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .prob-table td {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+    }
+
+    .prob-table tr:hover td {
+      background: rgba(255, 150, 100, 0.1);
+    }
+
+    .simulator {
+      background: rgba(100, 150, 255, 0.1);
+      border: 2px solid rgba(100, 150, 255, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 30px 0;
+    }
+
+    .simulator h3 {
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .control {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .control label {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .control input[type="range"] {
+      flex: 2;
+      height: 8px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .control input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ff9666;
+      cursor: pointer;
+    }
+
+    .control input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #ff9666;
+      cursor: pointer;
+    }
+
+    .control .value-display {
+      background: rgba(255, 150, 100, 0.2);
+      padding: 8px 15px;
+      border-radius: 8px;
+      color: #ffa066;
+      font-weight: 600;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .result-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .result-card .label {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .result-card .value {
+      color: #8fffa0;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .interpretation {
+      background: rgba(255, 150, 100, 0.15);
+      border: 2px solid rgba(255, 150, 100, 0.4);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px 0;
+    }
+
+    .interpretation h4 {
+      color: #ffa066;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .interpretation ul {
+      margin-left: 25px;
+    }
+
+    .interpretation li {
+      margin-bottom: 10px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .math-display { font-size: 1rem; }
+      .control { flex-direction: column; align-items: flex-start; }
+      .control input[type="range"] { width: 100%; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a class="nav-link" onclick="history.back()">← Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto</h1>
+      <p class="exercise-subtitle">Calibración de Transductor - Distribución Geométrica</p>
+    </div>
+
+    <!-- Contexto y enunciado -->
+    <div class="context-box">
+      <h3>🔧 Enunciado del Problema</h3>
+      <p>La probabilidad de que la <strong>calibración de un transductor</strong> en un instrumento electrónico cumpla con las especificaciones del sistema de medición, es <strong>0.6</strong>.</p>
+      
+      <p>Suponga que los <strong>intentos de calibración son independientes</strong>.</p>
+      
+      <p><strong>Pregunta:</strong> ¿Cuál es la probabilidad de que se requieran <strong>como máximo 3 intentos</strong> para satisfacer las especificaciones del sistema de medición?</p>
+
+      <div class="hint-box">
+        💡 <strong>Dato clave:</strong> Este es un problema de distribución geométrica, donde buscamos la probabilidad de éxito en los primeros k intentos.
+      </div>
+    </div>
+
+    <!-- Teoría -->
+    <div class="context-box">
+      <h3>📚 Distribución Geométrica</h3>
+      <p>La <strong>distribución geométrica</strong> modela el número de intentos necesarios para obtener el primer éxito en una serie de ensayos independientes de Bernoulli.</p>
+
+      <h4 style="color: #ffa066; margin-top: 20px;">Características:</h4>
+      <ul>
+        <li>Cada ensayo tiene solo dos resultados posibles: éxito o fracaso</li>
+        <li>La probabilidad de éxito (p) es constante en cada ensayo</li>
+        <li>Los ensayos son independientes entre sí</li>
+        <li>Nos interesa el número de intentos hasta el primer éxito</li>
+      </ul>
+
+      <div class="formula-reference">
+        <div class="formula-card">
+          <h4>📊 Función de probabilidad</h4>
+          <div class="formula">P(X = k) = (1-p)^(k-1) · p</div>
+          <div class="description">Probabilidad de éxito en el intento k</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📈 Probabilidad acumulada</h4>
+          <div class="formula">P(X ≤ k) = 1 - (1-p)^k</div>
+          <div class="description">Probabilidad de éxito en los primeros k intentos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📍 Media</h4>
+          <div class="formula">E[X] = 1/p</div>
+          <div class="description">Número esperado de intentos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📏 Varianza</h4>
+          <div class="formula">Var(X) = (1-p)/p²</div>
+          <div class="description">Variabilidad del número de intentos</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 1: Identificar parámetros -->
+    <div class="step">
+      <div class="step-header">1️⃣ Identificar los parámetros del problema</div>
+      <div class="step-content">
+        <p><strong>Extracción de datos del enunciado:</strong></p>
+        
+        <ul>
+          <li><strong>Probabilidad de éxito (p):</strong> 0.6 (60% de probabilidad de que la calibración cumpla las especificaciones)</li>
+          <li><strong>Probabilidad de fracaso (q):</strong> 1 - 0.6 = 0.4 (40% de probabilidad de que la calibración NO cumpla)</li>
+          <li><strong>Número máximo de intentos (k):</strong> 3</li>
+          <li><strong>Variable aleatoria X:</strong> Número de intentos necesarios para lograr la primera calibración exitosa</li>
+        </ul>
+
+        <div class="math-display">
+          <div class="formula">p = 0.6</div>
+          <div class="formula">q = 1 - p = 0.4</div>
+          <div class="formula">Buscamos: P(X ≤ 3)</div>
+        </div>
+
+        <div class="hint-box">
+          💡 <strong>Interpretación:</strong> Queremos calcular la probabilidad de que se necesiten 1, 2 o 3 intentos para lograr una calibración exitosa.
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2: Método 1 - Suma de probabilidades -->
+    <div class="step">
+      <div class="step-header">2️⃣ Método 1: Calcular usando suma de probabilidades individuales</div>
+      <div class="step-content">
+        <p><strong>Estrategia:</strong> Calculamos la probabilidad para cada caso (1, 2 y 3 intentos) y las sumamos.</p>
+        
+        <div class="math-display">
+          <div class="formula">P(X ≤ 3) = P(X=1) + P(X=2) + P(X=3)</div>
+        </div>
+
+        <h4 style="color: #ffa066; margin-top: 25px;">Caso 1: Éxito en el primer intento</h4>
+        <p>El transductor se calibra correctamente en el primer intento.</p>
+        <div class="math-display">
+          <div class="formula">P(X = 1) = p = 0.6</div>
+        </div>
+
+        <h4 style="color: #ffa066; margin-top: 25px;">Caso 2: Éxito en el segundo intento</h4>
+        <p>El primer intento falla (probabilidad 0.4), pero el segundo tiene éxito (probabilidad 0.6).</p>
+        <div class="math-display">
+          <div class="formula">P(X = 2) = q · p = 0.4 × 0.6 = 0.24</div>
+        </div>
+
+        <h4 style="color: #ffa066; margin-top: 25px;">Caso 3: Éxito en el tercer intento</h4>
+        <p>Los primeros dos intentos fallan (0.4 × 0.4), pero el tercero tiene éxito (0.6).</p>
+        <div class="math-display">
+          <div class="formula">P(X = 3) = q² · p = 0.4² × 0.6 = 0.16 × 0.6 = 0.096</div>
+        </div>
+
+        <h4 style="color: #ffa066; margin-top: 25px;">Probabilidad total:</h4>
+        <div class="math-display">
+          <div class="formula">P(X ≤ 3) = 0.6 + 0.24 + 0.096 = 0.936</div>
+        </div>
+
+        <table class="prob-table">
+          <thead>
+            <tr>
+              <th>Intento (k)</th>
+              <th>Secuencia</th>
+              <th>Fórmula</th>
+              <th>Cálculo</th>
+              <th>Probabilidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>É</td>
+              <td>p</td>
+              <td>0.6</td>
+              <td>0.6000</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>F-É</td>
+              <td>q · p</td>
+              <td>0.4 × 0.6</td>
+              <td>0.2400</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>F-F-É</td>
+              <td>q² · p</td>
+              <td>0.4² × 0.6</td>
+              <td>0.0960</td>
+            </tr>
+            <tr style="background: rgba(255, 150, 100, 0.2); font-weight: bold;">
+              <td colspan="4">SUMA TOTAL</td>
+              <td>0.9360</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="answer-box">
+          <h4>🎯 Resultado (Método 1)</h4>
+          <div class="answer">P(X ≤ 3) = 0.936 = 93.6%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 3: Método 2 - Fórmula directa -->
+    <div class="step">
+      <div class="step-header">3️⃣ Método 2: Usar la fórmula de probabilidad acumulada</div>
+      <div class="step-content">
+        <p><strong>Estrategia:</strong> Usar la fórmula directa de la distribución geométrica acumulada.</p>
+        
+        <div class="math-display">
+          <div class="formula">P(X ≤ k) = 1 - (1-p)^k</div>
+        </div>
+
+        <p><strong>Sustituyendo los valores:</strong></p>
+        <div class="math-display">
+          <div class="formula">P(X ≤ 3) = 1 - (1 - 0.6)³</div>
+          <div class="formula">P(X ≤ 3) = 1 - (0.4)³</div>
+          <div class="formula">P(X ≤ 3) = 1 - 0.064</div>
+          <div class="formula">P(X ≤ 3) = 0.936</div>
+        </div>
+
+        <div class="hint-box">
+          ✅ <strong>Verificación:</strong> Ambos métodos nos dan el mismo resultado: 0.936, lo que confirma que nuestro cálculo es correcto.
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Resultado (Método 2)</h4>
+          <div class="answer">P(X ≤ 3) = 0.936 = 93.6%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 4: Visualización -->
+    <div class="step">
+      <div class="step-header">4️⃣ Visualización de la distribución</div>
+      <div class="step-content">
+        <div class="chart-container">
+          <h4>📊 Probabilidad por Número de Intentos</h4>
+          <canvas id="probChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+          <h4>📈 Probabilidad Acumulada</h4>
+          <canvas id="cumulativeChart"></canvas>
+        </div>
+
+        <div class="interpretation">
+          <h4>📋 Interpretación de los gráficos:</h4>
+          <ul>
+            <li><strong>Gráfico 1 (Probabilidades individuales):</strong> Muestra que la mayor probabilidad es conseguir el éxito en el primer intento (60%), y las probabilidades disminuyen exponencialmente para intentos posteriores.</li>
+            <li><strong>Gráfico 2 (Probabilidad acumulada):</strong> Muestra cómo aumenta la probabilidad de éxito conforme permitimos más intentos. En 3 intentos, acumulamos un 93.6% de probabilidad de éxito.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 5: Respuesta final -->
+    <div class="step">
+      <div class="step-header">5️⃣ Respuesta e interpretación</div>
+      <div class="step-content">
+        <div class="answer-box">
+          <h4>🎯 RESPUESTA FINAL</h4>
+          <div class="answer">La probabilidad de que se requieran como máximo 3 intentos es 0.936 o 93.6%</div>
+        </div>
+
+        <div class="interpretation">
+          <h4>🔍 Interpretación práctica:</h4>
+          <ul>
+            <li>Hay un <strong>93.6% de probabilidad</strong> de que el transductor se calibre exitosamente en 3 intentos o menos.</li>
+            <li>Solo hay un <strong>6.4% de probabilidad</strong> de que se requieran más de 3 intentos.</li>
+            <li>En promedio, se necesitarían <span class="math">E[X] = 1/0.6 ≈ 1.67 intentos</span> para lograr una calibración exitosa.</li>
+            <li>La alta probabilidad de éxito (60%) en cada intento hace muy probable que se logre la calibración en pocos intentos.</li>
+          </ul>
+        </div>
+
+        <div class="hint-box">
+          💡 <strong>Dato interesante:</strong> Si quisiéramos estar 99% seguros de lograr la calibración, necesitaríamos permitir hasta 5 intentos, ya que P(X ≤ 5) = 0.99.
+        </div>
+      </div>
+    </div>
+
+    <!-- Simulador interactivo -->
+    <div class="simulator">
+      <h3>🎮 Simulador Interactivo</h3>
+      <p style="text-align: center; color: rgba(255,255,255,0.7); margin-bottom: 20px;">
+        Ajusta los parámetros para explorar diferentes escenarios
+      </p>
+
+      <div class="control-group">
+        <div class="control">
+          <label>Probabilidad de éxito (p):</label>
+          <input type="range" id="probSlider" min="0.1" max="0.9" step="0.05" value="0.6">
+          <span class="value-display" id="probValue">0.60</span>
+        </div>
+
+        <div class="control">
+          <label>Número máximo de intentos (k):</label>
+          <input type="range" id="attemptsSlider" min="1" max="10" step="1" value="3">
+          <span class="value-display" id="attemptsValue">3</span>
+        </div>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="label">P(X ≤ k)</div>
+          <div class="value" id="resultProb">93.6%</div>
+        </div>
+
+        <div class="result-card">
+          <div class="label">Media E[X]</div>
+          <div class="value" id="resultMean">1.67</div>
+        </div>
+
+        <div class="result-card">
+          <div class="label">Desviación Std</div>
+          <div class="value" id="resultStd">1.05</div>
+        </div>
+
+        <div class="result-card">
+          <div class="label">P(X > k)</div>
+          <div class="value" id="resultComplement">6.4%</div>
+        </div>
+      </div>
+
+      <div class="chart-container" style="margin-top: 30px;">
+        <h4>📊 Distribución actualizada</h4>
+        <canvas id="simulatorChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Crear gráfico de probabilidades
+    let probChartInstance, cumulativeChartInstance, simulatorChartInstance;
+
+    function createProbChart() {
+      const ctx = document.getElementById('probChart').getContext('2d');
+      
+      const data = {
+        labels: ['1', '2', '3', '4', '5'],
+        datasets: [{
+          label: 'P(X = k)',
+          data: [0.600, 0.240, 0.096, 0.038, 0.015],
+          backgroundColor: 'rgba(255, 150, 100, 0.8)',
+          borderColor: 'rgba(255, 150, 100, 1)',
+          borderWidth: 2,
+          borderRadius: 8
+        }]
+      };
+      
+      probChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `Probabilidad: ${(context.parsed.y * 100).toFixed(1)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 0.7,
+              title: {
+                display: true,
+                text: 'Probabilidad',
+                font: { size: 14, weight: 'bold' },
+                color: '#fff'
+              },
+              ticks: {
+                color: '#fff',
+                callback: function(value) {
+                  return (value * 100) + '%';
+                }
+              },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Número de intentos (k)',
+                font: { size: 14, weight: 'bold' },
+                color: '#fff'
+              },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    function createCumulativeChart() {
+      const ctx = document.getElementById('cumulativeChart').getContext('2d');
+      
+      const data = {
+        labels: ['1', '2', '3', '4', '5'],
+        datasets: [{
+          label: 'P(X ≤ k)',
+          data: [0.600, 0.840, 0.936, 0.974, 0.990],
+          backgroundColor: 'rgba(100, 200, 255, 0.8)',
+          borderColor: 'rgba(100, 200, 255, 1)',
+          borderWidth: 2,
+          borderRadius: 8
+        }]
+      };
+      
+      cumulativeChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `Probabilidad acumulada: ${(context.parsed.y * 100).toFixed(1)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 1.0,
+              title: {
+                display: true,
+                text: 'Probabilidad Acumulada',
+                font: { size: 14, weight: 'bold' },
+                color: '#fff'
+              },
+              ticks: {
+                color: '#fff',
+                callback: function(value) {
+                  return (value * 100) + '%';
+                }
+              },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Número máximo de intentos (k)',
+                font: { size: 14, weight: 'bold' },
+                color: '#fff'
+              },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    function createSimulatorChart(p, k) {
+      const ctx = document.getElementById('simulatorChart').getContext('2d');
+      
+      const labels = [];
+      const probData = [];
+      const q = 1 - p;
+      
+      for (let i = 1; i <= Math.min(k + 2, 10); i++) {
+        labels.push(i.toString());
+        probData.push(Math.pow(q, i - 1) * p);
+      }
+      
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'P(X = k)',
+          data: probData,
+          backgroundColor: probData.map((_, i) => 
+            i < k ? 'rgba(100, 255, 150, 0.8)' : 'rgba(255, 150, 100, 0.4)'
+          ),
+          borderColor: probData.map((_, i) => 
+            i < k ? 'rgba(100, 255, 150, 1)' : 'rgba(255, 150, 100, 1)'
+          ),
+          borderWidth: 2,
+          borderRadius: 8
+        }]
+      };
+      
+      if (simulatorChartInstance) {
+        simulatorChartInstance.destroy();
+      }
+      
+      simulatorChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `Probabilidad: ${(context.parsed.y * 100).toFixed(2)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Probabilidad',
+                font: { size: 14, weight: 'bold' },
+                color: '#fff'
+              },
+              ticks: {
+                color: '#fff',
+                callback: function(value) {
+                  return (value * 100).toFixed(1) + '%';
+                }
+              },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Número de intentos',
+                font: { size: 14, weight: 'bold' },
+                color: '#fff'
+              },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    // Simulador interactivo
+    function updateSimulator() {
+      const p = parseFloat(document.getElementById('probSlider').value);
+      const k = parseInt(document.getElementById('attemptsSlider').value);
+      const q = 1 - p;
+      
+      document.getElementById('probValue').textContent = p.toFixed(2);
+      document.getElementById('attemptsValue').textContent = k;
+      
+      // Calcular P(X ≤ k)
+      const probSuccess = 1 - Math.pow(q, k);
+      document.getElementById('resultProb').textContent = (probSuccess * 100).toFixed(1) + '%';
+      
+      // Calcular media
+      const mean = 1 / p;
+      document.getElementById('resultMean').textContent = mean.toFixed(2);
+      
+      // Calcular desviación estándar
+      const variance = q / (p * p);
+      const std = Math.sqrt(variance);
+      document.getElementById('resultStd').textContent = std.toFixed(2);
+      
+      // Calcular complemento
+      const complement = Math.pow(q, k);
+      document.getElementById('resultComplement').textContent = (complement * 100).toFixed(1) + '%';
+      
+      // Actualizar gráfico
+      createSimulatorChart(p, k);
+    }
+
+    document.getElementById('probSlider').addEventListener('input', updateSimulator);
+    document.getElementById('attemptsSlider').addEventListener('input', updateSimulator);
+
+    // Inicializar
+    window.addEventListener('load', () => {
+      createProbChart();
+      createCumulativeChart();
+      updateSimulator();
+    });
+    
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html'; // fallback si se abre directo
+      }
+    });
+  </script>
+</body>
+</html>

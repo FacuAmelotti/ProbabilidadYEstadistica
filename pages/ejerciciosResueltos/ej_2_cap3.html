@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Variable Aleatoria Discreta</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <style>
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .formula-reference {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .formula-card {
+      background: rgba(120, 119, 198, 0.1);
+      border: 1px solid rgba(120, 119, 198, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .formula-card:hover {
+      background: rgba(120, 119, 198, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .formula-card h4 {
+      color: #a0e0ff;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .formula-card .formula {
+      font-family: monospace;
+      color: #fff;
+      font-size: 1.1rem;
+      margin: 8px 0;
+    }
+
+    .formula-card .description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(120, 119, 198, 0.7);
+      background: rgba(120, 119, 198, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p, .step-content ul {
+      margin-bottom: 10px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #a0e0ff;
+    }
+
+    .equation-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 15px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .equation-box .step-eq {
+      margin: 8px 0;
+      font-size: 1.05rem;
+    }
+
+    .equation-box .final-answer {
+      color: #8fffa0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .visual-example {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 15px 0;
+    }
+
+    .coin-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .coin-outcome {
+      background: rgba(120, 119, 198, 0.15);
+      border: 1px solid rgba(120, 119, 198, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .coin-outcome:hover {
+      background: rgba(120, 119, 198, 0.25);
+      transform: scale(1.02);
+    }
+
+    .coin-sequence {
+      font-size: 1.5rem;
+      margin: 10px 0;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 3px;
+    }
+
+    .coin-count {
+      color: #a0e0ff;
+      font-size: 0.9rem;
+    }
+
+    .prob-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .prob-table th {
+      background: rgba(120, 119, 198, 0.3);
+      color: #fff;
+      padding: 15px;
+      font-weight: 600;
+    }
+
+    .prob-table td {
+      padding: 12px 15px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .prob-table tr:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 30px;
+      margin: 20px 0;
+    }
+
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      height: 300px;
+      margin: 20px 0;
+      padding: 20px;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .bar-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      max-width: 100px;
+    }
+
+    .bar {
+      width: 60px;
+      background: linear-gradient(180deg, #7877c6, #5554a5);
+      border-radius: 8px 8px 0 0;
+      transition: all 0.3s ease;
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 10px;
+    }
+
+    .bar:hover {
+      background: linear-gradient(180deg, #8988d7, #6665b6);
+      transform: translateY(-5px);
+    }
+
+    .bar-value {
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .bar-label {
+      margin-top: 10px;
+      color: #a0e0ff;
+      font-weight: 600;
+    }
+
+    .step-function-chart {
+      position: relative;
+      height: 400px;
+      margin: 30px 0;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      height: 100%;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .formula-reference { grid-template-columns: 1fr; }
+      .coin-grid { grid-template-columns: 1fr; }
+      .bar-chart { height: 250px; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../../index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Variable Aleatoria Discreta</h1>
+      <p class="exercise-subtitle">Lanzamiento de Moneda - Distribución de Probabilidad</p>
+    </div>
+
+    <div class="context-box">
+      <h3>🎯 Conceptos fundamentales</h3>
+      
+      <div class="formula-reference">
+        <div class="formula-card">
+          <h4>📊 Variable Aleatoria (v.a.)</h4>
+          <div class="description">Función que asigna un número real a cada resultado de un experimento aleatorio</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📈 Distribución de Probabilidad</h4>
+          <div class="formula">P(X = x)</div>
+          <div class="description">Describe la probabilidad de cada valor que puede tomar X</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📉 Función Distribución Acumulada</h4>
+          <div class="formula">F(x) = P(X ≤ x)</div>
+          <div class="description">Probabilidad acumulada hasta el valor x</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>✓ Propiedad fundamental</h4>
+          <div class="formula">Σ P(X = xᵢ) = 1</div>
+          <div class="description">La suma de todas las probabilidades es 1</div>
+        </div>
+      </div>
+
+      <div class="hint-box">
+        💡 <strong>Tip:</strong> En una moneda normal, P(cara) = P(ceca) = 1/2. Los lanzamientos son independientes.
+      </div>
+    </div>
+
+    <!-- Problema planteado -->
+    <div class="context-box">
+      <h3>📋 Problema</h3>
+      <p><strong>Se tira una moneda normal tres veces</strong>, sea la variable aleatoria:</p>
+      <p style="text-align: center; font-size: 1.2rem; color: #a0e0ff; margin: 15px 0;">
+        <strong>X: "número de caras obtenidas"</strong>
+      </p>
+      <p><strong>Hallar:</strong></p>
+      <ul style="margin-left: 25px;">
+        <li>a) La distribución de probabilidad de X</li>
+        <li>b) La función distribución acumulada de X y su gráfica</li>
+      </ul>
+    </div>
+
+    <!-- Paso 1: Espacio muestral -->
+    <div class="step">
+      <div class="step-header">1️⃣ Identificar el espacio muestral</div>
+      <div class="step-content">
+        <p><strong>Experimento:</strong> Lanzar una moneda 3 veces</p>
+        <p><strong>Resultados posibles:</strong> Cada lanzamiento puede ser Cara (C) o Ceca (X)</p>
+
+        <div class="visual-example">
+          <h4 style="color: #fff; text-align: center; margin-bottom: 20px;">🎲 Todos los resultados posibles</h4>
+          <div class="coin-grid">
+            <div class="coin-outcome">
+              <div class="coin-sequence">CCC</div>
+              <div class="coin-count">3 caras</div>
+            </div>
+            <div class="coin-outcome">
+              <div class="coin-sequence">CCX</div>
+              <div class="coin-count">2 caras</div>
+            </div>
+            <div class="coin-outcome">
+              <div class="coin-sequence">CXC</div>
+              <div class="coin-count">2 caras</div>
+            </div>
+            <div class="coin-outcome">
+              <div class="coin-sequence">CXX</div>
+              <div class="coin-count">1 cara</div>
+            </div>
+            <div class="coin-outcome">
+              <div class="coin-sequence">XCC</div>
+              <div class="coin-count">2 caras</div>
+            </div>
+            <div class="coin-outcome">
+              <div class="coin-sequence">XCX</div>
+              <div class="coin-count">1 cara</div>
+            </div>
+            <div class="coin-outcome">
+              <div class="coin-sequence">XXC</div>
+              <div class="coin-count">1 cara</div>
+            </div>
+            <div class="coin-outcome">
+              <div class="coin-sequence">XXX</div>
+              <div class="coin-count">0 caras</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="equation-box">
+          <div class="step-eq"><strong>Espacio muestral Ω:</strong></div>
+          <div class="step-eq">Ω = {CCC, CCX, CXC, CXX, XCC, XCX, XXC, XXX}</div>
+          <div class="final-answer">Total: 2³ = 8 resultados equiprobables</div>
+        </div>
+
+        <p style="margin-top: 15px;"><strong>Variable aleatoria X:</strong> Cuenta el número de caras en cada resultado</p>
+        <p>Los valores posibles son: <span class="math">X ∈ {0, 1, 2, 3}</span></p>
+      </div>
+    </div>
+
+    <!-- Paso 2: Distribución de probabilidad -->
+    <div class="step">
+      <div class="step-header">2️⃣ Parte a) Distribución de probabilidad de X</div>
+      <div class="step-content">
+        <h4 style="color: #a0e0ff; margin-bottom: 15px;">🔢 Contar resultados para cada valor de X</h4>
+        
+        <div class="visual-example">
+          <p><strong>X = 0</strong> (0 caras, 3 cecas):</p>
+          <p style="margin-left: 20px; color: #a0e0ff;">→ XXX</p>
+          <p style="margin-left: 20px;">Total: <strong>1 resultado</strong></p>
+          <p style="margin-top: 15px;"><strong>X = 1</strong> (1 cara, 2 cecas):</p>
+          <p style="margin-left: 20px; color: #a0e0ff;">→ CXX, XCX, XXC</p>
+          <p style="margin-left: 20px;">Total: <strong>3 resultados</strong></p>
+          <p style="margin-top: 15px;"><strong>X = 2</strong> (2 caras, 1 ceca):</p>
+          <p style="margin-left: 20px; color: #a0e0ff;">→ CCX, CXC, XCC</p>
+          <p style="margin-left: 20px;">Total: <strong>3 resultados</strong></p>
+          <p style="margin-top: 15px;"><strong>X = 3</strong> (3 caras, 0 cecas):</p>
+          <p style="margin-left: 20px; color: #a0e0ff;">→ CCC</p>
+          <p style="margin-left: 20px;">Total: <strong>1 resultado</strong></p>
+        </div>
+
+        <h4 style="color: #a0e0ff; margin: 25px 0 15px;">📊 Cálculo de probabilidades</h4>
+        <p>Como todos los resultados son equiprobables (cada uno tiene probabilidad 1/8):</p>
+
+        <div class="equation-box">
+          <div class="step-eq">P(X = 0) = 1/8 = 0.125</div>
+          <div class="step-eq">P(X = 1) = 3/8 = 0.375</div>
+          <div class="step-eq">P(X = 2) = 3/8 = 0.375</div>
+          <div class="step-eq">P(X = 3) = 1/8 = 0.125</div>
+          <div class="step-eq" style="margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;">
+            <strong>Verificación:</strong> 1/8 + 3/8 + 3/8 + 1/8 = 8/8 = 1 ✓
+          </div>
+        </div>
+
+        <h4 style="color: #a0e0ff; margin: 25px 0 15px;">📋 Tabla de distribución</h4>
+        <table class="prob-table">
+          <thead>
+            <tr>
+              <th>x (caras)</th>
+              <th>0</th>
+              <th>1</th>
+              <th>2</th>
+              <th>3</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>P(X = x)</strong></td>
+              <td>1/8</td>
+              <td>3/8</td>
+              <td>3/8</td>
+              <td>1/8</td>
+            </tr>
+            <tr>
+              <td><strong>Decimal</strong></td>
+              <td>0.125</td>
+              <td>0.375</td>
+              <td>0.375</td>
+              <td>0.125</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4 style="color: #a0e0ff; margin: 25px 0 15px;">📊 Gráfico de la distribución</h4>
+        <div class="chart-container">
+          <div class="bar-chart">
+            <div class="bar-wrapper">
+              <div class="bar" style="height: 83px;">
+                <span class="bar-value">1/8</span>
+              </div>
+              <div class="bar-label">X = 0</div>
+            </div>
+            <div class="bar-wrapper">
+              <div class="bar" style="height: 250px;">
+                <span class="bar-value">3/8</span>
+              </div>
+              <div class="bar-label">X = 1</div>
+            </div>
+            <div class="bar-wrapper">
+              <div class="bar" style="height: 250px;">
+                <span class="bar-value">3/8</span>
+              </div>
+              <div class="bar-label">X = 2</div>
+            </div>
+            <div class="bar-wrapper">
+              <div class="bar" style="height: 83px;">
+                <span class="bar-value">1/8</span>
+              </div>
+              <div class="bar-label">X = 3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hint-box">
+          💡 <strong>Observación:</strong> La distribución es simétrica. Esto tiene sentido porque es igualmente probable obtener k caras que (3-k) caras. Esta distribución se conoce como <strong>distribución binomial</strong> con n=3 y p=0.5.
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 3: Función distribución acumulada -->
+    <div class="step">
+      <div class="step-header">3️⃣ Parte b) Función distribución acumulada F(x)</div>
+      <div class="step-content">
+        <h4 style="color: #a0e0ff; margin-bottom: 15px;">📈 Definición</h4>
+        <p>La función distribución acumulada es:</p>
+        <div class="equation-box">
+          <div class="step-eq"><strong>F(x) = P(X ≤ x)</strong></div>
+          <div class="step-eq" style="font-size: 0.95rem; color: rgba(255,255,255,0.7);">
+            (Probabilidad de que X tome un valor menor o igual a x)
+          </div>
+        </div>
+
+        <h4 style="color: #a0e0ff; margin: 25px 0 15px;">🧮 Cálculo de F(x) para cada valor</h4>
+        
+        <div class="equation-box">
+          <div class="step-eq"><strong>Para x < 0:</strong></div>
+          <div class="step-eq">F(x) = P(X ≤ x) = 0</div>
+          <div class="step-eq" style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">
+            (No hay valores negativos de caras)
+          </div>
+          
+          <div class="step-eq" style="margin-top: 15px;"><strong>Para 0 ≤ x < 1:</strong></div>
+          <div class="step-eq">F(x) = P(X ≤ x) = P(X = 0) = 1/8 = 0.125</div>
+          
+          <div class="step-eq" style="margin-top: 15px;"><strong>Para 1 ≤ x < 2:</strong></div>
+          <div class="step-eq">F(x) = P(X ≤ x) = P(X = 0) + P(X = 1)</div>
+          <div class="step-eq">= 1/8 + 3/8 = 4/8 = 0.5</div>
+          
+          <div class="step-eq" style="margin-top: 15px;"><strong>Para 2 ≤ x < 3:</strong></div>
+          <div class="step-eq">F(x) = P(X ≤ x) = P(X = 0) + P(X = 1) + P(X = 2)</div>
+          <div class="step-eq">= 1/8 + 3/8 + 3/8 = 7/8 = 0.875</div>
+          
+          <div class="step-eq" style="margin-top: 15px;"><strong>Para x ≥ 3:</strong></div>
+          <div class="step-eq">F(x) = P(X ≤ x) = P(X = 0) + P(X = 1) + P(X = 2) + P(X = 3)</div>
+          <div class="step-eq">= 1/8 + 3/8 + 3/8 + 1/8 = 8/8 = 1</div>
+        </div>
+
+        <h4 style="color: #a0e0ff; margin: 25px 0 15px;">📋 Tabla de F(x)</h4>
+        <table class="prob-table">
+          <thead>
+            <tr>
+              <th>Intervalo</th>
+              <th>F(x) = P(X ≤ x)</th>
+              <th>Decimal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>x < 0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>0 ≤ x < 1</td>
+              <td>1/8</td>
+              <td>0.125</td>
+            </tr>
+            <tr>
+              <td>1 ≤ x < 2</td>
+              <td>4/8</td>
+              <td>0.500</td>
+            </tr>
+            <tr>
+              <td>2 ≤ x < 3</td>
+              <td>7/8</td>
+              <td>0.875</td>
+            </tr>
+            <tr>
+              <td>x ≥ 3</td>
+              <td>8/8</td>
+              <td>1.000</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4 style="color: #a0e0ff; margin: 25px 0 15px;">📊 Gráfica de F(x)</h4>
+        <div class="chart-container">
+          <canvas id="cdfChart"></canvas>
+        </div>
+
+        <div class="hint-box">
+          💡 <strong>Características de F(x):</strong>
+          <ul style="margin-left: 20px; margin-top: 10px;">
+            <li>Es una función <strong>escalonada</strong> (constante en intervalos, con saltos en valores enteros)</li>
+            <li>Es <strong>no decreciente</strong>: F(x₁) ≤ F(x₂) si x₁ < x₂</li>
+            <li>Los saltos ocurren en los valores que puede tomar X (0, 1, 2, 3)</li>
+            <li>La altura de cada salto es igual a P(X = x)</li>
+            <li>Tiende a 0 cuando x → -∞ y a 1 cuando x → +∞</li>
+          </ul>
+        </div>
+
+        <h4 style="color: #a0e0ff; margin: 25px 0 15px;">✏️ Expresión formal de F(x)</h4>
+        <div class="equation-box">
+          <div class="step-eq">F(x) = P(X ≤ x) = </div>
+          <div class="step-eq" style="margin-left: 40px;">
+            ⎧ 0,     si x < 0<br>
+            ⎪ 1/8,   si 0 ≤ x < 1<br>
+            ⎨ 4/8,   si 1 ≤ x < 2<br>
+            ⎪ 7/8,   si 2 ≤ x < 3<br>
+            ⎩ 1,     si x ≥ 3
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  <script>
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html';
+      }
+    });
+  </script>
+</body>
+</html>

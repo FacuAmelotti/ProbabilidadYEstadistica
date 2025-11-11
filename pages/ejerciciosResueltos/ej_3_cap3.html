@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Transformación de Variable Aleatoria</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <style>
+
+    @keyframes gradientShift {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(10deg); }
+    }
+
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .floating-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .floating-dot:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+    .floating-dot:nth-child(2) { top: 60%; left: 80%; animation-delay: 2s; }
+    .floating-dot:nth-child(3) { top: 80%; left: 50%; animation-delay: 4s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
+      50% { transform: translateY(-20px) rotate(180deg); opacity: 0.3; }
+    }
+
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .context-box ul {
+      margin-left: 25px;
+      list-style: disc;
+    }
+
+    .distribution-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .distribution-table th,
+    .distribution-table td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .distribution-table th {
+      background: rgba(120, 119, 198, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .distribution-table td {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(120, 119, 198, 0.7);
+      background: rgba(120, 119, 198, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p, .step-content ul {
+      margin-bottom: 10px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #a0e0ff;
+    }
+
+    .math-display {
+      text-align: center;
+      font-size: 1.1rem;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .formula {
+      font-family: 'Times New Roman', serif;
+      font-size: 1.2rem;
+      color: #a0e0ff;
+    }
+
+    .answer-box {
+      background: linear-gradient(135deg, rgba(120, 119, 198, 0.2), rgba(120, 119, 198, 0.1));
+      border: 2px solid rgba(120, 119, 198, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .answer-box h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .answer {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #8fffa0;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .chart-container h4 {
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    #probabilityChart {
+      max-width: 100%;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+    }
+
+    .transformation-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .transformation-table th,
+    .transformation-table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+    }
+
+    .transformation-table th {
+      background: rgba(120, 119, 198, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .transformation-table td {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .check-panel {
+      margin-top: 40px;
+      padding: 25px;
+      border-radius: 16px;
+      background: rgba(120, 119, 198, 0.15);
+      border: 1px solid rgba(120, 119, 198, 0.4);
+      text-align: center;
+    }
+
+    .check-panel h3 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .check-panel input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      width: 120px;
+      text-align: center;
+      font-size: 1rem;
+      margin: 0 5px;
+    }
+
+    .check-btn {
+      margin-top: 15px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #7877c6, #6564b5);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .check-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(120, 119, 198, 0.4);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .correct { color: #8fffa0; }
+    .incorrect { color: #ff8f8f; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .math-display { font-size: 1rem; }
+      .distribution-table th, .distribution-table td { padding: 8px; font-size: 0.8rem; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto</h1>
+      <p class="exercise-subtitle">Transformación de Variable Aleatoria - Valor Esperado y Varianza</p>
+    </div>
+
+    <!-- Contexto y enunciado -->
+    <div class="context-box">
+      <h3>🎯 Contexto</h3>
+      <p>Dada una <strong>variable aleatoria discreta X</strong> con la siguiente distribución de probabilidad:</p>
+      
+      <table class="distribution-table">
+        <thead>
+          <tr>
+            <th>x</th>
+            <th>0</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>f(x)</th>
+            <td>1/3</td>
+            <td>1/2</td>
+            <td>0</td>
+            <td>1/6</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>📘 Tarea</h3>
+      <p>Calcular el <strong>valor esperado</strong> y la <strong>varianza</strong> de la variable transformada:</p>
+      
+      <div class="math-display">
+        <div class="formula">Y = (X - 1)²</div>
+      </div>
+
+      <div class="hint-box">
+        💡 <strong>Tip:</strong> Para una variable transformada Y = g(X), primero encontramos la distribución de Y, luego aplicamos las fórmulas de valor esperado y varianza.
+      </div>
+    </div>
+
+    <!-- Paso 1: Distribución de Y -->
+    <div class="step">
+      <div class="step-header">1️⃣ Encontrar la distribución de Y = (X - 1)²</div>
+      <div class="step-content">
+        <p>Aplicamos la transformación a cada valor posible de X:</p>
+        
+        <table class="transformation-table">
+          <thead>
+            <tr>
+              <th>X</th>
+              <th>f(X)</th>
+              <th>Y = (X - 1)²</th>
+              <th>P(Y)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>1/3</td>
+              <td>(0 - 1)² = 1</td>
+              <td>1/3</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1/2</td>
+              <td>(1 - 1)² = 0</td>
+              <td>1/2</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>0</td>
+              <td>(2 - 1)² = 1</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>1/6</td>
+              <td>(3 - 1)² = 4</td>
+              <td>1/6</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>Como Y = 1 puede ocurrir cuando X = 0 o X = 2, combinamos las probabilidades:</p>
+        
+        <div class="math-display">
+          <div class="formula">P(Y = 0) = P(X = 1) = 1/2</div>
+          <div class="formula">P(Y = 1) = P(X = 0) + P(X = 2) = 1/3 + 0 = 1/3</div>
+          <div class="formula">P(Y = 4) = P(X = 3) = 1/6</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>📊 Distribución de Y</h4>
+          <p>Y puede tomar los valores <strong>0, 1, 4</strong> con probabilidades <strong>1/2, 1/3, 1/6</strong> respectivamente.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2: Valor Esperado de Y -->
+    <div class="step">
+      <div class="step-header">2️⃣ Calcular el valor esperado de Y</div>
+      <div class="step-content">
+        <p>Para una variable discreta, el valor esperado se calcula como:</p>
+        
+        <div class="math-display">
+          <div class="formula">E(Y) = Σ y · P(Y = y)</div>
+        </div>
+        
+        <p>Sustituyendo los valores:</p>
+        
+        <div class="math-display">
+          <div class="formula">E(Y) = 0 · P(Y = 0) + 1 · P(Y = 1) + 4 · P(Y = 4)</div>
+          <div class="formula">E(Y) = 0 · (1/2) + 1 · (1/3) + 4 · (1/6)</div>
+          <div class="formula">E(Y) = 0 + 1/3 + 4/6</div>
+          <div class="formula">E(Y) = 1/3 + 2/3 = 1</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>🎯 Resultado: Valor Esperado</h4>
+          <div class="answer">E(Y) = 1</div>
+          <p>El valor esperado de Y es <strong>1</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 3: Varianza de Y -->
+    <div class="step">
+      <div class="step-header">3️⃣ Calcular la varianza de Y</div>
+      <div class="step-content">
+        <p>La varianza se calcula usando: <span class="math">Var(Y) = E(Y²) - [E(Y)]²</span></p>
+        
+        <p>Primero calculamos E(Y²):</p>
+        
+        <div class="math-display">
+          <div class="formula">E(Y²) = Σ y² · P(Y = y)</div>
+          <div class="formula">E(Y²) = 0² · P(Y = 0) + 1² · P(Y = 1) + 4² · P(Y = 4)</div>
+          <div class="formula">E(Y²) = 0 · (1/2) + 1 · (1/3) + 16 · (1/6)</div>
+          <div class="formula">E(Y²) = 0 + 1/3 + 16/6</div>
+          <div class="formula">E(Y²) = 1/3 + 8/3 = 9/3 = 3</div>
+        </div>
+        
+        <p>Ahora aplicamos la fórmula de varianza:</p>
+        
+        <div class="math-display">
+          <div class="formula">Var(Y) = E(Y²) - [E(Y)]²</div>
+          <div class="formula">Var(Y) = 3 - (1)²</div>
+          <div class="formula">Var(Y) = 3 - 1 = 2</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>🎯 Resultado: Varianza</h4>
+          <div class="answer">Var(Y) = 2</div>
+          <p>La varianza de Y es <strong>2</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 4: Visualización -->
+    <div class="step">
+      <div class="step-header">4️⃣ Visualización de las distribuciones</div>
+      <div class="step-content">
+        <div class="chart-container">
+          <h4>📊 Distribución de X vs Distribución de Y</h4>
+          <canvas id="probabilityChart"></canvas>
+          <p style="margin-top: 15px; color: rgba(255,255,255,0.7);">
+            Comparación entre la distribución original de X y la transformada de Y
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 5: Verificación interactiva -->
+    <div class="step">
+      <div class="step-header">5️⃣ Verificación interactiva</div>
+      <div class="step-content">
+        <div class="check-panel">
+          <h3>Verificá los resultados calculados 🧮</h3>
+          <p>
+            Valor Esperado E(Y) = <input type="number" id="expectedValue" value="1" step="0.1">
+            Varianza Var(Y) = <input type="number" id="variance" value="2" step="0.1">
+          </p>
+          <button class="check-btn" onclick="checkResults()">Comprobar resultados</button>
+          <div id="checkResult" class="result"></div>
+        </div>
+        
+        <div class="check-panel" style="margin-top: 20px;">
+          <h3>Explorador de transformaciones 💡</h3>
+          <p>
+            Modificá el valor de c en Y = (X - c)²:<br>
+            <input type="number" id="customC" value="1" step="0.5" min="-2" max="4">
+            <button class="check-btn" onclick="calculateCustom()" style="margin-left: 10px;">Calcular E(Y) y Var(Y)</button>
+          </p>
+          <div id="customResult" class="result"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Verificación de resultados
+    function checkResults() {
+      const expectedValue = parseFloat(document.getElementById('expectedValue').value);
+      const variance = parseFloat(document.getElementById('variance').value);
+      
+      const correctExpected = 1;
+      const correctVariance = 2;
+      
+      const resultDiv = document.getElementById('checkResult');
+      
+      const expectedCorrect = Math.abs(expectedValue - correctExpected) < 0.01;
+      const varianceCorrect = Math.abs(variance - correctVariance) < 0.01;
+      
+      if (expectedCorrect && varianceCorrect) {
+        resultDiv.innerHTML = `✅ <span class="correct">¡Excelente!</span> Ambos resultados son correctos.`;
+      } else if (expectedCorrect || varianceCorrect) {
+        resultDiv.innerHTML = `🟡 <span class="correct">Parcialmente correcto.</span> E(Y) ${expectedCorrect ? '✓' : '✗'} Var(Y) ${varianceCorrect ? '✓' : '✗'}`;
+      } else {
+        resultDiv.innerHTML = `❌ <span class="incorrect">Revisá los cálculos.</span> Valores esperados: E(Y) = 1, Var(Y) = 2`;
+      }
+    }
+
+    // Cálculo personalizado para diferentes valores de c
+    function calculateCustom() {
+      const c = parseFloat(document.getElementById('customC').value);
+      const resultDiv = document.getElementById('customResult');
+      
+      // Distribución de X
+      const xValues = [0, 1, 2, 3];
+      const probabilities = [1/3, 1/2, 0, 1/6];
+      
+      // Calcular Y = (X - c)² para cada valor
+      let expectedY = 0;
+      let expectedY2 = 0;
+      
+      for (let i = 0; i < xValues.length; i++) {
+        const y = Math.pow(xValues[i] - c, 2);
+        expectedY += y * probabilities[i];
+        expectedY2 += Math.pow(y, 2) * probabilities[i];
+      }
+      
+      const varianceY = expectedY2 - Math.pow(expectedY, 2);
+      
+      resultDiv.innerHTML = `Para Y = (X - ${c})²:<br>
+        <strong>E(Y) = ${expectedY.toFixed(3)}</strong><br>
+        <strong>Var(Y) = ${varianceY.toFixed(3)}</strong>`;
+    }
+
+    // Crear gráfico comparativo
+    function createChart() {
+      const ctx = document.getElementById('probabilityChart').getContext('2d');
+      
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['X=0', 'X=1', 'X=2', 'X=3', 'Y=0', 'Y=1', 'Y=4'],
+          datasets: [{
+            label: 'Probabilidad',
+            data: [1/3, 1/2, 0, 1/6, 1/2, 1/3, 1/6],
+            backgroundColor: [
+              'rgba(120, 119, 198, 0.8)',
+              'rgba(120, 119, 198, 0.8)', 
+              'rgba(120, 119, 198, 0.8)',
+              'rgba(120, 119, 198, 0.8)',
+              'rgba(160, 224, 255, 0.8)',
+              'rgba(160, 224, 255, 0.8)',
+              'rgba(160, 224, 255, 0.8)'
+            ],
+            borderColor: [
+              'rgba(120, 119, 198, 1)',
+              'rgba(120, 119, 198, 1)',
+              'rgba(120, 119, 198, 1)',
+              'rgba(120, 119, 198, 1)',
+              'rgba(160, 224, 255, 1)',
+              'rgba(160, 224, 255, 1)',
+              'rgba(160, 224, 255, 1)'
+            ],
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Probabilidad',
+                color: 'white'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              },
+              ticks: {
+                color: 'white'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Valores',
+                color: 'white'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              },
+              ticks: {
+                color: 'white'
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: 'white'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Inicializar
+    window.addEventListener('load', () => {
+      createChart();
+    });
+
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html'; // fallback si se abre directo
+      }
+    });
+  </script>
+</body>
+</html>

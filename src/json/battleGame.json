@@ -226,8 +226,1853 @@
     ],
     "correct": 0,
     "explain": "Dos eventos A y B son independientes si P(A ∩ B) = P(A)·P(B). Esto implica que conocer si uno ocurre no cambia la probabilidad del otro."
+  },
+  {
+    "topic": "Operaciones con eventos",
+    "q": "¿Qué representa la operación A ∪ B (unión de A y B)?",
+    "options": [
+      "El conjunto de resultados que pertenecen a A, a B, o a ambos",
+      "El conjunto de resultados que pertenecen a A y B simultáneamente",
+      "El conjunto de resultados que pertenecen a A pero no a B",
+      "El conjunto de resultados que no pertenecen ni a A ni a B"
+    ],
+    "correct": 0,
+    "explain": "La unión A ∪ B incluye todos los resultados que están en A, en B, o en ambos. Representa el evento 'ocurre A o B o ambos'."
+  },
+  {
+    "topic": "Operaciones con eventos",
+    "q": "¿Qué representa la operación A ∩ B (intersección de A y B)?",
+    "options": [
+      "El conjunto de resultados que pertenecen simultáneamente a A y a B",
+      "El conjunto de resultados que pertenecen a A o a B",
+      "El conjunto de resultados que pertenecen solo a A",
+      "El conjunto de todos los resultados posibles"
+    ],
+    "correct": 0,
+    "explain": "La intersección A ∩ B contiene solo los resultados que están en ambos eventos al mismo tiempo. Representa 'ocurre A y B simultáneamente'."
+  },
+  {
+    "topic": "Operaciones con eventos",
+    "q": "¿Qué es el complemento de un evento A (representado como Aᶜ)?",
+    "options": [
+      "El conjunto de todos los resultados del espacio muestral que no pertenecen a A",
+      "El conjunto de resultados que están en A y en otro evento B",
+      "El conjunto vacío de probabilidad cero",
+      "El conjunto de resultados más probables que A"
+    ],
+    "correct": 0,
+    "explain": "El complemento Aᶜ contiene todos los resultados del espacio muestral que no están en A. Representa 'no ocurre A'. Se cumple que P(Aᶜ) = 1 − P(A)."
+  },
+  {
+    "topic": "Operaciones con eventos",
+    "q": "¿Qué representa la diferencia A − B?",
+    "options": [
+      "El conjunto de resultados que están en A pero no en B",
+      "El conjunto de resultados que están en B pero no en A",
+      "El conjunto de resultados comunes a A y B",
+      "La probabilidad de A menos la probabilidad de B"
+    ],
+    "correct": 0,
+    "explain": "A − B representa los elementos que pertenecen a A pero no a B. Es equivalente a A ∩ Bᶜ. Representa 'ocurre A pero no B'."
+  },
+  {
+    "topic": "Probabilidad condicional",
+    "q": "¿Cómo se define la probabilidad condicional P(A|B)?",
+    "options": [
+      "P(A|B) = P(A ∩ B) / P(B), con P(B) > 0",
+      "P(A|B) = P(A) × P(B)",
+      "P(A|B) = P(A) + P(B)",
+      "P(A|B) = P(B) / P(A)"
+    ],
+    "correct": 0,
+    "explain": "La probabilidad condicional P(A|B) mide la probabilidad de A dado que ya ocurrió B. Se calcula dividiendo la probabilidad conjunta entre la probabilidad de B."
+  },
+  {
+    "topic": "Probabilidad condicional",
+    "q": "Si dos eventos A y B son independientes, ¿qué relación existe entre P(A|B) y P(A)?",
+    "options": [
+      "P(A|B) = P(A)",
+      "P(A|B) = 0",
+      "P(A|B) = 1",
+      "P(A|B) = P(A) + P(B)"
+    ],
+    "correct": 0,
+    "explain": "Cuando A y B son independientes, conocer que B ocurrió no afecta la probabilidad de A. Por tanto, P(A|B) = P(A)."
+  },
+  {
+    "topic": "Regla del producto",
+    "q": "¿Cuál es la regla del producto para calcular P(A ∩ B)?",
+    "options": [
+      "P(A ∩ B) = P(B) · P(A|B) = P(A) · P(B|A)",
+      "P(A ∩ B) = P(A) + P(B)",
+      "P(A ∩ B) = P(A) / P(B)",
+      "P(A ∩ B) = P(A) − P(B)"
+    ],
+    "correct": 0,
+    "explain": "La regla del producto relaciona la probabilidad conjunta con las condicionales: P(A ∩ B) = P(B)·P(A|B). Es fundamental para calcular probabilidades de eventos simultáneos."
+  },
+  {
+    "topic": "Ley de los grandes números",
+    "q": "¿Qué establece la Ley de los grandes números?",
+    "options": [
+      "Que la frecuencia relativa de un evento converge a su probabilidad cuando el número de repeticiones tiende al infinito",
+      "Que todos los eventos tienen la misma probabilidad en experimentos grandes",
+      "Que la probabilidad aumenta con el número de observaciones",
+      "Que los eventos raros nunca ocurren en muestras grandes"
+    ],
+    "correct": 0,
+    "explain": "La Ley de los grandes números afirma que al repetir un experimento muchas veces, la frecuencia relativa observada se acerca cada vez más a la probabilidad teórica del evento."
+  },
+  {
+    "topic": "Variables aleatorias",
+    "q": "¿Qué es una variable aleatoria?",
+    "options": [
+      "Una función que asigna un valor numérico a cada resultado de un experimento aleatorio",
+      "Un conjunto de valores que puede tomar un evento",
+      "La probabilidad de que ocurra un resultado específico",
+      "El espacio muestral de un experimento"
+    ],
+    "correct": 0,
+    "explain": "Una variable aleatoria es una función X que mapea cada resultado del espacio muestral a un número real, permitiendo cuantificar los resultados del azar."
+  },
+  {
+    "topic": "Variables aleatorias",
+    "q": "¿Qué caracteriza a una variable aleatoria discreta?",
+    "options": [
+      "Puede tomar solo valores aislados, finitos o numerables",
+      "Puede tomar cualquier valor dentro de un intervalo continuo",
+      "Solo puede tomar valores enteros positivos",
+      "Siempre tiene distribución uniforme"
+    ],
+    "correct": 0,
+    "explain": "Una variable aleatoria discreta toma valores separados (como 0, 1, 2, ...). Ejemplos: número de caras al lanzar monedas, número de clientes que llegan."
+  },
+  {
+    "topic": "Variables aleatorias",
+    "q": "¿Qué caracteriza a una variable aleatoria continua?",
+    "options": [
+      "Puede tomar infinitos valores dentro de un intervalo",
+      "Solo puede tomar valores enteros",
+      "Tiene probabilidad positiva en cada punto individual",
+      "Su función de probabilidad es una suma finita"
+    ],
+    "correct": 0,
+    "explain": "Una variable aleatoria continua puede tomar cualquier valor en un intervalo. Ejemplos: altura, tiempo, temperatura. La probabilidad en un punto específico es cero."
+  },
+  {
+    "topic": "Esperanza matemática",
+    "q": "¿Qué representa la esperanza E[X] de una variable aleatoria?",
+    "options": [
+      "El valor promedio que se espera obtener al observar la variable muchas veces",
+      "El valor más frecuente de la variable",
+      "El valor máximo que puede tomar la variable",
+      "La diferencia entre el máximo y el mínimo valor"
+    ],
+    "correct": 0,
+    "explain": "La esperanza E[X] es el promedio ponderado de todos los valores posibles de X, usando sus probabilidades como pesos. Representa el 'centro de gravedad' de la distribución."
+  },
+  {
+    "topic": "Esperanza matemática",
+    "q": "Para una variable discreta, ¿cómo se calcula E[X]?",
+    "options": [
+      "E[X] = Σ xᵢ · P(X = xᵢ)",
+      "E[X] = Σ P(X = xᵢ) / n",
+      "E[X] = max(xᵢ) − min(xᵢ)",
+      "E[X] = 1 / Σ P(X = xᵢ)"
+    ],
+    "correct": 0,
+    "explain": "La esperanza de una variable discreta se calcula sumando cada valor posible multiplicado por su probabilidad: E[X] = Σ xᵢ · P(X = xᵢ)."
+  },
+  {
+    "topic": "Varianza",
+    "q": "¿Qué mide la varianza V[X] de una variable aleatoria?",
+    "options": [
+      "La dispersión o variabilidad de los valores de X respecto a su media",
+      "El valor promedio de la variable aleatoria",
+      "La probabilidad de que X tome su valor máximo",
+      "La diferencia entre dos valores consecutivos de X"
+    ],
+    "correct": 0,
+    "explain": "La varianza mide qué tan dispersos están los valores de X alrededor de su esperanza. Se calcula como V[X] = E[(X − E[X])²] = E[X²] − (E[X])²."
+  },
+  {
+    "topic": "Varianza",
+    "q": "¿Qué es la desviación estándar σ?",
+    "options": [
+      "La raíz cuadrada de la varianza",
+      "El doble de la varianza",
+      "La diferencia entre el máximo y mínimo valor",
+      "El inverso de la esperanza"
+    ],
+    "correct": 0,
+    "explain": "La desviación estándar σ = √V[X] mide la dispersión en las mismas unidades que la variable original, facilitando su interpretación."
+  },
+  {
+    "topic": "Propiedades de esperanza",
+    "q": "Si Y = aX + b, ¿cuánto vale E[Y]?",
+    "options": [
+      "E[Y] = a·E[X] + b",
+      "E[Y] = E[X] + b",
+      "E[Y] = a·E[X]",
+      "E[Y] = (a + b)·E[X]"
+    ],
+    "correct": 0,
+    "explain": "La esperanza es lineal: cuando transformamos una variable con Y = aX + b, su esperanza se transforma como E[Y] = a·E[X] + b."
+  },
+  {
+    "topic": "Propiedades de varianza",
+    "q": "Si Y = aX + b, ¿cuánto vale V[Y]?",
+    "options": [
+      "V[Y] = a²·V[X]",
+      "V[Y] = a·V[X] + b",
+      "V[Y] = V[X] + b",
+      "V[Y] = (a + b)²·V[X]"
+    ],
+    "correct": 0,
+    "explain": "Al multiplicar por una constante, la varianza se multiplica por su cuadrado. Sumar una constante no afecta la dispersión: V[Y] = a²·V[X]."
+  },
+  {
+    "topic": "Distribución Binomial",
+    "q": "¿Qué modela la distribución binomial?",
+    "options": [
+      "El número de éxitos en n ensayos independientes con probabilidad p constante",
+      "El tiempo hasta el primer éxito en una serie de ensayos",
+      "El número de eventos en un intervalo de tiempo",
+      "La probabilidad de un resultado específico en un experimento"
+    ],
+    "correct": 0,
+    "explain": "La distribución binomial B(n,p) cuenta éxitos en n repeticiones independientes donde cada una tiene probabilidad p de éxito."
+  },
+  {
+    "topic": "Distribución Binomial",
+    "q": "¿Cuál es la fórmula de la distribución binomial P(X = k)?",
+    "options": [
+      "P(X = k) = C(n,k) · p^k · (1−p)^(n−k)",
+      "P(X = k) = n · p^k",
+      "P(X = k) = λ^k · e^(−λ) / k!",
+      "P(X = k) = p · (1−p)^(k−1)"
+    ],
+    "correct": 0,
+    "explain": "La probabilidad binomial combina el coeficiente binomial C(n,k) con las probabilidades de k éxitos y (n−k) fracasos."
+  },
+  {
+    "topic": "Distribución Binomial",
+    "q": "Si X ~ B(n,p), ¿cuánto valen E[X] y V[X]?",
+    "options": [
+      "E[X] = np  y  V[X] = np(1−p)",
+      "E[X] = p  y  V[X] = p(1−p)",
+      "E[X] = n  y  V[X] = n²p",
+      "E[X] = np²  y  V[X] = n"
+    ],
+    "correct": 0,
+    "explain": "Para una binomial, la esperanza es np (número promedio de éxitos) y la varianza es np(1−p)."
+  },
+  {
+    "topic": "Distribución de Poisson",
+    "q": "¿Qué tipo de situaciones modela la distribución de Poisson?",
+    "options": [
+      "El número de eventos raros que ocurren en un intervalo de tiempo o espacio fijo",
+      "El número de éxitos en n ensayos con probabilidad variable",
+      "El tiempo de espera hasta el primer evento",
+      "La proporción de éxitos en una muestra"
+    ],
+    "correct": 0,
+    "explain": "La distribución de Poisson P(λ) modela conteos de eventos raros e independientes que ocurren con tasa promedio λ por unidad de tiempo/espacio."
+  },
+  {
+    "topic": "Distribución de Poisson",
+    "q": "¿Cuál es la fórmula de la distribución de Poisson?",
+    "options": [
+      "P(X = k) = (λ^k · e^(−λ)) / k!",
+      "P(X = k) = C(n,k) · p^k · (1−p)^(n−k)",
+      "P(X = k) = p · (1−p)^(k−1)",
+      "P(X = k) = 1/(b−a) para a ≤ k ≤ b"
+    ],
+    "correct": 0,
+    "explain": "La Poisson usa el parámetro λ (tasa promedio): P(X = k) = (λ^k · e^(−λ)) / k!, válida para k = 0, 1, 2, ..."
+  },
+  {
+    "topic": "Distribución de Poisson",
+    "q": "Si X ~ P(λ), ¿cuánto valen E[X] y V[X]?",
+    "options": [
+      "E[X] = λ  y  V[X] = λ",
+      "E[X] = λ²  y  V[X] = λ",
+      "E[X] = λ  y  V[X] = λ²",
+      "E[X] = 1/λ  y  V[X] = 1/λ²"
+    ],
+    "correct": 0,
+    "explain": "Una característica única de la Poisson es que su esperanza y varianza son iguales: ambas valen λ."
+  },
+  {
+    "topic": "Distribución Geométrica",
+    "q": "¿Qué modela la distribución geométrica?",
+    "options": [
+      "El número de ensayos necesarios hasta obtener el primer éxito",
+      "El número de éxitos en n ensayos",
+      "El tiempo entre dos eventos consecutivos",
+      "La proporción de éxitos en una muestra"
+    ],
+    "correct": 0,
+    "explain": "La geométrica G(p) cuenta cuántos ensayos independientes se necesitan hasta lograr el primer éxito con probabilidad p."
+  },
+  {
+    "topic": "Distribución Geométrica",
+    "q": "¿Cuál es la fórmula de la distribución geométrica?",
+    "options": [
+      "P(X = k) = p · (1−p)^(k−1)",
+      "P(X = k) = C(n,k) · p^k · (1−p)^(n−k)",
+      "P(X = k) = λ^k · e^(−λ) / k!",
+      "P(X = k) = (1−p)^k · p"
+    ],
+    "correct": 0,
+    "explain": "La geométrica requiere (k−1) fracasos antes del primer éxito en el k-ésimo ensayo: P(X = k) = p · (1−p)^(k−1)."
+  },
+  {
+    "topic": "Distribución Geométrica",
+    "q": "Si X ~ G(p), ¿cuánto vale E[X]?",
+    "options": [
+      "E[X] = 1/p",
+      "E[X] = p",
+      "E[X] = (1−p)/p",
+      "E[X] = 1/(1−p)"
+    ],
+    "correct": 0,
+    "explain": "El número esperado de ensayos hasta el primer éxito es E[X] = 1/p. Por ejemplo, si p = 0.1, se esperan 10 ensayos en promedio."
+  },
+  {
+    "topic": "Distribución Hipergeométrica",
+    "q": "¿Cuándo se usa la distribución hipergeométrica?",
+    "options": [
+      "Al extraer elementos sin reemplazo de una población finita con dos tipos de objetos",
+      "Al contar eventos en un intervalo de tiempo",
+      "Al repetir ensayos independientes con probabilidad constante",
+      "Al medir tiempos de espera entre eventos"
+    ],
+    "correct": 0,
+    "explain": "La hipergeométrica H(N,R,n) modela muestreo sin reemplazo: de N objetos (R éxitos, N−R fracasos) se extraen n."
+  },
+  {
+    "topic": "Distribución Uniforme Continua",
+    "q": "¿Qué caracteriza a la distribución uniforme continua U(a,b)?",
+    "options": [
+      "Todos los valores en el intervalo [a,b] tienen la misma densidad de probabilidad",
+      "Los valores cerca de (a+b)/2 son más probables",
+      "Solo valores enteros tienen probabilidad positiva",
+      "La probabilidad crece linealmente de a a b"
+    ],
+    "correct": 0,
+    "explain": "En la uniforme U(a,b), la función de densidad es constante f(x) = 1/(b−a) para a ≤ x ≤ b. Todos los valores son igualmente probables."
+  },
+  {
+    "topic": "Distribución Uniforme Continua",
+    "q": "Si X ~ U(a,b), ¿cuánto vale E[X]?",
+    "options": [
+      "E[X] = (a+b)/2",
+      "E[X] = b−a",
+      "E[X] = a",
+      "E[X] = (b−a)/2"
+    ],
+    "correct": 0,
+    "explain": "La esperanza de una uniforme es el punto medio del intervalo: E[X] = (a+b)/2."
+  },
+  {
+    "topic": "Distribución Exponencial",
+    "q": "¿Qué modela la distribución exponencial?",
+    "options": [
+      "El tiempo de espera hasta la ocurrencia del primer evento en un proceso de Poisson",
+      "El número de eventos en un intervalo de tiempo fijo",
+      "El número de ensayos hasta el primer éxito",
+      "La proporción de éxitos en n ensayos"
+    ],
+    "correct": 0,
+    "explain": "La exponencial E(λ) modela tiempos de espera o duraciones hasta que ocurre un evento, cuando los eventos siguen un proceso de Poisson."
+  },
+  {
+    "topic": "Distribución Exponencial",
+    "q": "¿Cuál es la función de densidad de la distribución exponencial?",
+    "options": [
+      "f(x) = λ·e^(−λx) para x ≥ 0",
+      "f(x) = (1/σ√(2π))·e^(−x²/2σ²)",
+      "f(x) = 1/(b−a) para a ≤ x ≤ b",
+      "f(x) = x^(k−1)·e^(−x)"
+    ],
+    "correct": 0,
+    "explain": "La exponencial tiene densidad f(x) = λ·e^(−λx) para x ≥ 0, donde λ es la tasa de ocurrencia de eventos."
+  },
+  {
+    "topic": "Distribución Exponencial",
+    "q": "Si X ~ E(λ), ¿cuánto valen E[X] y V[X]?",
+    "options": [
+      "E[X] = 1/λ  y  V[X] = 1/λ²",
+      "E[X] = λ  y  V[X] = λ²",
+      "E[X] = λ  y  V[X] = λ",
+      "E[X] = 1/λ  y  V[X] = 1/λ"
+    ],
+    "correct": 0,
+    "explain": "Para la exponencial, E[X] = 1/λ (tiempo promedio de espera) y V[X] = 1/λ²."
+  },
+  {
+    "topic": "Distribución Normal",
+    "q": "¿Qué caracteriza a la distribución normal o gaussiana?",
+    "options": [
+      "Tiene forma de campana simétrica alrededor de su media μ",
+      "Solo toma valores enteros positivos",
+      "Tiene densidad constante en todo su dominio",
+      "Sus valores están limitados a un intervalo finito"
+    ],
+    "correct": 0,
+    "explain": "La normal N(μ,σ²) tiene forma de campana simétrica centrada en μ. Es la distribución más importante en estadística."
+  },
+  {
+    "topic": "Distribución Normal",
+    "q": "¿Qué es la distribución normal estándar?",
+    "options": [
+      "Una distribución normal con media 0 y varianza 1",
+      "Una distribución normal con media 1 y varianza 0",
+      "Una distribución uniforme entre 0 y 1",
+      "Una distribución normal con parámetros desconocidos"
+    ],
+    "correct": 0,
+    "explain": "La normal estándar Z ~ N(0,1) tiene μ = 0 y σ = 1. Se usa para estandarizar cualquier normal mediante Z = (X−μ)/σ."
+  },
+  {
+    "topic": "Estandarización",
+    "q": "Si X ~ N(μ,σ²), ¿cómo se estandariza X?",
+    "options": [
+      "Z = (X−μ)/σ, donde Z ~ N(0,1)",
+      "Z = X/σ, donde Z ~ N(0,1)",
+      "Z = X−μ, donde Z ~ N(0,σ²)",
+      "Z = σX + μ, donde Z ~ N(μ,1)"
+    ],
+    "correct": 0,
+    "explain": "La estandarización transforma cualquier normal en una estándar: Z = (X−μ)/σ ~ N(0,1), facilitando el cálculo de probabilidades con tablas."
+  },
+  {
+    "topic": "Técnicas de conteo",
+    "q": "¿Qué establece el principio fundamental de conteo?",
+    "options": [
+      "Si hay n₁ formas de hacer una tarea y n₂ formas de hacer otra, hay n₁×n₂ formas de hacer ambas",
+      "El número total de formas es la suma de las formas individuales",
+      "Solo se puede realizar una tarea a la vez",
+      "El orden de las tareas no afecta el conteo total"
+    ],
+    "correct": 0,
+    "explain": "El principio fundamental establece que para tareas secuenciales, el total de formas es el producto: n₁ × n₂ × ... × nₖ."
+  },
+  {
+    "topic": "Permutaciones",
+    "q": "¿Qué son las permutaciones?",
+    "options": [
+      "Ordenamientos posibles de un conjunto de elementos donde el orden importa",
+      "Selecciones de elementos donde el orden no importa",
+      "Combinaciones de elementos con repetición",
+      "Agrupaciones de elementos idénticos"
+    ],
+    "correct": 0,
+    "explain": "Una permutación es un ordenamiento específico de elementos. El número de permutaciones de n elementos es n! = n×(n−1)×...×2×1."
+  },
+  {
+    "topic": "Combinaciones",
+    "q": "¿Qué diferencia hay entre permutaciones y combinaciones?",
+    "options": [
+      "En permutaciones el orden importa, en combinaciones no",
+      "Las permutaciones solo aplican a números, las combinaciones a cualquier objeto",
+      "Las permutaciones siempre dan más resultados que las combinaciones",
+      "No hay diferencia, son sinónimos"
+    ],
+    "correct": 0,
+    "explain": "Permutaciones cuentan ordenamientos (ABC ≠ BAC). Combinaciones cuentan selecciones sin orden (ABC = BAC). Siempre P(n,k) ≥ C(n,k)."
+  },
+  {
+    "topic": "Coeficiente binomial",
+    "q": "¿Cómo se calcula el coeficiente binomial C(n,k)?",
+    "options": [
+      "C(n,k) = n! / (k!·(n−k)!)",
+      "C(n,k) = n! / (n−k)!",
+      "C(n,k) = n^k",
+      "C(n,k) = k·n!"
+    ],
+    "correct": 0,
+    "explain": "El coeficiente binomial C(n,k) cuenta formas de elegir k elementos de n sin importar el orden: C(n,k) = n!/(k!·(n−k)!)."
+  },
+  {
+    "topic": "Estadística descriptiva",
+    "q": "¿Qué es la mediana de un conjunto de datos?",
+    "options": [
+      "El valor central cuando los datos están ordenados",
+      "El promedio aritmético de todos los valores",
+      "El valor que aparece con mayor frecuencia",
+      "La diferencia entre el máximo y el mínimo"
+    ],
+    "correct": 0,
+    "explain": "La mediana es el valor que divide los datos ordenados en dos mitades iguales. Si n es par, es el promedio de los dos valores centrales."
+  },
+  {
+    "topic": "Estadística descriptiva",
+    "q": "¿Qué es la moda de un conjunto de datos?",
+    "options": [
+      "El valor o valores que aparecen con mayor frecuencia",
+      "El promedio de todos los valores",
+      "El valor central de los datos ordenados",
+      "La suma de todos los valores dividida entre su cantidad"
+    ],
+    "correct": 0,
+    "explain": "La moda es el valor más frecuente en el conjunto de datos. Puede haber una moda (unimodal), dos (bimodal) o ninguna."
+  },
+  {
+    "topic": "Medidas de dispersión",
+    "q": "¿Qué es el rango de un conjunto de datos?",
+    "options": [
+      "La diferencia entre el valor máximo y el mínimo",
+      "El promedio de todos los valores",
+      "La raíz cuadrada de la varianza",
+      "El valor más frecuente"
+    ],
+    "correct": 0,
+    "explain": "El rango R = máx − mín mide la amplitud total de los datos. Es una medida simple pero sensible a valores extremos."
+  },
+  {
+    "topic": "Función de distribución acumulada",
+    "q": "¿Qué representa F(x) = P(X ≤ x)?",
+    "options": [
+      "La probabilidad de que la variable aleatoria tome valores menores o iguales a x",
+      "La probabilidad de que la variable tome exactamente el valor x",
+      "La probabilidad de que la variable sea mayor que x",
+      "El valor esperado de la variable"
+    ],
+    "correct": 0,
+    "explain": "La FDA F(x) acumula probabilidades hasta x. Cumple: F(−∞) = 0, F(∞) = 1, es no decreciente y continua por la derecha."
+  },
+  {
+    "topic": "Teorema del límite central",
+    "q": "¿Qué establece el Teorema del Límite Central?",
+    "options": [
+      "Que la suma de muchas variables aleatorias independientes tiende a distribuirse normalmente",
+      "Que todas las distribuciones convergen a la distribución uniforme",
+      "Que la media muestral siempre es igual a la media poblacional",
+      "Que las variables independientes tienen varianza cero"
+    ],
+    "correct": 0,
+    "explain": "El TLC establece que la suma (o promedio) de n variables i.i.d. se aproxima a una normal cuando n es grande, sin importar la distribución original."
+  },
+{
+    "topic": "Distribución t-Student",
+    "q": "¿Cuándo se utiliza la distribución t-Student en lugar de la normal?",
+    "options": [
+      "Cuando la varianza poblacional es desconocida y el tamaño de muestra es pequeño",
+      "Cuando la varianza es conocida y la muestra es grande",
+      "Cuando se conocen todos los parámetros poblacionales",
+      "Cuando se trabaja con variables discretas"
+    ],
+    "correct": 0,
+    "explain": "La t-Student se usa cuando estimamos la media con varianza desconocida y n pequeño. Tiene colas más pesadas que la normal y converge a N(0,1) cuando n aumenta."
+  },
+  {
+    "topic": "Distribución Chi-Cuadrado",
+    "q": "¿Qué modela la distribución Chi-Cuadrado?",
+    "options": [
+      "La distribución de la varianza muestral cuando los datos provienen de una población normal",
+      "El tiempo de espera entre eventos",
+      "El número de éxitos en n ensayos",
+      "La media de una muestra aleatoria"
+    ],
+    "correct": 0,
+    "explain": "La χ² con ν grados de libertad modela χ² = (n−1)S²/σ². Se usa para inferencias sobre varianzas y pruebas de bondad de ajuste."
+  },
+  {
+    "topic": "Relación Exponencial-Poisson",
+    "q": "¿Qué relación existe entre la distribución Exponencial y Poisson?",
+    "options": [
+      "Si los eventos siguen un proceso de Poisson, el tiempo entre eventos sigue una distribución Exponencial",
+      "Ambas son distribuciones discretas para contar eventos",
+      "La Exponencial es la versión continua de la Binomial",
+      "No tienen ninguna relación matemática"
+    ],
+    "correct": 0,
+    "explain": "Si los eventos ocurren según Poisson con tasa λ, el tiempo T hasta el siguiente evento sigue E(λ). Son complementarias: una cuenta eventos, la otra mide tiempos."
+  },
+  {
+    "topic": "Población y muestra",
+    "q": "¿Qué es un parámetro en estadística?",
+    "options": [
+      "Un valor numérico que describe una característica de la población",
+      "Un valor calculado a partir de una muestra",
+      "Una variable aleatoria discreta",
+      "El tamaño de la muestra seleccionada"
+    ],
+    "correct": 0,
+    "explain": "Un parámetro describe la población (ej: μ, σ²). Un estadístico describe la muestra (ej: x̄, s²). Los estadísticos estiman parámetros."
+  },
+  {
+    "topic": "Población y muestra",
+    "q": "¿Qué es un estadístico?",
+    "options": [
+      "Un valor numérico calculado a partir de datos de una muestra",
+      "Un parámetro de la población completa",
+      "El espacio muestral de un experimento",
+      "Una distribución de probabilidad"
+    ],
+    "correct": 0,
+    "explain": "Un estadístico es una función de los datos muestrales (como x̄, s², mediana muestral). Se usa para estimar parámetros poblacionales desconocidos."
+  },
+  {
+    "topic": "Variables cualitativas vs cuantitativas",
+    "q": "¿Cuál de las siguientes es una variable cualitativa?",
+    "options": [
+      "Color de ojos de una persona",
+      "Altura de una persona en centímetros",
+      "Número de hermanos",
+      "Temperatura en grados Celsius"
+    ],
+    "correct": 0,
+    "explain": "Las variables cualitativas expresan categorías o atributos (color, género, marca). Las cuantitativas expresan cantidades numéricas (altura, edad, ingresos)."
+  },
+  {
+    "topic": "Variables discretas vs continuas",
+    "q": "¿Cuál de las siguientes es una variable cuantitativa continua?",
+    "options": [
+      "Peso de un objeto en kilogramos",
+      "Número de estudiantes en una clase",
+      "Cantidad de hijos en una familia",
+      "Número de caras al lanzar 5 monedas"
+    ],
+    "correct": 0,
+    "explain": "Las variables continuas toman valores en un intervalo (peso, altura, tiempo). Las discretas toman valores aislados (número de hijos, de autos)."
+  },
+  {
+    "topic": "Frecuencia relativa",
+    "q": "¿Cómo se calcula la frecuencia relativa de un valor?",
+    "options": [
+      "Dividiendo su frecuencia absoluta entre el total de observaciones",
+      "Sumando todas las frecuencias hasta ese valor",
+      "Multiplicando la frecuencia por el valor observado",
+      "Restando la frecuencia del total"
+    ],
+    "correct": 0,
+    "explain": "La frecuencia relativa fr = f/n expresa la proporción de veces que aparece un valor. La suma de todas las frecuencias relativas es 1."
+  },
+  {
+    "topic": "Frecuencia acumulada",
+    "q": "¿Qué es la frecuencia acumulada?",
+    "options": [
+      "La suma de frecuencias desde el primer valor hasta el valor actual",
+      "El producto de todas las frecuencias observadas",
+      "La diferencia entre la frecuencia máxima y la actual",
+      "El promedio de todas las frecuencias"
+    ],
+    "correct": 0,
+    "explain": "La frecuencia acumulada F(xᵢ) = Σf(xⱼ) para j≤i suma todas las frecuencias hasta el valor xᵢ inclusive."
+  },
+  {
+    "topic": "Histogramas",
+    "q": "¿Qué representa un histograma?",
+    "options": [
+      "La distribución de frecuencias de una variable continua mediante barras",
+      "La relación entre dos variables cuantitativas",
+      "La proporción de categorías cualitativas",
+      "La evolución de una variable en el tiempo"
+    ],
+    "correct": 0,
+    "explain": "Un histograma agrupa datos continuos en intervalos (clases) y muestra sus frecuencias con barras. El área de cada barra representa la frecuencia relativa."
+  },
+  {
+    "topic": "Coeficiente de variación",
+    "q": "¿Qué mide el coeficiente de variación CV?",
+    "options": [
+      "La dispersión relativa de los datos respecto a su media, expresada en porcentaje",
+      "La diferencia absoluta entre el máximo y el mínimo",
+      "La probabilidad de observar un valor específico",
+      "El número de desviaciones estándar que un valor se aleja de la media"
+    ],
+    "correct": 0,
+    "explain": "CV = (σ/μ)×100% mide dispersión relativa. Permite comparar variabilidad entre conjuntos con diferentes unidades o escalas."
+  },
+  {
+    "topic": "Eventos complementarios",
+    "q": "Si P(A) = 0.35, ¿cuánto vale P(Aᶜ)?",
+    "options": [
+      "0.65",
+      "0.35",
+      "1.35",
+      "−0.35"
+    ],
+    "correct": 0,
+    "explain": "Los eventos complementarios cumplen P(A) + P(Aᶜ) = 1, por tanto P(Aᶜ) = 1 − P(A) = 1 − 0.35 = 0.65."
+  },
+  {
+    "topic": "Probabilidad condicional - aplicación",
+    "q": "Si P(A) = 0.4, P(B) = 0.5 y P(A∩B) = 0.2, ¿cuánto vale P(A|B)?",
+    "options": [
+      "0.4",
+      "0.2",
+      "0.5",
+      "0.8"
+    ],
+    "correct": 0,
+    "explain": "P(A|B) = P(A∩B)/P(B) = 0.2/0.5 = 0.4. Esto significa que si B ocurrió, la probabilidad de A es 40%."
+  },
+  {
+    "topic": "Independencia - verificación",
+    "q": "Si P(A) = 0.3, P(B) = 0.4 y P(A∩B) = 0.12, ¿son A y B independientes?",
+    "options": [
+      "Sí, porque P(A∩B) = P(A)·P(B)",
+      "No, porque P(A) ≠ P(B)",
+      "Sí, porque P(A) + P(B) = 0.7",
+      "No, porque P(A∩B) ≠ 0"
+    ],
+    "correct": 0,
+    "explain": "Verificamos: P(A)·P(B) = 0.3×0.4 = 0.12 = P(A∩B). Como se cumple la igualdad, A y B son independientes."
+  },
+  {
+    "topic": "Regla de la suma",
+    "q": "Si P(A) = 0.6, P(B) = 0.5 y P(A∩B) = 0.3, ¿cuánto vale P(A∪B)?",
+    "options": [
+      "0.8",
+      "1.1",
+      "0.3",
+      "0.9"
+    ],
+    "correct": 0,
+    "explain": "Aplicamos P(A∪B) = P(A) + P(B) − P(A∩B) = 0.6 + 0.5 − 0.3 = 0.8."
+  },
+  {
+    "topic": "Binomial - cálculo",
+    "q": "Si se lanzan 3 monedas justas, ¿cuál es la probabilidad de obtener exactamente 2 caras?",
+    "options": [
+      "3/8",
+      "1/2",
+      "1/8",
+      "1/4"
+    ],
+    "correct": 0,
+    "explain": "X ~ B(3, 0.5). P(X=2) = C(3,2)·(0.5)²·(0.5)¹ = 3·(1/4)·(1/2) = 3/8."
+  },
+  {
+    "topic": "Esperanza - cálculo",
+    "q": "Si X toma valores 1, 2, 3 con probabilidades 0.2, 0.3, 0.5 respectivamente, ¿cuánto vale E[X]?",
+    "options": [
+      "2.3",
+      "2.0",
+      "1.5",
+      "3.0"
+    ],
+    "correct": 0,
+    "explain": "E[X] = 1(0.2) + 2(0.3) + 3(0.5) = 0.2 + 0.6 + 1.5 = 2.3."
+  },
+  {
+    "topic": "Varianza - cálculo",
+    "q": "Si E[X] = 2 y E[X²] = 5, ¿cuánto vale V[X]?",
+    "options": [
+      "1",
+      "3",
+      "5",
+      "7"
+    ],
+    "correct": 0,
+    "explain": "V[X] = E[X²] − (E[X])² = 5 − 2² = 5 − 4 = 1."
+  },
+  {
+    "topic": "Normal estándar - tabla",
+    "q": "Si Z ~ N(0,1) y Φ(1.5) = 0.9332, ¿cuánto vale P(Z > 1.5)?",
+    "options": [
+      "0.0668",
+      "0.9332",
+      "0.5000",
+      "1.5000"
+    ],
+    "correct": 0,
+    "explain": "P(Z > 1.5) = 1 − P(Z ≤ 1.5) = 1 − Φ(1.5) = 1 − 0.9332 = 0.0668."
+  },
+  {
+    "topic": "Estandarización - aplicación",
+    "q": "Si X ~ N(50, 100) y queremos P(X < 60), ¿qué valor de Z usamos?",
+    "options": [
+      "Z = 1",
+      "Z = 10",
+      "Z = 0.1",
+      "Z = 60"
+    ],
+    "correct": 0,
+    "explain": "Z = (X−μ)/σ = (60−50)/10 = 10/10 = 1. Entonces P(X < 60) = P(Z < 1) = Φ(1)."
+  },
+  {
+    "topic": "Permutaciones - cálculo",
+    "q": "¿De cuántas formas se pueden ordenar 5 libros diferentes en un estante?",
+    "options": [
+      "120",
+      "25",
+      "20",
+      "5"
+    ],
+    "correct": 0,
+    "explain": "El número de permutaciones de 5 elementos es 5! = 5×4×3×2×1 = 120."
+  },
+  {
+    "topic": "Combinaciones - cálculo",
+    "q": "¿De cuántas formas se pueden elegir 3 personas de un grupo de 5?",
+    "options": [
+      "10",
+      "15",
+      "60",
+      "125"
+    ],
+    "correct": 0,
+    "explain": "C(5,3) = 5!/(3!·2!) = (5×4)/(2×1) = 20/2 = 10."
+  },
+  {
+    "topic": "Conceptos fundamentales",
+    "q": "¿Qué es un evento elemental?",
+    "options": [
+      "Un evento que consiste en un único resultado del espacio muestral",
+      "Un evento que contiene todos los resultados posibles",
+      "Un evento con probabilidad igual a 1",
+      "Un evento que ocurre con mayor frecuencia"
+    ],
+    "correct": 0,
+    "explain": "Un evento elemental es aquel que contiene exactamente un resultado del espacio muestral. Por ejemplo, en el lanzamiento de un dado, {3} es un evento elemental."
+  },
+  {
+    "topic": "Conceptos fundamentales",
+    "q": "¿Qué es un evento imposible?",
+    "options": [
+      "Un evento que no puede ocurrir, representado por el conjunto vacío ∅",
+      "Un evento con probabilidad menor a 0.5",
+      "Un evento que ocurre raramente",
+      "Un evento que depende de otro evento"
+    ],
+    "correct": 0,
+    "explain": "Un evento imposible es aquel que no contiene ningún resultado del espacio muestral (∅) y tiene probabilidad cero: P(∅) = 0. Por ejemplo, obtener un 7 al lanzar un dado estándar."
+  },
+  {
+    "topic": "Conceptos fundamentales",
+    "q": "¿Qué es un evento seguro?",
+    "options": [
+      "Un evento que siempre ocurre, equivalente al espacio muestral completo",
+      "Un evento con probabilidad mayor a 0.9",
+      "Un evento que no depende de factores externos",
+      "Un evento que se repite en todos los experimentos"
+    ],
+    "correct": 0,
+    "explain": "Un evento seguro es aquel que ocurre con certeza en cada realización del experimento. Es igual al espacio muestral Ω y tiene P(Ω) = 1."
+  },
+  {
+    "topic": "Axiomas de la probabilidad",
+    "q": "¿Qué implica que P(A ∪ B) ≤ P(A) + P(B)?",
+    "options": [
+      "Que la probabilidad de la unión nunca excede la suma de probabilidades individuales",
+      "Que A y B son eventos independientes",
+      "Que A y B son mutuamente excluyentes",
+      "Que la intersección de A y B es vacía"
+    ],
+    "correct": 0,
+    "explain": "Esta desigualdad se conoce como desigualdad de Boole. La igualdad se cumple solo cuando A ∩ B = ∅. En general, P(A ∪ B) = P(A) + P(B) − P(A ∩ B) ≤ P(A) + P(B)."
+  },
+  {
+    "topic": "Axiomas de la probabilidad",
+    "q": "Si A ⊂ B, ¿qué relación existe entre P(A) y P(B)?",
+    "options": [
+      "P(A) ≤ P(B)",
+      "P(A) = P(B)",
+      "P(A) > P(B)",
+      "No hay relación determinada"
+    ],
+    "correct": 0,
+    "explain": "Si A está contenido en B, entonces todos los resultados de A también están en B, por lo que P(A) ≤ P(B). Esta es la propiedad de monotonía de la probabilidad."
+  },
+  {
+    "topic": "Eventos y relaciones",
+    "q": "¿Qué son eventos exhaustivos?",
+    "options": [
+      "Un conjunto de eventos cuya unión es el espacio muestral completo",
+      "Eventos que tienen la misma probabilidad",
+      "Eventos que no pueden ocurrir simultáneamente",
+      "Eventos que dependen unos de otros"
+    ],
+    "correct": 0,
+    "explain": "Los eventos A₁, A₂, ..., Aₙ son exhaustivos si A₁ ∪ A₂ ∪ ... ∪ Aₙ = Ω. Esto significa que al menos uno de ellos debe ocurrir."
+  },
+  {
+    "topic": "Eventos y relaciones",
+    "q": "¿Qué es una partición del espacio muestral?",
+    "options": [
+      "Un conjunto de eventos mutuamente excluyentes y exhaustivos",
+      "El complemento de todos los eventos posibles",
+      "La intersección de todos los eventos",
+      "Un subconjunto con probabilidad igual a 1"
+    ],
+    "correct": 0,
+    "explain": "Una partición {B₁, B₂, ..., Bₙ} cumple dos condiciones: (1) los eventos son mutuamente excluyentes (Bᵢ ∩ Bⱼ = ∅ para i≠j) y (2) son exhaustivos (∪Bᵢ = Ω)."
+  },
+  {
+    "topic": "Eventos y relaciones",
+    "q": "¿Qué significa que A y B sean eventos compatibles?",
+    "options": [
+      "Que pueden ocurrir simultáneamente, es decir, A ∩ B ≠ ∅",
+      "Que no pueden ocurrir al mismo tiempo",
+      "Que tienen la misma probabilidad",
+      "Que son eventos complementarios"
+    ],
+    "correct": 0,
+    "explain": "Dos eventos son compatibles si su intersección no es vacía, es decir, existe al menos un resultado común. Son lo opuesto a eventos mutuamente excluyentes."
+  },
+  {
+    "topic": "Tipos de probabilidad",
+    "q": "¿Cuál es la principal limitación de la probabilidad clásica?",
+    "options": [
+      "Requiere que todos los resultados sean equiprobables",
+      "No se puede aplicar a experimentos repetibles",
+      "Solo funciona con variables continuas",
+      "No permite calcular probabilidades condicionales"
+    ],
+    "correct": 0,
+    "explain": "La probabilidad clásica solo se puede aplicar cuando todos los resultados tienen la misma probabilidad de ocurrir, lo cual limita su uso a situaciones ideales como juegos de azar justos."
+  },
+  {
+    "topic": "Tipos de probabilidad",
+    "q": "¿En qué se diferencia la probabilidad empírica de la teórica?",
+    "options": [
+      "La empírica se basa en observaciones reales, la teórica en modelos matemáticos",
+      "La empírica siempre es más precisa que la teórica",
+      "La teórica solo se aplica a experimentos físicos",
+      "No hay diferencia, son sinónimos"
+    ],
+    "correct": 0,
+    "explain": "La probabilidad empírica se estima mediante frecuencias observadas en experimentos reales, mientras que la teórica se calcula usando modelos matemáticos y supuestos."
+  },
+  {
+    "topic": "Operaciones con eventos",
+    "q": "¿Qué representa la diferencia simétrica A △ B?",
+    "options": [
+      "Los elementos que pertenecen a A o B pero no a ambos: (A ∪ B) − (A ∩ B)",
+      "Los elementos comunes a A y B",
+      "Todos los elementos de A",
+      "El complemento de la unión"
+    ],
+    "correct": 0,
+    "explain": "La diferencia simétrica A △ B = (A − B) ∪ (B − A) contiene elementos que están en exactamente uno de los dos conjuntos, pero no en ambos."
+  },
+  {
+    "topic": "Operaciones con eventos",
+    "q": "Si A y B son complementarios, ¿qué se cumple?",
+    "options": [
+      "A ∪ B = Ω y A ∩ B = ∅",
+      "A = B",
+      "P(A) = P(B)",
+      "A ⊂ B"
+    ],
+    "correct": 0,
+    "explain": "Los eventos complementarios cumplen que su unión es todo el espacio muestral y su intersección es vacía. Además, P(A) + P(B) = 1."
+  },
+  {
+    "topic": "Operaciones con eventos",
+    "q": "¿Cuál es la Ley de De Morgan para la unión?",
+    "options": [
+      "(A ∪ B)ᶜ = Aᶜ ∩ Bᶜ",
+      "(A ∪ B)ᶜ = Aᶜ ∪ Bᶜ",
+      "(A ∪ B)ᶜ = A ∩ B",
+      "(A ∪ B)ᶜ = ∅"
+    ],
+    "correct": 0,
+    "explain": "La Ley de De Morgan establece que el complemento de la unión es la intersección de los complementos: (A ∪ B)ᶜ = Aᶜ ∩ Bᶜ."
+  },
+  {
+    "topic": "Operaciones con eventos",
+    "q": "¿Cuál es la Ley de De Morgan para la intersección?",
+    "options": [
+      "(A ∩ B)ᶜ = Aᶜ ∪ Bᶜ",
+      "(A ∩ B)ᶜ = Aᶜ ∩ Bᶜ",
+      "(A ∩ B)ᶜ = A ∪ B",
+      "(A ∩ B)ᶜ = Ω"
+    ],
+    "correct": 0,
+    "explain": "La segunda Ley de De Morgan indica que el complemento de la intersección es la unión de los complementos: (A ∩ B)ᶜ = Aᶜ ∪ Bᶜ."
+  },
+  {
+    "topic": "Probabilidad condicional",
+    "q": "Si P(A|B) = P(A), ¿qué se puede concluir?",
+    "options": [
+      "Que A y B son eventos independientes",
+      "Que A y B son mutuamente excluyentes",
+      "Que A ⊂ B",
+      "Que P(B) = 0"
+    ],
+    "correct": 0,
+    "explain": "Si la probabilidad de A no cambia al saber que B ocurrió, entonces A y B son independientes. Esto implica también que P(A|B) = P(A) y P(A ∩ B) = P(A)·P(B)."
+  },
+  {
+    "topic": "Probabilidad condicional",
+    "q": "¿Qué ocurre con P(A|A)?",
+    "options": [
+      "P(A|A) = 1",
+      "P(A|A) = 0",
+      "P(A|A) = P(A)",
+      "P(A|A) está indefinido"
+    ],
+    "correct": 0,
+    "explain": "La probabilidad de A dado que A ocurrió es siempre 1, ya que si A ha ocurrido con certeza, entonces P(A|A) = P(A ∩ A)/P(A) = P(A)/P(A) = 1."
+  },
+  {
+    "topic": "Probabilidad condicional",
+    "q": "Si A y B son mutuamente excluyentes, ¿cuánto vale P(A|B)?",
+    "options": [
+      "P(A|B) = 0",
+      "P(A|B) = 1",
+      "P(A|B) = P(A)",
+      "P(A|B) está indefinido"
+    ],
+    "correct": 0,
+    "explain": "Si A y B son mutuamente excluyentes, A ∩ B = ∅, por lo que P(A|B) = P(A ∩ B)/P(B) = 0/P(B) = 0. Si B ocurre, A no puede ocurrir."
+  },
+  {
+    "topic": "Regla del producto",
+    "q": "Para tres eventos A, B y C, ¿cómo se calcula P(A ∩ B ∩ C)?",
+    "options": [
+      "P(A ∩ B ∩ C) = P(A)·P(B|A)·P(C|A∩B)",
+      "P(A ∩ B ∩ C) = P(A)·P(B)·P(C)",
+      "P(A ∩ B ∩ C) = P(A) + P(B) + P(C)",
+      "P(A ∩ B ∩ C) = P(A|B|C)"
+    ],
+    "correct": 0,
+    "explain": "La regla del producto se extiende a múltiples eventos mediante condicionamiento sucesivo: P(A ∩ B ∩ C) = P(A)·P(B|A)·P(C|A∩B)."
+  },
+  {
+    "topic": "Teoremas de probabilidad",
+    "q": "¿Qué establece el teorema de la probabilidad complementaria?",
+    "options": [
+      "P(Aᶜ) = 1 − P(A)",
+      "P(Aᶜ) = P(A)",
+      "P(Aᶜ) = 1 + P(A)",
+      "P(Aᶜ) = 0"
+    ],
+    "correct": 0,
+    "explain": "El complemento de un evento tiene probabilidad 1 − P(A), ya que A y Aᶜ son exhaustivos y mutuamente excluyentes: P(A) + P(Aᶜ) = 1."
+  },
+  {
+    "topic": "Teoremas de probabilidad",
+    "q": "Si P(A) = 0.7 y P(B|A) = 0.4, ¿cuánto vale P(A ∩ B)?",
+    "options": [
+      "0.28",
+      "0.4",
+      "0.7",
+      "1.1"
+    ],
+    "correct": 0,
+    "explain": "Usando la regla del producto: P(A ∩ B) = P(A)·P(B|A) = 0.7 × 0.4 = 0.28."
+  },
+  {
+    "topic": "Teoremas de probabilidad",
+    "q": "¿Cuándo se cumple que P(A ∪ B) = P(A) + P(B)?",
+    "options": [
+      "Cuando A y B son eventos mutuamente excluyentes",
+      "Cuando A y B son independientes",
+      "Siempre se cumple esta igualdad",
+      "Cuando P(A) = P(B)"
+    ],
+    "correct": 0,
+    "explain": "La suma directa de probabilidades solo es válida para eventos mutuamente excluyentes donde A ∩ B = ∅, por lo que P(A ∩ B) = 0."
+  },
+  {
+    "topic": "Teoremas de probabilidad",
+    "q": "Si tres eventos A, B y C son mutuamente excluyentes, ¿cuánto vale P(A ∪ B ∪ C)?",
+    "options": [
+      "P(A ∪ B ∪ C) = P(A) + P(B) + P(C)",
+      "P(A ∪ B ∪ C) = P(A)·P(B)·P(C)",
+      "P(A ∪ B ∪ C) = max(P(A), P(B), P(C))",
+      "P(A ∪ B ∪ C) = 1"
+    ],
+    "correct": 0,
+    "explain": "Para eventos mutuamente excluyentes, la probabilidad de la unión es simplemente la suma de las probabilidades individuales."
+  },
+  {
+    "topic": "Variables aleatorias",
+    "q": "¿Qué es el rango o recorrido de una variable aleatoria X?",
+    "options": [
+      "El conjunto de todos los valores posibles que X puede tomar",
+      "La diferencia entre el máximo y mínimo valor de X",
+      "El valor más frecuente de X",
+      "La probabilidad acumulada hasta un valor"
+    ],
+    "correct": 0,
+    "explain": "El rango Rₓ es el conjunto de todos los valores que la variable aleatoria puede asumir. Para una discreta es un conjunto numerable, para una continua es un intervalo."
+  },
+  {
+    "topic": "Variables aleatorias",
+    "q": "¿Qué es la función de masa de probabilidad (PMF)?",
+    "options": [
+      "Una función que asigna probabilidades a cada valor de una variable aleatoria discreta",
+      "La derivada de la función de distribución acumulada",
+      "Una función válida solo para variables continuas",
+      "El promedio de todos los valores posibles"
+    ],
+    "correct": 0,
+    "explain": "La PMF p(x) = P(X = x) especifica la probabilidad de cada valor para variables discretas. Cumple p(x) ≥ 0 y Σp(x) = 1."
+  },
+  {
+    "topic": "Variables aleatorias",
+    "q": "¿Qué es la función de densidad de probabilidad (PDF)?",
+    "options": [
+      "Una función no negativa cuya integral sobre su dominio es 1, usada para variables continuas",
+      "Una función que asigna probabilidades exactas a puntos individuales",
+      "El complemento de la función de distribución",
+      "Una tabla de frecuencias relativas"
+    ],
+    "correct": 0,
+    "explain": "La PDF f(x) para variables continuas cumple f(x) ≥ 0 y ∫f(x)dx = 1. La probabilidad se calcula integrando: P(a ≤ X ≤ b) = ∫ₐᵇf(x)dx."
+  },
+  {
+    "topic": "Variables aleatorias",
+    "q": "¿Por qué P(X = x) = 0 para cualquier valor específico x en una variable continua?",
+    "options": [
+      "Porque hay infinitos valores posibles en cualquier intervalo, haciendo que la probabilidad puntual sea cero",
+      "Porque las variables continuas no tienen valores definidos",
+      "Porque la función de densidad siempre es cero",
+      "Es un error, P(X = x) siempre es positiva"
+    ],
+    "correct": 0,
+    "explain": "En variables continuas, la probabilidad solo tiene sentido sobre intervalos, no puntos. P(X = x) = ∫ₓˣf(t)dt = 0 ya que el intervalo tiene longitud cero."
+  },
+  {
+    "topic": "Esperanza matemática",
+    "q": "¿Qué representa E[g(X)] donde g es una función?",
+    "options": [
+      "El valor esperado de la transformación g aplicada a X",
+      "La probabilidad de que g(X) ocurra",
+      "El máximo valor de g(X)",
+      "La derivada de g respecto a X"
+    ],
+    "correct": 0,
+    "explain": "E[g(X)] = Σg(xᵢ)P(X=xᵢ) para discretas o ∫g(x)f(x)dx para continuas. No requiere encontrar la distribución de g(X), se calcula directamente."
+  },
+  {
+    "topic": "Esperanza matemática",
+    "q": "¿Cuál es la propiedad de linealidad de la esperanza?",
+    "options": [
+      "E[aX + bY] = aE[X] + bE[Y] para cualesquiera X, Y",
+      "E[XY] = E[X]·E[Y] siempre",
+      "E[X + Y] = E[X] + E[Y] solo si X e Y son independientes",
+      "E[aX] = E[X]/a"
+    ],
+    "correct": 0,
+    "explain": "La esperanza es un operador lineal: E[aX + bY] = aE[X] + bE[Y] se cumple sin importar si X e Y son independientes. Es una propiedad fundamental."
+  },
+  {
+    "topic": "Esperanza matemática",
+    "q": "Si X es una variable con valores no negativos, ¿qué se puede decir de E[X]?",
+    "options": [
+      "E[X] ≥ 0",
+      "E[X] = 0",
+      "E[X] = 1",
+      "E[X] < 0"
+    ],
+    "correct": 0,
+    "explain": "Si X ≥ 0 siempre, entonces su esperanza también es no negativa: E[X] ≥ 0. La esperanza preserva desigualdades."
+  },
+  {
+    "topic": "Varianza",
+    "q": "¿Qué representa una varianza igual a cero?",
+    "options": [
+      "Que la variable es constante, sin variabilidad",
+      "Que la variable tiene distribución uniforme",
+      "Que la esperanza es cero",
+      "Que los valores están muy dispersos"
+    ],
+    "correct": 0,
+    "explain": "V[X] = 0 si y solo si X toma un único valor con probabilidad 1. No hay dispersión, la variable es determinística."
+  },
+  {
+    "topic": "Varianza",
+    "q": "¿Cuál es la fórmula alternativa para calcular la varianza?",
+    "options": [
+      "V[X] = E[X²] − (E[X])²",
+      "V[X] = E[X]² − E[X²]",
+      "V[X] = (E[X])² + E[X²]",
+      "V[X] = √(E[X²])"
+    ],
+    "correct": 0,
+    "explain": "La fórmula V[X] = E[X²] − (E[X])² es computacionalmente más conveniente que V[X] = E[(X−μ)²] y es matemáticamente equivalente."
+  },
+  {
+    "topic": "Varianza",
+    "q": "Si X e Y son independientes, ¿cuánto vale V[X + Y]?",
+    "options": [
+      "V[X + Y] = V[X] + V[Y]",
+      "V[X + Y] = V[X]·V[Y]",
+      "V[X + Y] = V[X] − V[Y]",
+      "V[X + Y] = √(V[X] + V[Y])"
+    ],
+    "correct": 0,
+    "explain": "Para variables independientes, la varianza de la suma es la suma de varianzas: V[X + Y] = V[X] + V[Y]. Esto no se cumple si hay dependencia."
+  },
+  {
+    "topic": "Propiedades de esperanza",
+    "q": "Si X e Y son independientes, ¿cuánto vale E[XY]?",
+    "options": [
+      "E[XY] = E[X]·E[Y]",
+      "E[XY] = E[X] + E[Y]",
+      "E[XY] = E[X − Y]",
+      "E[XY] = 0"
+    ],
+    "correct": 0,
+    "explain": "Para variables independientes, la esperanza del producto es el producto de esperanzas: E[XY] = E[X]·E[Y]. Esta es una característica importante de la independencia."
+  },
+  {
+    "topic": "Propiedades de esperanza",
+    "q": "¿Cuánto vale E[c] donde c es una constante?",
+    "options": [
+      "E[c] = c",
+      "E[c] = 0",
+      "E[c] = 1",
+      "E[c] = c²"
+    ],
+    "correct": 0,
+    "explain": "La esperanza de una constante es la constante misma: E[c] = c. Esto se deduce de que una constante no tiene variabilidad."
+  },
+  {
+    "topic": "Propiedades de varianza",
+    "q": "¿Cuánto vale V[c] donde c es una constante?",
+    "options": [
+      "V[c] = 0",
+      "V[c] = c",
+      "V[c] = c²",
+      "V[c] = 1"
+    ],
+    "correct": 0,
+    "explain": "Una constante no tiene variabilidad, por lo que su varianza es cero: V[c] = 0."
+  },
+  {
+    "topic": "Propiedades de varianza",
+    "q": "Si X e Y son independientes, ¿cuánto vale V[X − Y]?",
+    "options": [
+      "V[X − Y] = V[X] + V[Y]",
+      "V[X − Y] = V[X] − V[Y]",
+      "V[X − Y] = V[X]·V[Y]",
+      "V[X − Y] = |V[X] − V[Y]|"
+    ],
+    "correct": 0,
+    "explain": "Para variables independientes, V[X − Y] = V[X] + (−1)²V[Y] = V[X] + V[Y]. El signo negativo no afecta porque se eleva al cuadrado."
+  },
+  {
+    "topic": "Distribución Binomial",
+    "q": "¿Cuál es el supuesto clave de la distribución binomial?",
+    "options": [
+      "Los ensayos son independientes y la probabilidad de éxito es constante",
+      "Los ensayos son dependientes entre sí",
+      "La probabilidad cambia en cada ensayo",
+      "Solo se puede usar con números pares de ensayos"
+    ],
+    "correct": 0,
+    "explain": "La binomial requiere: (1) n ensayos independientes, (2) cada ensayo tiene dos resultados (éxito/fracaso), (3) probabilidad p constante en todos los ensayos."
+  },
+  {
+    "topic": "Distribución Binomial",
+    "q": "Si X ~ B(10, 0.5), ¿cuál es la interpretación práctica?",
+    "options": [
+      "Número de éxitos en 10 ensayos independientes con probabilidad 0.5 cada uno",
+      "Probabilidad de obtener exactamente 10 éxitos",
+      "Tiempo hasta obtener el décimo éxito",
+      "Número de ensayos hasta obtener el primer éxito"
+    ],
+    "correct": 0,
+    "explain": "B(10, 0.5) podría modelar el número de caras en 10 lanzamientos de una moneda justa, o cualquier situación con 10 ensayos independientes con p = 0.5."
+  },
+  {
+    "topic": "Distribución Binomial",
+    "q": "¿Qué forma tiene la distribución binomial cuando p = 0.5?",
+    "options": [
+      "Simétrica alrededor de n/2",
+      "Sesgada hacia la derecha",
+      "Sesgada hacia la izquierda",
+      "Uniforme"
+    ],
+    "correct": 0,
+    "explain": "Cuando p = 0.5, la binomial es simétrica. Si p < 0.5 está sesgada a la derecha, si p > 0.5 está sesgada a la izquierda."
+  },
+  {
+    "topic": "Distribución de Poisson",
+    "q": "¿Qué relación tiene la Poisson con la Binomial?",
+    "options": [
+      "La Poisson es el límite de B(n,p) cuando n→∞ y p→0 manteniendo np = λ constante",
+      "Son distribuciones completamente independientes sin relación",
+      "La Binomial es una aproximación de la Poisson",
+      "Solo se parecen cuando λ = n"
+    ],
+    "correct": 0,
+    "explain": "La Poisson aproxima la binomial cuando n es grande, p es pequeño y λ = np es moderado. Es útil para eventos raros."
+  },
+  {
+    "topic": "Distribución de Poisson",
+    "q": "¿Cuál es una aplicación típica de la distribución de Poisson?",
+    "options": [
+      "Número de llamadas telefónicas recibidas en una hora",
+      "Altura de personas en una población",
+      "Resultado de lanzar un dado",
+      "Tiempo de vida de un componente electrónico"
+    ],
+    "correct": 0,
+    "explain": "La Poisson modela conteos de eventos raros en tiempo/espacio fijo: llamadas telefónicas, accidentes de tráfico, llegadas de clientes, errores tipográficos, etc."
+  },
+  {
+    "topic": "Distribución de Poisson",
+    "q": "Si X ~ P(λ) y Y ~ P(μ) son independientes, ¿qué distribución tiene X + Y?",
+    "options": [
+      "X + Y ~ P(λ + μ)",
+      "X + Y ~ P(λ·μ)",
+      "X + Y ~ N(λ+μ, λ+μ)",
+      "X + Y ~ B(λ+μ, 0.5)"
+    ],
+    "correct": 0,
+    "explain": "La suma de Poissons independientes es también Poisson con parámetro igual a la suma: X + Y ~ P(λ + μ). Esta es una propiedad útil."
+  },
+  {
+    "topic": "Distribución Geométrica",
+    "q": "¿Qué propiedad caracteriza a la distribución geométrica?",
+    "options": [
+      "La propiedad de falta de memoria: P(X > s+t | X > s) = P(X > t)",
+      "Su media siempre es igual a 1",
+      "Solo toma valores pares",
+      "Es simétrica alrededor de su media"
+    ],
+    "correct": 0,
+    "explain": "La geométrica tiene la propiedad de falta de memoria: el número de ensayos adicionales necesarios no depende de cuántos ya se han realizado sin éxito."
+  },
+  {
+    "topic": "Distribución Geométrica",
+    "q": "Si X ~ G(p), ¿cuánto vale V[X]?",
+    "options": [
+      "V[X] = (1−p)/p²",
+      "V[X] = 1/p",
+      "V[X] = p/(1−p)",
+      "V[X] = p²"
+    ],
+    "correct": 0,
+    "explain": "La varianza de la geométrica es V[X] = (1−p)/p². Por ejemplo, si p = 0.5, V[X] = 0.5/0.25 = 2."
+  },
+  {
+    "topic": "Distribución Geométrica",
+    "q": "¿Cuál es la probabilidad de que se necesiten más de k ensayos en una G(p)?",
+    "options": [
+      "P(X > k) = (1−p)^k",
+      "P(X > k) = p^k",
+      "P(X > k) = 1 − p^k",
+      "P(X > k) = k·p"
+    ],
+    "correct": 0,
+    "explain": "La probabilidad de que todos los primeros k ensayos fallen es P(X > k) = (1−p)^k, usando la propiedad de falta de memoria."
+  },
+  {
+    "topic": "Distribución Hipergeométrica",
+    "q": "¿Cuál es la diferencia principal entre la Binomial y la Hipergeométrica?",
+    "options": [
+      "La Binomial es con reemplazo, la Hipergeométrica sin reemplazo",
+      "La Binomial es continua, la Hipergeométrica discreta",
+      "La Binomial requiere más parámetros",
+      "No hay diferencia significativa"
+    ],
+    "correct": 0,
+    "explain": "La binomial asume independencia (con reemplazo), mientras que la hipergeométrica modela muestreo sin reemplazo donde las probabilidades cambian."
+  },
+  {
+    "topic": "Distribución Hipergeométrica",
+    "q": "¿Cuándo la Hipergeométrica se aproxima bien por la Binomial?",
+    "options": [
+      "Cuando el tamaño de la población N es mucho mayor que el tamaño de muestra n",
+      "Cuando n > N/2",
+      "Cuando la muestra es pequeña",
+      "Nunca se pueden aproximar"
+    ],
+    "correct": 0,
+    "explain": "Si N es grande comparado con n (regla práctica: n < 0.05N), extraer sin reemplazo es casi como con reemplazo, y H(N,R,n) ≈ B(n, R/N)."
+  },
+  {
+    "topic": "Distribución Hipergeométrica",
+    "q": "En una hipergeométrica H(N,R,n), ¿cuánto vale E[X]?",
+    "options": [
+      "E[X] = n·(R/N)",
+      "E[X] = R/N",
+      "E[X] = N·R·n",
+      "E[X] = n/R"
+    ],
+    "correct": 0,
+    "explain": "La esperanza de la hipergeométrica es E[X] = n·p donde p = R/N es la proporción de éxitos en la población."
+  },
+  {
+    "topic": "Distribución Uniforme Continua",
+    "q": "Si X ~ U(a,b), ¿cuánto vale V[X]?",
+    "options": [
+      "V[X] = (b−a)²/12",
+      "V[X] = (b−a)/2",
+      "V[X] = (b+a)²/12",
+      "V[X] = b−a"
+    ],
+    "correct": 0,
+    "explain": "La varianza de la uniforme es V[X] = (b−a)²/12. Para U(0,1), V[X] = 1/12 ≈ 0.083."
+  },
+  {
+    "topic": "Distribución Uniforme Continua",
+    "q": "Si X ~ U(0,1), ¿qué distribución tiene Y = a + (b−a)X?",
+    "options": [
+      "Y ~ U(a,b)",
+      "Y ~ N(a,b)",
+      "Y ~ E(a)",
+      "Y ~ U(0,b)"
+    ],
+    "correct": 0,
+    "explain": "Esta transformación lineal de U(0,1) produce U(a,b). Es útil para generar variables uniformes en cualquier intervalo."
+  },
+  {
+    "topic": "Distribución Uniforme Continua",
+    "q": "Para X ~ U(a,b), ¿cuánto vale P(c < X < d) donde a ≤ c < d ≤ b?",
+    "options": [
+      "P(c < X < d) = (d−c)/(b−a)",
+      "P(c < X < d) = (d−c)",
+      "P(c < X < d) = 1/(b−a)",
+      "P(c < X < d) = (b−a)/(d−c)"
+    ],
+    "correct": 0,
+    "explain": "En una uniforme, la probabilidad de un intervalo es proporcional a su longitud: P(c < X < d) = (d−c)/(b−a)."
+  },
+  {
+    "topic": "Distribución Exponencial",
+    "q": "¿Qué propiedad comparte la exponencial con la geométrica?",
+    "options": [
+      "La propiedad de falta de memoria",
+      "Ambas son distribuciones discretas",
+      "Ambas tienen varianza igual a la media",
+      "Ambas están definidas en intervalos finitos"
+    ],
+    "correct": 0,
+    "explain": "Tanto la exponencial como la geométrica tienen falta de memoria. La exponencial es la versión continua de la geométrica."
+  },
+  {
+    "topic": "Distribución Exponencial",
+    "q": "¿Cuál es la función de distribución acumulada de X ~ E(λ)?",
+    "options": [
+      "F(x) = 1 − e^(−λx) para x ≥ 0",
+      "F(x) = λ·e^(−λx)",
+      "F(x) = e^(−λx)",
+      "F(x) = 1 − λx"
+    ],
+    "correct": 0,
+    "explain": "La FDA de la exponencial es F(x) = P(X ≤ x) = 1 − e^(−λx), lo que permite calcular fácilmente P(X > x) = e^(−λx)."
+  },
+  {
+    "topic": "Distribución Exponencial",
+    "q": "Si el tiempo entre eventos sigue E(λ), ¿cuál es la interpretación de λ?",
+    "options": [
+      "La tasa de ocurrencia de eventos por unidad de tiempo",
+      "El tiempo promedio entre eventos",
+      "El número total de eventos",
+      "La varianza del tiempo de espera"
+    ],
+    "correct": 0,
+    "explain": "λ es la tasa (eventos por unidad de tiempo). El tiempo promedio entre eventos es 1/λ. Por ejemplo, si λ = 2 eventos/hora, el tiempo promedio es 0.5 horas."
+  },
+  {
+    "topic": "Distribución Normal",
+    "q": "¿Qué porcentaje de datos está aproximadamente dentro de μ ± σ en una distribución normal?",
+    "options": [
+      "68%",
+      "50%",
+      "95%",
+      "99.7%"
+    ],
+    "correct": 0,
+    "explain": "En una normal, aproximadamente 68% de los datos caen dentro de una desviación estándar de la media (regla empírica 68-95-99.7)."
+  },
+  {
+    "topic": "Distribución Normal",
+    "q": "¿Qué porcentaje de datos está aproximadamente dentro de μ ± 2σ en una distribución normal?",
+    "options": [
+      "95%",
+      "68%",
+      "99.7%",
+      "50%"
+    ],
+    "correct": 0,
+    "explain": "Aproximadamente 95% de los datos en una normal están dentro de dos desviaciones estándar de la media."
+  },
+  {
+    "topic": "Distribución Normal",
+    "q": "¿Qué porcentaje de datos está aproximadamente dentro de μ ± 3σ en una distribución normal?",
+    "options": [
+      "99.7%",
+      "95%",
+      "68%",
+      "100%"
+    ],
+    "correct": 0,
+    "explain": "Aproximadamente 99.7% de los datos están dentro de tres desviaciones estándar. Valores fuera de este rango se consideran atípicos."
+  },
+  {
+    "topic": "Distribución Normal",
+    "q": "Si X ~ N(μ,σ²) e Y ~ N(ν,τ²) son independientes, ¿qué distribución tiene X + Y?",
+    "options": [
+      "X + Y ~ N(μ+ν, σ²+τ²)",
+      "X + Y ~ N(μ+ν, σ·τ)",
+      "X + Y ~ N(μ·ν, σ²+τ²)",
+      "X + Y ~ E(μ+ν)"
+    ],
+    "correct": 0,
+    "explain": "La suma de normales independientes es normal con media suma de medias y varianza suma de varianzas: X + Y ~ N(μ+ν, σ²+τ²)."
+  },
+  {
+    "topic": "Estandarización",
+    "q": "Si X ~ N(100, 225) y queremos P(X > 115), ¿qué hacemos?",
+    "options": [
+      "Calculamos Z = (115−100)/15 = 1 y buscamos P(Z > 1)",
+      "Calculamos Z = (115−100)/225 y buscamos P(Z > Z)",
+      "Usamos directamente P(X > 115) sin estandarizar",
+      "Calculamos Z = 115/100 y buscamos en la tabla"
+    ],
+    "correct": 0,
+    "explain": "Estandarizamos con σ = √225 = 15: Z = (115−100)/15 = 1. Luego P(X > 115) = P(Z > 1) = 1 − Φ(1) ≈ 0.1587."
+  },
+  {
+    "topic": "Estandarización",
+    "q": "¿Por qué es útil la estandarización?",
+    "options": [
+      "Permite usar una única tabla estándar para cualquier distribución normal",
+      "Convierte variables discretas en continuas",
+      "Elimina la necesidad de calcular probabilidades",
+      "Hace que todas las variables sean independientes"
+    ],
+    "correct": 0,
+    "explain": "La estandarización transforma cualquier N(μ,σ²) a N(0,1), permitiendo usar tablas estándar o software para una única distribución en lugar de infinitas."
+  },
+  {
+    "topic": "Estandarización",
+    "q": "Si Z ~ N(0,1), ¿cuánto vale P(Z < 0)?",
+    "options": [
+      "0.5",
+      "0",
+      "1",
+      "0.68"
+    ],
+    "correct": 0,
+    "explain": "La normal estándar es simétrica alrededor de 0, por lo que P(Z < 0) = P(Z > 0) = 0.5."
+  },
+  {
+    "topic": "Técnicas de conteo",
+    "q": "¿Cuántos números de 3 dígitos se pueden formar con los dígitos 1-9 sin repetición?",
+    "options": [
+      "504",
+      "729",
+      "84",
+      "27"
+    ],
+    "correct": 0,
+    "explain": "Usando el principio fundamental: 9 opciones para el primer dígito, 8 para el segundo, 7 para el tercero: 9×8×7 = 504."
+  },
+  {
+    "topic": "Técnicas de conteo",
+    "q": "¿Cuántas palabras de 4 letras (con sentido o sin él) se pueden formar con 26 letras si se permite repetición?",
+    "options": [
+      "456,976",
+      "358,800",
+      "14,950",
+      "104"
+    ],
+    "correct": 0,
+    "explain": "Con repetición permitida: 26×26×26×26 = 26⁴ = 456,976 palabras posibles."
+  },
+  {
+    "topic": "Técnicas de conteo",
+    "q": "¿Qué diferencia hay entre ordenar 5 libros y elegir 2 de 5 libros para leer?",
+    "options": [
+      "Ordenar es una permutación (120 formas), elegir es una combinación (10 formas)",
+      "Ambos son permutaciones",
+      "Ambos dan el mismo resultado",
+      "Ordenar da menos resultados que elegir"
+    ],
+    "correct": 0,
+    "explain": "Ordenar 5 libros: P(5,5) = 5! = 120. Elegir 2 de 5: C(5,2) = 10. El orden importa en permutaciones, no en combinaciones."
+  },
+  {
+    "topic": "Permutaciones",
+    "q": "¿Cuántas permutaciones hay de la palabra 'CASA'?",
+    "options": [
+      "12",
+      "24",
+      "4",
+      "6"
+    ],
+    "correct": 0,
+    "explain": "CASA tiene 4 letras con la A repetida 2 veces: 4!/2! = 24/2 = 12 permutaciones distintas."
+  },
+  {
+    "topic": "Permutaciones",
+    "q": "¿Cuántas formas hay de sentar a 6 personas en una mesa circular?",
+    "options": [
+      "120",
+      "720",
+      "6",
+      "30"
+    ],
+    "correct": 0,
+    "explain": "En permutaciones circulares: (n−1)! = 5! = 120. Se fija una posición de referencia para eliminar rotaciones equivalentes."
+  },
+  {
+    "topic": "Permutaciones",
+    "q": "¿Qué son las permutaciones con repetición?",
+    "options": [
+      "Ordenamientos donde algunos elementos son idénticos",
+      "Selecciones donde se permite elegir el mismo elemento varias veces",
+      "Combinaciones de elementos repetidos",
+      "Permutaciones donde el orden no importa"
+    ],
+    "correct": 0,
+    "explain": "Si hay n elementos con n₁ de tipo 1, n₂ de tipo 2, etc., las permutaciones son n!/(n₁!·n₂!·...·nₖ!)."
+  },
+  {
+    "topic": "Combinaciones",
+    "q": "¿Cuál es la relación entre C(n,k) y C(n,n−k)?",
+    "options": [
+      "C(n,k) = C(n,n−k)",
+      "C(n,k) = n·C(n,n−k)",
+      "C(n,k) + C(n,n−k) = n",
+      "C(n,k) > C(n,n−k) siempre"
+    ],
+    "correct": 0,
+    "explain": "Elegir k elementos es lo mismo que dejar n−k fuera: C(n,k) = C(n,n−k). Por ejemplo, C(5,2) = C(5,3) = 10."
+  },
+  {
+    "topic": "Coeficiente binomial",
+    "q": "¿Cuánto vale C(n,0)?",
+    "options": [
+      "1",
+      "0",
+      "n",
+      "n!"
+    ],
+    "correct": 0,
+    "explain": "C(n,0) = n!/(0!·n!) = 1. Hay exactamente una forma de elegir cero elementos (no elegir ninguno)."
+  },
+  {
+    "topic": "Coeficiente binomial",
+    "q": "¿Cuánto vale C(n,1)?",
+    "options": [
+      "n",
+      "1",
+      "n!",
+      "n²"
+    ],
+    "correct": 0,
+    "explain": "C(n,1) = n!/(1!·(n−1)!) = n. Hay n formas de elegir un elemento de n disponibles."
+  },
+  {
+    "topic": "Coeficiente binomial",
+    "q": "¿Qué establece la identidad de Pascal para coeficientes binomiales?",
+    "options": [
+      "C(n,k) = C(n−1,k−1) + C(n−1,k)",
+      "C(n,k) = C(n,k−1) + C(n,k+1)",
+      "C(n,k) = n·C(n−1,k)",
+      "C(n,k) = C(n,k−1)·C(n,k+1)"
+    ],
+    "correct": 0,
+    "explain": "La identidad de Pascal muestra cómo cada entrada en el triángulo de Pascal es la suma de las dos entradas superiores adyacentes."
+  },
+  {
+    "topic": "Estadística descriptiva",
+    "q": "¿Qué mide la media aritmética?",
+    "options": [
+      "El centro de gravedad o valor promedio de un conjunto de datos",
+      "El valor más frecuente",
+      "El valor central cuando los datos están ordenados",
+      "La dispersión de los datos"
+    ],
+    "correct": 0,
+    "explain": "La media x̄ = (Σxᵢ)/n es la suma de todos los valores dividida entre el número de observaciones. Es sensible a valores extremos."
+  },
+  {
+    "topic": "Estadística descriptiva",
+    "q": "¿Cuándo es preferible usar la mediana en lugar de la media?",
+    "options": [
+      "Cuando hay valores atípicos o la distribución es muy asimétrica",
+      "Siempre que se tengan datos numéricos",
+      "Cuando la distribución es normal",
+      "Cuando hay pocos datos"
+    ],
+    "correct": 0,
+    "explain": "La mediana es robusta frente a valores extremos. Por ejemplo, en ingresos con multimillonarios, la mediana representa mejor al ciudadano típico que la media."
+  },
+  {
+    "topic": "Estadística descriptiva",
+    "q": "¿Qué es un percentil?",
+    "options": [
+      "Un valor que deja por debajo un determinado porcentaje de las observaciones",
+      "El valor promedio de los datos",
+      "La diferencia entre el máximo y el mínimo",
+      "El valor que más se repite"
+    ],
+    "correct": 0,
+    "explain": "El percentil P_k deja el k% de los datos por debajo. Por ejemplo, P₂₅ es el primer cuartil, P₅₀ es la mediana, P₇₅ es el tercer cuartil."
+  },
+  {
+    "topic": "Estadística descriptiva",
+    "q": "¿Qué son los cuartiles?",
+    "options": [
+      "Valores que dividen los datos ordenados en cuatro partes iguales",
+      "Cuatro medidas de tendencia central diferentes",
+      "Los cuatro valores más frecuentes",
+      "Promedios de grupos de cuatro datos"
+    ],
+    "correct": 0,
+    "explain": "Los cuartiles Q₁ (P₂₅), Q₂ (mediana, P₅₀) y Q₃ (P₇₅) dividen los datos en cuatro grupos con 25% de observaciones cada uno."
+  },
+  {
+    "topic": "Medidas de dispersión",
+    "q": "¿Qué es el rango intercuartílico (IQR)?",
+    "options": [
+      "La diferencia entre el tercer y primer cuartil: IQR = Q₃ − Q₁",
+      "El promedio de todos los cuartiles",
+      "La suma de Q₁ y Q₃",
+      "La mediana de los datos"
+    ],
+    "correct": 0,
+    "explain": "IQR = Q₃ − Q₁ mide la dispersión del 50% central de los datos. Es robusto frente a valores extremos."
+  },
+  {
+    "topic": "Medidas de dispersión",
+    "q": "¿Cómo se define un valor atípico (outlier) usando el IQR?",
+    "options": [
+      "Un valor menor que Q₁−1.5·IQR o mayor que Q₃+1.5·IQR",
+      "Cualquier valor que esté fuera del rango",
+      "El valor más alejado de la media",
+      "Cualquier valor mayor que la mediana"
+    ],
+    "correct": 0,
+    "explain": "La regla de Tukey define outliers como valores fuera del rango [Q₁−1.5·IQR, Q₃+1.5·IQR]. Es un criterio estándar para detectar anomalías."
+  },
+  {
+    "topic": "Medidas de dispersión",
+    "q": "¿Por qué se usa (n−1) en la varianza muestral s²?",
+    "options": [
+      "Para obtener un estimador insesgado de la varianza poblacional",
+      "Porque siempre hay un dato menos al final",
+      "Para que la varianza sea siempre positiva",
+      "Es un error, debería usarse n"
+    ],
+    "correct": 0,
+    "explain": "Usar n−1 (corrección de Bessel) compensa el sesgo introducido al usar x̄ en lugar de μ. Hace que E[s²] = σ²."
+  },
+  {
+    "topic": "Función de distribución acumulada",
+    "q": "¿Qué propiedades cumple siempre una FDA F(x)?",
+    "options": [
+      "Es no decreciente, lim(x→−∞)F(x)=0, lim(x→∞)F(x)=1",
+      "Es siempre continua y diferenciable",
+      "Toma solo valores enteros",
+      "Es simétrica alrededor de la media"
+    ],
+    "correct": 0,
+    "explain": "Toda FDA es: (1) no decreciente, (2) continua por la derecha, (3) tiende a 0 en −∞ y a 1 en +∞."
+  },
+  {
+    "topic": "Función de distribución acumulada",
+    "q": "¿Cómo se calcula P(a < X ≤ b) usando la FDA?",
+    "options": [
+      "P(a < X ≤ b) = F(b) − F(a)",
+      "P(a < X ≤ b) = F(b) + F(a)",
+      "P(a < X ≤ b) = F(b) / F(a)",
+      "P(a < X ≤ b) = F(b) · F(a)"
+    ],
+    "correct": 0,
+    "explain": "La FDA acumula hasta un punto, por lo que la probabilidad de un intervalo es la diferencia: P(a < X ≤ b) = F(b) − F(a)."
+  },
+  {
+    "topic": "Teorema del límite central",
+    "q": "¿Qué establece el TLC sobre la distribución de la media muestral?",
+    "options": [
+      "Que x̄ tiende a distribuirse normalmente cuando n es grande, independientemente de la distribución original",
+      "Que x̄ siempre tiene la misma distribución que X",
+      "Que x̄ converge a una constante",
+      "Que la varianza de x̄ aumenta con n"
+    ],
+    "correct": 0,
+    "explain": "El TLC indica que x̄ ~ N(μ, σ²/n) aproximadamente cuando n es grande (típicamente n ≥ 30), sin importar la distribución de X."
+  },
+  {
+    "topic": "Teorema del límite central",
+    "q": "¿Por qué es importante el Teorema del Límite Central en estadística?",
+    "options": [
+      "Justifica el uso de métodos basados en la normal para medias muestrales",
+      "Permite calcular probabilidades exactas sin distribución",
+      "Elimina la necesidad de recoger muestras",
+      "Garantiza que todos los datos son normales"
+    ],
+    "correct": 0,
+    "explain": "El TLC es fundamental porque permite usar inferencia basada en la normal para medias muestrales, incluso cuando la población no es normal."
+  },
+  {
+    "topic": "Teorema del límite central",
+    "q": "Si X tiene media μ y varianza σ², ¿cuánto vale V[x̄] para una muestra de tamaño n?",
+    "options": [
+      "V[x̄] = σ²/n",
+      "V[x̄] = σ²·n",
+      "V[x̄] = σ²",
+      "V[x̄] = σ/√n"
+    ],
+    "correct": 0,
+    "explain": "La varianza de la media muestral es σ²/n, que disminuye al aumentar n. La desviación estándar es σ/√n (error estándar)."
+  },
+  {
+    "topic": "Distribución t-Student",
+    "q": "¿Cuántos parámetros tiene la distribución t-Student?",
+    "options": [
+      "Uno: los grados de libertad ν",
+      "Dos: media y varianza",
+      "Tres: media, varianza y grados de libertad",
+      "Ninguno, es una distribución fija"
+    ],
+    "correct": 0,
+    "explain": "La t-Student tiene un solo parámetro: los grados de libertad ν = n−1. A medida que ν aumenta, se aproxima a N(0,1)."
+  },
+  {
+    "topic": "Distribución t-Student",
+    "q": "¿Qué forma tiene la distribución t comparada con la normal estándar?",
+    "options": [
+      "Es simétrica pero con colas más pesadas",
+      "Es asimétrica hacia la derecha",
+      "Es idéntica a la normal",
+      "Tiene colas más ligeras"
+    ],
+    "correct": 0,
+    "explain": "La t-Student es simétrica alrededor de 0 pero tiene colas más pesadas que la normal, reflejando mayor incertidumbre cuando σ es desconocido."
+  },
+  {
+    "topic": "Distribución Chi-Cuadrado",
+    "q": "¿Qué forma tiene la distribución χ²?",
+    "options": [
+      "Es asimétrica y sesgada hacia la derecha para pocos grados de libertad",
+      "Es simétrica como la normal",
+      "Es uniforme en su dominio",
+      "Tiene forma de U"
+    ],
+    "correct": 0,
+    "explain": "χ² es asimétrica positiva para ν pequeño. A medida que ν aumenta, se aproxima a una normal por el TLC."
+  },
+  {
+    "topic": "Distribución Chi-Cuadrado",
+    "q": "Si Z ~ N(0,1), ¿qué distribución tiene Z²?",
+    "options": [
+      "Z² ~ χ²(1)",
+      "Z² ~ N(0,1)",
+      "Z² ~ t(1)",
+      "Z² ~ E(1)"
+    ],
+    "correct": 0,
+    "explain": "El cuadrado de una normal estándar sigue una chi-cuadrado con 1 grado de libertad: Z² ~ χ²(1)."
+  },
+  {
+    "topic": "Relación Exponencial-Poisson",
+    "q": "Si los eventos siguen un proceso de Poisson con tasa λ, ¿cómo se relaciona con la exponencial?",
+    "options": [
+      "El tiempo entre eventos consecutivos sigue E(λ)",
+      "El número de eventos sigue E(λ)",
+      "No hay relación entre ambas",
+      "Ambas modelan lo mismo"
+    ],
+    "correct": 0,
+    "explain": "En un proceso de Poisson: (1) el número de eventos en [0,t] ~ P(λt), (2) el tiempo entre eventos ~ E(λ)."
   }
-
-
-
 ]

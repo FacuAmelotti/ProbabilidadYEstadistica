@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Control de Calidad de Neumáticos</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <style>
+  
+
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 10px;
+      max-width: 500px;
+      margin: 20px auto;
+    }
+
+    .data-item {
+      aspect-ratio: 0.8;
+      background: linear-gradient(135deg, rgba(120, 119, 198, 0.3), rgba(100, 100, 180, 0.3));
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .data-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(120, 119, 198, 0.4);
+    }
+
+    .data-item.ideal {
+      background: linear-gradient(135deg, rgba(100, 255, 150, 0.4), rgba(100, 200, 150, 0.4));
+      border-color: rgba(100, 255, 150, 0.6);
+      color: #fff;
+    }
+
+    .formula-reference {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .formula-card {
+      background: rgba(120, 119, 198, 0.1);
+      border: 1px solid rgba(120, 119, 198, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .formula-card:hover {
+      background: rgba(120, 119, 198, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .formula-card h4 {
+      color: #a0e0ff;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .formula-card .formula {
+      font-family: monospace;
+      color: #fff;
+      font-size: 1.1rem;
+      margin: 8px 0;
+    }
+
+    .formula-card .description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(120, 119, 198, 0.7);
+      background: rgba(120, 119, 198, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p, .step-content ul {
+      margin-bottom: 10px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #a0e0ff;
+    }
+
+    .math-display {
+      text-align: center;
+      font-size: 1.1rem;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .formula {
+      font-family: 'Times New Roman', serif;
+      font-size: 1.2rem;
+      color: #a0e0ff;
+    }
+
+    .answer-box {
+      background: linear-gradient(135deg, rgba(120, 119, 198, 0.2), rgba(120, 119, 198, 0.1));
+      border: 2px solid rgba(120, 119, 198, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .answer-box h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .answer {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #8fffa0;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .chart-container h4 {
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    #statsChart {
+      max-width: 100%;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+    }
+
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .stats-table th,
+    .stats-table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stats-table th {
+      background: rgba(120, 119, 198, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .stats-table td {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .check-panel {
+      margin-top: 40px;
+      padding: 25px;
+      border-radius: 16px;
+      background: rgba(120, 119, 198, 0.15);
+      border: 1px solid rgba(120, 119, 198, 0.4);
+      text-align: center;
+    }
+
+    .check-panel h3 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .check-panel input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      width: 120px;
+      text-align: center;
+      font-size: 1rem;
+      margin: 0 5px;
+    }
+
+    .check-btn {
+      margin-top: 15px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #7877c6, #6564b5);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .check-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(120, 119, 198, 0.4);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .correct { color: #8fffa0; }
+    .incorrect { color: #ff8f8f; }
+
+    .analysis-box {
+      background: rgba(100, 200, 150, 0.15);
+      border: 2px solid rgba(100, 200, 150, 0.4);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px 0;
+    }
+
+    .analysis-box h4 {
+      color: #8fffa0;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .analysis-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+    }
+
+    .analysis-item h5 {
+      color: #a0e0ff;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .math-display { font-size: 1rem; }
+      .data-grid { grid-template-columns: repeat(4, 1fr); gap: 5px; }
+      .formula-reference { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto</h1>
+      <p class="exercise-subtitle">Control de Calidad - Análisis Estadístico de Diámetros</p>
+    </div>
+
+    <!-- Contexto y enunciado -->
+    <div class="context-box">
+      <h3>🎯 Contexto</h3>
+      <p>Un fabricante de neumáticos quiere determinar el <strong>diámetro interior</strong> de un neumático de cierto grado de calidad. <strong>Idealmente el diámetro sería de 570 mm.</strong></p>
+      
+      <p><strong>Datos obtenidos (en mm):</strong></p>
+      <div class="data-grid">
+        <div class="data-item">572</div>
+        <div class="data-item">573</div>
+        <div class="data-item">572</div>
+        <div class="data-item">568</div>
+        <div class="data-item">569</div>
+        <div class="data-item">575</div>
+        <div class="data-item">565</div>
+        <div class="data-item">570</div>
+      </div>
+      <p style="text-align: center; color: rgba(255,255,255,0.7);">
+        <span style="color: #8fffa0;">■</span> Valor ideal: 570 mm | <span style="color: #a0e0ff;">■</span> Muestra: n = 8
+      </p>
+
+      <h3>📘 Tareas</h3>
+      <ul>
+        <li>1️⃣ <strong>Calcular:</strong> la media y la mediana de la muestra</li>
+        <li>2️⃣ <strong>Obtener:</strong> la varianza, la desviación estándar y el rango de la muestra</li>
+        <li>3️⃣ <strong>Analizar:</strong> la calidad de los neumáticos basada en los estadísticos calculados</li>
+        <li>4️⃣ <strong>Visualizar:</strong> los resultados estadísticamente</li>
+      </ul>
+
+      <div class="hint-box">
+        💡 <strong>Tip:</strong> Recuerda que para datos agrupados, la media es la suma dividida por n, y para una muestra usamos n-1 en la varianza.
+      </div>
+    </div>
+
+    <!-- Referencia de fórmulas -->
+    <div class="context-box">
+      <h3>📊 Fórmulas de referencia</h3>
+      <div class="formula-reference">
+        <div class="formula-card">
+          <h4>📈 Media muestral</h4>
+          <div class="formula">x̄ = Σx / n</div>
+          <div class="description">Promedio aritmético de todos los datos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📊 Mediana</h4>
+          <div class="formula">Para n par:<br>Me = (x[n/2] + x[n/2+1]) / 2</div>
+          <div class="description">Valor central cuando se ordenan los datos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📏 Varianza muestral</h4>
+          <div class="formula">s² = Σ(x - x̄)² / (n-1)</div>
+          <div class="description">Medida de dispersión de los datos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📐 Desviación estándar</h4>
+          <div class="formula">s = √s²</div>
+          <div class="description">Raíz cuadrada de la varianza</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📏 Rango</h4>
+          <div class="formula">R = Valor máximo - Valor mínimo</div>
+          <div class="description">Diferencia entre el mayor y menor valor</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 1: Media y Mediana -->
+    <div class="step">
+      <div class="step-header">1️⃣ Calcular media y mediana</div>
+      <div class="step-content">
+        <p><strong>Paso 1: Organizar los datos de menor a mayor</strong></p>
+        
+        <div class="math-display">
+          <div class="formula">Datos ordenados: 565, 568, 569, 570, 572, 572, 573, 575</div>
+          <div class="formula">Tamaño de muestra: n = 8</div>
+        </div>
+
+        <p><strong>Paso 2: Calcular la media (x̄)</strong></p>
+        
+        <div class="math-display">
+          <div class="formula">x̄ = (565 + 568 + 569 + 570 + 572 + 572 + 573 + 575) / 8</div>
+          <div class="formula">x̄ = 4564 / 8</div>
+          <div class="formula">x̄ = 570.5 mm</div>
+        </div>
+
+        <p><strong>Paso 3: Calcular la mediana (Me)</strong></p>
+        <p>Como n = 8 es par, la mediana es el promedio de los valores 4° y 5°:</p>
+        
+        <div class="math-display">
+          <div class="formula">Posiciones 4° y 5°: 570 y 572</div>
+          <div class="formula">Me = (570 + 572) / 2</div>
+          <div class="formula">Me = 571 mm</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>🎯 Resultados del inciso a)</h4>
+          <div class="answer">Media: 570.5 mm</div>
+          <div class="answer">Mediana: 571 mm</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2: Varianza, Desviación y Rango -->
+    <div class="step">
+      <div class="step-header">2️⃣ Calcular varianza, desviación estándar y rango</div>
+      <div class="step-content">
+        <p><strong>Paso 1: Calcular el rango</strong></p>
+        
+        <div class="math-display">
+          <div class="formula">R = Valor máximo - Valor mínimo</div>
+          <div class="formula">R = 575 - 565</div>
+          <div class="formula">R = 10 mm</div>
+        </div>
+
+        <p><strong>Paso 2: Calcular las desviaciones al cuadrado</strong></p>
+        
+        <table class="stats-table">
+          <thead>
+            <tr>
+              <th>x</th>
+              <th>(x - x̄)</th>
+              <th>(x - x̄)²</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>565</td><td>565 - 570.5 = -5.5</td><td>30.25</td></tr>
+            <tr><td>568</td><td>568 - 570.5 = -2.5</td><td>6.25</td></tr>
+            <tr><td>569</td><td>569 - 570.5 = -1.5</td><td>2.25</td></tr>
+            <tr><td>570</td><td>570 - 570.5 = -0.5</td><td>0.25</td></tr>
+            <tr><td>572</td><td>572 - 570.5 = 1.5</td><td>2.25</td></tr>
+            <tr><td>572</td><td>572 - 570.5 = 1.5</td><td>2.25</td></tr>
+            <tr><td>573</td><td>573 - 570.5 = 2.5</td><td>6.25</td></tr>
+            <tr><td>575</td><td>575 - 570.5 = 4.5</td><td>20.25</td></tr>
+            <tr><th colspan="2">Total:</th><th>70</th></tr>
+          </tbody>
+        </table>
+
+        <p><strong>Paso 3: Calcular la varianza muestral (s²)</strong></p>
+        
+        <div class="math-display">
+          <div class="formula">s² = Σ(x - x̄)² / (n - 1)</div>
+          <div class="formula">s² = 70 / (8 - 1)</div>
+          <div class="formula">s² = 70 / 7</div>
+          <div class="formula">s² = 10 mm²</div>
+        </div>
+
+        <p><strong>Paso 4: Calcular la desviación estándar (s)</strong></p>
+        
+        <div class="math-display">
+          <div class="formula">s = √s² = √10</div>
+          <div class="formula">s ≈ 3.162 mm</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>🎯 Resultados del inciso b)</h4>
+          <div class="answer">Varianza: 10 mm²</div>
+          <div class="answer">Desviación estándar: 3.16 mm</div>
+          <div class="answer">Rango: 10 mm</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 3: Análisis de calidad -->
+    <div class="step">
+      <div class="step-header">3️⃣ Análisis de calidad de los neumáticos</div>
+      <div class="step-content">
+        <p><strong>Comparación con el valor ideal (570 mm):</strong></p>
+        
+        <div class="analysis-box">
+          <h4>📊 Interpretación de resultados</h4>
+          
+          <div class="analysis-item">
+            <h5>🎯 Precisión (Media vs Valor Ideal)</h5>
+            <p>• Media de la muestra: <strong>570.5 mm</strong></p>
+            <p>• Valor ideal: <strong>570 mm</strong></p>
+            <p>• Diferencia: <strong>+0.5 mm</strong></p>
+            <p style="color: #8fffa0;">✅ <strong>Excelente precisión:</strong> Solo 0.5 mm de diferencia con el ideal</p>
+          </div>
+
+          <div class="analysis-item">
+            <h5>📈 Consistencia (Desviación estándar)</h5>
+            <p>• Desviación estándar: <strong>3.16 mm</strong></p>
+            <p>• Esto significa que ~68% de los neumáticos están entre:</p>
+            <p>• 570.5 ± 3.16 = <strong>567.34 mm a 573.66 mm</strong></p>
+            <p style="color: #8fffa0;">✅ <strong>Buena consistencia:</strong> Variación relativamente baja</p>
+          </div>
+
+          <div class="analysis-item">
+            <h5>📏 Variabilidad (Rango)</h5>
+            <p>• Rango observado: <strong>10 mm</strong></p>
+            <p>• Diferencia entre el mayor (575 mm) y menor (565 mm)</p>
+            <p style="color: #fffa8f;">🟡 <strong>Variabilidad moderada:</strong> El rango muestra cierta dispersión</p>
+          </div>
+
+          <div class="analysis-item">
+            <h5>🏭 Veredicto general</h5>
+            <p><strong>✅ CALIDAD ACEPTABLE CON MEJORAS RECOMENDADAS:</strong></p>
+            <ul>
+              <li>La media está muy cerca del valor ideal</li>
+              <li>La desviación estándar es razonable para este tipo de manufactura</li>
+              <li>Se recomienda reducir la variabilidad para mejorar la consistencia</li>
+              <li>Revisar los procesos para neumáticos en los extremos (565 mm y 575 mm)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Inicializar
+    window.addEventListener('load', () => {
+      createChart();
+    });
+
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = 'index.html'; // fallback si se abre directo
+      }
+    });
+  </script>
+</body>
+</html>

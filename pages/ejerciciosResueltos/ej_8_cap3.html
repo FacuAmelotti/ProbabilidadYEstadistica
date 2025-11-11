@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Control de Calidad en Telas</title>
+<link rel="stylesheet" href="../css/base.css">
+  <style>
+    
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: white;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+
+    .context-box h4 {
+      color: #a0ff66;
+      font-weight: 500;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .context-box p {
+      margin-bottom: 15px;
+    }
+
+    .context-box ul {
+      margin-left: 25px;
+      margin-bottom: 15px;
+    }
+
+    .context-box li {
+      margin-bottom: 10px;
+    }
+
+    .visual-representation {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+      padding: 25px;
+      background: rgba(160, 255, 100, 0.05);
+      border: 1px solid rgba(160, 255, 100, 0.2);
+      border-radius: 12px;
+    }
+
+    .visual-box {
+      text-align: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
+    }
+
+    .visual-box h4 {
+      color: #a0ff66;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .visual-box .big-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 10px 0;
+    }
+
+    .visual-box .description {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+    }
+
+    .fabric-grid {
+      display: grid;
+      grid-template-columns: repeat(20, 1fr);
+      gap: 2px;
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px dashed rgba(160, 255, 100, 0.3);
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .fabric-grid::before {
+      content: '1 metro cuadrado';
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.85rem;
+    }
+
+    .fabric-cell {
+      aspect-ratio: 1;
+      background: rgba(200, 230, 180, 0.15);
+      border: 1px solid rgba(160, 255, 100, 0.2);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .fabric-cell.defect {
+      background: rgba(255, 100, 100, 0.4);
+      border-color: rgba(255, 100, 100, 0.8);
+    }
+
+    .fabric-cell.defect::after {
+      content: '✗';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ff6666;
+      font-weight: bold;
+      font-size: 0.7rem;
+    }
+
+    .fabric-cell:hover {
+      transform: scale(1.2);
+      z-index: 10;
+    }
+
+    .formula-reference {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .formula-card {
+      background: rgba(160, 255, 100, 0.1);
+      border: 1px solid rgba(160, 255, 100, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .formula-card:hover {
+      background: rgba(160, 255, 100, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .formula-card h4 {
+      color: #a0ff66;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .formula-card .formula {
+      font-family: 'Courier New', monospace;
+      color: #fff;
+      font-size: 1.1rem;
+      margin: 8px 0;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    .formula-card .description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(160, 255, 100, 0.7);
+      background: rgba(160, 255, 100, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-header::after {
+      content: '▼';
+      transition: transform 0.3s ease;
+    }
+
+    .step.open .step-header::after {
+      transform: rotate(180deg);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p {
+      margin-bottom: 15px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      color: #a0ff66;
+    }
+
+    .math-display {
+      text-align: center;
+      font-size: 1.2rem;
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .formula {
+      font-family: 'Courier New', monospace;
+      font-size: 1.2rem;
+      color: #a0ff66;
+      margin: 10px 0;
+    }
+
+    .calculation-steps {
+      background: rgba(160, 255, 100, 0.05);
+      border: 1px solid rgba(160, 255, 100, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .calculation-steps .step-line {
+      margin: 10px 0;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .answer-box {
+      background: linear-gradient(135deg, rgba(160, 255, 100, 0.2), rgba(160, 255, 100, 0.1));
+      border: 2px solid rgba(160, 255, 100, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .answer-box h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .answer {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #8fffa0;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 20px 0;
+    }
+
+    .chart-container h4 {
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+
+    canvas {
+      display: block;
+      width: 100% !important;
+      max-width: 700px;
+      height: 350px !important;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+    }
+
+    .prob-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .prob-table th,
+    .prob-table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .prob-table th {
+      background: rgba(160, 255, 100, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .prob-table td {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+    }
+
+    .prob-table tr:hover td {
+      background: rgba(160, 255, 100, 0.1);
+    }
+
+    .prob-table .highlight {
+      background: rgba(160, 255, 100, 0.2);
+      font-weight: 700;
+    }
+
+    .simulator {
+      background: rgba(255, 230, 100, 0.1);
+      border: 2px solid rgba(255, 230, 100, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 30px 0;
+    }
+
+    .simulator h3 {
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .control {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .control label {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .control input[type="range"] {
+      flex: 2;
+      height: 8px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .control input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #a0ff66;
+      cursor: pointer;
+    }
+
+    .control input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #a0ff66;
+      cursor: pointer;
+    }
+
+    .control .value-display {
+      background: rgba(160, 255, 100, 0.2);
+      padding: 8px 15px;
+      border-radius: 8px;
+      color: #a0ff66;
+      font-weight: 600;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .result-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .result-card .label {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .result-card .value {
+      color: #8fffa0;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .interpretation {
+      background: rgba(160, 255, 100, 0.15);
+      border: 2px solid rgba(160, 255, 100, 0.4);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px 0;
+    }
+
+    .interpretation h4 {
+      color: #a0ff66;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .interpretation ul {
+      margin-left: 25px;
+    }
+
+    .interpretation li {
+      margin-bottom: 10px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .comparison-table th {
+      background: rgba(160, 255, 100, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .comparison-table td {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .math-display { font-size: 1rem; }
+      .control { flex-direction: column; align-items: flex-start; }
+      .control input[type="range"] { width: 100%; }
+      .visual-representation { grid-template-columns: 1fr; }
+      .fabric-grid { grid-template-columns: repeat(10, 1fr); }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a class="nav-link" onclick="history.back()">← Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto</h1>
+      <p class="exercise-subtitle">Control de Calidad Textil - Distribución de Poisson</p>
+    </div>
+
+    <!-- Contexto y enunciado -->
+    <div class="context-box">
+      <h3>🧵 Enunciado del Problema</h3>
+      <p>Se supone que el número de <strong>defectos en los rollos de tela</strong> de cierta industria textil es una variable aleatoria <strong>Poisson</strong> con una media de <strong>0.1 defectos por metro cuadrado</strong>.</p>
+      
+      <h4>📋 Preguntas:</h4>
+      <ul>
+        <li><strong>a)</strong> ¿Cuál es la probabilidad de tener <strong>dos defectos</strong> en <strong>un metro cuadrado</strong> de tela?</li>
+        <li><strong>b)</strong> ¿Cuál es la probabilidad de tener <strong>un defecto</strong> en <strong>10 metros cuadrados</strong> de tela?</li>
+        <li><strong>c)</strong> ¿Cuál es la probabilidad de que <strong>no haya defectos</strong> en <strong>20 metros cuadrados</strong> de tela?</li>
+      </ul>
+
+      <div class="hint-box">
+        💡 <strong>Dato clave:</strong> Este es un problema de distribución de Poisson, ideal para modelar eventos raros en un intervalo continuo (tiempo, espacio, volumen).
+      </div>
+    </div>
+
+    <!-- Visualización del problema -->
+    <div class="context-box">
+      <h3>🎨 Visualización del Problema</h3>
+      
+      <div class="visual-representation">
+        <div class="visual-box">
+          <h4>📏 TASA BASE</h4>
+          <div class="big-number" style="color: #a0ff66;">0.1</div>
+          <div class="description">Defectos por m²</div>
+        </div>
+
+        <div class="visual-box">
+          <h4>📊 PREGUNTA A</h4>
+          <div class="big-number" style="color: #ffd666;">1 m²</div>
+          <div class="description">λ = 0.1</div>
+        </div>
+
+        <div class="visual-box">
+          <h4>📊 PREGUNTA B</h4>
+          <div class="big-number" style="color: #ffaa66;">10 m²</div>
+          <div class="description">λ = 1.0</div>
+        </div>
+
+        <div class="visual-box">
+          <h4>📊 PREGUNTA C</h4>
+          <div class="big-number" style="color: #ff9966;">20 m²</div>
+          <div class="description">λ = 2.0</div>
+        </div>
+      </div>
+
+      <h4>Representación de 1 metro cuadrado de tela (400 celdas):</h4>
+      <p style="text-align: center; color: rgba(255, 255, 255, 0.6); font-size: 0.9rem;">
+        En promedio, 0.1 defectos por m² (1 defecto cada 10 m²)
+      </p>
+      <div class="fabric-grid" id="fabricGrid"></div>
+    </div>
+
+    <!-- Teoría -->
+    <div class="context-box">
+      <h3>📚 Distribución de Poisson</h3>
+      <p>La <strong>distribución de Poisson</strong> modela el número de eventos que ocurren en un intervalo fijo de tiempo o espacio, cuando estos eventos ocurren con una tasa promedio constante e independientemente unos de otros.</p>
+
+      <h4>Características:</h4>
+      <ul>
+        <li>Modela eventos <strong>raros</strong> (baja probabilidad individual)</li>
+        <li>Los eventos ocurren de manera <strong>independiente</strong></li>
+        <li>La tasa promedio (λ) es <strong>constante</strong></li>
+        <li>Puede tomar valores 0, 1, 2, 3, ... (infinitos posibles)</li>
+        <li>Media = Varianza = λ</li>
+      </ul>
+
+      <h4>Parámetro en nuestro problema:</h4>
+      <ul>
+        <li><strong>λ (lambda)</strong> = tasa promedio de defectos por unidad de área</li>
+        <li>Para 1 m²: λ = 0.1 defectos</li>
+        <li>Para A m²: λ = 0.1 × A defectos</li>
+      </ul>
+
+      <div class="formula-reference">
+        <div class="formula-card">
+          <h4>📊 Función de probabilidad</h4>
+          <div class="formula">P(X = k) = (e^(-λ) × λ^k) / k!</div>
+          <div class="description">Probabilidad de observar exactamente k eventos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📍 Media</h4>
+          <div class="formula">E[X] = λ</div>
+          <div class="description">Número esperado de eventos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📏 Varianza</h4>
+          <div class="formula">Var(X) = λ</div>
+          <div class="description">En Poisson, varianza = media</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>🔄 Propiedad aditiva</h4>
+          <div class="formula">Si X~Poisson(λ₁), Y~Poisson(λ₂)<br>entonces X+Y~Poisson(λ₁+λ₂)</div>
+          <div class="description">Suma de Poissons es Poisson</div>
+        </div>
+      </div>
+
+      <div class="hint-box">
+        💡 <strong>Importante:</strong> e ≈ 2.71828... (número de Euler). La fórmula usa exponencial negativa e^(-λ).
+      </div>
+    </div>
+
+    <!-- Aplicaciones de Poisson -->
+    <div class="context-box">
+      <h3>🌟 Ejemplos de Distribución de Poisson</h3>
+      <p>La distribución de Poisson se usa comúnmente en:</p>
+      
+      <table class="comparison-table">
+        <thead>
+          <tr>
+            <th>Campo</th>
+            <th>Ejemplo</th>
+            <th>λ (tasa promedio)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Control de calidad</td>
+            <td>Defectos en productos manufacturados</td>
+            <td>Defectos por unidad</td>
+          </tr>
+          <tr>
+            <td>Telecomunicaciones</td>
+            <td>Llamadas que llegan a un call center</td>
+            <td>Llamadas por hora</td>
+          </tr>
+          <tr>
+            <td>Tráfico</td>
+            <td>Accidentes en una carretera</td>
+            <td>Accidentes por mes</td>
+          </tr>
+          <tr>
+            <td>Medicina</td>
+            <td>Casos de una enfermedad rara</td>
+            <td>Casos por año</td>
+          </tr>
+          <tr>
+            <td>Física</td>
+            <td>Partículas emitidas por material radiactivo</td>
+            <td>Partículas por segundo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paso 1: Identificar parámetros -->
+    <div class="step">
+      <div class="step-header">1️⃣ Identificar el parámetro λ para cada pregunta</div>
+      <div class="step-content">
+        <p><strong>Dato del problema:</strong> λ₀ = 0.1 defectos por metro cuadrado</p>
+        
+        <h4 style="color: #a0ff66; margin-top: 20px;">Pregunta a) 1 metro cuadrado:</h4>
+        <div class="calculation-steps">
+          <div class="step-line">λₐ = 0.1 defectos/m² × 1 m² = 0.1 defectos</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Pregunta b) 10 metros cuadrados:</h4>
+        <div class="calculation-steps">
+          <div class="step-line">λᵦ = 0.1 defectos/m² × 10 m² = 1.0 defectos</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Pregunta c) 20 metros cuadrados:</h4>
+        <div class="calculation-steps">
+          <div class="step-line">λ꜀ = 0.1 defectos/m² × 20 m² = 2.0 defectos</div>
+        </div>
+
+        <div class="hint-box">
+          💡 <strong>Principio clave:</strong> λ se escala proporcionalmente con el área. Si duplicamos el área, duplicamos λ.
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2: Pregunta a) -->
+    <div class="step">
+      <div class="step-header">2️⃣ Pregunta a) P(X = 2) con λ = 0.1</div>
+      <div class="step-content">
+        <p><strong>Buscamos:</strong> Probabilidad de tener exactamente 2 defectos en 1 m² de tela</p>
+        
+        <h4 style="color: #a0ff66; margin-top: 20px;">Fórmula de Poisson:</h4>
+        <div class="math-display">
+          <div class="formula">P(X = k) = (e^(-λ) × λ^k) / k!</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Sustituyendo valores:</h4>
+        <div class="math-display">
+          <div class="formula">P(X = 2) = (e^(-0.1) × 0.1²) / 2!</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 1: Calcular e^(-0.1)</h4>
+        <div class="calculation-steps">
+          <div class="step-line">e^(-0.1) ≈ 0.904837</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 2: Calcular λ^k = 0.1²</h4>
+        <div class="calculation-steps">
+          <div class="step-line">0.1² = 0.01</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 3: Calcular k! = 2!</h4>
+        <div class="calculation-steps">
+          <div class="step-line">2! = 2 × 1 = 2</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 4: Calcular la probabilidad</h4>
+        <div class="calculation-steps">
+          <div class="step-line">P(X = 2) = (0.904837 × 0.01) / 2</div>
+          <div class="step-line">P(X = 2) = 0.00904837 / 2</div>
+          <div class="step-line">P(X = 2) = 0.00452418</div>
+          <div class="step-line">P(X = 2) ≈ 0.0045</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta a)</h4>
+          <div class="answer">P(X = 2) = 0.0045 = 0.45%</div>
+        </div>
+
+        <div class="interpretation">
+          <h4>📊 Interpretación:</h4>
+          <ul>
+            <li>Hay una probabilidad de solo <strong>0.45%</strong> de encontrar exactamente 2 defectos en 1 m².</li>
+            <li>Es un evento <strong>muy raro</strong> porque λ = 0.1 es muy pequeño (esperamos 0.1 defectos en promedio).</li>
+            <li>Aproximadamente <strong>1 de cada 221 metros cuadrados</strong> tendrá exactamente 2 defectos.</li>
+            <li>Con una tasa tan baja, lo más probable es tener 0 defectos (90.5%).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 3: Pregunta b) -->
+    <div class="step">
+      <div class="step-header">3️⃣ Pregunta b) P(X = 1) con λ = 1.0</div>
+      <div class="step-content">
+        <p><strong>Buscamos:</strong> Probabilidad de tener exactamente 1 defecto en 10 m² de tela</p>
+        
+        <h4 style="color: #a0ff66; margin-top: 20px;">Importante: Cambio de λ</h4>
+        <p>Como ahora consideramos 10 m², debemos ajustar λ:</p>
+        <div class="calculation-steps">
+          <div class="step-line">λ = 0.1 defectos/m² × 10 m² = 1.0 defectos</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Aplicar la fórmula:</h4>
+        <div class="math-display">
+          <div class="formula">P(X = 1) = (e^(-1) × 1¹) / 1!</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 1: Calcular e^(-1)</h4>
+        <div class="calculation-steps">
+          <div class="step-line">e^(-1) ≈ 0.367879</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 2: Calcular λ^k = 1¹</h4>
+        <div class="calculation-steps">
+          <div class="step-line">1¹ = 1</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 3: Calcular k! = 1!</h4>
+        <div class="calculation-steps">
+          <div class="step-line">1! = 1</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 4: Calcular la probabilidad</h4>
+        <div class="calculation-steps">
+          <div class="step-line">P(X = 1) = (0.367879 × 1) / 1</div>
+          <div class="step-line">P(X = 1) = 0.367879</div>
+          <div class="step-line">P(X = 1) ≈ 0.3679</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta b)</h4>
+          <div class="answer">P(X = 1) = 0.3679 = 36.79%</div>
+        </div>
+
+        <div class="interpretation">
+          <h4>📊 Interpretación:</h4>
+          <ul>
+            <li>Hay una probabilidad del <strong>36.79%</strong> de encontrar exactamente 1 defecto en 10 m².</li>
+            <li>Es el resultado <strong>más probable</strong> cuando λ = 1 (junto con X=0 que tiene 36.79% también).</li>
+            <li>Aproximadamente <strong>1 de cada 3 muestras</strong> de 10 m² tendrá exactamente 1 defecto.</li>
+            <li>Tiene sentido: con λ = 1, esperamos en promedio 1 defecto.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 4: Pregunta c) -->
+    <div class="step">
+      <div class="step-header">4️⃣ Pregunta c) P(X = 0) con λ = 2.0</div>
+      <div class="step-content">
+        <p><strong>Buscamos:</strong> Probabilidad de que NO haya defectos en 20 m² de tela</p>
+        
+        <h4 style="color: #a0ff66; margin-top: 20px;">Ajustar λ para 20 m²:</h4>
+        <div class="calculation-steps">
+          <div class="step-line">λ = 0.1 defectos/m² × 20 m² = 2.0 defectos</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Aplicar la fórmula:</h4>
+        <div class="math-display">
+          <div class="formula">P(X = 0) = (e^(-2) × 2⁰) / 0!</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 1: Calcular e^(-2)</h4>
+        <div class="calculation-steps">
+          <div class="step-line">e^(-2) ≈ 0.135335</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 2: Calcular λ^k = 2⁰</h4>
+        <div class="calculation-steps">
+          <div class="step-line">2⁰ = 1 (cualquier número elevado a 0 es 1)</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 3: Calcular k! = 0!</h4>
+        <div class="calculation-steps">
+          <div class="step-line">0! = 1 (por definición)</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 4: Calcular la probabilidad</h4>
+        <div class="calculation-steps">
+          <div class="step-line">P(X = 0) = (0.135335 × 1) / 1</div>
+          <div class="step-line">P(X = 0) = 0.135335</div>
+          <div class="step-line">P(X = 0) ≈ 0.1353</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta c)</h4>
+          <div class="answer">P(X = 0) = 0.1353 = 13.53%</div>
+        </div>
+
+        <div class="interpretation">
+          <h4>📊 Interpretación:</h4>
+          <ul>
+            <li>Hay una probabilidad del <strong>13.53%</strong> de no encontrar ningún defecto en 20 m².</li>
+            <li>Aproximadamente <strong>1 de cada 7-8 muestras</strong> de 20 m² estará libre de defectos.</li>
+            <li>La probabilidad es menor que en áreas pequeñas porque con más área, más probabilidad de defectos.</li>
+            <li>Hay <strong>86.47% de probabilidad</strong> de encontrar al menos un defecto en 20 m².</li>
+          </ul>
+        </div>
+
+        <div class="hint-box">
+          💡 <strong>Fórmula simplificada para P(X=0):</strong> Cuando k=0, la fórmula se simplifica a P(X=0) = e^(-λ)
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 5: Distribuciones completas -->
+    <div class="step">
+      <div class="step-header">5️⃣ Distribuciones completas para cada caso</div>
+      <div class="step-content">
+        <h4 style="color: #a0ff66;">Caso a) λ = 0.1 (1 m²):</h4>
+        <table class="prob-table">
+          <thead>
+            <tr>
+              <th>k defectos</th>
+              <th>P(X = k)</th>
+              <th>Porcentaje</th>
+              <th>Interpretación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>0.9048</td>
+              <td>90.48%</td>
+              <td>Sin defectos (lo más probable)</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0.0905</td>
+              <td>9.05%</td>
+              <td>Un defecto</td>
+            </tr>
+            <tr class="highlight">
+              <td>2</td>
+              <td>0.0045</td>
+              <td>0.45%</td>
+              <td>Dos defectos ← Pregunta a)</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>0.0002</td>
+              <td>0.02%</td>
+              <td>Tres defectos (muy raro)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4 style="color: #a0ff66; margin-top: 30px;">Caso b) λ = 1.0 (10 m²):</h4>
+        <table class="prob-table">
+          <thead>
+            <tr>
+              <th>k defectos</th>
+              <th>P(X = k)</th>
+              <th>Porcentaje</th>
+              <th>Interpretación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>0.3679</td>
+              <td>36.79%</td>
+              <td>Sin defectos</td>
+            </tr>
+            <tr class="highlight">
+              <td>1</td>
+              <td>0.3679</td>
+              <td>36.79%</td>
+              <td>Un defecto ← Pregunta b)</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>0.1839</td>
+              <td>18.39%</td>
+              <td>Dos defectos</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>0.0613</td>
+              <td>6.13%</td>
+              <td>Tres defectos</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>0.0153</td>
+              <td>1.53%</td>
+              <td>Cuatro defectos</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4 style="color: #a0ff66; margin-top: 30px;">Caso c) λ = 2.0 (20 m²):</h4>
+        <table class="prob-table">
+          <thead>
+            <tr>
+              <th>k defectos</th>
+              <th>P(X = k)</th>
+              <th>Porcentaje</th>
+              <th>Interpretación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight">
+              <td>0</td>
+              <td>0.1353</td>
+              <td>13.53%</td>
+              <td>Sin defectos ← Pregunta c)</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>0.2707</td>
+              <td>27.07%</td>
+              <td>Un defecto</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>0.2707</td>
+              <td>27.07%</td>
+              <td>Dos defectos (más probable)</td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>0.1804</td>
+              <td>18.04%</td>
+              <td>Tres defectos</td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>0.0902</td>
+              <td>9.02%</td>
+              <td>Cuatro defectos</td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>0.0361</td>
+              <td>3.61%</td>
+              <td>Cinco defectos</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="chart-container">
+          <h4>📊 Comparación de las tres distribuciones</h4>
+          <canvas id="comparisonChart"></canvas>
+        </div>
+
+        <div class="interpretation">
+          <h4>🔍 Observaciones:</h4>
+          <ul>
+            <li><strong>λ = 0.1:</strong> Distribución muy sesgada hacia 0. El 90.5% de las veces no hay defectos.</li>
+            <li><strong>λ = 1.0:</strong> Distribución más equilibrada. Los valores 0 y 1 son igualmente probables (36.8% cada uno).</li>
+            <li><strong>λ = 2.0:</strong> Distribución más dispersa. El valor más probable es 2 (27.1%), pero hay más variabilidad.</li>
+            <li>A medida que aumenta λ, la distribución se vuelve más simétrica y dispersa.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 6: Resumen -->
+    <div class="step">
+      <div class="step-header">6️⃣ Resumen de respuestas</div>
+      <div class="step-content">
+        <div class="answer-box" style="margin-bottom: 15px;">
+          <h4>🎯 Respuesta a) 2 defectos en 1 m²</h4>
+          <div class="answer">P(X = 2 | λ=0.1) = 0.0045 = 0.45%</div>
+        </div>
+
+        <div class="answer-box" style="margin-bottom: 15px;">
+          <h4>🎯 Respuesta b) 1 defecto en 10 m²</h4>
+          <div class="answer">P(X = 1 | λ=1.0) = 0.3679 = 36.79%</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta c) 0 defectos en 20 m²</h4>
+          <div class="answer">P(X = 0 | λ=2.0) = 0.1353 = 13.53%</div>
+        </div>
+
+        <div class="interpretation" style="margin-top: 30px;">
+          <h4>💡 Conclusiones del control de calidad textil:</h4>
+          <ul>
+            <li><strong>Calidad general:</strong> La tasa de 0.1 defectos/m² indica muy buena calidad (1 defecto cada 10 m² en promedio).</li>
+            <li><strong>Escala del problema:</strong> La probabilidad de defectos aumenta con el área inspeccionada, como es de esperarse.</li>
+            <li><strong>Eventos raros:</strong> Con λ pequeño (0.1), los defectos son eventos raros, lo que se refleja en las probabilidades.</li>
+            <li><strong>Inspección óptima:</strong> Para garantizar alta calidad, inspeccionar áreas grandes (20 m²) tiene solo 13.5% de estar libre de defectos.</li>
+            <li><strong>Propiedad de escala:</strong> λ crece linealmente con el área: 1 m² → λ=0.1, 10 m² → λ=1.0, 20 m² → λ=2.0</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simulador interactivo -->
+    <div class="simulator">
+      <h3>🎮 Simulador Interactivo</h3>
+      <p style="text-align: center; color: rgba(255,255,255,0.7); margin-bottom: 20px;">
+        Ajusta los parámetros para explorar diferentes escenarios de control de calidad textil
+      </p>
+
+      <div class="control-group">
+        <div class="control">
+          <label>Tasa de defectos por m² (λ₀):</label>
+          <input type="range" id="rateSlider" min="0.05" max="1.0" step="0.05" value="0.1">
+          <span class="value-display" id="rateValue">0.10</span>
+        </div>
+
+        <div class="control">
+          <label>Área de tela (m²):</label>
+          <input type="range" id="areaSlider" min="1" max="50" step="1" value="10">
+          <span class="value-display" id="areaValue">10 m²</span>
+        </div>
+
+        <div class="control">
+          <label>Número de defectos (k):</label>
+          <input type="range" id="defectsSlider" min="0" max="10" step="1" value="1">
+          <span class="value-display" id="defectsValue">1</span>
+        </div>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="label">λ efectivo</div>
+          <div class="value" id="simLambda">1.00</div>
+        </div>
+
+        <div class="result-card">
+          <div class="label">P(X = k)</div>
+          <div class="value" id="simProb">36.79%</div>
+        </div>
+
+        <div class="result-card">
+          <div class="label">P(X = 0)</div>
+          <div class="value" id="simProb0">36.79%</div>
+        </div>
+
+        <div class="result-card">
+          <div class="label">P(X ≥ 1)</div>
+          <div class="value" id="simProb1plus">63.21%</div>
+        </div>
+      </div>
+
+      <div class="chart-container" style="margin-top: 30px;">
+        <h4>📊 Distribución de Poisson actualizada</h4>
+        <canvas id="simulatorChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Generar visualización de tela
+    function generateFabricGrid() {
+      const grid = document.getElementById('fabricGrid');
+      const totalCells = 400; // 20x20
+      const defectProbability = 0.1 / totalCells; // Aproximación visual
+      
+      for (let i = 0; i < totalCells; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'fabric-cell';
+        
+        // Agregar algunos defectos aleatorios (pocos)
+        if (Math.random() < defectProbability * 40) { // Factor para visibilidad
+          cell.classList.add('defect');
+        }
+        
+        grid.appendChild(cell);
+      }
+    }
+
+    // Función factorial
+    function factorial(n) {
+      if (n === 0 || n === 1) return 1;
+      let result = 1;
+      for (let i = 2; i <= n; i++) {
+        result *= i;
+      }
+      return result;
+    }
+
+    // Función de distribución de Poisson
+    function poisson(lambda, k) {
+      return (Math.pow(Math.E, -lambda) * Math.pow(lambda, k)) / factorial(k);
+    }
+
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Variables para los gráficos
+    let comparisonChartInstance, simulatorChartInstance;
+
+    // Crear gráfico de comparación
+    function createComparisonChart() {
+      const ctx = document.getElementById('comparisonChart').getContext('2d');
+      
+      const labels = ['0', '1', '2', '3', '4', '5', '6'];
+      
+      const data = {
+        labels: labels,
+        datasets: [
+          {
+            label: 'λ = 0.1 (1 m²)',
+            data: [0.9048, 0.0905, 0.0045, 0.0002, 0, 0, 0],
+            backgroundColor: 'rgba(160, 255, 100, 0.7)',
+            borderColor: 'rgba(160, 255, 100, 1)',
+            borderWidth: 2
+          },
+          {
+            label: 'λ = 1.0 (10 m²)',
+            data: [0.3679, 0.3679, 0.1839, 0.0613, 0.0153, 0.0031, 0.0005],
+            backgroundColor: 'rgba(255, 215, 100, 0.7)',
+            borderColor: 'rgba(255, 215, 100, 1)',
+            borderWidth: 2
+          },
+          {
+            label: 'λ = 2.0 (20 m²)',
+            data: [0.1353, 0.2707, 0.2707, 0.1804, 0.0902, 0.0361, 0.0120],
+            backgroundColor: 'rgba(255, 150, 100, 0.7)',
+            borderColor: 'rgba(255, 150, 100, 1)',
+            borderWidth: 2
+          }
+        ]
+      };
+      
+      comparisonChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              labels: { color: '#fff' }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `${context.dataset.label}: ${(context.parsed.y * 100).toFixed(2)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 1.0,
+              title: {
+                display: true,
+                text: 'Probabilidad',
+                font: { size: 14, weight: 'bold' },
+                color: '#fff'
+              },
+              ticks: {
+                color: '#fff',
+                callback: function(value) {
+                  return (value * 100).toFixed(0) + '%';
+                }
+              },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Número de defectos (k)',
+                font: { size: 14, weight: 'bold' },
+                color: '#fff'
+              },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    // Crear gráfico del simulador
+    function createSimulatorChart(lambda) {
+      const ctx = document.getElementById('simulatorChart').getContext('2d');
+      
+      const maxK = Math.min(20, Math.ceil(lambda + 3 * Math.sqrt(lambda)));
+      const labels = [];
+      const probData = [];
+      
+      for (let k = 0; k <= maxK; k++) {
+        labels.push(k.toString());
+        probData.push(poisson(lambda, k));
+      }
+      
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: `Poisson(λ=${lambda.toFixed(2)})`,
+          data: probData,
+          backgroundColor: probData.map((_, i) => {
+            const hue = 100 - (i * 3);
+            return `hsla(${hue}, 70%, 60%, 0.8)`;
+          }),
+          borderColor: probData.map((_, i) => {
+            const hue = 100 - (i * 3);
+            return `hsla(${hue}, 70%, 60%, 1)`;
+          }),
+          borderWidth: 2,
+          borderRadius: 5
+        }]
+      };
+      
+      if (simulatorChartInstance) {
+        simulatorChartInstance.destroy();
+      }
+      
+      simulatorChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              labels: { color: '#fff' }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `Probabilidad: ${(context.parsed.y * 100).toFixed(2)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Probabilidad',
+                font: { size: 14, weight: 'bold' },
+                color: '#fff'
+              },
+              ticks: {
+                color: '#fff',
+                callback: function(value) {
+                  return (value * 100).toFixed(1) + '%';
+                }
+              },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Número de defectos (k)',
+                font: { size: 14, weight: 'bold' },
+                color: '#fff'
+              },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    // Simulador interactivo
+    function updateSimulator() {
+      const rate = parseFloat(document.getElementById('rateSlider').value);
+      const area = parseInt(document.getElementById('areaSlider').value);
+      const k = parseInt(document.getElementById('defectsSlider').value);
+      
+      const lambda = rate * area;
+      
+      document.getElementById('rateValue').textContent = rate.toFixed(2);
+      document.getElementById('areaValue').textContent = area + ' m²';
+      document.getElementById('defectsValue').textContent = k;
+      
+      // Calcular probabilidades
+      const probK = poisson(lambda, k);
+      const prob0 = poisson(lambda, 0);
+      const prob1plus = 1 - prob0;
+      
+      document.getElementById('simLambda').textContent = lambda.toFixed(2);
+      document.getElementById('simProb').textContent = (probK * 100).toFixed(2) + '%';
+      document.getElementById('simProb0').textContent = (prob0 * 100).toFixed(2) + '%';
+      document.getElementById('simProb1plus').textContent = (prob1plus * 100).toFixed(2) + '%';
+      
+      // Actualizar gráfico
+      createSimulatorChart(lambda);
+    }
+
+    // Event listeners para el simulador
+    document.getElementById('rateSlider').addEventListener('input', updateSimulator);
+    document.getElementById('areaSlider').addEventListener('input', updateSimulator);
+    document.getElementById('defectsSlider').addEventListener('input', updateSimulator);
+
+    // Inicializar
+    window.addEventListener('load', () => {
+      generateFabricGrid();
+      createComparisonChart();
+      updateSimulator();
+    });
+
+            // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html'; // fallback si se abre directo
+      }
+    });
+  </script>
+</body>
+</html>

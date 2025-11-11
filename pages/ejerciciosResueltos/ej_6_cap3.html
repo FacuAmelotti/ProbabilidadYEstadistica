@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Proceso de Llenado Automático</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <style>
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: white;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .formula-reference {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .formula-card {
+      background: rgba(255, 150, 100, 0.1);
+      border: 1px solid rgba(255, 150, 100, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .formula-card:hover {
+      background: rgba(255, 150, 100, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .formula-card h4 {
+      color: #ffa066;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .formula-card .formula {
+      font-family: monospace;
+      color: #fff;
+      font-size: 1.1rem;
+      margin: 8px 0;
+    }
+
+    .formula-card .description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(255, 150, 100, 0.7);
+      background: rgba(255, 150, 100, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p, .step-content ul {
+      margin-bottom: 10px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #ffa066;
+    }
+
+    .math-display {
+      text-align: center;
+      font-size: 1.1rem;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .formula {
+      font-family: 'Times New Roman', serif;
+      font-size: 1.2rem;
+      color: #ffa066;
+      margin: 5px 0;
+    }
+
+    .answer-box {
+      background: linear-gradient(135deg, rgba(255, 150, 100, 0.2), rgba(255, 150, 100, 0.1));
+      border: 2px solid rgba(255, 150, 100, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .answer-box h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .answer {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #8fffa0;
+      margin: 8px 0;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .chart-container h4 {
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    #negbinomialChart {
+      display: block;
+      width: 100% !important;
+      max-width: 700px;
+      height: 320px !important;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+    }
+
+    .analysis-box {
+      background: rgba(255, 150, 100, 0.15);
+      border: 2px solid rgba(255, 150, 100, 0.4);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px 0;
+    }
+
+    .analysis-box h4 {
+      color: #ffa066;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .analysis-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+    }
+
+    .analysis-item h5 {
+      color: #ffa066;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 0.9rem;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .comparison-table th {
+      background: rgba(255, 150, 100, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .comparison-table td {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .highlight-row {
+      background: rgba(255, 150, 100, 0.2);
+      font-weight: bold;
+    }
+
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .data-card {
+      background: rgba(255, 150, 100, 0.1);
+      border: 1px solid rgba(255, 150, 100, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .data-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(255, 150, 100, 0.3);
+    }
+
+    .data-card h4 {
+      color: #ffa066;
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .data-card .value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #8fffa0;
+    }
+
+    .data-card .unit {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 5px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .math-display { font-size: 1rem; }
+      .formula-reference { grid-template-columns: 1fr; }
+      .data-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto</h1>
+      <p class="exercise-subtitle">Distribución Binomial Negativa - Control de Proceso de Llenado</p>
+    </div>
+
+    <!-- Contexto y enunciado -->
+    <div class="context-box">
+      <h3>📦 Contexto del Problema</h3>
+      <p>La escala electrónica de un <strong>proceso de llenado automático</strong> detiene la línea de producción después de haber detectado <strong>3 paquetes con un peso menor</strong> que el especificado.</p>
+      
+      <p><strong>Datos conocidos:</strong></p>
+      <ul>
+        <li>Probabilidad de llenar un paquete con peso menor: <strong>p = 0.001</strong> (0.1%)</li>
+        <li>Cada operación de llenado es <strong>independiente</strong></li>
+        <li>La línea se detiene al detectar el <strong>3er paquete defectuoso</strong> (r = 3)</li>
+      </ul>
+
+      <h3>📘 Tareas</h3>
+      <ul>
+        <li><strong>a)</strong> ¿Cuál es el <strong>número promedio de operaciones</strong> de llenado antes de que se detenga la línea?</li>
+        <li><strong>b)</strong> ¿Cuál es la <strong>desviación estándar</strong> del número de operaciones antes de que se detenga la línea?</li>
+      </ul>
+
+      <div class="hint-box">
+        💡 <strong>Distribución aplicable:</strong> Este problema sigue una <strong>Distribución Binomial Negativa</strong> (o Pascal), donde contamos el número de ensayos necesarios para obtener r éxitos (defectos). En este caso, X representa el número total de operaciones hasta obtener el 3er paquete defectuoso.
+      </div>
+    </div>
+
+    <!-- Referencia de fórmulas -->
+    <div class="context-box">
+      <h3>📊 Fórmulas de referencia - Distribución Binomial Negativa</h3>
+      <div class="formula-reference">
+        <div class="formula-card">
+          <h4>📈 Esperanza (Media)</h4>
+          <div class="formula">E(X) = μ = r / p</div>
+          <div class="description">Número promedio de ensayos hasta obtener r éxitos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📏 Varianza</h4>
+          <div class="formula">Var(X) = σ² = r(1-p) / p²</div>
+          <div class="description">Medida de dispersión del número de ensayos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📐 Desviación Estándar</h4>
+          <div class="formula">σ = √[r(1-p) / p²]</div>
+          <div class="description">Raíz cuadrada de la varianza</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📊 Función de probabilidad</h4>
+          <div class="formula">P(X = k) = C(k-1, r-1) · p^r · (1-p)^(k-r)</div>
+          <div class="description">Probabilidad de que el r-ésimo éxito ocurra en el ensayo k</div>
+        </div>
+      </div>
+
+      <div class="hint-box">
+        💡 <strong>Nota importante:</strong> En este problema:
+        <ul>
+          <li><strong>r = 3</strong> (número de paquetes defectuosos necesarios para detener)</li>
+          <li><strong>p = 0.001</strong> (probabilidad de defecto en cada operación)</li>
+          <li><strong>X</strong> = número total de operaciones hasta que se detiene la línea</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Paso 1: Identificar parámetros -->
+    <div class="step">
+      <div class="step-header">1️⃣ Identificar el tipo de distribución y parámetros</div>
+      <div class="step-content">
+        <p><strong>Análisis del problema:</strong></p>
+        
+        <div class="analysis-box">
+          <h4>🔍 Características del problema</h4>
+          <div class="analysis-item">
+            <h5>¿Por qué es Binomial Negativa?</h5>
+            <ul>
+              <li>✅ Realizamos ensayos repetidos (operaciones de llenado)</li>
+              <li>✅ Cada ensayo es independiente</li>
+              <li>✅ Cada ensayo tiene dos resultados: defecto (éxito) o no defecto (fracaso)</li>
+              <li>✅ La probabilidad p es constante en cada ensayo</li>
+              <li>✅ <strong>Contamos cuántos ensayos necesitamos hasta obtener r éxitos</strong></li>
+              <li>✅ El proceso se detiene al obtener el 3er éxito (r = 3)</li>
+            </ul>
+          </div>
+        </div>
+
+        <p><strong>Parámetros identificados:</strong></p>
+        
+        <div class="data-grid">
+          <div class="data-card">
+            <h4>Número de éxitos</h4>
+            <div class="value">r = 3</div>
+            <div class="unit">paquetes defectuosos</div>
+          </div>
+
+          <div class="data-card">
+            <h4>Probabilidad de éxito</h4>
+            <div class="value">p = 0.001</div>
+            <div class="unit">= 0.1%</div>
+          </div>
+
+          <div class="data-card">
+            <h4>Probabilidad de fracaso</h4>
+            <div class="value">1-p = 0.999</div>
+            <div class="unit">= 99.9%</div>
+          </div>
+        </div>
+
+        <div class="answer-box">
+          <h4>✅ Modelo Estadístico</h4>
+          <div class="answer">X ~ Binomial Negativa (r = 3, p = 0.001)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2: Calcular la media -->
+    <div class="step">
+      <div class="step-header">2️⃣ Parte a) Calcular el número promedio de operaciones</div>
+      <div class="step-content">
+        <p><strong>Objetivo:</strong> Encontrar el valor esperado E(X), que representa el número promedio de operaciones de llenado hasta que se detiene la línea.</p>
+
+        <p><strong>Paso 1: Identificar la fórmula de la esperanza</strong></p>
+        <p>Para una distribución Binomial Negativa:</p>
+        
+        <div class="math-display">
+          <div class="formula">E(X) = μ = r / p</div>
+        </div>
+
+        <p><strong>Paso 2: Sustituir los valores</strong></p>
+        <div class="math-display">
+          <div class="formula">E(X) = r / p</div>
+          <div class="formula">E(X) = 3 / 0.001</div>
+          <div class="formula">E(X) = 3,000 operaciones</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta Parte a)</h4>
+          <div class="answer">Número promedio de operaciones = 3,000</div>
+        </div>
+
+        <div class="analysis-box">
+          <h4>📋 Interpretación</h4>
+          <div class="analysis-item">
+            <h5>¿Qué significa este resultado?</h5>
+            <p>En promedio, se necesitan realizar <strong>3,000 operaciones de llenado</strong> antes de que la línea de producción se detenga por haber detectado 3 paquetes con peso menor al especificado.</p>
+            <p>Esto tiene sentido porque:</p>
+            <ul>
+              <li>La probabilidad de defecto es muy baja (0.1%)</li>
+              <li>Se espera 1 defecto cada 1,000 operaciones (1/0.001)</li>
+              <li>Por lo tanto, 3 defectos requieren aproximadamente 3,000 operaciones</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 3: Calcular la desviación estándar -->
+    <div class="step">
+      <div class="step-header">3️⃣ Parte b) Calcular la desviación estándar</div>
+      <div class="step-content">
+        <p><strong>Objetivo:</strong> Encontrar la desviación estándar σ, que mide la variabilidad del número de operaciones.</p>
+
+        <p><strong>Paso 1: Calcular la varianza</strong></p>
+        <p>Para una distribución Binomial Negativa:</p>
+        
+        <div class="math-display">
+          <div class="formula">Var(X) = σ² = r(1-p) / p²</div>
+        </div>
+
+        <p><strong>Paso 2: Sustituir los valores en la varianza</strong></p>
+        <div class="math-display">
+          <div class="formula">σ² = r(1-p) / p²</div>
+          <div class="formula">σ² = 3 × 0.999 / (0.001)²</div>
+          <div class="formula">σ² = 2.997 / 0.000001</div>
+          <div class="formula">σ² = 2,997,000</div>
+        </div>
+
+        <p><strong>Paso 3: Calcular la desviación estándar</strong></p>
+        <div class="math-display">
+          <div class="formula">σ = √σ²</div>
+          <div class="formula">σ = √2,997,000</div>
+          <div class="formula">σ ≈ 1,731.04 operaciones</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta Parte b)</h4>
+          <div class="answer">Desviación estándar ≈ 1,731 operaciones</div>
+          <div class="answer" style="font-size: 1.1rem;">(Varianza = 2,997,000)</div>
+        </div>
+
+        <div class="analysis-box">
+          <h4>📋 Interpretación</h4>
+          <div class="analysis-item">
+            <h5>¿Qué significa este resultado?</h5>
+            <p>La desviación estándar de <strong>1,731 operaciones</strong> indica que hay una variabilidad considerable en el número de operaciones antes de que se detenga la línea.</p>
+            <p><strong>Implicaciones prácticas:</strong></p>
+            <ul>
+              <li>El número de operaciones puede variar significativamente alrededor de la media de 3,000</li>
+              <li>En el 68% de los casos, el número de operaciones estará entre 1,269 y 4,731 (μ ± σ)</li>
+              <li>En el 95% de los casos, estará entre -462 y 6,462 (μ ± 2σ), aunque valores negativos no tienen sentido práctico</li>
+              <li>Esta alta variabilidad es típica de eventos raros (p pequeña)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparación de escenarios -->
+    <div class="step">
+      <div class="step-header">4️⃣ Análisis comparativo y probabilidades</div>
+      <div class="step-content">
+        <p><strong>¿Qué pasaría en diferentes escenarios?</strong></p>
+        
+        <div class="analysis-box">
+          <h4>📊 Comparación de escenarios</h4>
+          
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Escenario</th>
+                <th>r (defectos)</th>
+                <th>p (prob.)</th>
+                <th>E(X) Media</th>
+                <th>σ Desv. Est.</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1 defecto</td>
+                <td>1</td>
+                <td>0.001</td>
+                <td>1,000</td>
+                <td>999</td>
+              </tr>
+              <tr>
+                <td>2 defectos</td>
+                <td>2</td>
+                <td>0.001</td>
+                <td>2,000</td>
+                <td>1,414</td>
+              </tr>
+              <tr class="highlight-row">
+                <td><strong>Actual (3 defectos)</strong></td>
+                <td><strong>3</strong></td>
+                <td><strong>0.001</strong></td>
+                <td><strong>3,000</strong></td>
+                <td><strong>1,731</strong></td>
+              </tr>
+              <tr>
+                <td>4 defectos</td>
+                <td>4</td>
+                <td>0.001</td>
+                <td>4,000</td>
+                <td>2,000</td>
+              </tr>
+              <tr>
+                <td>5 defectos</td>
+                <td>5</td>
+                <td>0.001</td>
+                <td>5,000</td>
+                <td>2,236</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="analysis-item">
+            <h5>Observaciones:</h5>
+            <ul>
+              <li>La media crece linealmente con r: E(X) = r/p</li>
+              <li>La desviación estándar crece con √r: σ ∝ √r</li>
+              <li>Cuantos más defectos se necesiten, mayor será la variabilidad relativa</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="chart-container">
+          <h4>📊 Visualización aproximada de la distribución</h4>
+          <canvas id="negbinomialChart"></canvas>
+          <p style="font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-top: 10px;">
+            Nota: Gráfica ilustrativa de la densidad de probabilidad (escala reducida para visualización)
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resumen final -->
+    <div class="step">
+      <div class="step-header">📝 Resumen de Resultados</div>
+      <div class="step-content">
+      
+      <div class="data-grid">
+        <div class="data-card">
+          <h4>Distribución</h4>
+          <div class="value" style="font-size: 1.3rem;">Bin. Negativa</div>
+          <div class="unit">r=3, p=0.001</div>
+        </div>
+
+        <div class="data-card">
+          <h4>Parte a) Media</h4>
+          <div class="value">3,000</div>
+          <div class="unit">operaciones</div>
+        </div>
+
+        <div class="data-card">
+          <h4>Parte b) Desv. Est.</h4>
+          <div class="value">1,731</div>
+          <div class="unit">operaciones</div>
+        </div>
+      </div>
+
+      <div class="hint-box">
+        💡 <strong>Conclusión práctica:</strong> El proceso de llenado automático funcionará en promedio durante <strong>3,000 operaciones</strong> antes de detenerse, con una variabilidad típica de ±1,731 operaciones. Esto implica que el sistema de control de calidad permite una producción continua considerable antes de requerir intervención, ya que los defectos son muy raros (solo 0.1% de probabilidad).
+      </div>
+
+      <div class="analysis-box">
+        <h4>🎓 Conceptos clave aprendidos</h4>
+        <div class="analysis-item">
+          <ul>
+            <li><strong>Distribución Binomial Negativa:</strong> Modela el número de ensayos hasta obtener r éxitos</li>
+            <li><strong>Aplicación en control de calidad:</strong> Útil para determinar tiempos de producción entre detenciones</li>
+            <li><strong>Eventos raros:</strong> Cuando p es pequeña, la variabilidad relativa es alta</li>
+            <li><strong>Interpretación práctica:</strong> Los resultados ayudan a planificar mantenimiento y supervisión</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <script>
+  // Expansión de pasos
+  document.querySelectorAll('.step-header').forEach(header => {
+    header.addEventListener('click', () => {
+      const step = header.parentElement;
+      step.classList.toggle('open');
+    });
+  });
+
+  // Crear gráfica ilustrativa de la distribución
+  function createNegativeBinomialChart() {
+    const ctx = document.getElementById('negbinomialChart').getContext('2d');
+    
+    // Parámetros base
+    const mean = 3000;
+    const std = 1731;
+
+    const labels = [];
+    const probabilities = [];
+
+    // Generamos puntos cada 500 unidades desde 500 hasta 7000
+    for (let x = 500; x <= 7000; x += 500) {
+      labels.push(x.toString());
+      const z = (x - mean) / std;
+      const density = Math.exp(-0.5 * z * z) / (std * Math.sqrt(2 * Math.PI));
+      probabilities.push(density * 1e5); // escala visual
+    }
+
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Distribución aproximada',
+          data: probabilities,
+          borderColor: '#ffa066',
+          borderWidth: 2,
+          fill: true,
+          backgroundColor: 'rgba(255, 150, 100, 0.2)',
+          pointRadius: 3,
+          pointBackgroundColor: '#ffa066',
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: context => `Densidad aprox: ${context.parsed.y.toFixed(4)}`
+            }
+          }
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: 'Número de operaciones (X)',
+              color: '#fff'
+            },
+            ticks: { color: '#ccc' },
+            grid: { color: 'rgba(255,255,255,0.1)' }
+          },
+          y: {
+            title: {
+              display: true,
+              text: 'Densidad (escala reducida)',
+              color: '#fff'
+            },
+            ticks: { color: '#ccc' },
+            grid: { color: 'rgba(255,255,255,0.1)' }
+          }
+        }
+      }
+    });
+  }
+
+  // Ejecutar al cargar la página
+  document.addEventListener('DOMContentLoaded', createNegativeBinomialChart);
+
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html'; // fallback si se abre directo
+      }
+    });
+</script>
+</body></html>

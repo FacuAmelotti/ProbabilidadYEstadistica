@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/base.css" />
+  <title>Ejercicio Resuelto - Demanda de Bebida</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+  
+
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .floating-dot {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .floating-dot:nth-child(1) {
+      top: 20%;
+      left: 20%;
+      animation-delay: 0s;
+    }
+
+    .floating-dot:nth-child(2) {
+      top: 60%;
+      left: 80%;
+      animation-delay: 7s;
+    }
+
+    .floating-dot:nth-child(3) {
+      top: 80%;
+      left: 40%;
+      animation-delay: 14s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      33% { transform: translate(50px, -50px); }
+      66% { transform: translate(-50px, 50px); }
+    }
+
+
+    .nav-link:hover {
+      color: white;
+    }
+
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .context-box ul {
+      margin-left: 25px;
+      list-style: disc;
+    }
+
+    .context-box ul li {
+      margin-bottom: 10px;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(120, 119, 198, 0.7);
+      background: rgba(120, 119, 198, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-header::after {
+      content: '▼';
+      transition: transform 0.3s;
+    }
+
+    .step.open .step-header::after {
+      transform: rotate(180deg);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.8;
+    }
+
+    .step-content p {
+      margin-bottom: 15px;
+    }
+
+    .step-content ul {
+      margin: 15px 0 15px 25px;
+    }
+
+    .step-content ul li {
+      margin-bottom: 10px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      color: #a0e0ff;
+      font-size: 0.95em;
+    }
+
+    .math-display {
+      text-align: center;
+      font-size: 1.15rem;
+      margin: 25px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .formula {
+      font-family: 'Times New Roman', serif;
+      font-size: 1.2rem;
+      color: #a0e0ff;
+      line-height: 1.8;
+    }
+
+    .answer-box {
+      background: linear-gradient(135deg, rgba(120, 119, 198, 0.2), rgba(120, 119, 198, 0.1));
+      border: 2px solid rgba(120, 119, 198, 0.6);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .answer-box h4 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+
+    .answer {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #8fffa0;
+      margin: 10px 0;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 25px;
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .chart-container h4 {
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+    }
+
+    #densityChart, #demandChart {
+      max-width: 100%;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+    }
+
+    .check-panel {
+      margin-top: 40px;
+      padding: 25px;
+      border-radius: 16px;
+      background: rgba(120, 119, 198, 0.15);
+      border: 1px solid rgba(120, 119, 198, 0.4);
+      text-align: center;
+    }
+
+    .check-panel h3 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .check-panel input {
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      width: 150px;
+      text-align: center;
+      font-size: 1rem;
+      margin: 5px;
+    }
+
+    .check-btn {
+      margin-top: 15px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #7877c6, #6564b5);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+    }
+
+    .check-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(120, 119, 198, 0.4);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .correct { color: #8fffa0; }
+    .incorrect { color: #ff8f8f; }
+
+    .note-box {
+      background: rgba(88, 166, 255, 0.1);
+      border-left: 4px solid rgba(88, 166, 255, 0.7);
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .note-box strong {
+      color: #a0e0ff;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .math-display { font-size: 1rem; }
+      .nav-container { padding: 0 20px; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto</h1>
+      <p class="exercise-subtitle">Demanda Semanal de Bebida - Valor Esperado y Varianza</p>
+    </div>
+
+    <!-- Contexto y enunciado -->
+    <div class="context-box">
+      <h3>🎯 Contexto del Problema</h3>
+      <p>La <strong>demanda semanal</strong> de cierta bebida en una cadena de tiendas, medida en <strong>miles de litros</strong>, está dada por la función:</p>
+      
+      <div class="math-display">
+        <div class="formula">g(X) = X² + X - 2</div>
+      </div>
+
+      <p>donde <strong>X</strong> es una variable aleatoria continua con función de densidad:</p>
+
+      <div class="math-display">
+        <div class="formula">
+          f(x) = {<br>
+          &nbsp;&nbsp;2(x - 1) &nbsp; si 1 ≤ x ≤ 2<br>
+          &nbsp;&nbsp;0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; en otro caso
+        </div>
+      </div>
+
+      <h3>📘 Objetivo</h3>
+      <ul>
+        <li>🔢 <strong>Calcular E[g(X)]:</strong> el valor esperado de la demanda semanal</li>
+        <li>📊 <strong>Calcular Var[g(X)]:</strong> la varianza de la demanda semanal</li>
+      </ul>
+
+      <div class="hint-box">
+        💡 <strong>Recordatorio:</strong> Para una transformación g(X), usamos:<br>
+        • E[g(X)] = ∫ g(x)·f(x) dx<br>
+        • Var[g(X)] = E[g(X)²] - (E[g(X)])²
+      </div>
+    </div>
+
+    <!-- Paso 1: Verificación de función de densidad -->
+    <div class="step">
+      <div class="step-header">1️⃣ Verificación de la función de densidad</div>
+      <div class="step-content">
+        <p>Antes de comenzar, verificamos que f(x) es una función de densidad válida:</p>
+        
+        <div class="math-display">
+          <div class="formula">∫₁² 2(x - 1) dx</div>
+        </div>
+        
+        <p>Resolviendo la integral:</p>
+        
+        <div class="math-display">
+          <div class="formula">
+            = 2 ∫₁² (x - 1) dx<br>
+            = 2 [x²/2 - x]₁²<br>
+            = 2 [(4/2 - 2) - (1/2 - 1)]<br>
+            = 2 [0 - (-1/2)]<br>
+            = 2 × 1/2 = 1 ✓
+          </div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>✅ Verificación</h4>
+          <p>La integral da 1, confirmando que <strong>f(x) es una función de densidad válida</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2: Calcular E[X] y E[X²] -->
+    <div class="step">
+      <div class="step-header">2️⃣ Calcular E[X] y E[X²] (momentos de X)</div>
+      <div class="step-content">
+        <p>Necesitamos estos momentos para calcular E[g(X)] usando las propiedades de esperanza.</p>
+        
+        <h4 style="color: #a0e0ff; margin: 20px 0 10px;">Cálculo de E[X]:</h4>
+        
+        <div class="math-display">
+          <div class="formula">
+            E[X] = ∫₁² x · 2(x - 1) dx<br>
+            = 2 ∫₁² (x² - x) dx<br>
+            = 2 [x³/3 - x²/2]₁²
+          </div>
+        </div>
+        
+        <p>Evaluando en los límites:</p>
+        
+        <div class="math-display">
+          <div class="formula">
+            = 2 [(8/3 - 4/2) - (1/3 - 1/2)]<br>
+            = 2 [(8/3 - 2) - (1/3 - 1/2)]<br>
+            = 2 [(8/3 - 6/3) - (2/6 - 3/6)]<br>
+            = 2 [2/3 - (-1/6)]<br>
+            = 2 [2/3 + 1/6] = 2 [4/6 + 1/6]<br>
+            = 2 × 5/6 = 5/3
+          </div>
+        </div>
+
+        <h4 style="color: #a0e0ff; margin: 30px 0 10px;">Cálculo de E[X²]:</h4>
+        
+        <div class="math-display">
+          <div class="formula">
+            E[X²] = ∫₁² x² · 2(x - 1) dx<br>
+            = 2 ∫₁² (x³ - x²) dx<br>
+            = 2 [x⁴/4 - x³/3]₁²
+          </div>
+        </div>
+        
+        <p>Evaluando:</p>
+        
+        <div class="math-display">
+          <div class="formula">
+            = 2 [(16/4 - 8/3) - (1/4 - 1/3)]<br>
+            = 2 [(4 - 8/3) - (3/12 - 4/12)]<br>
+            = 2 [(12/3 - 8/3) - (-1/12)]<br>
+            = 2 [4/3 + 1/12]<br>
+            = 2 [16/12 + 1/12] = 2 × 17/12<br>
+            = 17/6
+          </div>
+        </div>
+
+        <div class="answer-box">
+          <h4>📊 Momentos de X</h4>
+          <div class="answer">E[X] = 5/3 ≈ 1.6667</div>
+          <div class="answer">E[X²] = 17/6 ≈ 2.8333</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 3: Calcular E[g(X)] -->
+    <div class="step">
+      <div class="step-header">3️⃣ Calcular E[g(X)] - Valor Esperado de la Demanda</div>
+      <div class="step-content">
+        <p>Recordemos que <span class="math">g(X) = X² + X - 2</span></p>
+        
+        <p>Por la <strong>linealidad de la esperanza</strong>:</p>
+        
+        <div class="math-display">
+          <div class="formula">
+            E[g(X)] = E[X² + X - 2]<br>
+            = E[X²] + E[X] - 2
+          </div>
+        </div>
+
+        <p>Sustituyendo los valores calculados:</p>
+        
+        <div class="math-display">
+          <div class="formula">
+            E[g(X)] = 17/6 + 5/3 - 2<br>
+            = 17/6 + 10/6 - 12/6<br>
+            = (17 + 10 - 12)/6<br>
+            = 15/6 = 5/2 = 2.5
+          </div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Valor Esperado de la Demanda</h4>
+          <div class="answer">E[g(X)] = 5/2 = 2.5 miles de litros</div>
+          <p>En promedio, la demanda semanal es de <strong>2,500 litros</strong></p>
+        </div>
+
+        <div class="note-box">
+          <strong>📝 Interpretación:</strong> Esto significa que, en el largo plazo, la cadena de tiendas puede esperar vender aproximadamente 2,500 litros de esta bebida cada semana.
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 4: Calcular E[g(X)²] -->
+    <div class="step">
+      <div class="step-header">4️⃣ Calcular E[g(X)²] - Momento de segundo orden</div>
+      <div class="step-content">
+        <p>Para calcular la varianza, necesitamos E[g(X)²]. Primero expandimos:</p>
+        
+        <div class="math-display">
+          <div class="formula">
+            g(X)² = (X² + X - 2)²<br>
+            = X⁴ + 2X³ - 4X² + X² + 2X² - 4X + 4<br>
+            = X⁴ + 2X³ - X² - 4X + 4
+          </div>
+        </div>
+
+        <p>Calculamos cada momento necesario:</p>
+
+        <h4 style="color: #a0e0ff; margin: 20px 0 10px;">E[X³]:</h4>
+        
+        <div class="math-display">
+          <div class="formula">
+            E[X³] = ∫₁² x³ · 2(x - 1) dx<br>
+            = 2 ∫₁² (x⁴ - x³) dx<br>
+            = 2 [x⁵/5 - x⁴/4]₁²<br>
+            = 2 [(32/5 - 16/4) - (1/5 - 1/4)]<br>
+            = 2 [(32/5 - 4) - (4/20 - 5/20)]<br>
+            = 2 [(32/5 - 20/5) - (-1/20)]<br>
+            = 2 [12/5 + 1/20] = 2 [48/20 + 1/20]<br>
+            = 2 × 49/20 = 49/10
+          </div>
+        </div>
+
+        <h4 style="color: #a0e0ff; margin: 20px 0 10px;">E[X⁴]:</h4>
+        
+        <div class="math-display">
+          <div class="formula">
+            E[X⁴] = ∫₁² x⁴ · 2(x - 1) dx<br>
+            = 2 ∫₁² (x⁵ - x⁴) dx<br>
+            = 2 [x⁶/6 - x⁵/5]₁²<br>
+            = 2 [(64/6 - 32/5) - (1/6 - 1/5)]<br>
+            = 2 [(320/30 - 192/30) - (5/30 - 6/30)]<br>
+            = 2 [128/30 - (-1/30)]<br>
+            = 2 × 129/30 = 129/15 = 43/5
+          </div>
+        </div>
+
+        <p>Ahora calculamos E[g(X)²]:</p>
+
+        <div class="math-display">
+          <div class="formula">
+            E[g(X)²] = E[X⁴] + 2E[X³] - E[X²] - 4E[X] + 4<br>
+            = 43/5 + 2(49/10) - 17/6 - 4(5/3) + 4<br>
+            = 43/5 + 49/5 - 17/6 - 20/3 + 4<br>
+            = 92/5 - 17/6 - 20/3 + 4
+          </div>
+        </div>
+
+        <p>Usando denominador común 30:</p>
+
+        <div class="math-display">
+          <div class="formula">
+            = 552/30 - 85/30 - 200/30 + 120/30<br>
+            = (552 - 85 - 200 + 120)/30<br>
+            = 387/30 = 129/10 = 12.9
+          </div>
+        </div>
+
+        <div class="answer-box">
+          <h4>📊 Momento de Segundo Orden</h4>
+          <div class="answer">E[g(X)²] = 129/10 = 12.9</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 5: Calcular Varianza -->
+    <div class="step">
+      <div class="step-header">5️⃣ Calcular Var[g(X)] - Varianza de la Demanda</div>
+      <div class="step-content">
+        <p>Usamos la fórmula de la varianza:</p>
+        
+        <div class="math-display">
+          <div class="formula">
+            Var[g(X)] = E[g(X)²] - (E[g(X)])²
+          </div>
+        </div>
+
+        <p>Sustituyendo los valores calculados:</p>
+        
+        <div class="math-display">
+          <div class="formula">
+            Var[g(X)] = 129/10 - (5/2)²<br>
+            = 129/10 - 25/4<br>
+            = 258/20 - 125/20<br>
+            = 133/20 = 6.65
+          </div>
+        </div>
+
+        <p>La desviación estándar es:</p>
+
+        <div class="math-display">
+          <div class="formula">
+            σ[g(X)] = √(133/20) ≈ 2.578 miles de litros
+          </div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Varianza de la Demanda</h4>
+          <div class="answer">Var[g(X)] = 133/20 = 6.65 (miles de litros)²</div>
+          <div class="answer">σ[g(X)] ≈ 2.578 miles de litros</div>
+        </div>
+
+        <div class="note-box">
+          <strong>📝 Interpretación:</strong> La varianza de 6.65 indica una variabilidad moderada en la demanda semanal. La desviación estándar de aproximadamente 2,578 litros nos dice que la demanda típicamente varía alrededor de ±2,578 litros respecto al promedio de 2,500 litros.
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 6: Resumen de resultados -->
+    <div class="step">
+      <div class="step-header">6️⃣ Resumen de Resultados Finales</div>
+      <div class="step-content">
+        <div class="answer-box" style="background: linear-gradient(135deg, rgba(143, 255, 160, 0.2), rgba(143, 255, 160, 0.1));">
+          <h4>📊 RESULTADOS FINALES</h4>
+          
+          <div style="text-align: left; max-width: 600px; margin: 20px auto;">
+            <p style="margin: 15px 0;"><strong>Valor Esperado de la Demanda:</strong></p>
+            <div class="answer">E[g(X)] = 5/2 = 2.5 miles de litros</div>
+            
+            <p style="margin: 25px 0 15px;"><strong>Varianza de la Demanda:</strong></p>
+            <div class="answer">Var[g(X)] = 133/20 = 6.65 (miles de litros)²</div>
+            
+            <p style="margin: 25px 0 15px;"><strong>Desviación Estándar:</strong></p>
+            <div class="answer">σ[g(X)] ≈ 2.578 miles de litros</div>
+          </div>
+        </div>
+
+        <div class="note-box" style="margin-top: 30px; text-align: left;">
+          <strong>🎯 Conclusiones para la Gestión:</strong><br><br>
+          • La cadena puede planificar un inventario base de <strong>2,500 litros por semana</strong><br>
+          • La desviación estándar de 2,578 litros sugiere mantener un <strong>stock de seguridad</strong> para cubrir la variabilidad<br>
+          • Con 95% de confianza (±2σ), la demanda estaría aproximadamente entre -2,656 y 7,656 litros (considerando el rango práctico: 0 a 7,656 litros)
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Mostrar momentos
+    function showMoments() {
+      const resultDiv = document.getElementById('momentsResult');
+      resultDiv.innerHTML = `
+        <div style="text-align: left; max-width: 400px; margin: 20px auto; line-height: 2;">
+          <strong>Momentos de X:</strong><br>
+          E[X] = 5/3 ≈ <span class="correct">1.6667</span><br>
+          E[X²] = 17/6 ≈ <span class="correct">2.8333</span><br>
+          E[X³] = 49/10 = <span class="correct">4.9000</span><br>
+          E[X⁴] = 43/5 = <span class="correct">8.6000</span>
+        </div>
+      `;
+    }
+
+    // Cálculo personalizado
+    function calculateCustom() {
+      const x = parseFloat(document.getElementById('customX').value);
+      const resultDiv = document.getElementById('customResult');
+      
+      if (x < 1 || x > 2) {
+        resultDiv.innerHTML = `❌ <span class="incorrect">x debe estar entre 1 y 2.</span>`;
+        return;
+      }
+      
+      const fx = 2 * (x - 1);
+      const gx = x * x + x - 2;
+      
+      resultDiv.innerHTML = `
+        <div style="margin-top: 15px;">
+          Para x = ${x}:<br>
+          <span class="correct">f(${x}) = ${fx.toFixed(4)}</span><br>
+          <span class="correct">g(${x}) = ${gx.toFixed(4)} miles de litros</span>
+        </div>
+      `;
+    }
+
+    // Inicializar gráficos al cargar la página
+    window.addEventListener('load', () => {
+      createDensityChart();
+      createDemandChart();
+    });
+
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html'; // fallback
+      }
+    });
+  </script>
+</body>
+</html>

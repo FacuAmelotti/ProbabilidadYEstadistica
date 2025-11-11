@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Vida Útil de Medicina</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <style>
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .context-box ul {
+      margin-left: 25px;
+      list-style: disc;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(120, 119, 198, 0.7);
+      background: rgba(120, 119, 198, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p, .step-content ul {
+      margin-bottom: 10px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #a0e0ff;
+    }
+
+    .math-display {
+      text-align: center;
+      font-size: 1.1rem;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .formula {
+      font-family: 'Times New Roman', serif;
+      font-size: 1.2rem;
+      color: #a0e0ff;
+    }
+
+    .answer-box {
+      background: linear-gradient(135deg, rgba(120, 119, 198, 0.2), rgba(120, 119, 198, 0.1));
+      border: 2px solid rgba(120, 119, 198, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .answer-box h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .answer {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #8fffa0;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .chart-container h4 {
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    #probabilityChart {
+      max-width: 100%;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+    }
+
+    .check-panel {
+      margin-top: 40px;
+      padding: 25px;
+      border-radius: 16px;
+      background: rgba(120, 119, 198, 0.15);
+      border: 1px solid rgba(120, 119, 198, 0.4);
+      text-align: center;
+    }
+
+    .check-panel h3 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .check-panel input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      width: 120px;
+      text-align: center;
+      font-size: 1rem;
+      margin: 0 5px;
+    }
+
+    .check-btn {
+      margin-top: 15px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #7877c6, #6564b5);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .check-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(120, 119, 198, 0.4);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .correct { color: #8fffa0; }
+    .incorrect { color: #ff8f8f; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .math-display { font-size: 1rem; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../../index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+  <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto</h1>
+      <p class="exercise-subtitle">Vida Útil de Medicina - Variable Aleatoria Continua</p>
+    </div>
+
+    <!-- Contexto y enunciado -->
+    <div class="context-box">
+      <h3>🎯 Contexto</h3>
+      <p>La <strong>vida útil</strong> (en días) para frascos de cierta medicina de prescripción es una <strong>variable aleatoria continua</strong> con función de densidad:</p>
+      
+      <div class="math-display">
+        <div class="formula">f(x) = { 20000 / (x + 100)³ , x > 0<br>         0 , en otro caso }</div>
+      </div>
+
+      <h3>📘 Tareas</h3>
+      <ul>
+        <li>1️⃣ <strong>Verificar:</strong> que f(x) es una función de densidad válida.</li>
+        <li>2️⃣ <strong>Calcular P(X ≥ 200):</strong> probabilidad de que un frasco tenga vida útil de al menos 200 días.</li>
+        <li>3️⃣ <strong>Calcular P(80 ≤ X ≤ 120):</strong> probabilidad de que la vida útil esté entre 80 y 120 días.</li>
+        <li>4️⃣ <strong>Visualizar:</strong> la función de densidad y las probabilidades calculadas.</li>
+      </ul>
+
+      <div class="hint-box">
+        💡 <strong>Tip:</strong> Para una función de densidad, ∫₀^∞ f(x)dx = 1. Para calcular probabilidades usamos integrales definidas.
+      </div>
+    </div>
+
+    <!-- Paso 1: Verificación de función de densidad -->
+    <div class="step">
+      <div class="step-header">1️⃣ Verificación de función de densidad</div>
+      <div class="step-content">
+        <p>Una función de densidad debe cumplir que la integral de 0 a ∞ sea igual a 1.</p>
+        
+        <div class="math-display">
+          <div class="formula">∫₀^∞ f(x)dx = ∫₀^∞ 20000/(x + 100)³ dx</div>
+        </div>
+        
+        <p>Usamos la sustitución: <span class="math">u = x + 100</span>, <span class="math">du = dx</span></p>
+        <p>Cuando x = 0, u = 100; cuando x = ∞, u = ∞</p>
+        
+        <div class="math-display">
+          <div class="formula">= 20000 ∫₁₀₀^∞ u⁻³ du</div>
+          <div class="formula">= 20000 [ u⁻²/(-2) ]₁₀₀^∞</div>
+          <div class="formula">= 20000 [ 0 - (-100⁻²/2) ]</div>
+          <div class="formula">= 20000 × 100⁻²/2 = 20000/(2 × 10000) = 1</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>✅ Verificación</h4>
+          <p>Como la integral da 1, <strong>f(x) es una función de densidad válida</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2: P(X ≥ 200) -->
+    <div class="step">
+      <div class="step-header">2️⃣ Calcular P(X ≥ 200)</div>
+      <div class="step-content">
+        <p>Para una variable continua, <span class="math">P(X ≥ 200) = ∫₂₀₀^∞ f(x)dx</span></p>
+        
+        <div class="math-display">
+          <div class="formula">P(X ≥ 200) = ∫₂₀₀^∞ 20000/(x + 100)³ dx</div>
+        </div>
+        
+        <p>Usando la misma sustitución: <span class="math">u = x + 100</span>, <span class="math">du = dx</span></p>
+        <p>Cuando x = 200, u = 300; cuando x = ∞, u = ∞</p>
+        
+        <div class="math-display">
+          <div class="formula">= 20000 ∫₃₀₀^∞ u⁻³ du</div>
+          <div class="formula">= 20000 [ u⁻²/(-2) ]₃₀₀^∞</div>
+          <div class="formula">= 20000 [ 0 - (-300⁻²/2) ]</div>
+          <div class="formula">= 20000 × 300⁻²/2 = 20000/(2 × 90000) = 1/9</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>🎯 Resultado a)</h4>
+          <div class="answer">P(X ≥ 200) = 1/9 ≈ 0.1111</div>
+          <p>Aproximadamente <strong>11.11%</strong> de los frascos durarán al menos 200 días.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 3: P(80 ≤ X ≤ 120) -->
+    <div class="step">
+      <div class="step-header">3️⃣ Calcular P(80 ≤ X ≤ 120)</div>
+      <div class="step-content">
+        <p><span class="math">P(80 ≤ X ≤ 120) = ∫₈₀¹²⁰ f(x)dx = ∫₈₀¹²⁰ 20000/(x + 100)³ dx</span></p>
+        
+        <div class="math-display">
+          <div class="formula">= 20000 [ -1/(2(x + 100)²) ]₈₀¹²⁰</div>
+        </div>
+        
+        <p>Evaluando en los límites:</p>
+        
+        <div class="math-display">
+          <div class="formula">= 20000 [ -1/(2 × 180²) - (-1/(2 × 220²)) ]</div>
+          <div class="formula">= 20000 [ -1/(2 × 32400) + 1/(2 × 48400) ]</div>
+          <div class="formula">= 20000 [ -1/64800 + 1/96800 ]</div>
+          <div class="formula">= 20000 × (96800 - 64800)/(64800 × 96800)</div>
+          <div class="formula">= 20000 × 32000/(64800 × 96800)</div>
+          <div class="formula">= 16/81 ≈ 0.1975</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>🎯 Resultado b)</h4>
+          <div class="answer">P(80 ≤ X ≤ 120) = 16/81 ≈ 0.1975</div>
+          <p>Aproximadamente <strong>19.75%</strong> de los frascos tendrán vida útil entre 80 y 120 días.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 4: Visualización -->
+    <div class="step">
+      <div class="step-header">4️⃣ Visualización de la función de densidad</div>
+      <div class="step-content">
+        <div class="chart-container">
+          <h4>📊 Función de densidad f(x) = 20000/(x+100)³</h4>
+          <canvas id="probabilityChart"></canvas>
+          <p style="margin-top: 15px; color: rgba(255,255,255,0.7);">
+            Las áreas sombreadas representan las probabilidades calculadas
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 5: Verificación interactiva -->
+    <div class="step">
+      <div class="step-header">5️⃣ Verificación interactiva</div>
+      <div class="step-content">
+        <div class="check-panel">
+          <h3>Verificá los resultados calculados 🧮</h3>
+          <p>
+            P(X ≥ 200) = <input type="number" id="pA" value="0.1111" step="0.0001">
+            P(80 ≤ X ≤ 120) = <input type="number" id="pB" value="0.1975" step="0.0001">
+          </p>
+          <button class="check-btn" onclick="checkResults()">Comprobar resultados</button>
+          <div id="checkResult" class="result"></div>
+        </div>
+        
+        <div class="check-panel" style="margin-top: 20px;">
+          <h3>Calculadora de probabilidades 💡</h3>
+          <p>
+            Ingresá un valor x para calcular P(X ≥ x):<br>
+            <input type="number" id="customX" value="200" step="10" min="0">
+            <button class="check-btn" onclick="calculateCustom()" style="margin-left: 10px;">Calcular P(X ≥ x)</button>
+          </p>
+          <div id="customResult" class="result"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Verificación de resultados
+    function checkResults() {
+      const pA = parseFloat(document.getElementById('pA').value);
+      const pB = parseFloat(document.getElementById('pB').value);
+      
+      const correctA = 1/9; // ≈ 0.1111
+      const correctB = 16/81; // ≈ 0.1975
+      
+      const resultDiv = document.getElementById('checkResult');
+      
+      const aCorrect = Math.abs(pA - correctA) < 0.01;
+      const bCorrect = Math.abs(pB - correctB) < 0.01;
+      
+      if (aCorrect && bCorrect) {
+        resultDiv.innerHTML = `✅ <span class="correct">¡Excelente!</span> Ambos resultados son correctos.`;
+      } else if (aCorrect || bCorrect) {
+        resultDiv.innerHTML = `🟡 <span class="correct">Parcialmente correcto.</span> a) ${aCorrect ? '✓' : '✗'} b) ${bCorrect ? '✓' : '✗'}`;
+      } else {
+        resultDiv.innerHTML = `❌ <span class="incorrect">Revisá los cálculos.</span> Valores esperados: P(X≥200) = 1/9 ≈ 0.111, P(80≤X≤120) = 16/81 ≈ 0.198`;
+      }
+    }
+
+    // Cálculo personalizado
+    function calculateCustom() {
+      const x = parseFloat(document.getElementById('customX').value);
+      const resultDiv = document.getElementById('customResult');
+      
+      if (x < 0) {
+        resultDiv.innerHTML = `❌ <span class="incorrect">x debe ser positivo.</span>`;
+        return;
+      }
+      
+      // P(X ≥ x) = ∫_x^∞ 20000/(t+100)^3 dt
+      // = 20000 * [ -1/(2(t+100)^2) ]_x^∞
+      // = 20000 * (1/(2(x+100)^2))
+      // = 10000/(x+100)^2
+      
+      const p = 10000 / Math.pow(x + 100, 2);
+      
+      resultDiv.innerHTML = `P(X ≥ ${x}) = 10000/(${x}+100)² = <strong>${p.toFixed(6)}</strong> ≈ ${(p*100).toFixed(2)}%`;
+    }
+
+    // Crear gráfico
+    function createChart() {
+      const ctx = document.getElementById('probabilityChart').getContext('2d');
+      
+      // Datos para la función de densidad
+      const data = [];
+      for (let x = 0; x <= 500; x += 5) {
+        data.push({x: x, y: 20000 / Math.pow(x + 100, 3)});
+      }
+      
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [{
+            label: 'f(x) = 20000/(x+100)³',
+            data: data,
+            borderColor: '#7877c6',
+            backgroundColor: 'rgba(120, 119, 198, 0.1)',
+            fill: true,
+            tension: 0.4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              type: 'linear',
+              title: {
+                display: true,
+                text: 'x (días)',
+                color: 'white'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              },
+              ticks: {
+                color: 'white'
+              }
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'f(x)',
+                color: 'white'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              },
+              ticks: {
+                color: 'white'
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: {
+                color: 'white'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    // Inicializar
+    window.addEventListener('load', () => {
+      createChart();
+    });
+
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html'; // fallback si se abre directo
+      }
+    });
+  </script>
+</body>
+</html>

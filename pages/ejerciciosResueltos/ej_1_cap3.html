@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Distribución de Probabilidad</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/base.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  
+      min-height: 100vh;
+      color: #fff;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #191919 0%, #2c2c2c 50%, #1c1c1c 100%);
+      z-index: -2;
+    }
+
+    .floating-elements {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .floating-dot {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .floating-dot:nth-child(1) {
+      top: 20%;
+      left: 20%;
+      animation-delay: 0s;
+    }
+
+    .floating-dot:nth-child(2) {
+      top: 60%;
+      left: 80%;
+      animation-delay: 5s;
+    }
+
+    .floating-dot:nth-child(3) {
+      top: 80%;
+      left: 40%;
+      animation-delay: 10s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      33% { transform: translate(100px, -100px); }
+      66% { transform: translate(-100px, 100px); }
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      padding: 15px 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-link {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      padding: 8px 20px;
+      border-radius: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 35px;
+      margin-bottom: 40px;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .context-box ul {
+      margin-left: 25px;
+      list-style: disc;
+      margin-top: 15px;
+    }
+
+    .context-box li {
+      margin-bottom: 10px;
+    }
+
+    .hint-box {
+      margin-top: 25px;
+      padding: 20px;
+      border-left: 4px solid rgba(120, 119, 198, 0.7);
+      background: rgba(120, 119, 198, 0.15);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      margin-bottom: 30px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 25px 35px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.3rem;
+      letter-spacing: 0.5px;
+      user-select: none;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .step-icon {
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .step.open .step-icon {
+      transform: rotate(180deg);
+    }
+
+    .step-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .step-inner {
+      padding: 25px 35px;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.8;
+    }
+
+    .step.open .step-content {
+      max-height: 5000px;
+    }
+
+    .step-inner h4 {
+      color: #fff;
+      margin: 25px 0 15px;
+      font-size: 1.2rem;
+    }
+
+    .step-inner p {
+      margin-bottom: 15px;
+    }
+
+    .step-inner ul {
+      margin: 15px 0 15px 25px;
+    }
+
+    .step-inner li {
+      margin-bottom: 10px;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      color: #a0e0ff;
+      font-weight: 600;
+    }
+
+    .equation-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 25px;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      font-size: 1.1rem;
+    }
+
+    .equation-box p {
+      margin: 10px 0;
+      color: #e0e0ff;
+    }
+
+    .equation-box strong {
+      color: #8fffa0;
+      font-size: 1.2rem;
+    }
+
+    .probability-table {
+      width: 100%;
+      max-width: 900px;
+      margin: 25px auto;
+      border-collapse: collapse;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .probability-table th,
+    .probability-table td {
+      padding: 15px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .probability-table th {
+      background: rgba(120, 119, 198, 0.4);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .probability-table tr:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .probability-table td {
+      font-size: 1rem;
+    }
+
+    .highlight-row {
+      background: rgba(120, 119, 198, 0.2);
+      font-weight: 600;
+    }
+
+    .dice-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      margin: 25px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 15px;
+    }
+
+    .dice-cell {
+      aspect-ratio: 1;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .dice-cell:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.05);
+    }
+
+    .combinations-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .combination-group {
+      margin: 15px 0;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+    }
+
+    .combination-group strong {
+      color: #8fffa0;
+      font-size: 1.1rem;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 30px;
+      margin: 25px 0;
+    }
+
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      height: 300px;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .bar {
+      flex: 1;
+      background: linear-gradient(180deg, #7877c6, #5554a5);
+      border-radius: 8px 8px 0 0;
+      position: relative;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 5px;
+    }
+
+    .bar:hover {
+      background: linear-gradient(180deg, #9897e6, #7574c5);
+      transform: translateY(-5px);
+    }
+
+    .bar-value {
+      position: absolute;
+      top: -25px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .bar-label {
+      margin-top: 10px;
+      text-align: center;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .step-chart {
+      margin: 25px 0;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 15px;
+    }
+
+    .step-function-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .step-function-box {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 15px;
+      border-radius: 10px;
+      border-left: 4px solid rgba(120, 119, 198, 0.7);
+    }
+
+    .step-function-box strong {
+      color: #8fffa0;
+    }
+
+    .formula-section {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 25px;
+      margin: 20px 0;
+    }
+
+    .formula-section h4 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .integration-steps {
+      margin: 20px 0;
+    }
+
+    .integration-step {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border-left: 3px solid rgba(120, 119, 198, 0.7);
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container {
+        padding: 100px 20px 40px;
+      }
+
+      .step-header {
+        font-size: 1.1rem;
+        padding: 20px;
+      }
+
+      .step-inner {
+        padding: 20px;
+      }
+
+      .dice-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .bar-chart {
+        height: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Distribución de Probabilidad</h1>
+      <p class="exercise-subtitle">Lanzamiento de dos dados balanceados - Suma de puntos</p>
+       <p class="exercise-subtitle">Ejercicio de Muestra</p>
+    </div>
+
+    <div class="context-box">
+      <h3><i class="fas fa-dice"></i> Contexto del Problema</h3>
+      <p>Se va a lanzar un <strong>par de dados balanceados</strong>, donde la variable aleatoria <span class="math">X</span> denota la <strong>suma de los puntos</strong> obtenidos.</p>
+
+      <h3 style="margin-top: 25px;"><i class="fas fa-tasks"></i> Objetivos</h3>
+      <ul>
+        <li><strong>a)</strong> Obtener la distribución de probabilidad para X</li>
+        <li><strong>b)</strong> Encontrar la función de distribución F(X)</li>
+        <li><strong>c)</strong> Elaborar una gráfica de esta función</li>
+      </ul>
+
+      <div class="hint-box">
+        <i class="fas fa-lightbulb"></i> <strong>Conceptos clave:</strong> La probabilidad de un evento se calcula como P(A) = n(A)/n(S), donde n(A) es el número de casos favorables y n(S) es el número total de casos posibles.
+      </div>
+    </div>
+
+    <!-- Paso 1: Espacio Muestral -->
+    <div class="step">
+      <div class="step-header">
+        <span><i class="fas fa-cube"></i> Paso 1: Determinar el Espacio Muestral S</span>
+        <i class="fas fa-chevron-down step-icon"></i>
+      </div>
+      <div class="step-content">
+        <div class="step-inner">
+          <p>Cuando lanzamos dos dados, cada dado puede mostrar un valor del 1 al 6. Por lo tanto, el espacio muestral consiste en todos los pares ordenados (dado 1, dado 2).</p>
+
+          <div class="equation-box">
+            <p><strong>n(S) = 6 × 6 = 36 elementos</strong></p>
+          </div>
+
+          <h4><i class="fas fa-th"></i> Visualización del Espacio Muestral</h4>
+          <div class="dice-grid">
+            <div class="dice-cell">(1,1)</div>
+            <div class="dice-cell">(1,2)</div>
+            <div class="dice-cell">(1,3)</div>
+            <div class="dice-cell">(1,4)</div>
+            <div class="dice-cell">(1,5)</div>
+            <div class="dice-cell">(1,6)</div>
+            <div class="dice-cell">(2,1)</div>
+            <div class="dice-cell">(2,2)</div>
+            <div class="dice-cell">(2,3)</div>
+            <div class="dice-cell">(2,4)</div>
+            <div class="dice-cell">(2,5)</div>
+            <div class="dice-cell">(2,6)</div>
+            <div class="dice-cell">(3,1)</div>
+            <div class="dice-cell">(3,2)</div>
+            <div class="dice-cell">(3,3)</div>
+            <div class="dice-cell">(3,4)</div>
+            <div class="dice-cell">(3,5)</div>
+            <div class="dice-cell">(3,6)</div>
+            <div class="dice-cell">(4,1)</div>
+            <div class="dice-cell">(4,2)</div>
+            <div class="dice-cell">(4,3)</div>
+            <div class="dice-cell">(4,4)</div>
+            <div class="dice-cell">(4,5)</div>
+            <div class="dice-cell">(4,6)</div>
+            <div class="dice-cell">(5,1)</div>
+            <div class="dice-cell">(5,2)</div>
+            <div class="dice-cell">(5,3)</div>
+            <div class="dice-cell">(5,4)</div>
+            <div class="dice-cell">(5,5)</div>
+            <div class="dice-cell">(5,6)</div>
+            <div class="dice-cell">(6,1)</div>
+            <div class="dice-cell">(6,2)</div>
+            <div class="dice-cell">(6,3)</div>
+            <div class="dice-cell">(6,4)</div>
+            <div class="dice-cell">(6,5)</div>
+            <div class="dice-cell">(6,6)</div>
+          </div>
+
+          <p>Cada uno de estos 36 resultados es <strong>igualmente probable</strong> cuando los dados son balanceados.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2: Recorrido de X -->
+    <div class="step">
+      <div class="step-header">
+        <span><i class="fas fa-chart-line"></i> Paso 2: Determinar el Recorrido de X</span>
+        <i class="fas fa-chevron-down step-icon"></i>
+      </div>
+      <div class="step-content">
+        <div class="step-inner">
+          <p>La variable aleatoria <span class="math">X</span> representa la <strong>suma de los puntos</strong> de ambos dados.</p>
+
+          <ul>
+            <li><strong>Valor mínimo:</strong> 1 + 1 = 2</li>
+            <li><strong>Valor máximo:</strong> 6 + 6 = 12</li>
+          </ul>
+
+          <div class="equation-box">
+            <p><strong>Recorrido de X = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}</strong></p>
+            <p style="margin-top: 10px;">Total: 11 valores posibles</p>
+          </div>
+
+          <p>Cada valor de X puede obtenerse de diferentes maneras, dependiendo de las combinaciones de los dos dados.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 3: Combinaciones -->
+    <div class="step">
+      <div class="step-header">
+        <span><i class="fas fa-list-ol"></i> Paso 3: Determinar las Combinaciones para Cada Valor</span>
+        <i class="fas fa-chevron-down step-icon"></i>
+      </div>
+      <div class="step-content">
+        <div class="step-inner">
+          <p>Ahora contaremos cuántas formas hay de obtener cada suma posible:</p>
+
+          <div class="combinations-box">
+            <div class="combination-group">
+              <strong>X = 2:</strong> (1,1) → <span class="math">1 forma</span>
+            </div>
+            <div class="combination-group">
+              <strong>X = 3:</strong> (1,2), (2,1) → <span class="math">2 formas</span>
+            </div>
+            <div class="combination-group">
+              <strong>X = 4:</strong> (1,3), (2,2), (3,1) → <span class="math">3 formas</span>
+            </div>
+            <div class="combination-group">
+              <strong>X = 5:</strong> (1,4), (2,3), (3,2), (4,1) → <span class="math">4 formas</span>
+            </div>
+            <div class="combination-group">
+              <strong>X = 6:</strong> (1,5), (2,4), (3,3), (4,2), (5,1) → <span class="math">5 formas</span>
+            </div>
+            <div class="combination-group">
+              <strong>X = 7:</strong> (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) → <span class="math">6 formas</span>
+            </div>
+            <div class="combination-group">
+              <strong>X = 8:</strong> (2,6), (3,5), (4,4), (5,3), (6,2) → <span class="math">5 formas</span>
+            </div>
+            <div class="combination-group">
+              <strong>X = 9:</strong> (3,6), (4,5), (5,4), (6,3) → <span class="math">4 formas</span>
+            </div>
+            <div class="combination-group">
+              <strong>X = 10:</strong> (4,6), (5,5), (6,4) → <span class="math">3 formas</span>
+            </div>
+            <div class="combination-group">
+              <strong>X = 11:</strong> (5,6), (6,5) → <span class="math">2 formas</span>
+            </div>
+            <div class="combination-group">
+              <strong>X = 12:</strong> (6,6) → <span class="math">1 forma</span>
+            </div>
+          </div>
+
+          <div class="hint-box">
+            <i class="fas fa-info-circle"></i> <strong>Nota:</strong> Observa que la distribución es simétrica alrededor de X = 7, que es el valor más probable.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 4: Distribución de Probabilidad -->
+    <div class="step open">
+      <div class="step-header">
+        <span><i class="fas fa-chart-bar"></i> Paso 4a: Distribución de Probabilidad P(X)</span>
+        <i class="fas fa-chevron-down step-icon"></i>
+      </div>
+      <div class="step-content">
+        <div class="step-inner">
+          <p>Calculamos la probabilidad usando la fórmula: <span class="math">P(X = x) = n(x) / n(S)</span></p>
+
+          <table class="probability-table">
+            <thead>
+              <tr>
+                <th>x</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+                <th>10</th>
+                <th>11</th>
+                <th>12</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>P(X = x)</th>
+                <td>1/36</td>
+                <td>2/36</td>
+                <td>3/36</td>
+                <td>4/36</td>
+                <td>5/36</td>
+                <td>6/36</td>
+                <td>5/36</td>
+                <td>4/36</td>
+                <td>3/36</td>
+                <td>2/36</td>
+                <td>1/36</td>
+              </tr>
+              <tr class="highlight-row">
+                <th>Decimal</th>
+                <td>0.028</td>
+                <td>0.056</td>
+                <td>0.083</td>
+                <td>0.111</td>
+                <td>0.139</td>
+                <td>0.167</td>
+                <td>0.139</td>
+                <td>0.111</td>
+                <td>0.083</td>
+                <td>0.056</td>
+                <td>0.028</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4 style="text-align: center; margin-top: 30px;"><i class="fas fa-chart-bar"></i> Gráfica de la Distribución</h4>
+          <div class="chart-container">
+            <div class="bar-chart">
+              <div style="flex-direction: column; display: flex; align-items: center;">
+                <div class="bar" style="height: 16.7%;"><span class="bar-value">1/36</span></div>
+                <div class="bar-label">2</div>
+              </div>
+              <div style="flex-direction: column; display: flex; align-items: center;">
+                <div class="bar" style="height: 33.3%;"><span class="bar-value">2/36</span></div>
+                <div class="bar-label">3</div>
+              </div>
+              <div style="flex-direction: column; display: flex; align-items: center;">
+                <div class="bar" style="height: 50%;"><span class="bar-value">3/36</span></div>
+                <div class="bar-label">4</div>
+              </div>
+              <div style="flex-direction: column; display: flex; align-items: center;">
+                <div class="bar" style="height: 66.7%;"><span class="bar-value">4/36</span></div>
+                <div class="bar-label">9</div>
+              </div>
+              <div style="flex-direction: column; display: flex; align-items: center;">
+                <div class="bar" style="height: 50%;"><span class="bar-value">3/36</span></div>
+                <div class="bar-label">10</div>
+              </div>
+              <div style="flex-direction: column; display: flex; align-items: center;">
+                <div class="bar" style="height: 33.3%;"><span class="bar-value">2/36</span></div>
+                <div class="bar-label">11</div>
+              </div>
+              <div style="flex-direction: column; display: flex; align-items: center;">
+                <div class="bar" style="height: 16.7%;"><span class="bar-value">1/36</span></div>
+                <div class="bar-label">12</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hint-box">
+            <i class="fas fa-check-circle"></i> <strong>Verificación:</strong> La suma de todas las probabilidades debe ser 1:
+            <div style="text-align: center; margin-top: 10px;">
+              (1+2+3+4+5+6+5+4+3+2+1)/36 = 36/36 = 1 ✓
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 5: Función de Distribución -->
+    <div class="step open">
+      <div class="step-header">
+        <span><i class="fas fa-function"></i> Paso 4b: Función de Distribución F(X)</span>
+        <i class="fas fa-chevron-down step-icon"></i>
+      </div>
+      <div class="step-content">
+        <div class="step-inner">
+          <p>La <strong>función de distribución acumulada</strong> F(x) nos da la probabilidad de que X sea menor o igual a un valor específico:</p>
+
+          <div class="equation-box">
+            <p><strong>F(x) = P(X ≤ x)</strong></p>
+          </div>
+
+          <p>Calculamos F(x) sumando las probabilidades acumuladas:</p>
+
+          <div class="step-function-grid">
+            <div class="step-function-box">
+              <strong>F(2)</strong> = P(X ≤ 2) = 1/36
+            </div>
+            <div class="step-function-box">
+              <strong>F(3)</strong> = P(X ≤ 3) = 3/36
+            </div>
+            <div class="step-function-box">
+              <strong>F(4)</strong> = P(X ≤ 4) = 6/36
+            </div>
+            <div class="step-function-box">
+              <strong>F(5)</strong> = P(X ≤ 5) = 10/36
+            </div>
+            <div class="step-function-box">
+              <strong>F(6)</strong> = P(X ≤ 6) = 15/36
+            </div>
+            <div class="step-function-box">
+              <strong>F(7)</strong> = P(X ≤ 7) = 21/36
+            </div>
+            <div class="step-function-box">
+              <strong>F(8)</strong> = P(X ≤ 8) = 26/36
+            </div>
+            <div class="step-function-box">
+              <strong>F(9)</strong> = P(X ≤ 9) = 30/36
+            </div>
+            <div class="step-function-box">
+              <strong>F(10)</strong> = P(X ≤ 10) = 33/36
+            </div>
+            <div class="step-function-box">
+              <strong>F(11)</strong> = P(X ≤ 11) = 35/36
+            </div>
+            <div class="step-function-box">
+              <strong>F(12)</strong> = P(X ≤ 12) = 36/36 = 1
+            </div>
+          </div>
+
+          <h4 style="margin-top: 30px;">Expresión Matemática Completa</h4>
+          <div class="formula-section">
+            <div class="equation-box" style="text-align: left; font-size: 1rem;">
+              <p>F(x) = P(X ≤ x) = </p>
+              <p style="margin-left: 40px;">• 0, si x < 2</p>
+              <p style="margin-left: 40px;">• 1/36, si 2 ≤ x < 3</p>
+              <p style="margin-left: 40px;">• 3/36, si 3 ≤ x < 4</p>
+              <p style="margin-left: 40px;">• 6/36, si 4 ≤ x < 5</p>
+              <p style="margin-left: 40px;">• 10/36, si 5 ≤ x < 6</p>
+              <p style="margin-left: 40px;">• 15/36, si 6 ≤ x < 7</p>
+              <p style="margin-left: 40px;">• 21/36, si 7 ≤ x < 8</p>
+              <p style="margin-left: 40px;">• 26/36, si 8 ≤ x < 9</p>
+              <p style="margin-left: 40px;">• 30/36, si 9 ≤ x < 10</p>
+              <p style="margin-left: 40px;">• 33/36, si 10 ≤ x < 11</p>
+              <p style="margin-left: 40px;">• 35/36, si 11 ≤ x < 12</p>
+              <p style="margin-left: 40px;">• 1, si x ≥ 12</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 6: Gráfica de F(X) -->
+    <div class="step open">
+      <div class="step-header">
+        <span><i class="fas fa-chart-area"></i> Paso 4c: Gráfica de la Función de Distribución</span>
+        <i class="fas fa-chevron-down step-icon"></i>
+      </div>
+      <div class="step-content">
+        <div class="step-inner">
+          <p>La función de distribución acumulada F(x) es una <strong>función escalonada</strong> (step function) que va desde 0 hasta 1:</p>
+
+          <div class="step-chart">
+            <canvas id="cdfChart" width="800" height="400"></canvas>
+          </div>
+
+          <h4 style="margin-top: 30px;"><i class="fas fa-info-circle"></i> Propiedades de F(X)</h4>
+          <ul>
+            <li><strong>No decreciente:</strong> F(x) siempre aumenta o se mantiene constante</li>
+            <li><strong>Límite inferior:</strong> lim<sub>x→-∞</sub> F(x) = 0</li>
+            <li><strong>Límite superior:</strong> lim<sub>x→+∞</sub> F(x) = 1</li>
+            <li><strong>Continua por la derecha:</strong> F(x) tiene saltos en los valores de X</li>
+          </ul>
+
+          <table class="probability-table" style="margin-top: 25px;">
+            <thead>
+              <tr>
+                <th>x</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>7</th>
+                <th>8</th>
+                <th>9</th>
+                <th>10</th>
+                <th>11</th>
+                <th>12</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>F(x)</th>
+                <td>1/36</td>
+                <td>3/36</td>
+                <td>6/36</td>
+                <td>10/36</td>
+                <td>15/36</td>
+                <td>21/36</td>
+                <td>26/36</td>
+                <td>30/36</td>
+                <td>33/36</td>
+                <td>35/36</td>
+                <td>36/36</td>
+              </tr>
+              <tr class="highlight-row">
+                <th>Decimal</th>
+                <td>0.028</td>
+                <td>0.083</td>
+                <td>0.167</td>
+                <td>0.278</td>
+                <td>0.417</td>
+                <td>0.583</td>
+                <td>0.722</td>
+                <td>0.833</td>
+                <td>0.917</td>
+                <td>0.972</td>
+                <td>1.000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ejemplo Adicional: Esperanza y Varianza -->
+    <div class="step">
+      <div class="step-header">
+        <span><i class="fas fa-calculator"></i> Extra: Esperanza y Varianza de Variable Continua</span>
+        <i class="fas fa-chevron-down step-icon"></i>
+      </div>
+      <div class="step-content">
+        <div class="step-inner">
+          <p>Una variable aleatoria continua <strong>X</strong> tiene una densidad de probabilidad dada por:</p>
+
+          <div class="equation-box">
+            <p>f(x) = x · e<sup>-x</sup>, para x ≥ 0</p>
+            <p>f(x) = 0, en otro caso</p>
+          </div>
+
+          <p><strong>Objetivo:</strong> Determinar la esperanza E(X) y la varianza Var(X).</p>
+
+          <h4><i class="fas fa-chart-line"></i> Cálculo de la Esperanza</h4>
+          <p>La esperanza se calcula como:</p>
+
+          <div class="equation-box">
+            <p>E(X) = ∫<sub>-∞</sub><sup>+∞</sup> x · f(x) dx</p>
+            <p>E(X) = ∫<sub>0</sub><sup>+∞</sup> x · (x · e<sup>-x</sup>) dx</p>
+            <p>E(X) = ∫<sub>0</sub><sup>+∞</sup> x² · e<sup>-x</sup> dx</p>
+          </div>
+
+          <h4 style="margin-top: 25px;">Resolución por Integración por Partes</h4>
+          <p>Usamos la fórmula: <span class="math">∫ u dv = uv - ∫ v du</span></p>
+
+          <div class="integration-steps">
+            <div class="integration-step">
+              <strong>Primera integración por partes:</strong><br>
+              Sea u = x² → du = 2x dx<br>
+              Sea dv = e<sup>-x</sup> dx → v = -e<sup>-x</sup>
+            </div>
+
+            <div class="integration-step">
+              <strong>Aplicando la fórmula:</strong><br>
+              ∫ x² · e<sup>-x</sup> dx = -x² · e<sup>-x</sup> - ∫ -e<sup>-x</sup> · 2x dx<br>
+              = -x² · e<sup>-x</sup> + 2∫ x · e<sup>-x</sup> dx
+            </div>
+
+            <div class="integration-step">
+              <strong>Segunda integración por partes:</strong><br>
+              Para ∫ x · e<sup>-x</sup> dx:<br>
+              u = x → du = dx<br>
+              dv = e<sup>-x</sup> dx → v = -e<sup>-x</sup><br><br>
+              ∫ x · e<sup>-x</sup> dx = -x · e<sup>-x</sup> + ∫ e<sup>-x</sup> dx<br>
+              = -x · e<sup>-x</sup> - e<sup>-x</sup><br>
+              = -e<sup>-x</sup>(x + 1)
+            </div>
+
+            <div class="integration-step">
+              <strong>Sustituyendo:</strong><br>
+              ∫ x² · e<sup>-x</sup> dx = -x² · e<sup>-x</sup> + 2[-e<sup>-x</sup>(x + 1)]<br>
+              = -x² · e<sup>-x</sup> - 2x · e<sup>-x</sup> - 2e<sup>-x</sup><br>
+              = -e<sup>-x</sup>(x² + 2x + 2)
+            </div>
+
+            <div class="integration-step">
+              <strong>Evaluando en los límites [0, +∞]:</strong><br>
+              E(X) = [-e<sup>-x</sup>(x² + 2x + 2)]<sub>0</sub><sup>+∞</sup><br>
+              = lim<sub>x→+∞</sub> [-e<sup>-x</sup>(x² + 2x + 2)] - [-e<sup>0</sup>(0 + 0 + 2)]<br>
+              = 0 - (-2)<br>
+              = <strong style="color: #8fffa0;">2</strong>
+            </div>
+          </div>
+
+          <div class="equation-box">
+            <p><strong>E(X) = 2</strong></p>
+          </div>
+
+          <h4 style="margin-top: 30px;"><i class="fas fa-square-root-alt"></i> Cálculo de la Varianza</h4>
+          <p>La varianza se calcula como: <span class="math">Var(X) = E(X²) - [E(X)]²</span></p>
+
+          <p>Primero calculamos E(X²):</p>
+
+          <div class="equation-box">
+            <p>E(X²) = ∫<sub>0</sub><sup>+∞</sup> x² · f(x) dx</p>
+            <p>E(X²) = ∫<sub>0</sub><sup>+∞</sup> x² · (x · e<sup>-x</sup>) dx</p>
+            <p>E(X²) = ∫<sub>0</sub><sup>+∞</sup> x³ · e<sup>-x</sup> dx</p>
+          </div>
+
+          <div class="integration-steps">
+            <div class="integration-step">
+              <strong>Proceso similar de integración por partes:</strong><br>
+              Aplicando tres veces integración por partes, se obtiene:<br>
+              E(X²) = <strong style="color: #8fffa0;">6</strong>
+            </div>
+
+            <div class="integration-step">
+              <strong>Calculando la varianza:</strong><br>
+              Var(X) = E(X²) - [E(X)]²<br>
+              Var(X) = 6 - (2)²<br>
+              Var(X) = 6 - 4<br>
+              Var(X) = <strong style="color: #8fffa0;">2</strong>
+            </div>
+          </div>
+
+          <div class="equation-box">
+            <p><strong>Resultados Finales:</strong></p>
+            <p style="margin-top: 15px;">E(X) = 2</p>
+            <p>Var(X) = 2</p>
+            <p>σ(X) = √2 ≈ 1.414</p>
+          </div>
+
+          <div class="hint-box" style="margin-top: 25px;">
+            <i class="fas fa-lightbulb"></i> <strong>Interpretación:</strong> En promedio, el valor esperado de X es 2, con una variabilidad (varianza) de 2 unidades cuadradas alrededor de este valor medio.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Toggle de los pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Gráfica de la Función de Distribución Acumulada
+    const canvas = document.getElementById('cdfChart');
+    const ctx = canvas.getContext('2d');
+
+    // Datos
+    const xValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+    const yValues = [0, 1/36, 3/36, 6/36, 10/36, 15/36, 21/36, 26/36, 30/36, 33/36, 35/36, 36/36, 36/36];
+
+    // Configuración del canvas
+    const padding = 50;
+    const chartWidth = canvas.width - 2 * padding;
+    const chartHeight = canvas.height - 2 * padding;
+
+    // Función para escalar coordenadas
+    function scaleX(x) {
+      return padding + ((x - 1) / 12) * chartWidth;
+    }
+
+    function scaleY(y) {
+      return canvas.height - padding - y * chartHeight;
+    }
+
+    // Dibujar ejes
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(padding, padding);
+    ctx.lineTo(padding, canvas.height - padding);
+    ctx.lineTo(canvas.width - padding, canvas.height - padding);
+    ctx.stroke();
+
+    // Etiquetas de los ejes
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+    ctx.font = '14px Arial';
+    ctx.textAlign = 'center';
+
+    // Eje X
+    for (let i = 2; i <= 12; i++) {
+      const x = scaleX(i);
+      ctx.fillText(i, x, canvas.height - padding + 25);
+      
+      // Líneas de guía verticales
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.beginPath();
+      ctx.moveTo(x, padding);
+      ctx.lineTo(x, canvas.height - padding);
+      ctx.stroke();
+    }
+
+    // Eje Y
+    ctx.textAlign = 'right';
+    for (let i = 0; i <= 10; i++) {
+      const y = scaleY(i / 10);
+      ctx.fillText((i / 10).toFixed(1), padding - 10, y + 5);
+      
+      // Líneas de guía horizontales
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+      ctx.beginPath();
+      ctx.moveTo(padding, y);
+      ctx.lineTo(canvas.width - padding, y);
+      ctx.stroke();
+    }
+
+    // Etiquetas principales
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 16px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText('X (Suma de dados)', canvas.width / 2, canvas.height - 10);
+    
+    ctx.save();
+    ctx.translate(15, canvas.height / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText('F(X) = P(X ≤ x)', 0, 0);
+    ctx.restore();
+
+    // Dibujar la función escalonada
+    ctx.strokeStyle = '#7877c6';
+    ctx.lineWidth = 3;
+
+    for (let i = 0; i < xValues.length - 1; i++) {
+      const x1 = scaleX(xValues[i]);
+      const x2 = scaleX(xValues[i + 1]);
+      const y = scaleY(yValues[i]);
+      const yNext = scaleY(yValues[i + 1]);
+
+      // Línea horizontal
+      ctx.beginPath();
+      ctx.moveTo(x1, y);
+      ctx.lineTo(x2, y);
+      ctx.stroke();
+
+      // Línea vertical (salto)
+      if (i < xValues.length - 2) {
+        ctx.beginPath();
+        ctx.moveTo(x2, y);
+        ctx.lineTo(x2, yNext);
+        ctx.stroke();
+      }
+
+      // Punto lleno en el inicio de cada escalón
+      ctx.fillStyle = '#7877c6';
+      ctx.beginPath();
+      ctx.arc(x1, y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+
+      // Punto vacío al final (excepto el último)
+      if (i < xValues.length - 2) {
+        ctx.fillStyle = '#1a1a2e';
+        ctx.strokeStyle = '#7877c6';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(x2, y, 5, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.stroke();
+        ctx.lineWidth = 3;
+      }
+    }
+
+    // Punto final
+    ctx.fillStyle = '#7877c6';
+    ctx.beginPath();
+    ctx.arc(scaleX(12), scaleY(1), 5, 0, 2 * Math.PI);
+    ctx.fill();
+  </script>
+    <script>
+
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html';
+      }
+    });
+  </script>
+</body>
+</html>

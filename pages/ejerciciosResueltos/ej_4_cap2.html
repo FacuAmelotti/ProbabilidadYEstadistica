@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Duración de Vida de Bombas de Combustible</title>
+  <link rel="stylesheet" href="../css/base.css" />
+  <style>
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: white;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .data-table th {
+      background: rgba(255, 150, 100, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .data-table td {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+    }
+
+    .data-table td:hover {
+      background: rgba(255, 150, 100, 0.2);
+    }
+
+    .ordered-data {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+      gap: 8px;
+      max-width: 100%;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .ordered-item {
+      aspect-ratio: 0.8;
+      background: linear-gradient(135deg, rgba(255, 150, 100, 0.3), rgba(255, 100, 100, 0.3));
+      border: 1px solid rgba(255, 150, 100, 0.4);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .ordered-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 3px 10px rgba(255, 150, 100, 0.4);
+    }
+
+    .formula-reference {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .formula-card {
+      background: rgba(255, 150, 100, 0.1);
+      border: 1px solid rgba(255, 150, 100, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .formula-card:hover {
+      background: rgba(255, 150, 100, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .formula-card h4 {
+      color: #ffa066;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .formula-card .formula {
+      font-family: monospace;
+      color: #fff;
+      font-size: 1.1rem;
+      margin: 8px 0;
+    }
+
+    .formula-card .description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(255, 150, 100, 0.7);
+      background: rgba(255, 150, 100, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p, .step-content ul {
+      margin-bottom: 10px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #ffa066;
+    }
+
+    .math-display {
+      text-align: center;
+      font-size: 1.1rem;
+      margin: 20px 0;
+      padding: 15px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .formula {
+      font-family: 'Times New Roman', serif;
+      font-size: 1.2rem;
+      color: #ffa066;
+    }
+
+    .answer-box {
+      background: linear-gradient(135deg, rgba(255, 150, 100, 0.2), rgba(255, 150, 100, 0.1));
+      border: 2px solid rgba(255, 150, 100, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .answer-box h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .answer {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #8fffa0;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .chart-container h4 {
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+#histogramChart {
+  display: block;
+  width: 100% !important;
+  max-width: 700px;
+  height: 320px !important;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 10px;
+}
+
+
+    .stats-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 0.9rem;
+    }
+
+    .stats-table th,
+    .stats-table td {
+      padding: 8px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .stats-table th {
+      background: rgba(255, 150, 100, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .stats-table td {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .check-panel {
+      margin-top: 40px;
+      padding: 25px;
+      border-radius: 16px;
+      background: rgba(255, 150, 100, 0.15);
+      border: 1px solid rgba(255, 150, 100, 0.4);
+      text-align: center;
+    }
+
+    .check-panel h3 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .check-panel input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      width: 120px;
+      text-align: center;
+      font-size: 1rem;
+      margin: 0 5px;
+    }
+
+    .check-btn {
+      margin-top: 15px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #ff9666, #ff7f4f);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .check-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(255, 150, 100, 0.4);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .correct { color: #8fffa0; }
+    .incorrect { color: #ff8f8f; }
+
+    .analysis-box {
+      background: rgba(255, 150, 100, 0.15);
+      border: 2px solid rgba(255, 150, 100, 0.4);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px 0;
+    }
+
+    .analysis-box h4 {
+      color: #ffa066;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .analysis-item {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 15px;
+      margin: 10px 0;
+    }
+
+    .analysis-item h5 {
+      color: #ffa066;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .frequency-table {
+      margin: 20px 0;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .math-display { font-size: 1rem; }
+      .data-table th, .data-table td { padding: 8px; font-size: 0.8rem; }
+      .formula-reference { grid-template-columns: 1fr; }
+      .ordered-data { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto</h1>
+      <p class="exercise-subtitle">Duración de Vida de Bombas de Combustible - Análisis Estadístico</p>
+    </div>
+
+    <!-- Contexto y enunciado -->
+    <div class="context-box">
+      <h3>⛽ Contexto</h3>
+      <p>Se registra la <strong>duración de vida, en años</strong> (medida al entero más cercano) de 30 bombas de combustible similares. Los datos obtenidos se presentan a continuación:</p>
+      
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th colspan="6">Duración de vida de bombas de combustible (años)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>2.0</td><td>3.0</td><td>0.3</td><td>3.3</td><td>1.3</td><td>0.4</td>
+          </tr>
+          <tr>
+            <td>0.2</td><td>6.0</td><td>5.5</td><td>6.5</td><td>0.2</td><td>2.3</td>
+          </tr>
+          <tr>
+            <td>1.5</td><td>4.0</td><td>5.9</td><td>1.8</td><td>4.7</td><td>0.7</td>
+          </tr>
+          <tr>
+            <td>4.5</td><td>0.3</td><td>1.5</td><td>0.5</td><td>2.5</td><td>5.0</td>
+          </tr>
+          <tr>
+            <td>1.0</td><td>6.0</td><td>5.6</td><td>6.0</td><td>1.2</td><td>0.2</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p style="text-align: center; color: rgba(255,255,255,0.7);">
+        <strong>Total de observaciones:</strong> n = 30 bombas de combustible
+      </p>
+
+      <h3>📘 Tareas</h3>
+      <ul>
+        <li>1️⃣ <strong>Elaborar:</strong> un histograma de frecuencias relativas</li>
+        <li>2️⃣ <strong>Calcular:</strong> la media, el rango y la desviación estándar de la muestra</li>
+        <li>3️⃣ <strong>Visualizar:</strong> la distribución de los datos</li>
+        <li>4️⃣ <strong>Interpretar:</strong> los resultados estadísticos</li>
+      </ul>
+
+      <div class="hint-box">
+        💡 <strong>Tip:</strong> Para el histograma, usa la regla de Sturges para determinar el número óptimo de clases: k = 1 + 3.322 × log(n)
+      </div>
+    </div>
+
+    <!-- Referencia de fórmulas -->
+    <div class="context-box">
+      <h3>📊 Fórmulas de referencia</h3>
+      <div class="formula-reference">
+        <div class="formula-card">
+          <h4>📈 Media muestral</h4>
+          <div class="formula">x̄ = Σx / n</div>
+          <div class="description">Promedio aritmético de todas las observaciones</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📏 Rango</h4>
+          <div class="formula">Rango = Valor máximo - Valor mínimo</div>
+          <div class="description">Diferencia entre el mayor y menor valor</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📏 Varianza muestral</h4>
+          <div class="formula">s² = Σ(x - x̄)² / (n-1)</div>
+          <div class="description">Medida de dispersión de los datos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📐 Desviación estándar</h4>
+          <div class="formula">s = √s²</div>
+          <div class="description">Raíz cuadrada de la varianza</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 1: Organizar datos -->
+    <div class="step">
+      <div class="step-header">1️⃣ Organizar datos de menor a mayor</div>
+      <div class="step-content">
+        <p><strong>Paso 1: Extraer y ordenar todos los datos</strong></p>
+        
+        <p>Primero extraemos todos los datos: 30 valores en total y los organizamos de menor a mayor</p>
+        
+        <div class="ordered-data">
+          <div class="ordered-item">0.2</div>
+          <div class="ordered-item">0.2</div>
+          <div class="ordered-item">0.2</div>
+          <div class="ordered-item">0.3</div>
+          <div class="ordered-item">0.3</div>
+          <div class="ordered-item">0.4</div>
+          <div class="ordered-item">0.5</div>
+          <div class="ordered-item">0.7</div>
+          <div class="ordered-item">1.0</div>
+          <div class="ordered-item">1.2</div>
+          <div class="ordered-item">1.3</div>
+          <div class="ordered-item">1.5</div>
+          <div class="ordered-item">1.5</div>
+          <div class="ordered-item">1.8</div>
+          <div class="ordered-item">2.0</div>
+          <div class="ordered-item">2.3</div>
+          <div class="ordered-item">2.5</div>
+          <div class="ordered-item">3.0</div>
+          <div class="ordered-item">3.3</div>
+          <div class="ordered-item">4.0</div>
+          <div class="ordered-item">4.5</div>
+          <div class="ordered-item">4.7</div>
+          <div class="ordered-item">5.0</div>
+          <div class="ordered-item">5.5</div>
+          <div class="ordered-item">5.6</div>
+          <div class="ordered-item">5.9</div>
+          <div class="ordered-item">6.0</div>
+          <div class="ordered-item">6.0</div>
+          <div class="ordered-item">6.0</div>
+          <div class="ordered-item">6.5</div>
+        </div>
+
+        <p><strong>Identificación de valores extremos:</strong></p>
+        <div class="math-display">
+          <div class="formula">Valor mínimo = 0.2 años</div>
+          <div class="formula">Valor máximo = 6.5 años</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2: Calcular la media -->
+    <div class="step">
+      <div class="step-header">2️⃣ Calcular la media</div>
+      <div class="step-content">
+        <p><strong>Paso 1: Calcular la suma total</strong></p>
+        <p>Σx = 2.0+3.0+0.3+3.3+1.3+0.4+0.2+6.0+5.5+6.5+0.2+2.3+1.5+4.0+5.9+1.8+4.7+0.7+4.5+0.3+1.5+0.5+2.5+5.0+1.0+6.0+5.6+6.0+1.2+0.2 = <strong>83.4 años</strong></p>
+
+        <p><strong>Paso 2: Aplicar la fórmula de la media</strong></p>
+        
+        <div class="math-display">
+          <div class="formula">x̄ = Σx / n = 83.4 / 30</div>
+          <div class="formula">x̄ = 2.78 años</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>🎯 Resultado</h4>
+          <div class="answer">Media: 2.78 años</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 3: Calcular el rango -->
+    <div class="step">
+      <div class="step-header">3️⃣ Calcular el rango</div>
+      <div class="step-content">
+        <p><strong>Usar la fórmula del rango:</strong></p>
+        
+        <div class="math-display">
+          <div class="formula">Rango = Valor máximo - Valor mínimo</div>
+          <div class="formula">Rango = 6.5 - 0.2 = 6.3 años</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>🎯 Resultado</h4>
+          <div class="answer">Rango: 6.3 años</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 4: Calcular la desviación estándar -->
+    <div class="step">
+      <div class="step-header">4️⃣ Calcular la desviación estándar</div>
+      <div class="step-content">
+        <p><strong>Paso 1: Aplicar la fórmula de varianza</strong></p>
+        <p>Usamos la fórmula: s² = Σ(x - x̄)² / (n-1)</p>
+        
+        <p><strong>Paso 2: Calcular las desviaciones al cuadrado</strong></p>
+        
+        <div class="analysis-box">
+          <h4>📋 Cálculos de muestra</h4>
+          <div class="analysis-item">
+            <h5>Muestra de primeros 5 valores</h5>
+            <table class="stats-table">
+              <thead>
+                <tr>
+                  <th>x</th>
+                  <th>(x - 2.78)</th>
+                  <th>(x - 2.78)²</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>2.0</td><td>-0.78</td><td>0.61</td></tr>
+                <tr><td>3.0</td><td>0.22</td><td>0.05</td></tr>
+                <tr><td>0.3</td><td>-2.48</td><td>6.15</td></tr>
+                <tr><td>3.3</td><td>0.52</td><td>0.27</td></tr>
+                <tr><td>1.3</td><td>-1.48</td><td>2.19</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p><strong>Paso 3: Aplicar la fórmula completa</strong></p>
+        <p>Después de calcular todas las desviaciones al cuadrado:</p>
+        
+        <div class="math-display">
+          <div class="formula">Σ(x - x̄)² = 95.47</div>
+          <div class="formula">s² = 95.47 / (30 - 1) = 95.47 / 29</div>
+          <div class="formula">s² = 3.29 años²</div>
+          <div class="formula">s = √3.29 = 1.81 años</div>
+        </div>
+        
+        <div class="answer-box">
+          <h4>🎯 Resultado</h4>
+          <div class="answer">Desviación estándar: 1.81 años</div>
+          <div class="answer">Varianza: 3.29 años²</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 5: Crear histograma -->
+    <div class="step">
+      <div class="step-header">5️⃣ Elaborar histograma de frecuencias relativas</div>
+      <div class="step-content">
+        <p><strong>Paso 1: Determinar el número de clases usando la regla de Sturges</strong></p>
+        
+        <div class="math-display">
+          <div class="formula">k = 1 + 3.322 × log(30) ≈ 6 clases</div>
+          <div class="formula">Ancho de clase = 6.3 / 6 = 1.05 ≈ 1.1 años</div>
+        </div>
+
+        <p><strong>Paso 2: Tabla de frecuencias</strong></p>
+        
+        <div class="frequency-table">
+          <table class="stats-table">
+            <thead>
+              <tr>
+                <th>Clase</th>
+                <th>Límite Inferior</th>
+                <th>Límite Superior</th>
+                <th>Frecuencia</th>
+                <th>Frecuencia Relativa</th>
+                <th>Frecuencia Relativa (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>0.2</td>
+                <td>1.3</td>
+                <td>10</td>
+                <td>10/30 = 0.333</td>
+                <td>33.3%</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>1.3</td>
+                <td>2.4</td>
+                <td>7</td>
+                <td>7/30 = 0.233</td>
+                <td>23.3%</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>2.4</td>
+                <td>3.5</td>
+                <td>2</td>
+                <td>2/30 = 0.067</td>
+                <td>6.7%</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>3.5</td>
+                <td>4.6</td>
+                <td>3</td>
+                <td>3/30 = 0.100</td>
+                <td>10.0%</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>4.6</td>
+                <td>5.7</td>
+                <td>5</td>
+                <td>5/30 = 0.167</td>
+                <td>16.7%</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>5.7</td>
+                <td>6.8</td>
+                <td>3</td>
+                <td>3/30 = 0.100</td>
+                <td>10.0%</td>
+              </tr>
+              <tr style="background: rgba(255, 150, 100, 0.2); font-weight: bold;">
+                <td colspan="3">TOTAL</td>
+                <td>30</td>
+                <td>1.000</td>
+                <td>100.0%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p><strong>Paso 3: Visualización</strong></p>
+        
+        <div class="chart-container">
+          <h4>📊 Histograma de Frecuencias Relativas</h4>
+          <canvas id="histogramChart"></canvas>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Interpretación del Histograma</h4>
+          <div class="answer">La mayor concentración de datos (33.3%) se encuentra en la primera clase (0.2 - 1.3 años)</div>
+        </div>
+      </div>
+    </div>
+
+      
+  </div>
+
+  <script>
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Crear histograma
+    function createHistogram() {
+      const ctx = document.getElementById('histogramChart').getContext('2d');
+      
+      const data = {
+        labels: ['0.2-1.3', '1.3-2.4', '2.4-3.5', '3.5-4.6', '4.6-5.7', '5.7-6.8'],
+        datasets: [{
+          label: 'Frecuencia Relativa',
+          data: [0.333, 0.233, 0.067, 0.100, 0.167, 0.100],
+          backgroundColor: [
+            'rgba(255, 150, 100, 0.8)',
+            'rgba(255, 179, 71, 0.8)',
+            'rgba(255, 160, 122, 0.8)',
+            'rgba(255, 140, 105, 0.8)',
+            'rgba(255, 120, 80, 0.8)',
+            'rgba(255, 100, 60, 0.8)'
+          ],
+          borderColor: [
+            'rgba(255, 150, 100, 1)',
+            'rgba(255, 179, 71, 1)',
+            'rgba(255, 160, 122, 1)',
+            'rgba(255, 140, 105, 1)',
+            'rgba(255, 120, 80, 1)',
+            'rgba(255, 100, 60, 1)'
+          ],
+          borderWidth: 2,
+          borderRadius: 5
+        }]
+      };
+      
+      const config = {
+        type: 'bar',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Distribución de Frecuencias Relativas',
+              font: {
+                size: 16,
+                weight: 'bold'
+              },
+              color: '#fff'
+            },
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return `Frecuencia Relativa: ${(context.parsed.y * 100).toFixed(1)}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 0.4,
+              title: {
+                display: true,
+                text: 'Frecuencia Relativa',
+                font: {
+                  size: 14,
+                  weight: 'bold'
+                },
+                color: '#fff'
+              },
+              ticks: {
+                color: '#fff',
+                callback: function(value) {
+                  return (value * 100) + '%';
+                }
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Clases (años)',
+                font: {
+                  size: 14,
+                  weight: 'bold'
+                },
+                color: '#fff'
+              },
+              ticks: {
+                color: '#fff'
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.1)'
+              }
+            }
+          }
+        }
+      };
+      
+      new Chart(ctx, config);
+    }
+
+    // Inicializar
+    window.addEventListener('load', () => {
+      createHistogram();
+    });
+
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = 'index.html'; // fallback si se abre directo
+      }
+    });
+  </script>
+</body>
+</html>

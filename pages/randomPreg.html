@@ -225,6 +225,7 @@
     }
 
     .back-btn {
+
       margin-top: 25px;
       width: 100%;
       padding: 16px;
@@ -271,7 +272,7 @@
       <img src="../src/img/logo.png" alt="PyE Logo" /> PyE
     </a>
             <ul class="nav-menu">
-  <li><a id="back-btn" class="nav-link">Volver</a></li>
+  <li><a id="back-btn" class="nav-link" style="cursor: pointer;">Volver</a></li>
     </ul>
   </nav>
 
@@ -295,93 +296,133 @@
     </div>
   </div>
 
-  <script>
-    let currentQuestion = null;
+<script>
+  let currentQuestion = null;
 
-    async function loadQuestion() {
-      const res = await fetch("../src/json/randomQuiz.json");
-      const data = await res.json();
-      return data[Math.floor(Math.random() * data.length)];
-    }
+  // ==============================
+  // 📘 Cargar una pregunta al azar desde battleGame.json
+  // ==============================
+  async function loadQuestion() {
+    const res = await fetch("../src/json/battleGame.json");
+    const data = await res.json();
+    const random = data[Math.floor(Math.random() * data.length)];
 
-    async function renderQuestion(question) {
-      currentQuestion = question;
-      const qTitle = document.getElementById("qTitle");
-      const qDesc = document.getElementById("qDesc");
-      const container = document.getElementById("options");
+    // Adaptamos el formato a lo que el sistema necesita internamente
+    return {
+      titulo: random.q,
+      descripcion: random.topic || "",
+      opciones: random.options,
+      respuestaCorrecta: random.correct,
+      justificaciones: random.options.map((opt, i) =>
+        i === random.correct
+          ? random.explain || "Respuesta correcta."
+          : "Opción incorrecta."
+      )
+    };
+  }
 
-      qTitle.textContent = question.titulo;
-      qDesc.textContent = question.descripcion;
-      container.innerHTML = "";
+  // ==============================
+  // 🎯 Renderizar la pregunta en pantalla
+  // ==============================
+  async function renderQuestion(question) {
+    currentQuestion = question;
+    const qTitle = document.getElementById("qTitle");
+    const qDesc = document.getElementById("qDesc");
+    const container = document.getElementById("options");
 
-      const allIndices = question.opciones.map((_, i) => i);
-      const correct = question.respuestaCorrecta;
-      const incorrects = allIndices.filter(i => i !== correct);
+    qTitle.textContent = question.titulo;
+    qDesc.textContent = question.descripcion;
+    container.innerHTML = "";
 
-      const randomIncorrects = shuffleArray(incorrects).slice(0, Math.random() < 0.5 ? 2 : 3);
-      const visibleIndices = shuffleArray([...randomIncorrects, correct]);
-      question.visibleOptions = visibleIndices;
+    // Selecciona entre 3 y 4 opciones visibles, asegurando incluir la correcta
+    const allIndices = question.opciones.map((_, i) => i);
+    const correct = question.respuestaCorrecta;
+    const incorrects = allIndices.filter(i => i !== correct);
 
-      visibleIndices.forEach((idx, i) => {
-        const btn = document.createElement("button");
-        btn.className = "option-btn";
-        btn.innerHTML = `<span class="option-letter">${String.fromCharCode(65 + i)}</span> ${question.opciones[idx]}`;
-        btn.onclick = () => selectOption(idx, question);
-        container.appendChild(btn);
-      });
-    }
+    const randomIncorrects = shuffleArray(incorrects).slice(0, Math.random() < 0.5 ? 2 : 3);
+    const visibleIndices = shuffleArray([...randomIncorrects, correct]);
+    question.visibleOptions = visibleIndices;
 
-    function selectOption(selectedIndex, question) {
-      const buttons = document.querySelectorAll(".option-btn");
-      const isCorrect = selectedIndex === question.respuestaCorrecta;
-
-      buttons.forEach((btn, i) => {
-        const optIdx = question.visibleOptions[i];
-        btn.classList.add("disabled");
-        if (optIdx === question.respuestaCorrecta) btn.classList.add("correct");
-        else if (optIdx === selectedIndex) btn.classList.add("incorrect");
-      });
-
-      showFeedback(selectedIndex, question, isCorrect);
-    }
-
-    function showFeedback(selectedIndex, question, isCorrect) {
-      const fb = document.getElementById("feedback");
-      const main = document.body;
-      fb.className = "feedback " + (isCorrect ? "correct" : "incorrect");
-
-      document.getElementById("feedbackTitle").textContent =
-        isCorrect ? "✅ ¡Correcto!" : "❌ Incorrecto";
-      document.getElementById("feedbackText").textContent =
-        question.justificaciones[selectedIndex] || "Revisá el temario para entender este tema.";
-
-      const justifications = document.getElementById("feedbackJustifications");
-      justifications.innerHTML = "<h4 style='color:white;margin-bottom:10px;'>📘 Explicaciones:</h4>";
-      question.visibleOptions.forEach((optIdx, i) => {
-        const text = question.justificaciones[optIdx] || "Sin explicación.";
-        justifications.innerHTML += `<div class='justification-item'><strong>${String.fromCharCode(65 + i)})</strong> ${text}</div>`;
-      });
-
-      main.classList.add("show-feedback");
-    }
-
-    async function newQuestion() {
-      const main = document.body;
-      main.classList.remove("show-feedback");
-      const newQ = await loadQuestion();
-      setTimeout(() => renderQuestion(newQ), 500); // espera animación antes de recargar
-    }
-
-    function shuffleArray(arr) {
-      return arr.sort(() => Math.random() - 0.5);
-    }
-
-    document.addEventListener("DOMContentLoaded", async () => {
-      const question = await loadQuestion();
-      renderQuestion(question);
-      document.getElementById("newQuestionBtn").addEventListener("click", newQuestion);
+    visibleIndices.forEach((idx, i) => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.innerHTML = `
+        <span class="option-letter">${String.fromCharCode(65 + i)}</span> 
+        ${question.opciones[idx]}
+      `;
+      btn.onclick = () => selectOption(idx, question);
+      container.appendChild(btn);
     });
-  </script>
+  }
+
+  // ==============================
+  // 🧠 Seleccionar opción y mostrar resultado
+  // ==============================
+  function selectOption(selectedIndex, question) {
+    const buttons = document.querySelectorAll(".option-btn");
+    const isCorrect = selectedIndex === question.respuestaCorrecta;
+
+    buttons.forEach((btn, i) => {
+      const optIdx = question.visibleOptions[i];
+      btn.classList.add("disabled");
+      if (optIdx === question.respuestaCorrecta) btn.classList.add("correct");
+      else if (optIdx === selectedIndex) btn.classList.add("incorrect");
+    });
+
+    showFeedback(selectedIndex, question, isCorrect);
+  }
+
+  // ==============================
+  // 💬 Mostrar feedback con explicación
+  // ==============================
+  function showFeedback(selectedIndex, question, isCorrect) {
+    const fb = document.getElementById("feedback");
+    const main = document.body;
+    fb.className = "feedback " + (isCorrect ? "correct" : "incorrect");
+
+    document.getElementById("feedbackTitle").textContent =
+      isCorrect ? "✅ ¡Correcto!" : "❌ Incorrecto";
+    document.getElementById("feedbackText").textContent =
+      question.justificaciones[selectedIndex] || "Revisá el temario para entender este tema.";
+
+    const justifications = document.getElementById("feedbackJustifications");
+    justifications.innerHTML = "<h4 style='color:white;margin-bottom:10px;'>📘 Explicaciones:</h4>";
+    question.visibleOptions.forEach((optIdx, i) => {
+      const text = question.justificaciones[optIdx] || "Sin explicación.";
+      justifications.innerHTML += `<div class='justification-item'><strong>${String.fromCharCode(65 + i)})</strong> ${text}</div>`;
+    });
+
+    main.classList.add("show-feedback");
+  }
+
+  // ==============================
+  // 🔁 Cargar nueva pregunta
+  // ==============================
+  async function newQuestion() {
+    const main = document.body;
+    main.classList.remove("show-feedback");
+    const newQ = await loadQuestion();
+    setTimeout(() => renderQuestion(newQ), 500);
+  }
+
+  // ==============================
+  // 🔀 Utilidad: mezclar array
+  // ==============================
+  function shuffleArray(arr) {
+    return arr.sort(() => Math.random() - 0.5);
+  }
+
+  // ==============================
+  // 🚀 Inicialización
+  // ==============================
+  document.addEventListener("DOMContentLoaded", async () => {
+    const question = await loadQuestion();
+    renderQuestion(question);
+    document.getElementById("newQuestionBtn").addEventListener("click", newQuestion);
+  });
+</script>
+
+
   <script>
   // Botón "Volver" dinámico
   document.getElementById('back-btn').addEventListener('click', () => {

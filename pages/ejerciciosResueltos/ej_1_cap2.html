@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicios Resueltos - Técnicas de conteo</title>
+  <link rel="icon" type="image/png" href="../../src/img/logo.png">
+  <link rel="stylesheet" href="../css/base.css" />
+  <style>
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: linear-gradient(135deg, #ffffff, #a0a0a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .context-box ul {
+      margin-left: 25px;
+      list-style: disc;
+    }
+
+    .formula-reference {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .formula-card {
+      background: rgba(120, 119, 198, 0.1);
+      border: 1px solid rgba(120, 119, 198, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .formula-card:hover {
+      background: rgba(120, 119, 198, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .formula-card h4 {
+      color: #a0e0ff;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .formula-card .formula {
+      font-family: monospace;
+      color: #fff;
+      font-size: 1.1rem;
+      margin: 8px 0;
+    }
+
+    .formula-card .description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(120, 119, 198, 0.7);
+      background: rgba(120, 119, 198, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p, .step-content ul {
+      margin-bottom: 10px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: monospace;
+      color: #a0e0ff;
+    }
+
+    .equation-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 15px 0;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+    }
+
+    .equation-box .step-eq {
+      margin: 8px 0;
+      font-size: 1.05rem;
+    }
+
+    .equation-box .final-answer {
+      color: #8fffa0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .visual-example {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 15px 0;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      max-width: 400px;
+      margin: 20px auto;
+    }
+
+    .card-item {
+      aspect-ratio: 0.7;
+      background: linear-gradient(135deg, rgba(120, 119, 198, 0.3), rgba(100, 100, 180, 0.3));
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: #fff;
+      transition: all 0.3s ease;
+    }
+
+    .card-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(120, 119, 198, 0.4);
+    }
+
+    .card-item.odd {
+      background: linear-gradient(135deg, rgba(255, 150, 100, 0.3), rgba(255, 100, 100, 0.3));
+    }
+
+    .card-item.even {
+      background: linear-gradient(135deg, rgba(100, 150, 255, 0.3), rgba(100, 200, 255, 0.3));
+    }
+
+    .practice-section {
+      margin-top: 50px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px solid rgba(120, 119, 198, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+    }
+
+    .practice-section h2 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+    }
+
+    .practice-problem {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .practice-problem:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .practice-problem h4 {
+      color: #a0e0ff;
+      margin-bottom: 10px;
+    }
+
+    .practice-answer {
+      display: none;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .practice-problem.revealed .practice-answer {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .check-panel {
+      margin-top: 30px;
+      padding: 25px;
+      border-radius: 16px;
+      background: rgba(120, 119, 198, 0.15);
+      border: 1px solid rgba(120, 119, 198, 0.4);
+      text-align: center;
+    }
+
+    .check-panel h3 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .check-panel input {
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      width: 150px;
+      text-align: center;
+      font-size: 1rem;
+      margin: 10px 5px;
+    }
+
+    .check-btn {
+      margin-top: 15px;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 30px;
+      background: linear-gradient(135deg, #7877c6, #6564b5);
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .check-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(120, 119, 198, 0.4);
+    }
+
+    .result {
+      margin-top: 20px;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .correct { color: #8fffa0; }
+    .incorrect { color: #ff8f8f; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .formula-reference { grid-template-columns: 1fr; }
+      .card-grid { grid-template-columns: repeat(5, 1fr); gap: 5px; }
+    }
+  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../../index.html" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicios Resueltos</h1>
+      <p class="exercise-subtitle">Técnicas de conteo</p>
+    </div>
+
+        <!-- Contexto y enunciado -->
+    <div class="context-box">
+      <h2>Ejercicios:</h2>
+      <p>1️⃣ Una torta necesita 8 ingredientes, ¿de cuántas maneras se pueden mezclar?</p>
+      <p>2️⃣ ¿En cuántas permutaciones de la palabra AYCYDYTV las tres Y aparecen juntas?</p>
+      <p>3️⃣ ¿De cuántas maneras puede elegirse entre 9 personas un comité de 5?</p>
+      <p>4️⃣ Se tienen 10 cartas numeradas del 1 al 10. Se seleccionan 2 cartas al azar.</p>
+    </div>
+
+    <div class="context-box">
+      <h3>🔢 Recordatorio de fórmulas</h3>
+      
+      <div class="formula-reference">
+        <div class="formula-card">
+          <h4>📊 Permutaciones</h4>
+          <div class="formula">P(n) = n!</div>
+          <div class="description">Ordenar n elementos distintos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>🔄 Permutaciones con repetición</h4>
+          <div class="formula">P(n; n₁,n₂,...) = n! / (n₁!·n₂!·...)</div>
+          <div class="description">Con elementos repetidos</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>🎯 Variaciones</h4>
+          <div class="formula">V(n,r) = n! / (n-r)!</div>
+          <div class="description">Ordenar r de n elementos (importa orden)</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>🎲 Combinaciones</h4>
+          <div class="formula">C(n,r) = n! / (r!·(n-r)!)</div>
+          <div class="description">Elegir r de n elementos (no importa orden)</div>
+        </div>
+      </div>
+
+      <div class="hint-box">
+        💡 <strong>Tip clave:</strong> ¿Importa el orden? → Usa Variaciones/Permutaciones. ¿No importa? → Usa Combinaciones.
+      </div>
+    </div>
+
+    <!-- Problema 1 -->
+    <div class="step">
+      <div class="step-header">1️⃣ Mezclar 8 ingredientes</div>
+      <div class="step-content">
+        <p><strong>Pregunta:</strong> Una torta necesita 8 ingredientes, ¿de cuántas maneras se pueden mezclar?</p>
+
+        <h4 style="color: #a0e0ff; margin-top: 20px;">🤔 Análisis</h4>
+        <p>Mezclar ingredientes implica <strong>ordenarlos</strong> (el orden en que se agregan puede importar). Todos los ingredientes son diferentes.</p>
+        <p>Usamos <strong>Permutaciones</strong>: P(n) = n!</p>
+
+        <div class="equation-box">
+          <div class="step-eq">P(8) = 8!</div>
+          <div class="step-eq">= 8 × 7 × 6 × 5 × 4 × 3 × 2 × 1</div>
+          <div class="final-answer">= 40,320 maneras</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Problema 2 -->
+    <div class="step">
+      <div class="step-header">2️⃣ Permutaciones de AYCYDYTV con Y juntas</div>
+      <div class="step-content">
+        <p><strong>Pregunta:</strong> ¿En cuántas permutaciones de la palabra <span class="math">AYCYDYTV</span> las tres Y aparecen juntas?</p>
+
+        <h4 style="color: #a0e0ff; margin-top: 20px;">🤔 Análisis</h4>
+        <p>La palabra tiene 8 letras: A, Y, C, Y, D, Y, T, V</p>
+        <p>Letras repetidas: Y aparece <strong>3 veces</strong></p>
+        <p><strong>Estrategia:</strong> Tratar las 3 Y como un <strong>bloque único [YYY]</strong></p>
+
+        <div class="visual-example">
+          <p style="text-align: center; color: #fff; font-weight: 600;">Transformación:</p>
+          <p style="text-align: center; margin: 15px 0;">
+            <span style="background: rgba(255, 100, 100, 0.3); padding: 8px 12px; border-radius: 8px; margin: 0 5px;">A</span>
+            <span style="background: rgba(100, 255, 150, 0.3); padding: 8px 12px; border-radius: 8px; margin: 0 5px;">[YYY]</span>
+            <span style="background: rgba(255, 100, 100, 0.3); padding: 8px 12px; border-radius: 8px; margin: 0 5px;">C</span>
+            <span style="background: rgba(255, 100, 100, 0.3); padding: 8px 12px; border-radius: 8px; margin: 0 5px;">D</span>
+            <span style="background: rgba(255, 100, 100, 0.3); padding: 8px 12px; border-radius: 8px; margin: 0 5px;">T</span>
+            <span style="background: rgba(255, 100, 100, 0.3); padding: 8px 12px; border-radius: 8px; margin: 0 5px;">V</span>
+          </p>
+          <p style="text-align: center; color: rgba(255,255,255,0.7);">Ahora tenemos 6 elementos distintos para permutar</p>
+        </div>
+
+        <div class="equation-box">
+          <div class="step-eq">Elementos a permutar: A, [YYY], C, D, T, V = 6 elementos</div>
+          <div class="step-eq">P(6) = 6!</div>
+          <div class="step-eq">= 6 × 5 × 4 × 3 × 2 × 1</div>
+          <div class="final-answer">= 720 permutaciones</div>
+        </div>
+
+        <p style="margin-top: 20px;"><strong>Nota:</strong> No dividimos por 3! porque las Y dentro del bloque están fijas juntas.</p>
+      </div>
+    </div>
+
+    <!-- Problema 3 -->
+    <div class="step">
+      <div class="step-header">3️⃣ Comité de 5 personas entre 9</div>
+      <div class="step-content">
+        <p><strong>Pregunta:</strong> ¿De cuántas maneras puede elegirse entre 9 personas un comité de 5?</p>
+
+        <h4 style="color: #a0e0ff; margin-top: 20px;">🤔 Análisis</h4>
+        <p>Elegir un comité → <strong>NO importa el orden</strong> (un grupo de personas)</p>
+        <p>Usamos <strong>Combinaciones</strong>: C(n,r) = n! / (r!·(n-r)!)</p>
+
+        <div class="equation-box">
+          <div class="step-eq">C(9,5) = 9! / (5!·(9-5)!)</div>
+          <div class="step-eq">= 9! / (5!·4!)</div>
+          <div class="step-eq">= (9×8×7×6×5!) / (5!×4×3×2×1)</div>
+          <div class="step-eq">= (9×8×7×6) / (4×3×2×1)</div>
+          <div class="step-eq">= 3024 / 24</div>
+          <div class="final-answer">= 126 maneras</div>
+        </div>
+
+        <p style="margin-top: 20px;"><strong>💡 Nota importante:</strong> Si te pidieran "de cuántas formas puede elegirse presidente, vicepresidente, secretario, tesorero y vocal", ahí SÍ importaría el orden y usaríamos V(9,5).</p>
+      </div>
+    </div>
+
+    <!-- Problema 4 -->
+    <div class="step">
+      <div class="step-header">4️⃣ Probabilidad de suma impar en cartas</div>
+      <div class="step-content">
+        <p><strong>Contexto:</strong> Se tienen 10 cartas numeradas del 1 al 10. Se seleccionan 2 cartas al azar.</p>
+        <p><strong>Pregunta:</strong> Hallar P(suma impar)</p>
+
+        <div class="visual-example">
+          <h4 style="color: #fff; text-align: center; margin-bottom: 15px;">Cartas disponibles</h4>
+          <div class="card-grid">
+            <div class="card-item odd">1</div>
+            <div class="card-item even">2</div>
+            <div class="card-item odd">3</div>
+            <div class="card-item even">4</div>
+            <div class="card-item odd">5</div>
+            <div class="card-item even">6</div>
+            <div class="card-item odd">7</div>
+            <div class="card-item even">8</div>
+            <div class="card-item odd">9</div>
+            <div class="card-item even">10</div>
+          </div>
+          <p style="text-align: center; margin-top: 10px;">
+            <span style="color: #ff8f8f;">■</span> Impares: {1, 3, 5, 7, 9} = 5 cartas<br>
+            <span style="color: #8fa0ff;">■</span> Pares: {2, 4, 6, 8, 10} = 5 cartas
+          </p>
+        </div>
+
+        <h4 style="color: #a0e0ff; margin-top: 25px;">🧠 Regla clave</h4>
+        <p><strong>Suma impar</strong> ocurre cuando: <span class="math">Impar + Par</span> o <span class="math">Par + Impar</span></p>
+        <p>Nunca: Impar + Impar = Par, ni Par + Par = Par</p>
+
+        <h4 style="color: #a0e0ff; margin-top: 25px;">📋 Caso a) Las dos cartas se sacan juntas</h4>
+        <p>No importa el orden → usamos <strong>Combinaciones</strong></p>
+
+        <div class="equation-box">
+          <div class="step-eq"><strong>Casos totales:</strong> C(10,2) = 10!/(2!·8!) = 45</div>
+          <div class="step-eq" style="margin-top: 15px;"><strong>Casos favorables (suma impar):</strong></div>
+          <div class="step-eq">• Elegir 1 impar y 1 par:</div>
+          <div class="step-eq">C(5,1) × C(5,1) = 5 × 5 = 25</div>
+          <div class="step-eq" style="margin-top: 15px;"><strong>Probabilidad:</strong></div>
+          <div class="step-eq">P(suma impar) = 25/45</div>
+          <div class="final-answer">= 5/9 ≈ 0.556 = 55.6%</div>
+        </div>
+
+        <h4 style="color: #a0e0ff; margin-top: 30px;">📋 Caso b) Se sacan una tras otra sin sustitución</h4>
+        <p>Sí importa el orden → usamos <strong>Variaciones</strong></p>
+
+        <div class="equation-box">
+          <div class="step-eq"><strong>Casos totales:</strong> V(10,2) = 10!/(10-2)! = 10×9 = 90</div>
+          <div class="step-eq" style="margin-top: 15px;"><strong>Casos favorables (suma impar):</strong></div>
+          <div class="step-eq">• Primera impar, segunda par: 5 × 5 = 25</div>
+          <div class="step-eq">• Primera par, segunda impar: 5 × 5 = 25</div>
+          <div class="step-eq">Total favorable: 25 + 25 = 50</div>
+          <div class="step-eq" style="margin-top: 15px;"><strong>Probabilidad:</strong></div>
+          <div class="step-eq">P(suma impar) = 50/90</div>
+          <div class="final-answer">= 5/9 ≈ 0.556 = 55.6%</div>
+        </div>
+
+        <p style="margin-top: 20px; padding: 15px; background: rgba(120, 119, 198, 0.15); border-radius: 8px;">
+          <strong>🎯 Conclusión:</strong> La probabilidad es la misma en ambos casos (5/9), aunque los espacios muestrales son diferentes (45 vs 90).
+        </p>
+
+       
+      </div>
+    </div>
+
+  <script>
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+
+    // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html';
+      }
+    });
+  </script>
+</body>
+</html>

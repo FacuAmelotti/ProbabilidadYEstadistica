@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distribución Uniforme - Espesor de Borde de Componente de Aeronave</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .theme-purple {
+            --primary-color: #8b5cf6;
+            --primary-light: #a78bfa;
+            --primary-dark: #7c3aed;
+            --accent-color: #c084fc;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .distribution-header {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        }
+        
+        .exercise-container {
+            border-left: 5px solid #8b5cf6;
+        }
+        
+        .slider-container {
+            background: linear-gradient(90deg, #a78bfa, #8b5cf6);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(20, 1fr);
+            gap: 2px;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .thickness-cell {
+            aspect-ratio: 1;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .thickness-cell:hover {
+            transform: scale(1.1);
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .thickness-cell.thin {
+            background: linear-gradient(135deg, #8b5cf6, #a78bfa);
+        }
+        
+        .thickness-cell.thick {
+            background: linear-gradient(135deg, #ec4899, #f472b6);
+        }
+        
+        .thickness-cell.acceptable {
+            background: linear-gradient(135deg, #10b981, #34d399);
+        }
+        
+        .thickness-cell::after {
+            content: attr(data-thickness);
+            position: absolute;
+            top: -25px;
+            background: #1f2937;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            white-space: nowrap;
+        }
+        
+        .thickness-cell:hover::after {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="theme-purple">
+    <header class="distribution-header">
+        <div class="container">
+            <h1>Distribución Uniforme</h1>
+            <h2>Espesor de Borde de Componente de Aeronave</h2>
+            <p class="subtitle">Ejercicio Interactivo con Visualización y Simulador</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Problema -->
+        <section class="exercise-container">
+            <h3>📋 Problema</h3>
+            <div class="problem-statement">
+                <p>El espesor de borde de un componente de una aeronave está distribuido de manera uniforme entre <strong>0.95</strong> y <strong>1.05 mm</strong>.</p>
+                <p><strong>a)</strong> Determinar la probabilidad de x (forma general)</p>
+                <p><strong>b)</strong> Calcular la proporción de bordes cuyo espesor es mayor que 1.02 mm</p>
+                <p><strong>c)</strong> Calcular la Esperanza y la Varianza del espesor del borde</p>
+            </div>
+        </section>
+
+        <!-- Teoría -->
+        <section class="exercise-container">
+            <h3>📚 Teoría de la Distribución Uniforme</h3>
+            <div class="theory-content">
+                <p>Una variable aleatoria continua X tiene una distribución uniforme en el intervalo [a, b] si su función de densidad de probabilidad es:</p>
+                
+                <div class="formula-box">
+                    <h4>Función de Densidad de Probabilidad:</h4>
+                    <div class="formula">f(x) = 1/(b-a) , donde a ≤ x ≤ b</div>
+                    <div class="formula">f(x) = 0 , en cualquier otro caso</div>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Función de Distribución Acumulada:</h4>
+                    <div class="formula">F(x) = (x-a)/(b-a) , donde a ≤ x ≤ b</div>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Parámetros Estadísticos:</h4>
+                    <div class="formula">E[X] = (a + b)/2</div>
+                    <div class="formula">Var(X) = (b-a)²/12</div>
+                </div>
+
+                <div class="application-box">
+                    <h4>🔧 Aplicaciones en Ingeniería Aeroespacial:</h4>
+                    <ul>
+                        <li><strong>Control de Calidad:</strong> Verificación de tolerancias en fabricación</li>
+                        <li><strong>Diseño Estructural:</strong> Cálculo de márgenes de seguridad</li>
+                        <li><strong>Certificación:</strong> Cumplimiento de estándares aeronáuticos</li>
+                        <li><strong>Inspección:</strong> Validación de especificaciones de componentes</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Solución Paso a Paso -->
+        <section class="exercise-container">
+            <h3>🔍 Solución Paso a Paso</h3>
+            
+            <div class="solution-step">
+                <h4>Parte a) Forma General de la Probabilidad</h4>
+                <p>Para una distribución uniforme U(0.95, 1.05):</p>
+                <div class="formula-box">
+                    <div class="formula">f(x) = 1/(1.05 - 0.95) = 1/0.1 = 10</div>
+                    <div class="formula">f(x) = 10 , donde 0.95 ≤ x ≤ 1.05</div>
+                    <div class="formula">F(x) = (x - 0.95)/0.1 = 10(x - 0.95)</div>
+                </div>
+                <p>Esto significa que la densidad de probabilidad es constante (10) en el intervalo.</p>
+            </div>
+
+            <div class="solution-step">
+                <h4>Parte b) Probabilidad de Espesor Mayor a 1.02 mm</h4>
+                <p>Calculamos P(X > 1.02):</p>
+                <div class="formula-box">
+                    <div class="formula">P(X > 1.02) = 1 - F(1.02)</div>
+                    <div class="formula">F(1.02) = (1.02 - 0.95)/0.1 = 0.07/0.1 = 0.7</div>
+                    <div class="formula">P(X > 1.02) = 1 - 0.7 = 0.3</div>
+                </div>
+                <div class="result-box">
+                    <strong>Resultado: 30.0% de los componentes tienen espesor mayor a 1.02 mm</strong>
+                </div>
+            </div>
+
+            <div class="solution-step">
+                <h4>Parte c) Esperanza y Varianza</h4>
+                <p>Calculamos los parámetros estadísticos:</p>
+                <div class="formula-box">
+                    <div class="formula">E[X] = (a + b)/2 = (0.95 + 1.05)/2 = 2.0/2 = 1.00 mm</div>
+                    <div class="formula">Var(X) = (b-a)²/12 = (0.1)²/12 = 0.01/12 ≈ 0.000833</div>
+                    <div class="formula">σ(X) = √Var(X) = √0.000833 ≈ 0.0289 mm</div>
+                </div>
+                <div class="result-box">
+                    <strong>Esperanza: 1.00 mm</strong><br>
+                    <strong>Varianza: 0.000833 mm²</strong><br>
+                    <strong>Desviación Estándar: 0.0289 mm</strong>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visualización -->
+        <section class="exercise-container">
+            <h3>📊 Visualización de Datos</h3>
+            
+            <h4>Distribución de Espesores (100 Muestras Simuladas)</h4>
+            <div class="grid-container" id="thicknessGrid"></div>
+            
+            <div style="text-align: center; margin: 10px;">
+                <span style="background: linear-gradient(135deg, #8b5cf6, #a78bfa); padding: 5px 10px; border-radius: 15px; margin: 0 10px; color: white;">
+                    <span style="font-size: 20px;">●</span> 0.95-1.00 mm
+                </span>
+                <span style="background: linear-gradient(135deg, #10b981, #34d399); padding: 5px 10px; border-radius: 15px; margin: 0 10px; color: white;">
+                    <span style="font-size: 20px;">●</span> 1.00-1.02 mm (Acceptable)
+                </span>
+                <span style="background: linear-gradient(135deg, #ec4899, #f472b6); padding: 5px 10px; border-radius: 15px; margin: 0 10px; color: white;">
+                    <span style="font-size: 20px;">●</span> >1.02 mm
+                </span>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <h4>Función de Densidad de Probabilidad</h4>
+                    <canvas id="pdfChart"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <h4>Función de Distribución Acumulada</h4>
+                    <canvas id="cdfChart"></canvas>
+                </div>
+            </div>
+
+            <div class="results-table">
+                <h4>Valores Críticos de la Distribución</h4>
+                <table id="criticalTable">
+                    <thead>
+                        <tr>
+                            <th>Percentil</th>
+                            <th>Espesor (mm)</th>
+                            <th>Interpretación</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Se llenará con JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Simulador Interactivo -->
+        <section class="exercise-container">
+            <h3>🎮 Simulador Interactivo</h3>
+            <p>Ajusta los parámetros de la distribución uniforme y observa cómo cambian las probabilidades:</p>
+            
+            <div class="simulation-controls">
+                <div class="slider-container">
+                    <div class="control-group">
+                        <label for="paramA">Límite Inferior (a): <span id="paramAValue">0.95</span> mm</label>
+                        <input type="range" id="paramA" min="0.5" max="2.0" step="0.01" value="0.95">
+                    </div>
+                    <div class="control-group">
+                        <label for="paramB">Límite Superior (b): <span id="paramBValue">1.05</span> mm</label>
+                        <input type="range" id="paramB" min="0.6" max="2.5" step="0.01" value="1.05">
+                    </div>
+                    <div class="control-group">
+                        <label for="thresholdX">Umbral X: <span id="thresholdXValue">1.02</span> mm</label>
+                        <input type="range" id="thresholdX" min="0.9" max="1.1" step="0.01" value="1.02">
+                    </div>
+                </div>
+                
+                <div class="btn-container">
+                    <button class="btn-primary" onclick="updateSimulation()">Actualizar Simulación</button>
+                    <button class="btn-secondary" onclick="generateNewData()">Generar Nueva Muestra</button>
+                </div>
+            </div>
+
+            <div class="simulation-results">
+                <div class="result-card">
+                    <h4>Parámetros Actuales</h4>
+                    <div id="currentParams">
+                        <!-- Se llenará con JavaScript -->
+                    </div>
+                </div>
+                <div class="result-card">
+                    <h4>Probabilidades Calculadas</h4>
+                    <div id="currentProbabilities">
+                        <!-- Se llenará con JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="charts-container">
+                <div class="chart-wrapper">
+                    <h4>PDF Dinámico</h4>
+                    <canvas id="dynamicPDF"></canvas>
+                </div>
+                <div class="chart-wrapper">
+                    <h4>Área Sombreada: P(X > X₀)</h4>
+                    <canvas id="shadedArea"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparación con Otras Distribuciones -->
+        <section class="exercise-container">
+            <h3>🔄 Comparación con Otras Distribuciones Continuas</h3>
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Distribución</th>
+                            <th>Densidad</th>
+                            <th>Esperanza</th>
+                            <th>Varianza</th>
+                            <th>Forma</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Uniforme</strong></td>
+                            <td>Constante en [a,b]</td>
+                            <td>(a+b)/2</td>
+                            <td>(b-a)²/12</td>
+                            <td>Rectangular</td>
+                        </tr>
+                        <tr>
+                            <td>Normal</td>
+                            <td>e^(-(x-μ)²/2σ²)/(σ√(2π))</td>
+                            <td>μ</td>
+                            <td>σ²</td>
+                            <td>Campana</td>
+                        </tr>
+                        <tr>
+                            <td>Exponencial</td>
+                            <td>λe^(-λx)</td>
+                            <td>1/λ</td>
+                            <td>1/λ²</td>
+                            <td>Decay</td>
+                        </tr>
+                        <tr>
+                            <td>Gamma</td>
+                            <td>x^(k-1)e^(-x/θ)/(θ^kΓ(k))</td>
+                            <td>kθ</td>
+                            <td>kθ²</td>
+                            <td>Sesgada</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Configuración global
+        const CONFIG = {
+            a: 0.95,
+            b: 1.05,
+            threshold: 1.02,
+            defaultSamples: 100
+        };
+
+        // Función de densidad uniforme
+        function uniformPDF(x, a, b) {
+            if (x >= a && x <= b) {
+                return 1 / (b - a);
+            }
+            return 0;
+        }
+
+        // Función de distribución acumulada uniforme
+        function uniformCDF(x, a, b) {
+            if (x < a) return 0;
+            if (x > b) return 1;
+            return (x - a) / (b - a);
+        }
+
+        // Calcular estadísticas
+        function calculateStats(a, b) {
+            const mean = (a + b) / 2;
+            const variance = Math.pow(b - a, 2) / 12;
+            const stdDev = Math.sqrt(variance);
+            
+            return { mean, variance, stdDev };
+        }
+
+        // Generar datos simulados
+        function generateUniformData(a, b, n = 100) {
+            const data = [];
+            for (let i = 0; i < n; i++) {
+                const value = a + Math.random() * (b - a);
+                data.push(value);
+            }
+            return data;
+        }
+
+        // Inicializar visualización de grid
+        function initializeGrid() {
+            const gridContainer = document.getElementById('thicknessGrid');
+            const data = generateUniformData(CONFIG.a, CONFIG.b, CONFIG.defaultSamples);
+            
+            gridContainer.innerHTML = '';
+            
+            data.forEach((value, index) => {
+                const cell = document.createElement('div');
+                cell.className = 'thickness-cell';
+                cell.setAttribute('data-thickness', `${value.toFixed(3)} mm`);
+                
+                if (value <= 1.00) {
+                    cell.classList.add('thin');
+                } else if (value <= CONFIG.threshold) {
+                    cell.classList.add('acceptable');
+                } else {
+                    cell.classList.add('thick');
+                }
+                
+                cell.textContent = (index % 10 === 0) ? value.toFixed(2) : '';
+                gridContainer.appendChild(cell);
+            });
+        }
+
+        // Crear gráfico PDF
+        function createPDFChart() {
+            const ctx = document.getElementById('pdfChart').getContext('2d');
+            
+            const xValues = [];
+            const yValues = [];
+            
+            for (let x = CONFIG.a - 0.1; x <= CONFIG.b + 0.1; x += 0.01) {
+                xValues.push(x);
+                yValues.push(uniformPDF(x, CONFIG.a, CONFIG.b));
+            }
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        label: 'f(x)',
+                        data: yValues,
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Función de Densidad - Uniforme U(0.95, 1.05)'
+                        },
+                        legend: {
+                            display: true
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Espesor (mm)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Densidad f(x)'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Crear gráfico CDF
+        function createCDFChart() {
+            const ctx = document.getElementById('cdfChart').getContext('2d');
+            
+            const xValues = [];
+            const yValues = [];
+            
+            for (let x = CONFIG.a - 0.1; x <= CONFIG.b + 0.1; x += 0.01) {
+                xValues.push(x);
+                yValues.push(uniformCDF(x, CONFIG.a, CONFIG.b));
+            }
+            
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        label: 'F(x)',
+                        data: yValues,
+                        borderColor: '#a78bfa',
+                        backgroundColor: 'rgba(167, 139, 250, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Función de Distribución Acumulada'
+                        },
+                        legend: {
+                            display: true
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Espesor (mm)'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Probabilidad Acumulada F(x)'
+                            },
+                            beginAtZero: true,
+                            max: 1
+                        }
+                    }
+                }
+            });
+        }
+
+        // Crear tabla de valores críticos
+        function createCriticalTable() {
+            const tableBody = document.querySelector('#criticalTable tbody');
+            const percentiles = [10, 25, 50, 75, 90, 95, 99];
+            
+            tableBody.innerHTML = '';
+            
+            percentiles.forEach(p => {
+                const row = tableBody.insertRow();
+                const x = CONFIG.a + (p/100) * (CONFIG.b - CONFIG.a);
+                const interpretation = getInterpretation(x);
+                
+                row.innerHTML = `
+                    <td>${p}%</td>
+                    <td>${x.toFixed(4)} mm</td>
+                    <td>${interpretation}</td>
+                `;
+            });
+        }
+
+        // Obtener interpretación del valor
+        function getInterpretation(x) {
+            if (x <= CONFIG.a) return 'Límite mínimo';
+            if (x <= 1.00) return 'Espesor inferior';
+            if (x <= CONFIG.threshold) return 'Zona aceptable';
+            if (x <= CONFIG.b) return 'Espesor superior';
+            return 'Límite máximo';
+        }
+
+        // Actualizar simulación
+        function updateSimulation() {
+            const a = parseFloat(document.getElementById('paramA').value);
+            const b = parseFloat(document.getElementById('paramB').value);
+            const threshold = parseFloat(document.getElementById('thresholdX').value);
+            
+            // Validar que a < b
+            if (a >= b) {
+                alert('El límite inferior debe ser menor que el superior');
+                return;
+            }
+            
+            const stats = calculateStats(a, b);
+            const pGreaterThanThreshold = 1 - uniformCDF(threshold, a, b);
+            const pLessThanThreshold = uniformCDF(threshold, a, b);
+            
+            // Actualizar parámetros mostrados
+            document.getElementById('paramAValue').textContent = a.toFixed(2);
+            document.getElementById('paramBValue').textContent = b.toFixed(2);
+            document.getElementById('thresholdXValue').textContent = threshold.toFixed(2);
+            
+            // Actualizar resultados
+            document.getElementById('currentParams').innerHTML = `
+                <p><strong>Intervalo:</strong> [${a.toFixed(3)}, ${b.toFixed(3)}] mm</p>
+                <p><strong>Longitud del intervalo:</strong> ${(b-a).toFixed(3)} mm</p>
+                <p><strong>Densidad:</strong> ${(1/(b-a)).toFixed(2)}</p>
+                <p><strong>Esperanza:</strong> ${stats.mean.toFixed(4)} mm</p>
+                <p><strong>Varianza:</strong> ${stats.variance.toFixed(6)} mm²</p>
+                <p><strong>Desv. Estándar:</strong> ${stats.stdDev.toFixed(4)} mm</p>
+            `;
+            
+            document.getElementById('currentProbabilities').innerHTML = `
+                <p><strong>P(X ≤ ${threshold.toFixed(2)})</strong></p>
+                <p>${(pLessThanThreshold * 100).toFixed(2)}%</p>
+                <hr>
+                <p><strong>P(X > ${threshold.toFixed(2)})</strong></p>
+                <p>${(pGreaterThanThreshold * 100).toFixed(2)}%</p>
+            `;
+            
+            // Actualizar gráficos dinámicos
+            createDynamicCharts(a, b, threshold);
+        }
+
+        // Crear gráficos dinámicos
+        function createDynamicCharts(a, b, threshold) {
+            // Gráfico PDF dinámico
+            const ctx1 = document.getElementById('dynamicPDF').getContext('2d');
+            
+            const xValues = [];
+            const yValues = [];
+            
+            for (let x = a - 0.1; x <= b + 0.1; x += 0.01) {
+                xValues.push(x);
+                yValues.push(uniformPDF(x, a, b));
+            }
+            
+            new Chart(ctx1, {
+                type: 'line',
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        label: 'f(x)',
+                        data: yValues,
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                        borderWidth: 2,
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `PDF Dinámico - U(${a.toFixed(2)}, ${b.toFixed(2)})`
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'x'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'f(x)'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+            // Gráfico área sombreada
+            const ctx2 = document.getElementById('shadedArea').getContext('2d');
+            
+            const xShaded = [];
+            const yShaded = [];
+            const xFull = [];
+            const yFull = [];
+            
+            for (let x = a; x <= b; x += 0.01) {
+                xFull.push(x);
+                yFull.push(uniformPDF(x, a, b));
+                
+                if (x > threshold) {
+                    xShaded.push(x);
+                    yShaded.push(uniformPDF(x, a, b));
+                }
+            }
+            
+            new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: xFull,
+                    datasets: [{
+                        label: 'Distribución Completa',
+                        data: yFull,
+                        borderColor: '#94a3b8',
+                        backgroundColor: 'rgba(148, 163, 184, 0.1)',
+                        borderWidth: 1,
+                        fill: false
+                    }, {
+                        label: `P(X > ${threshold.toFixed(2)})`,
+                        data: xShaded.map((x, i) => ({ x, y: yShaded[i] })),
+                        borderColor: '#ec4899',
+                        backgroundColor: 'rgba(236, 72, 153, 0.3)',
+                        borderWidth: 2,
+                        fill: 'origin',
+                        showLine: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `Área Sombreada: ${((1 - uniformCDF(threshold, a, b)) * 100).toFixed(1)}%`
+                        }
+                    },
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            title: {
+                                display: true,
+                                text: 'x'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'f(x)'
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Generar nueva muestra
+        function generateNewData() {
+            initializeGrid();
+        }
+
+        // Inicializar aplicación
+        function initializeApp() {
+            initializeGrid();
+            createPDFChart();
+            createCDFChart();
+            createCriticalTable();
+            updateSimulation();
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Agregar event listeners a los sliders
+            document.getElementById('paramA').addEventListener('input', updateSimulation);
+            document.getElementById('paramB').addEventListener('input', updateSimulation);
+            document.getElementById('thresholdX').addEventListener('input', updateSimulation);
+            
+            initializeApp();
+        });
+    </script>
+</body>
+</html>

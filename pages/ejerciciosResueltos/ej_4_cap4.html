@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Distribución Normal Estándar</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <style>
+   
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: white;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+
+    .context-box h4 {
+      color: #a0ff66;
+      font-weight: 500;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .context-box p {
+      margin-bottom: 15px;
+    }
+
+    .context-box ul {
+      margin-left: 25px;
+      margin-bottom: 15px;
+    }
+
+    .context-box li {
+      margin-bottom: 10px;
+    }
+
+    .visual-representation {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+      padding: 25px;
+      background: rgba(160, 255, 100, 0.05);
+      border: 1px solid rgba(160, 255, 100, 0.2);
+      border-radius: 12px;
+    }
+
+    .visual-box {
+      text-align: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
+    }
+
+    .visual-box h4 {
+      color: #a0ff66;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .visual-box .big-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 10px 0;
+    }
+
+    .visual-box .description {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(160, 255, 100, 0.7);
+      background: rgba(160, 255, 100, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-header::after {
+      content: '▼';
+      transition: transform 0.3s ease;
+    }
+
+    .step.open .step-header::after {
+      transform: rotate(180deg);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p {
+      margin-bottom: 15px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      color: #a0ff66;
+    }
+
+    .math-display {
+      text-align: center;
+      font-size: 1.3rem;
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .formula {
+      font-family: 'Courier New', monospace;
+      font-size: 1.2rem;
+      color: #a0ff66;
+      margin: 10px 0;
+    }
+
+    .calculation-steps {
+      background: rgba(160, 255, 100, 0.05);
+      border: 1px solid rgba(160, 255, 100, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .calculation-steps .step-line {
+      margin: 10px 0;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .answer-box {
+      background: linear-gradient(135deg, rgba(160, 255, 100, 0.2), rgba(160, 255, 100, 0.1));
+      border: 2px solid rgba(160, 255, 100, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .answer-box h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .answer {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #8fffa0;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 20px 0;
+    }
+
+    .chart-container h4 {
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+
+    canvas {
+      display: block;
+      width: 100% !important;
+      max-width: 700px;
+      height: 350px !important;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+    }
+
+    .z-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+      font-size: 0.85rem;
+    }
+
+    .z-table th,
+    .z-table td {
+      padding: 8px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .z-table th {
+      background: rgba(160, 255, 100, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .z-table td {
+      color: rgba(255, 255, 255, 0.9);
+      font-family: 'Courier New', monospace;
+    }
+
+    .z-table .highlight {
+      background: rgba(160, 255, 100, 0.2);
+      font-weight: 700;
+    }
+
+    .interpretation {
+      background: rgba(160, 255, 100, 0.15);
+      border: 2px solid rgba(160, 255, 100, 0.4);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px 0;
+    }
+
+    .interpretation h4 {
+      color: #a0ff66;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .interpretation ul {
+      margin-left: 25px;
+    }
+
+    .interpretation li {
+      margin-bottom: 10px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .simulator {
+      background: rgba(255, 230, 100, 0.1);
+      border: 2px solid rgba(255, 230, 100, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 30px 0;
+    }
+
+    .simulator h3 {
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .control {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .control label {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .control input[type="range"] {
+      flex: 2;
+      height: 8px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .control input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #a0ff66;
+      cursor: pointer;
+    }
+
+    .control input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #a0ff66;
+      cursor: pointer;
+    }
+
+    .control .value-display {
+      background: rgba(160, 255, 100, 0.2);
+      padding: 8px 15px;
+      border-radius: 8px;
+      color: #a0ff66;
+      font-weight: 600;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .result-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .result-card .label {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .result-card .value {
+      color: #8fffa0;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .math-display { font-size: 1rem; }
+      .control { flex-direction: column; align-items: flex-start; }
+      .control input[type="range"] { width: 100%; }
+      .visual-representation { grid-template-columns: 1fr; }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">PyE</a>
+      <ul class="nav-menu">
+  <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto</h1>
+      <p class="exercise-subtitle">Distribución Normal Estándar Z ~ N(0,1)</p>
+    </div>
+
+    <div class="context-box">
+      <h3>📊 Enunciado del Problema</h3>
+      <p>Sea <strong>Z</strong> una variable aleatoria <strong>normal estándar</strong>, es decir <span class="math">Z ~ N(0,1)</span></p>
+      
+      <h4>📋 Calcular:</h4>
+      <ul>
+        <li><strong>a)</strong> P(−1.5 ≤ Z ≤ 2)</li>
+        <li><strong>b)</strong> P(−2.5 ≤ Z ≤ 2.5)</li>
+        <li><strong>c)</strong> P(Z ≥ c) = 0.121</li>
+        <li><strong>d)</strong> φ(c) = 0.9838</li>
+      </ul>
+
+      <div class="hint-box">
+        💡 <strong>Dato clave:</strong> La distribución normal estándar tiene media μ = 0 y desviación estándar σ = 1. Usaremos la tabla Z (o función de distribución acumulada Φ).
+      </div>
+    </div>
+
+    <div class="context-box">
+      <h3>🎨 Visualización del Problema</h3>
+      
+      <div class="visual-representation">
+        <div class="visual-box">
+          <h4>📊 PREGUNTA A</h4>
+          <div class="big-number" style="color: #ffd666;">[-1.5, 2]</div>
+          <div class="description">Área entre dos valores</div>
+        </div>
+
+        <div class="visual-box">
+          <h4>📊 PREGUNTA B</h4>
+          <div class="big-number" style="color: #ffaa66;">[-2.5, 2.5]</div>
+          <div class="description">Área simétrica</div>
+        </div>
+
+        <div class="visual-box">
+          <h4>📊 PREGUNTA C</h4>
+          <div class="big-number" style="color: #ff9966;">Z ≥ c</div>
+          <div class="description">Buscar valor crítico</div>
+        </div>
+
+        <div class="visual-box">
+          <h4>📊 PREGUNTA D</h4>
+          <div class="big-number" style="color: #a0ff66;">φ(c)</div>
+          <div class="description">Función acumulada</div>
+        </div>
+      </div>
+
+      <div class="chart-container">
+        <h4>📈 Curva Normal Estándar</h4>
+        <canvas id="normalCurve"></canvas>
+      </div>
+    </div>
+
+    <div class="context-box">
+      <h3>📚 Distribución Normal Estándar</h3>
+      <p>La <strong>distribución normal estándar</strong> es un caso especial de la distribución normal con:</p>
+
+      <div class="visual-representation" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));">
+        <div class="visual-box">
+          <h4>Media</h4>
+          <div class="big-number" style="font-size: 2rem;">μ = 0</div>
+        </div>
+        <div class="visual-box">
+          <h4>Desv. Estándar</h4>
+          <div class="big-number" style="font-size: 2rem;">σ = 1</div>
+        </div>
+      </div>
+
+      <h4>Propiedades importantes:</h4>
+      <ul>
+        <li><strong>Función de densidad:</strong> φ(z) = (1/√(2π)) × e^(-z²/2)</li>
+        <li><strong>Función acumulada:</strong> Φ(z) = P(Z ≤ z)</li>
+        <li><strong>Simetría:</strong> Φ(-z) = 1 - Φ(z)</li>
+        <li><strong>Regla empírica:</strong> 68% de datos en [-1,1], 95% en [-2,2], 99.7% en [-3,3]</li>
+      </ul>
+
+      <h4>Notación:</h4>
+      <ul>
+        <li><strong>φ(z):</strong> Función de densidad de probabilidad (PDF)</li>
+        <li><strong>Φ(z):</strong> Función de distribución acumulada (CDF) = P(Z ≤ z)</li>
+        <li><strong>P(a ≤ Z ≤ b) = Φ(b) - Φ(a)</strong></li>
+      </ul>
+
+      <div class="hint-box">
+        💡 <strong>Tabla Z:</strong> Usamos la tabla de la normal estándar para encontrar Φ(z). Los valores positivos de z se buscan directamente, los negativos usan la simetría.
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">1️⃣ Pregunta a) P(−1.5 ≤ Z ≤ 2)</div>
+      <div class="step-content">
+        <p><strong>Buscamos:</strong> La probabilidad de que Z esté entre -1.5 y 2</p>
+        
+        <h4 style="color: #a0ff66; margin-top: 20px;">Fórmula:</h4>
+        <div class="math-display">
+          <div class="formula">P(a ≤ Z ≤ b) = Φ(b) - Φ(a)</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Aplicando:</h4>
+        <div class="calculation-steps">
+          <div class="step-line">P(−1.5 ≤ Z ≤ 2) = Φ(2) - Φ(-1.5)</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 1: Buscar Φ(2) en tabla Z</h4>
+        <div class="calculation-steps">
+          <div class="step-line">Φ(2) = 0.9772</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 2: Buscar Φ(-1.5) usando simetría</h4>
+        <div class="calculation-steps">
+          <div class="step-line">Φ(-1.5) = 1 - Φ(1.5)</div>
+          <div class="step-line">Φ(1.5) = 0.9332</div>
+          <div class="step-line">Φ(-1.5) = 1 - 0.9332 = 0.0668</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 3: Calcular la probabilidad</h4>
+        <div class="calculation-steps">
+          <div class="step-line">P(−1.5 ≤ Z ≤ 2) = 0.9772 - 0.0668</div>
+          <div class="step-line">P(−1.5 ≤ Z ≤ 2) = 0.9104</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta a)</h4>
+          <div class="answer">P(−1.5 ≤ Z ≤ 2) = 0.9104 = 91.04%</div>
+        </div>
+
+        <div class="interpretation">
+          <h4>📊 Interpretación:</h4>
+          <ul>
+            <li>El <strong>91.04%</strong> de los valores de Z caen entre -1.5 y 2</li>
+            <li>Solo el 8.96% de los valores están fuera de este intervalo</li>
+            <li>Es un intervalo bastante amplio que captura la mayor parte de la distribución</li>
+          </ul>
+        </div>
+
+        <div class="chart-container">
+          <h4>📊 Visualización del área P(−1.5 ≤ Z ≤ 2)</h4>
+          <canvas id="chartA"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">2️⃣ Pregunta b) P(−2.5 ≤ Z ≤ 2.5)</div>
+      <div class="step-content">
+        <p><strong>Buscamos:</strong> La probabilidad de que Z esté entre -2.5 y 2.5 (intervalo simétrico)</p>
+        
+        <h4 style="color: #a0ff66; margin-top: 20px;">Aplicando la fórmula:</h4>
+        <div class="calculation-steps">
+          <div class="step-line">P(−2.5 ≤ Z ≤ 2.5) = Φ(2.5) - Φ(-2.5)</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 1: Buscar Φ(2.5) en tabla Z</h4>
+        <div class="calculation-steps">
+          <div class="step-line">Φ(2.5) = 0.9938</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 2: Calcular Φ(-2.5) usando simetría</h4>
+        <div class="calculation-steps">
+          <div class="step-line">Φ(-2.5) = 1 - Φ(2.5)</div>
+          <div class="step-line">Φ(-2.5) = 1 - 0.9938 = 0.0062</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 3: Calcular la probabilidad</h4>
+        <div class="calculation-steps">
+          <div class="step-line">P(−2.5 ≤ Z ≤ 2.5) = 0.9938 - 0.0062</div>
+          <div class="step-line">P(−2.5 ≤ Z ≤ 2.5) = 0.9876</div>
+        </div>
+
+        <div class="hint-box">
+          💡 <strong>Atajo para intervalos simétricos:</strong> P(−a ≤ Z ≤ a) = 2Φ(a) - 1 = 2(0.9938) - 1 = 0.9876
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta b)</h4>
+          <div class="answer">P(−2.5 ≤ Z ≤ 2.5) = 0.9876 = 98.76%</div>
+        </div>
+
+        <div class="interpretation">
+          <h4>📊 Interpretación:</h4>
+          <ul>
+            <li>El <strong>98.76%</strong> de los valores caen dentro de 2.5 desviaciones estándar de la media</li>
+            <li>Solo el 1.24% de los valores están más alejados que ±2.5σ</li>
+            <li>Este es un intervalo muy amplio que captura casi toda la distribución</li>
+            <li>Está muy cerca de la regla empírica de 95% para ±2σ</li>
+          </ul>
+        </div>
+
+        <div class="chart-container">
+          <h4>📊 Visualización del área P(−2.5 ≤ Z ≤ 2.5)</h4>
+          <canvas id="chartB"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">3️⃣ Pregunta c) P(Z ≥ c) = 0.121</div>
+      <div class="step-content">
+        <p><strong>Buscamos:</strong> El valor crítico c tal que la probabilidad de que Z sea mayor o igual a c es 0.121</p>
+        
+        <h4 style="color: #a0ff66; margin-top: 20px;">Interpretación del problema:</h4>
+        <p>Queremos encontrar c donde el área a la derecha de c bajo la curva normal es 0.121</p>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 1: Convertir a función acumulada</h4>
+        <div class="calculation-steps">
+          <div class="step-line">P(Z ≥ c) = 0.121</div>
+          <div class="step-line">1 - P(Z < c) = 0.121</div>
+          <div class="step-line">1 - Φ(c) = 0.121</div>
+          <div class="step-line">Φ(c) = 1 - 0.121</div>
+          <div class="step-line">Φ(c) = 0.879</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 2: Buscar en tabla Z inversa</h4>
+        <p>Buscamos qué valor de z tiene Φ(z) = 0.879 en la tabla Z</p>
+        <div class="calculation-steps">
+          <div class="step-line">Buscando 0.879 en el cuerpo de la tabla Z...</div>
+          <div class="step-line">Φ(1.17) ≈ 0.8790</div>
+          <div class="step-line">Φ(1.18) ≈ 0.8810</div>
+          <div class="step-line">El valor más cercano es z ≈ 1.17</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 3: Interpolación (opcional para mayor precisión)</h4>
+        <div class="calculation-steps">
+          <div class="step-line">Entre 1.17 y 1.18, interpolando linealmente:</div>
+          <div class="step-line">c ≈ 1.17 (aproximación suficiente)</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta c)</h4>
+          <div class="answer">c ≈ 1.17</div>
+        </div>
+
+        <div class="interpretation">
+          <h4>📊 Interpretación:</h4>
+          <ul>
+            <li>El valor crítico es <strong>c = 1.17</strong></li>
+            <li>El 12.1% de los valores de Z están por encima de 1.17 desviaciones estándar</li>
+            <li>El 87.9% de los valores están por debajo de 1.17</li>
+            <li>Es un valor en la cola derecha de la distribución</li>
+          </ul>
+        </div>
+
+        <div class="chart-container">
+          <h4>📊 Visualización de P(Z ≥ 1.17) = 0.121</h4>
+          <canvas id="chartC"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">4️⃣ Pregunta d) φ(c) = 0.9838</div>
+      <div class="step-content">
+        <p><strong>Buscamos:</strong> El valor c tal que Φ(c) = 0.9838</p>
+        
+        <h4 style="color: #a0ff66; margin-top: 20px;">Nota importante:</h4>
+        <p>Aquí φ(c) representa la <strong>función de distribución acumulada</strong> Φ(c), no la función de densidad. Es común usar φ o Φ indistintamente para la CDF.</p>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Paso 1: Buscar en tabla Z</h4>
+        <p>Buscamos directamente qué valor de z tiene Φ(z) = 0.9838</p>
+        <div class="calculation-steps">
+          <div class="step-line">Buscando 0.9838 en el cuerpo de la tabla Z...</div>
+          <div class="step-line">Φ(2.13) ≈ 0.9834</div>
+          <div class="step-line">Φ(2.14) ≈ 0.9838</div>
+          <div class="step-line">¡Coincidencia exacta con z = 2.14!</div>
+        </div>
+
+        <h4 style="color: #a0ff66; margin-top: 20px;">Verificación:</h4>
+        <div class="calculation-steps">
+          <div class="step-line">Φ(2.14) = 0.9838 ✓</div>
+          <div class="step-line">Esto significa P(Z ≤ 2.14) = 0.9838</div>
+          <div class="step-line">Es decir, el 98.38% de los valores están por debajo de 2.14</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta d)</h4>
+          <div class="answer">c = 2.14</div>
+        </div>
+
+        <div class="interpretation">
+          <h4>📊 Interpretación:</h4>
+          <ul>
+            <li>El valor crítico es <strong>c = 2.14</strong></li>
+            <li>El 98.38% de los valores de Z están por debajo de 2.14</li>
+            <li>Solo el 1.62% de los valores están por encima de 2.14</li>
+            <li>Es un valor en la cola derecha, cerca de 2 desviaciones estándar</li>
+            <li>Este percentil (98.38) es muy alto, indicando un valor extremo</li>
+          </ul>
+        </div>
+
+        <div class="chart-container">
+          <h4>📊 Visualización de Φ(2.14) = 0.9838</h4>
+          <canvas id="chartD"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-header">5️⃣ Resumen de respuestas</div>
+      <div class="step-content">
+        <div class="answer-box" style="margin-bottom: 15px;">
+          <h4>🎯 Respuesta a)</h4>
+          <div class="answer">P(−1.5 ≤ Z ≤ 2) = 0.9104 = 91.04%</div>
+        </div>
+
+        <div class="answer-box" style="margin-bottom: 15px;">
+          <h4>🎯 Respuesta b)</h4>
+          <div class="answer">P(−2.5 ≤ Z ≤ 2.5) = 0.9876 = 98.76%</div>
+        </div>
+
+        <div class="answer-box" style="margin-bottom: 15px;">
+          <h4>🎯 Respuesta c)</h4>
+          <div class="answer">c = 1.17 (donde P(Z ≥ c) = 0.121)</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta d)</h4>
+          <div class="answer">c = 2.14 (donde Φ(c) = 0.9838)</div>
+        </div>
+
+        <div class="interpretation" style="margin-top: 30px;">
+          <h4>💡 Conceptos clave aplicados:</h4>
+          <ul>
+            <li><strong>Cálculo de probabilidades entre valores:</strong> P(a ≤ Z ≤ b) = Φ(b) - Φ(a)</li>
+            <li><strong>Simetría de la normal:</strong> Φ(-z) = 1 - Φ(z)</li>
+            <li><strong>Complemento:</strong> P(Z ≥ c) = 1 - Φ(c)</li>
+            <li><strong>Uso de tabla Z:</strong> Para encontrar probabilidades y valores críticos</li>
+            <li><strong>Tabla inversa:</strong> Buscar el valor de z dado Φ(z)</li>
+          </ul>
+        </div>
+
+        <div class="context-box" style="margin-top: 30px;">
+          <h3>📝 Valores importantes de la tabla Z</h3>
+          <table class="z-table" style="font-size: 0.9rem;">
+            <thead>
+              <tr>
+                <th>z</th>
+                <th>Φ(z)</th>
+                <th>Interpretación</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>-3</td>
+                <td>0.0013</td>
+                <td>0.13% por debajo</td>
+              </tr>
+              <tr>
+                <td>-2</td>
+                <td>0.0228</td>
+                <td>2.28% por debajo</td>
+              </tr>
+              <tr>
+                <td>-1</td>
+                <td>0.1587</td>
+                <td>15.87% por debajo</td>
+              </tr>
+              <tr>
+                <td>0</td>
+                <td>0.5000</td>
+                <td>50% por debajo (mediana)</td>
+              </tr>
+              <tr>
+                <td>1</td>
+                <td>0.8413</td>
+                <td>84.13% por debajo</td>
+              </tr>
+              <tr class="highlight">
+                <td>1.17</td>
+                <td>0.8790</td>
+                <td>Respuesta c)</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>0.9772</td>
+                <td>97.72% por debajo</td>
+              </tr>
+              <tr class="highlight">
+                <td>2.14</td>
+                <td>0.9838</td>
+                <td>Respuesta d)</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>0.9987</td>
+                <td>99.87% por debajo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="simulator">
+      <h3>🎮 Simulador Interactivo de Distribución Normal</h3>
+      <p style="text-align: center; color: rgba(255,255,255,0.7); margin-bottom: 20px;">
+        Explora diferentes valores y probabilidades de la distribución normal estándar
+      </p>
+
+      <div class="control-group">
+        <div class="control">
+          <label>Límite inferior (a):</label>
+          <input type="range" id="lowerSlider" min="-4" max="4" step="0.1" value="-1.5">
+          <span class="value-display" id="lowerValue">-1.50</span>
+        </div>
+
+        <div class="control">
+          <label>Límite superior (b):</label>
+          <input type="range" id="upperSlider" min="-4" max="4" step="0.1" value="2">
+          <span class="value-display" id="upperValue">2.00</span>
+        </div>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="label">Φ(a)</div>
+          <div class="value" id="simPhiA">0.0668</div>
+        </div>
+
+        <div class="result-card">
+          <div class="label">Φ(b)</div>
+          <div class="value" id="simPhiB">0.9772</div>
+        </div>
+
+        <div class="result-card">
+          <div class="label">P(a ≤ Z ≤ b)</div>
+          <div class="value" id="simProb">0.9104</div>
+        </div>
+
+        <div class="result-card">
+          <div class="label">Porcentaje</div>
+          <div class="value" id="simPercent">91.04%</div>
+        </div>
+      </div>
+
+      <div class="chart-container" style="margin-top: 30px;">
+        <h4>📊 Distribución normal interactiva</h4>
+        <canvas id="simulatorChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Función de distribución acumulada de la normal estándar (aproximación)
+    function Phi(z) {
+      const t = 1 / (1 + 0.2316419 * Math.abs(z));
+      const d = 0.3989423 * Math.exp(-z * z / 2);
+      const prob = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+      return z > 0 ? 1 - prob : prob;
+    }
+
+    // Función de densidad de probabilidad de la normal estándar
+    function phi(z) {
+      return (1 / Math.sqrt(2 * Math.PI)) * Math.exp(-z * z / 2);
+    }
+
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Crear gráfico de curva normal general
+    function createNormalCurve() {
+      const ctx = document.getElementById('normalCurve').getContext('2d');
+      const points = [];
+      for (let z = -4; z <= 4; z += 0.1) {
+        points.push({x: z, y: phi(z)});
+      }
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [{
+            label: 'φ(z) - Densidad',
+            data: points,
+            borderColor: 'rgba(160, 255, 100, 1)',
+            backgroundColor: 'rgba(160, 255, 100, 0.1)',
+            fill: true,
+            tension: 0.4,
+            pointRadius: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { labels: { color: '#fff' } }
+          },
+          scales: {
+            x: {
+              type: 'linear',
+              title: { display: true, text: 'z', color: '#fff' },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            y: {
+              title: { display: true, text: 'Densidad', color: '#fff' },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    // Crear visualizaciones para cada pregunta
+    function createChartA() {
+      const ctx = document.getElementById('chartA').getContext('2d');
+      const points = [];
+      const shaded = [];
+      
+      for (let z = -4; z <= 4; z += 0.05) {
+        points.push({x: z, y: phi(z)});
+        if (z >= -1.5 && z <= 2) {
+          shaded.push({x: z, y: phi(z)});
+        }
+      }
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [
+            {
+              label: 'Área sombreada (91.04%)',
+              data: shaded,
+              borderColor: 'rgba(160, 255, 100, 1)',
+              backgroundColor: 'rgba(160, 255, 100, 0.5)',
+              fill: true,
+              pointRadius: 0
+            },
+            {
+              label: 'Curva normal',
+              data: points,
+              borderColor: 'rgba(255, 255, 255, 0.8)',
+              backgroundColor: 'transparent',
+              fill: false,
+              tension: 0.4,
+              pointRadius: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#fff' } } },
+          scales: {
+            x: {
+              type: 'linear',
+              title: { display: true, text: 'z', color: '#fff' },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            y: {
+              title: { display: true, text: 'φ(z)', color: '#fff' },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    function createChartB() {
+      const ctx = document.getElementById('chartB').getContext('2d');
+      const points = [];
+      const shaded = [];
+      
+      for (let z = -4; z <= 4; z += 0.05) {
+        points.push({x: z, y: phi(z)});
+        if (z >= -2.5 && z <= 2.5) {
+          shaded.push({x: z, y: phi(z)});
+        }
+      }
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [
+            {
+              label: 'Área sombreada (98.76%)',
+              data: shaded,
+              borderColor: 'rgba(255, 170, 100, 1)',
+              backgroundColor: 'rgba(255, 170, 100, 0.5)',
+              fill: true,
+              pointRadius: 0
+            },
+            {
+              label: 'Curva normal',
+              data: points,
+              borderColor: 'rgba(255, 255, 255, 0.8)',
+              backgroundColor: 'transparent',
+              fill: false,
+              tension: 0.4,
+              pointRadius: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#fff' } } },
+          scales: {
+            x: {
+              type: 'linear',
+              title: { display: true, text: 'z', color: '#fff' },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            y: {
+              title: { display: true, text: 'φ(z)', color: '#fff' },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    function createChartC() {
+      const ctx = document.getElementById('chartC').getContext('2d');
+      const points = [];
+      const shaded = [];
+      
+      for (let z = -4; z <= 4; z += 0.05) {
+        points.push({x: z, y: phi(z)});
+        if (z >= 1.17) {
+          shaded.push({x: z, y: phi(z)});
+        }
+      }
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [
+            {
+              label: 'Área sombreada P(Z ≥ 1.17) = 12.1%',
+              data: shaded,
+              borderColor: 'rgba(255, 150, 100, 1)',
+              backgroundColor: 'rgba(255, 150, 100, 0.5)',
+              fill: true,
+              pointRadius: 0
+            },
+            {
+              label: 'Curva normal',
+              data: points,
+              borderColor: 'rgba(255, 255, 255, 0.8)',
+              backgroundColor: 'transparent',
+              fill: false,
+              tension: 0.4,
+              pointRadius: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#fff' } } },
+          scales: {
+            x: {
+              type: 'linear',
+              title: { display: true, text: 'z', color: '#fff' },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            y: {
+              title: { display: true, text: 'φ(z)', color: '#fff' },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    function createChartD() {
+      const ctx = document.getElementById('chartD').getContext('2d');
+      const points = [];
+      const shaded = [];
+      
+      for (let z = -4; z <= 4; z += 0.05) {
+        points.push({x: z, y: phi(z)});
+        if (z <= 2.14) {
+          shaded.push({x: z, y: phi(z)});
+        }
+      }
+
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [
+            {
+              label: 'Área sombreada Φ(2.14) = 98.38%',
+              data: shaded,
+              borderColor: 'rgba(100, 200, 255, 1)',
+              backgroundColor: 'rgba(100, 200, 255, 0.5)',
+              fill: true,
+              pointRadius: 0
+            },
+            {
+              label: 'Curva normal',
+              data: points,
+              borderColor: 'rgba(255, 255, 255, 0.8)',
+              backgroundColor: 'transparent',
+              fill: false,
+              tension: 0.4,
+              pointRadius: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#fff' } } },
+          scales: {
+            x: {
+              type: 'linear',
+              title: { display: true, text: 'z', color: '#fff' },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            y: {
+              title: { display: true, text: 'φ(z)', color: '#fff' },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    // Simulador interactivo
+    let simulatorChartInstance;
+
+    function updateSimulator() {
+      const a = parseFloat(document.getElementById('lowerSlider').value);
+      const b = parseFloat(document.getElementById('upperSlider').value);
+      
+      document.getElementById('lowerValue').textContent = a.toFixed(2);
+      document.getElementById('upperValue').textContent = b.toFixed(2);
+      
+      const phiA = Phi(a);
+      const phiB = Phi(b);
+      const prob = phiB - phiA;
+      
+      document.getElementById('simPhiA').textContent = phiA.toFixed(4);
+      document.getElementById('simPhiB').textContent = phiB.toFixed(4);
+      document.getElementById('simProb').textContent = prob.toFixed(4);
+      document.getElementById('simPercent').textContent = (prob * 100).toFixed(2) + '%';
+      
+      // Actualizar gráfico
+      const ctx = document.getElementById('simulatorChart').getContext('2d');
+      const points = [];
+      const shaded = [];
+      
+      for (let z = -4; z <= 4; z += 0.05) {
+        points.push({x: z, y: phi(z)});
+        if (z >= a && z <= b) {
+          shaded.push({x: z, y: phi(z)});
+        }
+      }
+
+      if (simulatorChartInstance) {
+        simulatorChartInstance.destroy();
+      }
+
+      simulatorChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          datasets: [
+            {
+              label: `Área P(${a.toFixed(2)} ≤ Z ≤ ${b.toFixed(2)}) = ${(prob*100).toFixed(2)}%`,
+              data: shaded,
+              borderColor: 'rgba(160, 255, 100, 1)',
+              backgroundColor: 'rgba(160, 255, 100, 0.5)',
+              fill: true,
+              pointRadius: 0
+            },
+            {
+              label: 'N(0,1)',
+              data: points,
+              borderColor: 'rgba(255, 255, 255, 0.8)',
+              backgroundColor: 'transparent',
+              fill: false,
+              tension: 0.4,
+              pointRadius: 0
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { labels: { color: '#fff' } } },
+          scales: {
+            x: {
+              type: 'linear',
+              title: { display: true, text: 'z', color: '#fff' },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            },
+            y: {
+              title: { display: true, text: 'φ(z)', color: '#fff' },
+              ticks: { color: '#fff' },
+              grid: { color: 'rgba(255, 255, 255, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    document.getElementById('lowerSlider').addEventListener('input', updateSimulator);
+    document.getElementById('upperSlider').addEventListener('input', updateSimulator);
+
+    // Inicializar
+    window.addEventListener('load', () => {
+      createNormalCurve();
+      createChartA();
+      createChartB();
+      createChartC();
+      createChartD();
+      updateSimulator();
+    });
+
+                // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html'; // fallback si se abre directo
+      }
+    });
+  </script>
+</body>
+</html>

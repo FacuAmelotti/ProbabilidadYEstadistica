@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ejercicio Resuelto - Control de Calidad Aeronáutico</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <style>
+    
+    .exercise-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .exercise-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .exercise-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 300;
+      margin-bottom: 15px;
+      background: white;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .exercise-subtitle {
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .context-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+    }
+
+    .context-box h3 {
+      color: #fff;
+      font-weight: 500;
+      margin-bottom: 15px;
+      font-size: 1.4rem;
+    }
+
+    .context-box h4 {
+      color: #a0ff66;
+      font-weight: 500;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .context-box p {
+      margin-bottom: 15px;
+    }
+
+    .context-box ul {
+      margin-left: 25px;
+      margin-bottom: 15px;
+    }
+
+    .context-box li {
+      margin-bottom: 10px;
+    }
+
+    .visual-representation {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+      padding: 25px;
+      background: rgba(160, 255, 100, 0.05);
+      border: 1px solid rgba(160, 255, 100, 0.2);
+      border-radius: 12px;
+    }
+
+    .visual-box {
+      text-align: center;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 10px;
+    }
+
+    .visual-box h4 {
+      color: #a0ff66;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .visual-box .big-number {
+      font-size: 3rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 10px 0;
+    }
+
+    .visual-box .description {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+    }
+
+    .fabric-grid {
+      display: grid;
+      grid-template-columns: repeat(20, 1fr);
+      gap: 2px;
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px dashed rgba(160, 255, 100, 0.3);
+      border-radius: 10px;
+      position: relative;
+    }
+
+    .fabric-grid::before {
+      content: '1 metro cuadrado';
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.85rem;
+    }
+
+    .fabric-cell {
+      aspect-ratio: 1;
+      background: rgba(200, 230, 180, 0.15);
+      border: 1px solid rgba(160, 255, 100, 0.2);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .fabric-cell.defect {
+      background: rgba(255, 100, 100, 0.4);
+      border-color: rgba(255, 100, 100, 0.8);
+    }
+
+    .fabric-cell.defect::after {
+      content: '✗';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ff6666;
+      font-weight: bold;
+      font-size: 0.7rem;
+    }
+
+    .fabric-cell:hover {
+      transform: scale(1.2);
+      z-index: 10;
+    }
+
+    .formula-reference {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .formula-card {
+      background: rgba(160, 255, 100, 0.1);
+      border: 1px solid rgba(160, 255, 100, 0.3);
+      border-radius: 12px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .formula-card:hover {
+      background: rgba(160, 255, 100, 0.15);
+      transform: translateY(-2px);
+    }
+
+    .formula-card h4 {
+      color: #a0ff66;
+      margin-bottom: 8px;
+      font-size: 1rem;
+    }
+
+    .formula-card .formula {
+      font-family: 'Courier New', monospace;
+      color: #fff;
+      font-size: 1.1rem;
+      margin: 8px 0;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 8px;
+      border-radius: 6px;
+    }
+
+    .formula-card .description {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+    }
+
+    .hint-box {
+      margin-top: 20px;
+      padding: 20px;
+      border-left: 4px solid rgba(160, 255, 100, 0.7);
+      background: rgba(160, 255, 100, 0.1);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 25px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+      font-weight: 500;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+    }
+
+    .step-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .step-header::after {
+      content: '▼';
+      transition: transform 0.3s ease;
+    }
+
+    .step.open .step-header::after {
+      transform: rotate(180deg);
+    }
+
+    .step-content {
+      display: none;
+      padding: 20px 30px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.7;
+    }
+
+    .step-content p {
+      margin-bottom: 15px;
+    }
+
+    .step.open .step-content {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .math {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      color: #a0ff66;
+    }
+
+    .math-display {
+      text-align: center;
+      font-size: 1.2rem;
+      margin: 20px 0;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+    }
+
+    .formula {
+      font-family: 'Courier New', monospace;
+      font-size: 1.2rem;
+      color: #a0ff66;
+      margin: 10px 0;
+    }
+
+    .calculation-steps {
+      background: rgba(160, 255, 100, 0.05);
+      border: 1px solid rgba(160, 255, 100, 0.2);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .calculation-steps .step-line {
+      margin: 10px 0;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .answer-box {
+      background: linear-gradient(135deg, rgba(160, 255, 100, 0.2), rgba(160, 255, 100, 0.1));
+      border: 2px solid rgba(160, 255, 100, 0.6);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .answer-box h4 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .answer {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #8fffa0;
+    }
+
+    .chart-container {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 20px 0;
+    }
+
+    .chart-container h4 {
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+
+    canvas {
+      display: block;
+      width: 100% !important;
+      max-width: 700px;
+      height: 350px !important;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 10px;
+    }
+
+    .prob-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .prob-table th,
+    .prob-table td {
+      padding: 12px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .prob-table th {
+      background: rgba(160, 255, 100, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .prob-table td {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+    }
+
+    .prob-table tr:hover td {
+      background: rgba(160, 255, 100, 0.1);
+    }
+
+    .prob-table .highlight {
+      background: rgba(160, 255, 100, 0.2);
+      font-weight: 700;
+    }
+
+    .simulator {
+      background: rgba(255, 230, 100, 0.1);
+      border: 2px solid rgba(255, 230, 100, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 30px 0;
+    }
+
+    .simulator h3 {
+      color: #fff;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .control {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .control label {
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 500;
+      flex: 1;
+    }
+
+    .control input[type="range"] {
+      flex: 2;
+      height: 8px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .control input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #a0ff66;
+      cursor: pointer;
+    }
+
+    .control input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #a0ff66;
+      cursor: pointer;
+    }
+
+    .control .value-display {
+      background: rgba(160, 255, 100, 0.2);
+      padding: 8px 15px;
+      border-radius: 8px;
+      color: #a0ff66;
+      font-weight: 600;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .result-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .result-card .label {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.9rem;
+      margin-bottom: 8px;
+    }
+
+    .result-card .value {
+      color: #8fffa0;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .interpretation {
+      background: rgba(160, 255, 100, 0.15);
+      border: 2px solid rgba(160, 255, 100, 0.4);
+      border-radius: 12px;
+      padding: 25px;
+      margin: 20px 0;
+    }
+
+    .interpretation h4 {
+      color: #a0ff66;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .interpretation ul {
+      margin-left: 25px;
+    }
+
+    .interpretation li {
+      margin-bottom: 10px;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+      padding: 12px;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .comparison-table th {
+      background: rgba(160, 255, 100, 0.3);
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .comparison-table td {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .exercise-container { padding: 100px 20px 40px; }
+      .step-header { font-size: 1rem; }
+      .math-display { font-size: 1rem; }
+      .control { flex-direction: column; align-items: flex-start; }
+      .control input[type="range"] { width: 100%; }
+      .visual-representation { grid-template-columns: 1fr; }
+      .fabric-grid { grid-template-columns: repeat(10, 1fr); }
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">PyE</a>
+      <ul class="nav-menu">
+  <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercise-container">
+    <div class="exercise-header">
+      <h1 class="exercise-title">Ejercicio Resuelto</h1>
+      <p class="exercise-subtitle">Control de Calidad Aeronáutico - Distribución Uniforme</p>
+    </div>
+
+    <!-- Contexto y enunciado -->
+    <div class="context-box">
+      <h3>✈️ Enunciado del Problema</h3>
+      <p>En la fabricación de componentes aeronáuticos, el <strong>espesor de borde</strong> de cierta pieza es un factor crítico para la seguridad. Se supone que el espesor sigue una <strong>distribución uniforme</strong> entre <strong>0.95 mm</strong> y <strong>1.05 mm</strong>.</p>
+      
+      <h4>📋 Preguntas a resolver:</h4>
+      <ul>
+        <li><strong>a)</strong> Determinar la función de densidad de probabilidad <strong>f(x)</strong> (forma general)</li>
+        <li><strong>b)</strong> Calcular la <strong>proporción de bordes</strong> cuyo espesor es mayor que <strong>1.02 mm</strong></li>
+        <li><strong>c)</strong> Calcular la <strong>Esperanza</strong> y <strong>Varianza</strong> del espesor del borde</li>
+      </ul>
+
+      <div class="hint-box">
+        💡 <strong>Contexto crítico:</strong> En aeronáutica, la precisión en el control de calidad es vital. Pequeñas variaciones pueden comprometer la integridad estructural.
+      </div>
+    </div>
+
+    <!-- Visualización del problema -->
+    <div class="context-box">
+      <h3>🎨 Visualización del Problema</h3>
+      
+      <div class="visual-representation">
+        <div class="visual-box">
+          <h4>📏 RANGO MÍNIMO</h4>
+          <div class="big-number" style="color: #0057B7;">0.95</div>
+          <div class="description">mm (a)</div>
+        </div>
+
+        <div class="visual-box">
+          <h4>📊 FUNCIÓN DENSIDAD</h4>
+          <div class="big-number" style="color: #10B981;">f(x) = 10</div>
+          <div class="description">1/(b-a)</div>
+        </div>
+
+        <div class="visual-box">
+          <h4>📏 RANGO MÁXIMO</h4>
+          <div class="big-number" style="color: #0057B7;">1.05</div>
+          <div class="description">mm (b)</div>
+        </div>
+
+        <div class="visual-box">
+          <h4>🎯 VALOR CRÍTICO</h4>
+          <div class="big-number" style="color: #F59E0B;">1.02</div>
+          <div class="description">mm (Punto de control)</div>
+        </div>
+      </div>
+
+      <h4>Representación del borde del componente (longitud de muestra):</h4>
+      <p style="text-align: center; color: #374151; font-size: 0.9rem;">
+        Intervalo uniforme [0.95, 1.05] mm con f(x) = 10
+      </p>
+      <div class="aerospace-component" id="componentGrid"></div>
+    </div>
+
+    <!-- Teoría -->
+    <div class="context-box">
+      <h3>📚 Distribución Uniforme</h3>
+      <p>La <strong>distribución uniforme continua</strong> modela variables que pueden tomar cualquier valor en un intervalo [a, b] con igual probabilidad.</p>
+
+      <h4>Características:</h4>
+      <ul>
+        <li>Todos los valores en <strong>[a, b] son igualmente probables</strong></li>
+        <li>La función de densidad es <strong>constante</strong> en el intervalo</li>
+        <li>La probabilidad se distribuye <strong>uniformemente</strong></li>
+        <li>Se usa en control de calidad cuando el proceso está <strong>bien controlado</strong></li>
+      </ul>
+
+      <h4>Parámetros del problema:</h4>
+      <ul>
+        <li><strong>a (mínimo)</strong> = 0.95 mm</li>
+        <li><strong>b (máximo)</strong> = 1.05 mm</li>
+        <li><strong>Amplitud</strong> = b - a = 0.10 mm</li>
+      </ul>
+
+      <div class="formula-reference">
+        <div class="formula-card">
+          <h4>📊 Función de densidad</h4>
+          <div class="formula">f(x) = 1/(b-a) para a ≤ x ≤ b</div>
+          <div class="description">Probabilidad por unidad de longitud</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📍 Media (Esperanza)</h4>
+          <div class="formula">E[X] = (a + b)/2</div>
+          <div class="description">Centro de la distribución</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📏 Varianza</h4>
+          <div class="formula">Var(X) = (b-a)²/12</div>
+          <div class="description">Medida de dispersión</div>
+        </div>
+
+        <div class="formula-card">
+          <h4>📈 Función acumulada</h4>
+          <div class="formula">F(x) = (x-a)/(b-a) para a ≤ x ≤ b</div>
+          <div class="description">P(X ≤ x)</div>
+        </div>
+      </div>
+
+      <div class="hint-box">
+        💡 <strong>Aplicación aeronáutica:</strong> Cuando un proceso está bajo control estadístico, las mediciones tienden a distribuirse uniformemente dentro de las tolerancias.
+      </div>
+    </div>
+
+    <!-- Aplicaciones de Uniforme -->
+    <div class="context-box">
+      <h3>🌟 Aplicaciones de la Distribución Uniforme</h3>
+      <p>La distribución uniforme es especialmente útil en:</p>
+      
+      <table class="tolerance-table">
+        <thead>
+          <tr>
+            <th>Campo</th>
+            <th>Ejemplo</th>
+            <th>Interpretación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Control de calidad</td>
+            <td>Espesores dentro de tolerancias</td>
+            <td>Proceso bien controlado</td>
+          </tr>
+          <tr>
+            <td>Manufactura</td>
+            <td>Dimensiones de piezas</td>
+            <td>Variación controlada</td>
+          </tr>
+          <tr>
+            <td>Aeronáutica</td>
+            <td>Tolerancias de componentes</td>
+            <td>Seguridad estructural</td>
+          </tr>
+          <tr>
+            <td>Simulación</td>
+            <td>Valores aleatorios uniformes</td>
+            <td>Base para otras distribuciones</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paso 1: Identificar parámetros -->
+    <div class="step">
+      <div class="step-header">1️⃣ Identificar los parámetros a y b</div>
+      <div class="step-content">
+        <p><strong>Datos del problema:</strong></p>
+        
+        <div class="calculation-steps">
+          <div class="step-line">a = 0.95 mm (valor mínimo)</div>
+          <div class="step-line">b = 1.05 mm (valor máximo)</div>
+          <div class="step-line">Amplitud = b - a = 1.05 - 0.95 = 0.10 mm</div>
+        </div>
+
+        <h4 style="color: #0057B7; margin-top: 20px;">Significado en el contexto aeronáutico:</h4>
+        <div class="interpretation">
+          <ul>
+            <li><strong>Proceso controlado:</strong> El espesor varía entre 0.95 y 1.05 mm, cumpliendo con las especificaciones</li>
+            <li><strong>Tolerancia:</strong> La amplitud de 0.10 mm indica una tolerancia estricta para seguridad</li>
+            <li><strong>Rango operativo:</strong> Cualquier valor entre estos límites es aceptable</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 2: Función de densidad -->
+    <div class="step">
+      <div class="step-header">2️⃣ Función de densidad de probabilidad f(x)</div>
+      <div class="step-content">
+        <p><strong>Buscamos:</strong> La función que describe la probabilidad por unidad de longitud</p>
+        
+        <h4 style="color: #0057B7; margin-top: 20px;">Fórmula general de distribución uniforme:</h4>
+        <div class="math-display">
+          <div class="formula">f(x) = 1/(b - a) para a ≤ x ≤ b</div>
+        </div>
+
+        <h4 style="color: #0057B7; margin-top: 20px;">Sustituyendo nuestros valores:</h4>
+        <div class="math-display">
+          <div class="formula">f(x) = 1/(1.05 - 0.95)</div>
+          <div class="formula">f(x) = 1/0.10</div>
+          <div class="formula">f(x) = 10</div>
+        </div>
+
+        <h4 style="color: #0057B7; margin-top: 20px;">Resultado final:</h4>
+        <div class="answer-box">
+          <h4>🎯 Respuesta a)</h4>
+          <div class="answer">f(x) = 10 para 0.95 ≤ x ≤ 1.05</div>
+        </div>
+
+        <div class="interpretation">
+          <h4>📊 Interpretación:</h4>
+          <ul>
+            <li>La densidad de probabilidad es <strong>constante e igual a 10</strong></li>
+            <li>Esto significa que hay <strong>10 unidades de probabilidad por cada mm</strong></li>
+            <li>La probabilidad total del intervalo es: ∫[0.95,1.05] 10 dx = 1 ✓</li>
+            <li>Para <strong>x < 0.95 o x > 1.05</strong>: f(x) = 0 (fuera del rango permitido)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 3: Proporción mayor que 1.02 -->
+    <div class="step">
+      <div class="step-header">3️⃣ Proporción de bordes con espesor > 1.02 mm</div>
+      <div class="step-content">
+        <p><strong>Buscamos:</strong> P(X > 1.02) - Probabilidad de que el espesor supere 1.02 mm</p>
+        
+        <h4 style="color: #0057B7; margin-top: 20px;">Método 1: Usando la función de densidad</h4>
+        <div class="math-display">
+          <div class="formula">P(X > 1.02) = ∫[1.02, 1.05] f(x) dx</div>
+          <div class="formula">P(X > 1.02) = ∫[1.02, 1.05] 10 dx</div>
+        </div>
+
+        <h4 style="color: #0057B7; margin-top: 20px;">Paso 1: Calcular la integral</h4>
+        <div class="calculation-steps">
+          <div class="step-line">∫[1.02, 1.05] 10 dx = 10 × [x][1.02, 1.05]</div>
+          <div class="step-line">= 10 × (1.05 - 1.02)</div>
+          <div class="step-line">= 10 × 0.03</div>
+          <div class="step-line">= 0.30</div>
+        </div>
+
+        <h4 style="color: #0057B7; margin-top: 20px;">Método 2: Usando función acumulada F(x)</h4>
+        <div class="math-display">
+          <div class="formula">F(x) = (x - a)/(b - a) = (x - 0.95)/0.10</div>
+          <div class="formula">P(X > 1.02) = 1 - F(1.02)</div>
+          <div class="formula">F(1.02) = (1.02 - 0.95)/0.10 = 0.07/0.10 = 0.70</div>
+          <div class="formula">P(X > 1.02) = 1 - 0.70 = 0.30</div>
+        </div>
+
+        <h4 style="color: #0057B7; margin-top: 20px;">Método 3: Proporción geométrica</h4>
+        <div class="calculation-steps">
+          <div class="step-line">Longitud favorable = 1.05 - 1.02 = 0.03 mm</div>
+          <div class="step-line">Longitud total = 1.05 - 0.95 = 0.10 mm</div>
+          <div class="step-line">Proporción = 0.03/0.10 = 0.30 = 30%</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta b)</h4>
+          <div class="answer">P(X > 1.02) = 0.30 = 30%</div>
+        </div>
+
+        <div class="interpretation">
+          <h4>📊 Interpretación para control de calidad:</h4>
+          <ul>
+            <li><strong>3 de cada 10 componentes</strong> tendrán espesor mayor a 1.02 mm</li>
+            <li>Es un valor <strong>dentro de especificaciones</strong> (no es un defecto)</li>
+            <li>Ayuda a establecer <strong>puntos de control</strong> en el proceso de fabricación</li>
+            <li>El 70% restante tendrá espesor ≤ 1.02 mm</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 4: Esperanza y Varianza -->
+    <div class="step">
+      <div class="step-header">4️⃣ Esperanza E[X] y Varianza Var(X)</div>
+      <div class="step-content">
+        <p><strong>Buscamos:</strong> Los parámetros estadísticos fundamentales de la distribución</p>
+        
+        <h4 style="color: #0057B7; margin-top: 20px;">Esperanza (Media):</h4>
+        <div class="math-display">
+          <div class="formula">E[X] = (a + b)/2</div>
+          <div class="formula">E[X] = (0.95 + 1.05)/2</div>
+          <div class="formula">E[X] = 2.00/2</div>
+          <div class="formula">E[X] = 1.00 mm</div>
+        </div>
+
+        <h4 style="color: #0057B7; margin-top: 20px;">Varianza:</h4>
+        <div class="math-display">
+          <div class="formula">Var(X) = (b - a)²/12</div>
+          <div class="formula">Var(X) = (0.10)²/12</div>
+          <div class="formula">Var(X) = 0.01/12</div>
+          <div class="formula">Var(X) = 0.0008333...</div>
+          <div class="formula">Var(X) ≈ 0.00083 mm²</div>
+        </div>
+
+        <h4 style="color: #0057B7; margin-top: 20px;">Desviación Estándar:</h4>
+        <div class="math-display">
+          <div class="formula">σ = √Var(X) = √0.00083</div>
+          <div class="formula">σ ≈ 0.0289 mm</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta c)</h4>
+          <div class="answer">E[X] = 1.00 mm | Var(X) = 0.00083 mm²</div>
+        </div>
+
+        <div class="interpretation">
+          <h4>📊 Interpretación en el contexto aeronáutico:</h4>
+          <ul>
+            <li><strong>Media:</strong> El espesor promedio es 1.00 mm, justo en el centro del intervalo</li>
+            <li><strong>Varianza baja:</strong> Var = 0.00083 mm² indica <strong>variabilidad muy pequeña</strong></li>
+            <li><strong>Control de proceso:</strong> Desviación estándar de 0.029 mm es excelente para aeronáutica</li>
+            <li><strong>Coeficiente de variación:</strong> CV = 0.029/1.00 = 2.9% (muy bajo)</li>
+            <li><strong>Consistencia:</strong> El proceso muestra alta consistencia en las mediciones</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 5: Tabla de probabilidades -->
+    <div class="step">
+      <div class="step-header">5️⃣ Tabla de probabilidades y valores clave</div>
+      <div class="step-content">
+        <h4 style="color: #0057B7;">Probabilidades acumuladas importantes:</h4>
+        <table class="prob-table">
+          <thead>
+            <tr>
+              <th>Evento</th>
+              <th>Expresión</th>
+              <th>Valor</th>
+              <th>Porcentaje</th>
+              <th>Interpretación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>X < 0.97</td>
+              <td>P(X < 0.97)</td>
+              <td>0.20</td>
+              <td>20.00%</td>
+              <td>Espesor muy bajo</td>
+            </tr>
+            <tr>
+              <td>X < 1.00</td>
+              <td>P(X < 1.00)</td>
+              <td>0.50</td>
+              <td>50.00%</td>
+              <td>Por debajo de la media</td>
+            </tr>
+            <tr class="highlight">
+              <td>X > 1.02</td>
+              <td>P(X > 1.02)</td>
+              <td>0.30</td>
+              <td>30.00%</td>
+              <td>Por encima de 1.02 mm ← Pregunta b)</td>
+            </tr>
+            <tr>
+              <td>X < 1.03</td>
+              <td>P(X < 1.03)</td>
+              <td>0.80</td>
+              <td>80.00%</td>
+              <td>Espesor aceptable alto</td>
+            </tr>
+            <tr>
+              <td>X < 1.05</td>
+              <td>P(X < 1.05)</td>
+              <td>1.00</td>
+              <td>100.00%</td>
+              <td>Todos los valores válidos</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h4 style="color: #0057B7; margin-top: 30px;">Valores dentro de tolerancias aeronáuticas:</h4>
+        <table class="tolerance-table">
+          <thead>
+            <tr>
+              <th>Rango de espesor</th>
+              <th>Clasificación</th>
+              <th>Probabilidad</th>
+              <th>Acción recomendada</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="spec-ok">
+              <td>0.95 ≤ X < 1.05</td>
+              <td>ESPECIFICACIÓN</td>
+              <td>100%</td>
+              <td>Todas las piezas son válidas</td>
+            </tr>
+            <tr class="spec-ok">
+              <td>0.95 ≤ X ≤ 1.02</td>
+              <td>CONTROL NORMAL</td>
+              <td>70%</td>
+              <td>Proceso bajo control</td>
+            </tr>
+            <tr class="spec-warn">
+              <td>1.02 < X ≤ 1.05</td>
+              <td>VIGILANCIA</td>
+              <td>30%</td>
+              <td>Monitorear tendencia</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="chart-container">
+          <h4>📊 Función de densidad de probabilidad uniforme</h4>
+          <canvas id="uniformChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+          <h4>📈 Función de distribución acumulada F(x)</h4>
+          <canvas id="cumulativeChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Paso 6: Resumen -->
+    <div class="step">
+      <div class="step-header">6️⃣ Resumen de respuestas</div>
+      <div class="step-content">
+        <div class="answer-box" style="margin-bottom: 15px;">
+          <h4>🎯 Respuesta a) Función de densidad</h4>
+          <div class="answer">f(x) = 10 para 0.95 ≤ x ≤ 1.05</div>
+        </div>
+
+        <div class="answer-box" style="margin-bottom: 15px;">
+          <h4>🎯 Respuesta b) Proporción > 1.02 mm</h4>
+          <div class="answer">P(X > 1.02) = 0.30 = 30%</div>
+        </div>
+
+        <div class="answer-box" style="margin-bottom: 15px;">
+          <h4>🎯 Respuesta c) Esperanza</h4>
+          <div class="answer">E[X] = 1.00 mm</div>
+        </div>
+
+        <div class="answer-box">
+          <h4>🎯 Respuesta c) Varianza</h4>
+          <div class="answer">Var(X) = 0.00083 mm²</div>
+        </div>
+
+        <div class="interpretation" style="margin-top: 30px;">
+          <h4>💡 Conclusiones del control de calidad aeronáutico:</h4>
+          <ul>
+            <li><strong>Proceso controlado:</strong> La distribución uniforme indica un proceso de fabricación estable</li>
+            <li><strong>Tolerancias estrictas:</strong> El rango de 0.10 mm es apropiado para componentes críticos</li>
+            <li><strong>Consistencia:</strong> La baja varianza (0.00083) demuestra alta precisión</li>
+            <li><strong>Puntos de control:</strong> 1.02 mm es un valor de referencia útil para monitoreo</li>
+            <li><strong>Garantía de calidad:</strong> 100% de las piezas cumplen especificaciones</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simulador interactivo -->
+    <div class="simulator">
+      <h3>🎮 Simulador Interactivo - Distribución Uniforme</h3>
+      <p style="text-align: center; color: #374151; margin-bottom: 20px;">
+        Explora diferentes valores para analizar el comportamiento de la distribución uniforme
+      </p>
+
+      <div class="control-group">
+        <div class="control">
+          <label>Valor mínimo (a):</label>
+          <input type="range" id="aSlider" min="0.90" max="1.00" step="0.01" value="0.95">
+          <span class="value-display" id="aValue">0.95</span>
+        </div>
+
+        <div class="control">
+          <label>Valor máximo (b):</label>
+          <input type="range" id="bSlider" min="1.00" max="1.10" step="0.01" value="1.05">
+          <span class="value-display" id="bValue">1.05</span>
+        </div>
+
+        <div class="control">
+          <label>Valor de comparación (c):</label>
+          <input type="range" id="cSlider" min="0.90" max="1.10" step="0.01" value="1.02">
+          <span class="value-display" id="cValue">1.02</span>
+        </div>
+      </div>
+
+      <div class="results-grid">
+        <div class="result-card">
+          <div class="label">f(x) = 1/(b-a)</div>
+          <div class="value" id="simDensity">10.00</div>
+        </div>
+
+        <div class="result-card">
+          <div class="label">P(X > c)</div>
+          <div class="value" id="simProb">30.00%</div>
+        </div>
+
+        <div class="result-card">
+          <div class="label">E[X] = (a+b)/2</div>
+          <div class="value" id="simMean">1.00</div>
+        </div>
+
+        <div class="result-card">
+          <div class="label">Var(X) = (b-a)²/12</div>
+          <div class="value" id="simVar">0.0008</div>
+        </div>
+      </div>
+
+      <div class="chart-container" style="margin-top: 30px;">
+        <h4>📊 Función de densidad de probabilidad</h4>
+        <canvas id="simulatorChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Generar visualización del componente
+    function generateComponentGrid() {
+      const grid = document.getElementById('componentGrid');
+      const totalCells = 225; // 15x15
+      const uniformProbability = 1.0; // 100% están dentro del rango
+      
+      for (let i = 0; i < totalCells; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'component-cell';
+        
+        // Todos los valores están dentro del rango (distribución uniforme)
+        cell.classList.add('measurement');
+        
+        grid.appendChild(cell);
+      }
+    }
+
+    // Expansión de pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const step = header.parentElement;
+        step.classList.toggle('open');
+      });
+    });
+
+    // Variables para los gráficos
+    let simulatorChartInstance;
+
+    // Crear gráfico de distribución uniforme
+    function createUniformChart() {
+      const ctx = document.getElementById('uniformChart').getContext('2d');
+      
+      const labels = [];
+      const pdfData = [];
+      const cdfData = [];
+      
+      for (let x = 0.90; x <= 1.10; x += 0.01) {
+        labels.push(x.toFixed(2));
+        // PDF: f(x) = 10 para 0.95 ≤ x ≤ 1.05, 0 en otro caso
+        pdfData.push(x >= 0.95 && x <= 1.05 ? 10 : 0);
+        // CDF: F(x) = 0 para x < 0.95, (x-0.95)/0.10 para 0.95 ≤ x ≤ 1.05, 1 para x > 1.05
+        if (x < 0.95) cdfData.push(0);
+        else if (x <= 1.05) cdfData.push((x - 0.95) / 0.10);
+        else cdfData.push(1);
+      }
+      
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'f(x) = 10',
+            data: pdfData,
+            backgroundColor: 'rgba(0, 87, 183, 0.1)',
+            borderColor: '#0057B7',
+            borderWidth: 3,
+            fill: true,
+            tension: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              labels: { color: '#111827' }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 12,
+              title: {
+                display: true,
+                text: 'Densidad de probabilidad f(x)',
+                font: { size: 14, weight: 'bold' },
+                color: '#111827'
+              },
+              ticks: { color: '#374151' },
+              grid: { color: 'rgba(0, 0, 0, 0.1)' }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Espesor x (mm)',
+                font: { size: 14, weight: 'bold' },
+                color: '#111827'
+              },
+              ticks: { color: '#374151' },
+              grid: { color: 'rgba(0, 0, 0, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    // Crear gráfico de función acumulada
+    function createCumulativeChart() {
+      const ctx = document.getElementById('cumulativeChart').getContext('2d');
+      
+      const labels = [];
+      const cdfData = [];
+      
+      for (let x = 0.90; x <= 1.10; x += 0.01) {
+        labels.push(x.toFixed(2));
+        // CDF: F(x) = 0 para x < 0.95, (x-0.95)/0.10 para 0.95 ≤ x ≤ 1.05, 1 para x > 1.05
+        if (x < 0.95) cdfData.push(0);
+        else if (x <= 1.05) cdfData.push((x - 0.95) / 0.10);
+        else cdfData.push(1);
+      }
+      
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'F(x)',
+            data: cdfData,
+            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+            borderColor: '#10B981',
+            borderWidth: 3,
+            fill: true,
+            tension: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              labels: { color: '#111827' }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 1.1,
+              title: {
+                display: true,
+                text: 'Probabilidad acumulada F(x)',
+                font: { size: 14, weight: 'bold' },
+                color: '#111827'
+              },
+              ticks: { color: '#374151' },
+              grid: { color: 'rgba(0, 0, 0, 0.1)' }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Espesor x (mm)',
+                font: { size: 14, weight: 'bold' },
+                color: '#111827'
+              },
+              ticks: { color: '#374151' },
+              grid: { color: 'rgba(0, 0, 0, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    // Crear gráfico del simulador
+    function createSimulatorChart(a, b) {
+      const ctx = document.getElementById('simulatorChart').getContext('2d');
+      
+      const labels = [];
+      const pdfData = [];
+      
+      for (let x = 0.85; x <= 1.15; x += 0.01) {
+        labels.push(x.toFixed(2));
+        const density = x >= a && x <= b ? 1 / (b - a) : 0;
+        pdfData.push(density);
+      }
+      
+      if (simulatorChartInstance) {
+        simulatorChartInstance.destroy();
+      }
+      
+      simulatorChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: `f(x) = 1/${(b - a).toFixed(2)}`,
+            data: pdfData,
+            backgroundColor: 'rgba(0, 87, 183, 0.1)',
+            borderColor: '#0057B7',
+            borderWidth: 3,
+            fill: true,
+            tension: 0
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              display: true,
+              labels: { color: '#111827' }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Densidad de probabilidad',
+                font: { size: 14, weight: 'bold' },
+                color: '#111827'
+              },
+              ticks: { color: '#374151' },
+              grid: { color: 'rgba(0, 0, 0, 0.1)' }
+            },
+            x: {
+              title: {
+                display: true,
+                text: 'Espesor x (mm)',
+                font: { size: 14, weight: 'bold' },
+                color: '#111827'
+              },
+              ticks: { color: '#374151' },
+              grid: { color: 'rgba(0, 0, 0, 0.1)' }
+            }
+          }
+        }
+      });
+    }
+
+    // Simulador interactivo
+    function updateSimulator() {
+      let a = parseFloat(document.getElementById('aSlider').value);
+      let b = parseFloat(document.getElementById('bSlider').value);
+      let c = parseFloat(document.getElementById('cSlider').value);
+      
+      // Validar que a < b
+      if (a >= b) {
+        if (event.target.id === 'aSlider') {
+          a = b - 0.01;
+          document.getElementById('aSlider').value = a;
+        } else {
+          b = a + 0.01;
+          document.getElementById('bSlider').value = b;
+        }
+      }
+      
+      // Asegurar que c esté en un rango válido
+      if (c <= a || c >= b) {
+        c = (a + b) / 2;
+        document.getElementById('cSlider').value = c;
+      }
+      
+      document.getElementById('aValue').textContent = a.toFixed(2);
+      document.getElementById('bValue').textContent = b.toFixed(2);
+      document.getElementById('cValue').textContent = c.toFixed(2);
+      
+      // Calcular estadísticas
+      const density = 1 / (b - a);
+      const probGreater = (b - c) / (b - a);
+      const mean = (a + b) / 2;
+      const variance = Math.pow(b - a, 2) / 12;
+      
+      document.getElementById('simDensity').textContent = density.toFixed(2);
+      document.getElementById('simProb').textContent = (probGreater * 100).toFixed(2) + '%';
+      document.getElementById('simMean').textContent = mean.toFixed(2);
+      document.getElementById('simVar').textContent = variance.toFixed(4);
+      
+      // Actualizar gráfico
+      createSimulatorChart(a, b);
+    }
+
+    // Event listeners para el simulador
+    document.getElementById('aSlider').addEventListener('input', updateSimulator);
+    document.getElementById('bSlider').addEventListener('input', updateSimulator);
+    document.getElementById('cSlider').addEventListener('input', updateSimulator);
+
+    // Inicializar
+    window.addEventListener('load', () => {
+      generateComponentGrid();
+      createUniformChart();
+      createCumulativeChart();
+      updateSimulator();
+    });
+
+                // Botón "Volver" dinámico
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = '../temario.html'; // fallback si se abre directo
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1502 @@
+
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía PyE - Pasos para Resolver Ejercicios</title>
+  <link rel="stylesheet" href="./css/base.css">
+  <style>
+    .guide-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 120px 40px 60px;
+    }
+
+    .guide-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .guide-title {
+      font-size: clamp(3rem, 8vw, 5rem);
+      font-weight: 300;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #a0ff66, #66ffcc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .guide-subtitle {
+      font-size: 1.3rem;
+      color: rgba(255, 255, 255, 0.7);
+      max-width: 900px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
+    }
+
+    .mode-toggle {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 40px 0;
+    }
+
+    .mode-btn {
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border: 2px solid rgba(160, 255, 100, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.7);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .mode-btn:hover {
+      background: rgba(160, 255, 100, 0.1);
+      border-color: rgba(160, 255, 100, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .mode-btn.active {
+      background: linear-gradient(135deg, rgba(160, 255, 100, 0.3), rgba(102, 255, 204, 0.3));
+      border-color: #a0ff66;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(160, 255, 100, 0.4);
+    }
+
+    .content-section {
+      display: none;
+    }
+
+    .content-section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .step-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 30px;
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .step-box:hover {
+      border-color: rgba(160, 255, 100, 0.3);
+      box-shadow: 0 8px 32px rgba(160, 255, 100, 0.1);
+    }
+
+    .step-header {
+      cursor: pointer;
+      padding: 25px 35px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(160, 255, 100, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .step-header:hover {
+      background: rgba(160, 255, 100, 0.1);
+    }
+
+    .step-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #a0ff66;
+      margin-right: 15px;
+    }
+
+    .step-title {
+      flex: 1;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.3rem;
+    }
+
+    .step-icon {
+      font-size: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .step-box.open .step-icon {
+      transform: rotate(180deg);
+    }
+
+    .step-content {
+      display: none;
+      padding: 30px 35px;
+      color: rgba(255, 255, 255, 0.85);
+      line-height: 1.8;
+    }
+
+    .step-box.open .step-content {
+      display: block;
+      animation: slideDown 0.4s ease;
+    }
+
+    .reference-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 25px 0;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .reference-table th,
+    .reference-table td {
+      padding: 15px;
+      text-align: left;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .reference-table th {
+      background: rgba(160, 255, 100, 0.2);
+      font-weight: 600;
+      color: #fff;
+      font-size: 1.05rem;
+    }
+
+    .reference-table td {
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .reference-table tr:hover td {
+      background: rgba(160, 255, 100, 0.08);
+    }
+
+    .formula-box {
+      background: rgba(160, 255, 100, 0.1);
+      border: 2px solid rgba(160, 255, 100, 0.3);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 1.1rem;
+      color: #a0ff66;
+      text-align: center;
+    }
+
+    .distribution-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .distribution-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .distribution-card:hover {
+      background: rgba(160, 255, 100, 0.08);
+      border-color: rgba(160, 255, 100, 0.4);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(160, 255, 100, 0.15);
+    }
+
+    .distribution-card h4 {
+      color: #a0ff66;
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+    }
+
+    .distribution-card .emoji {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .hint-box {
+      background: linear-gradient(135deg, rgba(255, 215, 100, 0.1), rgba(255, 180, 100, 0.1));
+      border-left: 4px solid rgba(255, 215, 100, 0.7);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .warning-box {
+      background: linear-gradient(135deg, rgba(255, 100, 100, 0.1), rgba(255, 150, 150, 0.1));
+      border-left: 4px solid rgba(255, 100, 100, 0.7);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .visual-diagram {
+      background: rgba(255, 255, 255, 0.03);
+      border: 2px dashed rgba(160, 255, 100, 0.3);
+      border-radius: 12px;
+      padding: 30px;
+      margin: 25px 0;
+      text-align: center;
+    }
+
+    .diagram-title {
+      color: #a0ff66;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+    }
+
+    .quick-reference {
+      background: linear-gradient(135deg, rgba(102, 255, 204, 0.1), rgba(160, 255, 100, 0.1));
+      border: 2px solid rgba(160, 255, 100, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      margin: 30px 0;
+    }
+
+    .quick-reference h3 {
+      color: #66ffcc;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+
+    code {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 3px 8px;
+      border-radius: 5px;
+      color: #a0ff66;
+      font-family: 'Courier New', monospace;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .guide-container { padding: 100px 20px 40px; }
+      .mode-toggle { flex-direction: column; }
+      .mode-btn { width: 100%; }
+      .step-header { padding: 20px; }
+      .step-title { font-size: 1.1rem; }
+      .distribution-grid { grid-template-columns: 1fr; }
+    }
+</style>
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">PyE</a>
+      <ul class="nav-menu">
+        <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="guide-container">
+    <div class="guide-header">
+      <h1 class="guide-title">Guía de Resolución</h1>
+      <p class="guide-subtitle">
+        Metodología paso a paso para resolver ejercicios de Probabilidad y Estadística
+      </p>
+      
+      <div class="mode-toggle">
+        <button class="mode-btn active" data-mode="probabilidad">
+          🎲 Probabilidad
+        </button>
+        <button class="mode-btn" data-mode="estadistica">
+          📊 Estadística
+        </button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN PROBABILIDAD -->
+    <div id="probabilidad" class="content-section active">
+      
+      <!-- PASO 1: Identificar tipo de situación -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">1️⃣</span>
+          <span class="step-title">Identificar el tipo de situación</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <p><strong>Lo primero es determinar qué tipo de problema tenés:</strong></p>
+          
+          <div class="distribution-grid">
+            <div class="distribution-card">
+              <span class="emoji">🎲</span>
+              <h4>Espacio Muestral Finito</h4>
+              <p><strong>Usar cuando:</strong> Contás cosas finitas y conocidas</p>
+              <p><strong>Ejemplos:</strong> Dados, cartas, bolillas, monedas</p>
+              <p><strong>Característica:</strong> Todos los resultados son equiprobables</p>
+            </div>
+
+            <div class="distribution-card">
+              <span class="emoji">📦</span>
+              <h4>Distribuciones Discretas</h4>
+              <p><strong>Usar cuando:</strong> Contás eventos (0, 1, 2, 3...)</p>
+              <p><strong>Ejemplos:</strong> Número de defectos, llamadas, éxitos</p>
+              <p><strong>Tipos:</strong> Binomial, Poisson, Geométrica, Hipergeométrica</p>
+            </div>
+
+            <div class="distribution-card">
+              <span class="emoji">📈</span>
+              <h4>Distribuciones Continuas</h4>
+              <p><strong>Usar cuando:</strong> Medís cosas (tiempo, peso, altura)</p>
+              <p><strong>Ejemplos:</strong> Tiempo de espera, peso, temperatura</p>
+              <p><strong>Tipos:</strong> Normal, Uniforme, Exponencial</p>
+            </div>
+          </div>
+
+          <div class="quick-reference">
+            <h3>🔍 Tabla de Decisión Rápida</h3>
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Si el enunciado dice...</th>
+                  <th>Probablemente sea...</th>
+                  <th>Por qué</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>"Se lanza un dado/moneda"</td>
+                  <td>Espacio muestral finito</td>
+                  <td>Resultados conocidos y limitados</td>
+                </tr>
+                <tr>
+                  <td>"n ensayos independientes, éxito/fracaso"</td>
+                  <td>Binomial</td>
+                  <td>Repeticiones con dos resultados</td>
+                </tr>
+                <tr>
+                  <td>"Eventos raros en intervalo de tiempo/espacio"</td>
+                  <td>Poisson</td>
+                  <td>Tasa promedio constante</td>
+                </tr>
+                <tr>
+                  <td>"Hasta el primer éxito"</td>
+                  <td>Geométrica</td>
+                  <td>Número de intentos necesarios</td>
+                </tr>
+                <tr>
+                  <td>"Extracción sin reposición"</td>
+                  <td>Hipergeométrica</td>
+                  <td>Población finita que cambia</td>
+                </tr>
+                <tr>
+                  <td>"Tiempo entre eventos"</td>
+                  <td>Exponencial</td>
+                  <td>Proceso continuo de espera</td>
+                </tr>
+                <tr>
+                  <td>"Todos los valores igualmente probables en [a,b]"</td>
+                  <td>Uniforme</td>
+                  <td>Distribución plana</td>
+                </tr>
+                <tr>
+                  <td>"Promedio, altura, peso, IQ"</td>
+                  <td>Normal</td>
+                  <td>Datos que se agrupan al centro</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="hint-box">
+            💡 <strong>Pro tip:</strong> Convertí la probabilidad a porcentaje y pensá en "1 de cada X veces". Por ejemplo, P=0.05 = 5% = "1 de cada 20 veces".
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- SECCIÓN ESTADÍSTICA -->
+    <div id="estadistica" class="content-section">
+      
+      <!-- PASO 1: Organizar datos -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">1️⃣</span>
+          <span class="step-title">Organizar los datos</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <p><strong>Lo primero en estadística: ordenar la información de manera clara.</strong></p>
+          
+          <div class="quick-reference">
+            <h3>📋 Tabla de Frecuencias - Tu mejor amiga</h3>
+            <p>Preferentemente organizá los datos en una tabla como esta:</p>
+            
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Xᵢ (Valor)</th>
+                  <th>fᵢ (Frecuencia)</th>
+                  <th>Xᵢ·fᵢ</th>
+                  <th>(Xᵢ − x̄)²·fᵢ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>x₁</td>
+                  <td>f₁</td>
+                  <td>x₁·f₁</td>
+                  <td>(x₁−x̄)²·f₁</td>
+                </tr>
+                <tr>
+                  <td>x₂</td>
+                  <td>f₂</td>
+                  <td>x₂·f₂</td>
+                  <td>(x₂−x̄)²·f₂</td>
+                </tr>
+                <tr>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                  <td>...</td>
+                </tr>
+                <tr style="background: rgba(160, 255, 100, 0.2);">
+                  <td><strong>TOTALES</strong></td>
+                  <td><strong>n = Σfᵢ</strong></td>
+                  <td><strong>Σ(Xᵢ·fᵢ)</strong></td>
+                  <td><strong>Σ(Xᵢ−x̄)²·fᵢ</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="distribution-grid">
+            <div class="distribution-card">
+              <span class="emoji">📊</span>
+              <h4>Datos sin agrupar</h4>
+              <p><strong>Cuándo:</strong> Pocos datos (n < 30)</p>
+              <p><strong>Cómo:</strong> Lista directa de valores</p>
+              <p><strong>Ejemplo:</strong> [2, 3, 3, 4, 5, 5, 5, 6]</p>
+            </div>
+
+            <div class="distribution-card">
+              <span class="emoji">📈</span>
+              <h4>Datos agrupados</h4>
+              <p><strong>Cuándo:</strong> Muchos datos (n > 30)</p>
+              <p><strong>Cómo:</strong> Tabla de frecuencias con intervalos</p>
+              <p><strong>Ejemplo:</strong> [0-10): 5, [10-20): 12, ...</p>
+            </div>
+
+            <div class="distribution-card">
+              <span class="emoji">📋</span>
+              <h4>Datos cualitativos</h4>
+              <p><strong>Cuándo:</strong> Categorías (no números)</p>
+              <p><strong>Cómo:</strong> Tabla de frecuencias por categoría</p>
+              <p><strong>Ejemplo:</strong> Rojo: 5, Azul: 8, Verde: 3</p>
+            </div>
+          </div>
+
+          <div class="hint-box">
+            💡 <strong>Consejo:</strong> Antes de calcular nada, escribí todos los datos en una tabla. Te ahorra tiempo y evita errores.
+          </div>
+
+          <div class="warning-box">
+            ⚠️ <strong>Cuidado:</strong> Si tenés datos agrupados en intervalos, usá la marca de clase (punto medio del intervalo) como Xᵢ.
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 2: Calcular medidas de tendencia central -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">2️⃣</span>
+          <span class="step-title">Medidas de Tendencia Central</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <p><strong>¿Dónde se concentran los datos? Calculá el "centro".</strong></p>
+          
+          <div class="distribution-grid">
+            <div class="distribution-card">
+              <span class="emoji">📊</span>
+              <h4>Media (x̄)</h4>
+              <div class="formula-box">
+                x̄ = Σ(Xᵢ·fᵢ) / n
+              </div>
+              <p><strong>Qué es:</strong> El promedio aritmético</p>
+              <p><strong>Cuándo usar:</strong> Datos sin valores extremos</p>
+              <p><strong>Ventaja:</strong> Usa todos los datos</p>
+              <p><strong>Desventaja:</strong> Sensible a valores atípicos</p>
+            </div>
+
+            <div class="distribution-card">
+              <span class="emoji">🎯</span>
+              <h4>Mediana (Me)</h4>
+              <p><strong>Qué es:</strong> El valor del medio cuando ordenás los datos</p>
+              <p><strong>Cuándo usar:</strong> Con valores extremos o distribuciones asimétricas</p>
+              <p><strong>Cómo calcular:</strong></p>
+              <ul style="text-align: left; margin-left: 20px;">
+                <li>n impar: el valor central</li>
+                <li>n par: promedio de los dos centrales</li>
+              </ul>
+              <p><strong>Ventaja:</strong> No se afecta por valores extremos</p>
+            </div>
+
+            <div class="distribution-card">
+              <span class="emoji">🔝</span>
+              <h4>Moda (Mo)</h4>
+              <p><strong>Qué es:</strong> El valor que más se repite</p>
+              <p><strong>Cuándo usar:</strong> Datos categóricos o para saber "lo más común"</p>
+              <p><strong>Nota:</strong> Puede haber más de una moda (bimodal, multimodal) o ninguna</p>
+              <p><strong>Ventaja:</strong> Fácil de identificar</p>
+            </div>
+          </div>
+
+          <div class="quick-reference">
+            <h3>🎓 Comparación: ¿Cuál usar?</h3>
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Situación</th>
+                  <th>Mejor medida</th>
+                  <th>Por qué</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Distribución simétrica sin valores atípicos</td>
+                  <td>Media</td>
+                  <td>Usa toda la información</td>
+                </tr>
+                <tr>
+                  <td>Distribución asimétrica o con valores extremos</td>
+                  <td>Mediana</td>
+                  <td>No se distorsiona</td>
+                </tr>
+                <tr>
+                  <td>Datos categóricos</td>
+                  <td>Moda</td>
+                  <td>La única que tiene sentido</td>
+                </tr>
+                <tr>
+                  <td>Ingresos económicos</td>
+                  <td>Mediana</td>
+                  <td>Pocos ricos no distorsionan</td>
+                </tr>
+                <tr>
+                  <td>Notas de examen (sin aplazos extremos)</td>
+                  <td>Media</td>
+                  <td>Distribución razonablemente simétrica</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="hint-box">
+            💡 <strong>Pro tip:</strong> En una distribución normal perfecta, Media = Mediana = Moda. Si difieren mucho, tu distribución es asimétrica.
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 3: Calcular medidas de dispersión -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">3️⃣</span>
+          <span class="step-title">Medidas de Dispersión</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <p><strong>¿Qué tan dispersos están los datos? ¿Se agrupan cerca del centro o están muy esparcidos?</strong></p>
+          
+          <div class="distribution-grid">
+            <div class="distribution-card">
+              <span class="emoji">📏</span>
+              <h4>Rango (R)</h4>
+              <div class="formula-box">
+                R = Xₘₐₓ − Xₘᵢₙ
+              </div>
+              <p><strong>Qué es:</strong> Diferencia entre el valor más grande y el más pequeño</p>
+              <p><strong>Ventaja:</strong> Muy fácil de calcular</p>
+              <p><strong>Desventaja:</strong> Solo usa dos valores, ignora el resto</p>
+            </div>
+
+            <div class="distribution-card">
+              <span class="emoji">📊</span>
+              <h4>Varianza (s² o σ²)</h4>
+              <div class="formula-box">
+                s² = Σ(Xᵢ − x̄)²·fᵢ / (n−1)
+              </div>
+              <p><strong>Qué es:</strong> Promedio de las desviaciones al cuadrado</p>
+              <p><strong>Problema:</strong> Las unidades están al cuadrado</p>
+              <p><strong>Nota:</strong> Usa n−1 para muestras, n para poblaciones</p>
+            </div>
+
+            <div class="distribution-card">
+              <span class="emoji">📈</span>
+              <h4>Desviación Estándar (s o σ)</h4>
+              <div class="formula-box">
+                s = √(s²)
+              </div>
+              <p><strong>Qué es:</strong> Raíz cuadrada de la varianza</p>
+              <p><strong>Ventaja:</strong> Mismas unidades que los datos originales</p>
+              <p><strong>Interpretación:</strong> "Distancia promedio al centro"</p>
+            </div>
+          </div>
+
+          <div class="distribution-grid">
+            <div class="distribution-card">
+              <span class="emoji">📐</span>
+              <h4>Coeficiente de Variación (CV)</h4>
+              <div class="formula-box">
+                CV = (s / x̄) × 100%
+              </div>
+              <p><strong>Qué es:</strong> Dispersión relativa (en porcentaje)</p>
+              <p><strong>Cuándo usar:</strong> Para comparar dispersión entre conjuntos con diferentes unidades o escalas</p>
+              <p><strong>Ejemplo:</strong> Comparar variabilidad de pesos (kg) vs alturas (cm)</p>
+            </div>
+
+            <div class="distribution-card">
+              <span class="emoji">📊</span>
+              <h4>Cuartiles (Q₁, Q₂, Q₃)</h4>
+              <p><strong>Qué son:</strong> Valores que dividen los datos en 4 partes iguales</p>
+              <ul style="text-align: left; margin-left: 20px;">
+                <li><strong>Q₁:</strong> 25% de los datos están debajo</li>
+                <li><strong>Q₂:</strong> La mediana (50%)</li>
+                <li><strong>Q₃:</strong> 75% de los datos están debajo</li>
+              </ul>
+              <p><strong>IQR:</strong> Q₃ − Q₁ (rango intercuartílico)</p>
+            </div>
+          </div>
+
+          <div class="hint-box">
+            💡 <strong>Regla práctica:</strong> Si CV < 15%: poca dispersión. Si CV > 30%: alta dispersión.
+          </div>
+
+          <div class="warning-box">
+            ⚠️ <strong>Cuidado:</strong> La varianza muestral usa n−1 en el denominador (corrección de Bessel), no n.
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 4: Graficar -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">4️⃣</span>
+          <span class="step-title">Representar Gráficamente</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <p><strong>Una imagen vale más que mil números. Elegí el gráfico correcto.</strong></p>
+          
+          <table class="reference-table">
+            <thead>
+              <tr>
+                <th>Tipo de datos</th>
+                <th>Gráfico recomendado</th>
+                <th>Cuándo usarlo</th>
+                <th>Qué muestra</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Datos categóricos</td>
+                <td>Gráfico de barras / Torta</td>
+                <td>Frecuencias por categoría</td>
+                <td>Comparación entre categorías</td>
+              </tr>
+              <tr>
+                <td>Datos numéricos discretos</td>
+                <td>Gráfico de barras</td>
+                <td>Valores puntuales (0,1,2,3...)</td>
+                <td>Frecuencia de cada valor</td>
+              </tr>
+              <tr>
+                <td>Datos numéricos continuos</td>
+                <td>Histograma</td>
+                <td>Datos agrupados en intervalos</td>
+                <td>Forma de la distribución</td>
+              </tr>
+              <tr>
+                <td>Comparar distribuciones</td>
+                <td>Box Plot (Diagrama de cajas)</td>
+                <td>Ver cuartiles y valores atípicos</td>
+                <td>Resumen de 5 números</td>
+              </tr>
+              <tr>
+                <td>Evolución temporal</td>
+                <td>Gráfico de líneas</td>
+                <td>Series de tiempo</td>
+                <td>Tendencias y patrones</td>
+              </tr>
+              <tr>
+                <td>Relación entre variables</td>
+                <td>Diagrama de dispersión</td>
+                <td>Pares de datos (x,y)</td>
+                <td>Correlación</td>
+              </tr>
+              <tr>
+                <td>Frecuencias acumuladas</td>
+                <td>Ojiva</td>
+                <td>Distribución acumulada</td>
+                <td>Percentiles</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="quick-reference">
+            <h3>📊 Elementos clave de un buen gráfico</h3>
+            <ul style="list-style: none; padding: 0;">
+              <li style="margin-bottom: 10px;">✅ <strong>Título claro</strong> que explica qué se está mostrando</li>
+              <li style="margin-bottom: 10px;">✅ <strong>Ejes etiquetados</strong> con unidades (kg, m, años...)</li>
+              <li style="margin-bottom: 10px;">✅ <strong>Escala apropiada</strong> que no distorsiona</li>
+              <li style="margin-bottom: 10px;">✅ <strong>Leyenda</strong> si hay múltiples series</li>
+              <li style="margin-bottom: 10px;">✅ <strong>Colores distinguibles</strong> y accesibles</li>
+            </ul>
+          </div>
+
+          <div class="hint-box">
+            💡 <strong>Pro tip:</strong> El histograma te muestra la forma: simétrica, asimétrica a derecha/izquierda, bimodal, uniforme...
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 5: Analizar e interpretar -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">5️⃣</span>
+          <span class="step-title">Analizar e Interpretar</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <p><strong>Los números no hablan solos. Dale sentido a los resultados.</strong></p>
+          
+          <div class="quick-reference">
+            <h3>🔍 Preguntas clave para el análisis</h3>
+            
+            <div class="distribution-grid">
+              <div class="distribution-card">
+                <h4>📍 Centro</h4>
+                <ul style="text-align: left;">
+                  <li>¿Cuál es el valor típico?</li>
+                  <li>¿Media, mediana o moda?</li>
+                  <li>¿Qué representa en contexto?</li>
+                </ul>
+              </div>
+
+              <div class="distribution-card">
+                <h4>📊 Dispersión</h4>
+                <ul style="text-align: left;">
+                  <li>¿Los datos son homogéneos?</li>
+                  <li>¿Hay mucha variabilidad?</li>
+                  <li>¿Es aceptable para el proceso?</li>
+                </ul>
+              </div>
+
+              <div class="distribution-card">
+                <h4>📈 Forma</h4>
+                <ul style="text-align: left;">
+                  <li>¿Simétrica o asimétrica?</li>
+                  <li>¿Hay valores atípicos?</li>
+                  <li>¿Unimodal o multimodal?</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="distribution-card" style="background: rgba(160, 255, 100, 0.08); margin: 25px 0;">
+            <h4>🎯 Tipos de distribución según la forma</h4>
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Forma</th>
+                  <th>Características</th>
+                  <th>Relación entre medidas</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Simétrica</td>
+                  <td>Datos equilibrados a ambos lados</td>
+                  <td>Media ≈ Mediana ≈ Moda</td>
+                </tr>
+                <tr>
+                  <td>Asimétrica positiva (a derecha)</td>
+                  <td>Cola larga hacia la derecha</td>
+                  <td>Media > Mediana > Moda</td>
+                </tr>
+                <tr>
+                  <td>Asimétrica negativa (a izquierda)</td>
+                  <td>Cola larga hacia la izquierda</td>
+                  <td>Media < Mediana < Moda</td>
+                </tr>
+                <tr>
+                  <td>Bimodal</td>
+                  <td>Dos picos distintos</td>
+                  <td>Dos modas, puede indicar mezcla de poblaciones</td>
+                </tr>
+                <tr>
+                  <td>Uniforme</td>
+                  <td>Todas las frecuencias similares</td>
+                  <td>No hay moda clara</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="hint-box">
+            💡 <strong>Checklist final:</strong>
+            <ul style="margin-top: 10px;">
+              <li>✅ ¿Calculaste correctamente todas las medidas?</li>
+              <li>✅ ¿Los resultados tienen sentido en contexto?</li>
+              <li>✅ ¿Identificaste valores atípicos?</li>
+              <li>✅ ¿El gráfico representa bien los datos?</li>
+              <li>✅ ¿Podés explicar tus conclusiones?</li>
+            </ul>
+          </div>
+
+          <div class="warning-box">
+            ⚠️ <strong>Errores comunes a evitar:</strong>
+            <ul style="margin-top: 10px;">
+              <li>❌ Confundir varianza con desviación estándar</li>
+              <li>❌ Usar media cuando hay valores extremos</li>
+              <li>❌ No redondear adecuadamente</li>
+              <li>❌ Olvidar las unidades</li>
+              <li>❌ No contextualizar los resultados</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 6: Bonus - Fórmulas rápidas -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">📚</span>
+          <span class="step-title">Fórmulas Esenciales - Referencia Rápida</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <h3 style="color: #a0ff66; margin-bottom: 20px;">⚡ Las fórmulas que SÍ o SÍ tenés que saber</h3>
+          
+          <table class="reference-table">
+            <thead>
+              <tr>
+                <th>Medida</th>
+                <th>Fórmula</th>
+                <th>Cuando usar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background: rgba(160, 255, 100, 0.1);">
+                <td colspan="3" style="text-align: center; font-weight: bold; color: #a0ff66;">TENDENCIA CENTRAL</td>
+              </tr>
+              <tr>
+                <td>Media</td>
+                <td><code>x̄ = Σ(Xᵢ·fᵢ) / n</code></td>
+                <td>Datos sin valores extremos</td>
+              </tr>
+              <tr>
+                <td>Media ponderada</td>
+                <td><code>x̄ = Σ(Xᵢ·wᵢ) / Σwᵢ</code></td>
+                <td>Cuando los datos tienen pesos diferentes</td>
+              </tr>
+              <tr style="background: rgba(160, 255, 100, 0.1);">
+                <td colspan="3" style="text-align: center; font-weight: bold; color: #a0ff66;">DISPERSIÓN</td>
+              </tr>
+              <tr>
+                <td>Varianza muestral</td>
+                <td><code>s² = Σ(Xᵢ−x̄)²·fᵢ / (n−1)</code></td>
+                <td>Cuando trabajás con una muestra</td>
+              </tr>
+              <tr>
+                <td>Varianza poblacional</td>
+                <td><code>σ² = Σ(Xᵢ−μ)²·fᵢ / N</code></td>
+                <td>Cuando tenés toda la población</td>
+              </tr>
+              <tr>
+                <td>Desv. estándar</td>
+                <td><code>s = √(s²)</code></td>
+                <td>Siempre después de calcular varianza</td>
+              </tr>
+              <tr>
+                <td>Coef. de variación</td>
+                <td><code>CV = (s/x̄)×100%</code></td>
+                <td>Comparar dispersión relativa</td>
+              </tr>
+              <tr style="background: rgba(160, 255, 100, 0.1);">
+                <td colspan="3" style="text-align: center; font-weight: bold; color: #a0ff66;">POSICIÓN</td>
+              </tr>
+              <tr>
+                <td>Cuartil k</td>
+                <td><code>Posición = k(n+1)/4</code></td>
+                <td>k=1,2,3 para Q₁,Q₂,Q₃</td>
+              </tr>
+              <tr>
+                <td>Percentil p</td>
+                <td><code>Posición = p(n+1)/100</code></td>
+                <td>p entre 0 y 100</td>
+              </tr>
+              <tr>
+                <td>Rango intercuartílico</td>
+                <td><code>IQR = Q₃ − Q₁</code></td>
+                <td>Medir dispersión sin extremos</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="hint-box" style="margin-top: 25px;">
+            💡 <strong>Truco para recordar:</strong> La varianza siempre es positiva (porque elevás al cuadrado). Si te da negativa, revisá los cálculos.
+          </div>
+        </div>
+
+        
+      </div>
+
+    </div>
+
+
+
+      <!-- PASO 2: Dibujar la situación -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">2️⃣</span>
+          <span class="step-title">Dibujar / Visualizar la situación</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <p><strong>Un buen dibujo vale más que mil fórmulas. Representá el problema visualmente.</strong></p>
+          
+          <table class="reference-table">
+            <thead>
+              <tr>
+                <th>Tipo de ejercicio</th>
+                <th>Qué dibujar</th>
+                <th>Ejemplo mental</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Espacio muestral finito</td>
+                <td>Lista de resultados o diagrama</td>
+                <td>Dado: {1, 2, 3, 4, 5, 6}</td>
+              </tr>
+              <tr>
+                <td>Eventos A, B, A∪B, A∩B</td>
+                <td>Diagrama de Venn</td>
+                <td>Dos círculos superpuestos</td>
+              </tr>
+              <tr>
+                <td>Binomial</td>
+                <td>Árbol de éxito/fracaso</td>
+                <td>S→S→F→S (ramificaciones)</td>
+              </tr>
+              <tr>
+                <td>Hipergeométrica</td>
+                <td>Urna con dos grupos</td>
+                <td>Caja dividida: buenos | malos</td>
+              </tr>
+              <tr>
+                <td>Geométrica</td>
+                <td>Línea de intentos</td>
+                <td>❌ ❌ ❌ ✅</td>
+              </tr>
+              <tr>
+                <td>Poisson</td>
+                <td>Línea de tiempo con eventos</td>
+                <td>• • • • • (eventos raros)</td>
+              </tr>
+              <tr>
+                <td>Uniforme U(a,b)</td>
+                <td>Segmento del intervalo [a, b]</td>
+                <td>Recta horizontal entre dos puntos</td>
+              </tr>
+              <tr>
+                <td>Normal</td>
+                <td>Curva de campana + área</td>
+                <td>Curva simétrica con zona sombreada</td>
+              </tr>
+              <tr>
+                <td>Exponencial</td>
+                <td>Curva descendente rápida</td>
+                <td>Baja rápido desde x=0</td>
+              </tr>
+              <tr>
+                <td>Probabilidad condicional</td>
+                <td>Árbol con ramas</td>
+                <td>A → B y A → Bᶜ</td>
+              </tr>
+              <tr>
+                <td>Bayes</td>
+                <td>Árbol invertido</td>
+                <td>Causas → Efectos observables</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="visual-diagram">
+            <div class="diagram-title">Ejemplo: Diagrama de Venn para P(A∪B)</div>
+            <svg viewBox="0 0 400 250" style="max-width: 500px; margin: 0 auto;">
+              <circle cx="140" cy="125" r="80" fill="rgba(160, 255, 100, 0.3)" stroke="#a0ff66" stroke-width="2"/>
+              <circle cx="260" cy="125" r="80" fill="rgba(102, 255, 204, 0.3)" stroke="#66ffcc" stroke-width="2"/>
+              <text x="110" y="130" fill="#fff" font-size="24" font-weight="bold">A</text>
+              <text x="280" y="130" fill="#fff" font-size="24" font-weight="bold">B</text>
+              <text x="190" y="130" fill="#fff" font-size="20">A∩B</text>
+            </svg>
+          </div>
+
+          <div class="hint-box">
+            💡 <strong>Pro tip:</strong> Dibujá aunque sea un esquema simple. Te ayuda a no confundir "al menos" con "exactamente", o "con reposición" vs "sin reposición".
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 3: Encontrar exactamente lo que piden -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">3️⃣</span>
+          <span class="step-title">Encontrar EXACTAMENTE lo que piden (CRÍTICO)</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <p><strong>La diferencia entre aprobar y desaprobar suele estar acá. Traducí las palabras a matemática.</strong></p>
+          
+          <div class="warning-box">
+            ⚠️ <strong>Errores comunes:</strong> Confundir "más de 3" (>3, o sea k≥4) con "al menos 3" (≥3). O confundir "antes de t" (<t) con "después de t" (>t).
+          </div>
+
+          <table class="reference-table">
+            <thead>
+              <tr>
+                <th>Frase en el enunciado</th>
+                <th>Traducción matemática</th>
+                <th>Interpretación visual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>"Mayor que a"</td>
+                <td><code>P(X > a)</code></td>
+                <td>Todo lo que está a la derecha de a</td>
+              </tr>
+              <tr>
+                <td>"Mayor o igual que a"</td>
+                <td><code>P(X ≥ a)</code></td>
+                <td>Incluye el borde (a está adentro)</td>
+              </tr>
+              <tr>
+                <td>"Menor que a"</td>
+                <td><code>P(X < a)</code></td>
+                <td>Todo lo que está a la izquierda de a</td>
+              </tr>
+              <tr>
+                <td>"Menor o igual que a"</td>
+                <td><code>P(X ≤ a)</code></td>
+                <td>Incluye el borde</td>
+              </tr>
+              <tr>
+                <td>"Entre a y b"</td>
+                <td><code>P(a ≤ X ≤ b)</code></td>
+                <td>Región del medio</td>
+              </tr>
+              <tr>
+                <td>"A lo sumo a"</td>
+                <td><code>P(X ≤ a)</code></td>
+                <td>Máximo aceptable (hasta a)</td>
+              </tr>
+              <tr>
+                <td>"Al menos a"</td>
+                <td><code>P(X ≥ a)</code></td>
+                <td>Como mínimo eso (desde a)</td>
+              </tr>
+              <tr>
+                <td>"Exactamente k"</td>
+                <td><code>P(X = k)</code></td>
+                <td>Un solo valor puntual</td>
+              </tr>
+              <tr>
+                <td>"Más de k"</td>
+                <td><code>P(X > k)</code></td>
+                <td>k+1, k+2, k+3...</td>
+              </tr>
+              <tr>
+                <td>"Menos de k"</td>
+                <td><code>P(X < k)</code></td>
+                <td>0, 1, 2, ... hasta k−1</td>
+              </tr>
+              <tr>
+                <td>"Antes de tiempo t"</td>
+                <td><code>P(X < t)</code></td>
+                <td>Fallo temprano (exponencial)</td>
+              </tr>
+              <tr>
+                <td>"Después de t"</td>
+                <td><code>P(X > t)</code></td>
+                <td>Vida útil restante</td>
+              </tr>
+              <tr>
+                <td>"Complemento de A"</td>
+                <td><code>P(Aᶜ) = 1 − P(A)</code></td>
+                <td>Lo que NO ocurre</td>
+              </tr>
+              <tr>
+                <td>"Dado que B ocurrió"</td>
+                <td><code>P(A|B)</code></td>
+                <td>Probabilidad condicional</td>
+              </tr>
+              <tr>
+                <td>"A y B ocurren juntos"</td>
+                <td><code>P(A∩B)</code></td>
+                <td>Intersección (ambos a la vez)</td>
+              </tr>
+              <tr>
+                <td>"A o B ocurren"</td>
+                <td><code>P(A∪B)</code></td>
+                <td>Unión (al menos uno)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="hint-box">
+            💡 <strong>Estrategia:</strong> Subrayá las palabras clave en el enunciado. Escribilas en lenguaje matemático ANTES de aplicar fórmulas.
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 4: Qué distribución, qué fórmula, cómo calcular -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">4️⃣</span>
+          <span class="step-title">Aplicar la distribución correcta y calcular</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <h3 style="color: #a0ff66; margin-bottom: 20px;">📚 Guía de Distribuciones</h3>
+          
+          <!-- Espacio Muestral Finito -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(160, 255, 100, 0.08);">
+            <h4>🎲 ESPACIO MUESTRAL FINITO (Equiprobable)</h4>
+            <p><strong>Usar cuando:</strong> Dados, cartas, bolillas, combinatoria simple</p>
+            
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Situación</th>
+                  <th>Fórmula</th>
+                  <th>Nota</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Probabilidad básica</td>
+                  <td><code>P(A) = favorables / totales</code></td>
+                  <td>La más usada</td>
+                </tr>
+                <tr>
+                  <td>Unión de eventos</td>
+                  <td><code>P(A∪B) = P(A) + P(B) − P(A∩B)</code></td>
+                  <td>Evita doble conteo</td>
+                </tr>
+                <tr>
+                  <td>Complemento</td>
+                  <td><code>P(Aᶜ) = 1 − P(A)</code></td>
+                  <td>Muy útil siempre</td>
+                </tr>
+                <tr>
+                  <td>Condicional</td>
+                  <td><code>P(A|B) = P(A∩B) / P(B)</code></td>
+                  <td>Dado que B ocurrió</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Binomial -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 215, 100, 0.08);">
+            <h4>🔢 BINOMIAL → X ~ B(n, p)</h4>
+            <p><strong>Usar cuando:</strong> n ensayos independientes, 2 resultados (éxito/fracaso), probabilidad constante p</p>
+            <p><strong>Parámetros:</strong> n = número de ensayos, p = probabilidad de éxito, k = número de éxitos</p>
+            
+            <div class="formula-box">
+              P(X = k) = C(n,k) × p^k × (1−p)^(n−k)
+            </div>
+            
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Probabilidad pedida</th>
+                  <th>Cómo calcular</th>
+                  <th>Tip</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Exactamente k éxitos</td>
+                  <td><code>P(X = k)</code></td>
+                  <td>Aplicá la fórmula directa</td>
+                </tr>
+                <tr>
+                  <td>A lo sumo k</td>
+                  <td><code>P(X ≤ k) = Σ P(X=i) para i=0 hasta k</code></td>
+                  <td>Suma acumulada</td>
+                </tr>
+                <tr>
+                  <td>Al menos k</td>
+                  <td><code>P(X ≥ k) = 1 − P(X < k)</code></td>
+                  <td>Usá complemento (más fácil)</td>
+                </tr>
+                <tr>
+                  <td>Más de k</td>
+                  <td><code>P(X > k) = 1 − P(X ≤ k)</code></td>
+                  <td>Complemento también</td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <div class="hint-box">
+              💡 <strong>Media y Varianza:</strong> E[X] = n×p, Var(X) = n×p×(1−p)
+            </div>
+          </div>
+
+          <!-- Poisson -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 180, 100, 0.08);">
+            <h4>⚡ POISSON → X ~ Poisson(λ)</h4>
+            <p><strong>Usar cuando:</strong> Eventos raros en un intervalo (tiempo/espacio), tasa promedio constante</p>
+            <p><strong>Parámetro:</strong> λ = tasa promedio de eventos en el intervalo</p>
+            
+            <div class="formula-box">
+              P(X = k) = (e^(−λ) × λ^k) / k!
+            </div>
+            
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Situación</th>
+                  <th>Cómo ajustar λ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Tasa: λ₀ = 0.1 defectos/m²<br>Área: 1 m²</td>
+                  <td>λ = 0.1 × 1 = 0.1</td>
+                </tr>
+                <tr>
+                  <td>Tasa: λ₀ = 0.1 defectos/m²<br>Área: 10 m²</td>
+                  <td>λ = 0.1 × 10 = 1.0</td>
+                </tr>
+                <tr>
+                  <td>Tasa: 5 llamadas/hora<br>Tiempo: 30 min</td>
+                  <td>λ = 5 × 0.5 = 2.5</td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <div class="hint-box">
+              💡 <strong>Propiedad:</strong> Si X~Poisson(λ₁) y Y~Poisson(λ₂), entonces X+Y~Poisson(λ₁+λ₂)
+            </div>
+          </div>
+
+          <!-- Geométrica -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(102, 255, 204, 0.08);">
+            <h4>🎯 GEOMÉTRICA → X ~ Geom(p)</h4>
+            <p><strong>Usar cuando:</strong> Número de ensayos hasta el primer éxito</p>
+            <p><strong>Parámetro:</strong> p = probabilidad de éxito en cada ensayo</p>
+            
+            <div class="formula-box">
+              P(X = k) = (1−p)^(k−1) × p
+            </div>
+            
+            <p><strong>Interpretación:</strong> k−1 fracasos seguidos del éxito en el intento k</p>
+            
+            <div class="hint-box">
+              💡 <strong>Media:</strong> E[X] = 1/p (promedio de intentos necesarios)
+            </div>
+          </div>
+
+          <!-- Hipergeométrica -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 150, 200, 0.08);">
+            <h4>🎁 HIPERGEOMÉTRICA → X ~ H(N, K, n)</h4>
+            <p><strong>Usar cuando:</strong> Extracción SIN reposición de una población finita</p>
+            <p><strong>Parámetros:</strong></p>
+            <ul>
+              <li>N = tamaño población total</li>
+              <li>K = número de éxitos en la población</li>
+              <li>n = tamaño de la muestra extraída</li>
+            </ul>
+            
+            <div class="formula-box">
+              P(X = k) = [C(K,k) × C(N−K, n−k)] / C(N,n)
+            </div>
+            
+            <div class="warning-box">
+              ⚠️ <strong>Diferencia con Binomial:</strong> Binomial = CON reposición, Hipergeométrica = SIN reposición
+            </div>
+          </div>
+
+          <!-- Normal -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(160, 200, 255, 0.08);">
+            <h4>📊 NORMAL → X ~ N(μ, σ²)</h4>
+            <p><strong>Usar cuando:</strong> Datos que se distribuyen simétricamente alrededor de un promedio</p>
+            <p><strong>Parámetros:</strong> μ = media, σ = desviación estándar</p>
+            
+            <div class="formula-box">
+              Z = (X − μ) / σ<br>
+              Luego buscás P(Z) en tabla
+            </div>
+            
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Querés calcular</th>
+                  <th>Procedimiento</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>P(X < a)</td>
+                  <td>Z = (a−μ)/σ → Buscá Φ(Z) en tabla</td>
+                </tr>
+                <tr>
+                  <td>P(X > a)</td>
+                  <td>1 − P(X < a) = 1 − Φ(Z)</td>
+                </tr>
+                <tr>
+                  <td>P(a < X < b)</td>
+                  <td>Φ(Zb) − Φ(Za)</td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <div class="hint-box">
+              💡 <strong>Regla 68-95-99.7:</strong> 68% dentro de ±1σ, 95% dentro de ±2σ, 99.7% dentro de ±3σ
+            </div>
+          </div>
+
+          <!-- Uniforme -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 255, 150, 0.08);">
+            <h4>📏 UNIFORME → X ~ U(a, b)</h4>
+            <p><strong>Usar cuando:</strong> Todos los valores en [a, b] son igualmente probables</p>
+            
+            <div class="formula-box">
+              P(c < X < d) = (d − c) / (b − a)<br>
+              f(x) = 1/(b−a) para x ∈ [a,b]
+            </div>
+            
+            <div class="hint-box">
+              💡 <strong>Media:</strong> E[X] = (a+b)/2, <strong>Varianza:</strong> Var(X) = (b−a)²/12
+            </div>
+          </div>
+
+          <!-- Exponencial -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 120, 120, 0.08);">
+            <h4>⏱️ EXPONENCIAL → X ~ Exp(λ)</h4>
+            <p><strong>Usar cuando:</strong> Tiempo entre eventos en un proceso de Poisson</p>
+            <p><strong>Parámetro:</strong> λ = tasa de ocurrencia</p>
+            
+            <div class="formula-box">
+              P(X > t) = e^(−λt)<br>
+              P(X ≤ t) = 1 − e^(−λt)
+            </div>
+            
+            <div class="hint-box">
+              💡 <strong>Propiedad sin memoria:</strong> P(X > s+t | X > s) = P(X > t)
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PASO 5: Interpretar resultado -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">5️⃣</span>
+          <span class="step-title">Interpretar el resultado</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <p><strong>Un número sin contexto no sirve. Siempre preguntate:</strong></p>
+          
+          <div class="quick-reference">
+            <h3>✅ Checklist de interpretación</h3>
+            <ul style="list-style: none; padding: 0;">
+              <li style="margin-bottom: 15px;">
+                <strong style="color: #a0ff66;">🔢 ¿Tiene sentido el número?</strong>
+                <p>Si te da P = 1.5 o P = −0.2, algo está mal. Las probabilidades van de 0 a 1.</p>
+              </li>
+              <li style="margin-bottom: 15px;">
+                <strong style="color: #a0ff66;">📊 ¿Es un valor razonable?</strong>
+                <p>Si calculás P(defecto) = 0.95 en un proceso de alta calidad, revisá los cálculos.</p>
+              </li>
+              <li style="margin-bottom: 15px;">
+                <strong style="color: #a0ff66;">📖 ¿Podés explicarlo en palabras simples?</strong>
+                <p>Ejemplo: "Hay un 13.5% de probabilidad de no encontrar defectos en 20 m²"</p>
+              </li>
+              <li style="margin-bottom: 15px;">
+                <strong style="color: #a0ff66;">🎯 ¿Responde exactamente lo que pedían?</strong>
+                <p>Si pedían P(X > 5) y calculaste P(X ≥ 5), no es lo mismo.</p>
+              </li>
+              <li style="margin-bottom: 15px;">
+                <strong style="color: #a0ff66;">💡 ¿Qué implica para la situación real?</strong>
+                <p>¿Es un evento raro? ¿Frecuente? ¿Requiere acción?</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+    </div>
+
+  <script>
+    // Toggle entre Probabilidad y Estadística
+    const modeButtons = document.querySelectorAll('.mode-btn');
+    const sections = document.querySelectorAll('.content-section');
+
+    modeButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const mode = btn.dataset.mode;
+        
+        // Actualizar botones
+        modeButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Mostrar sección correspondiente
+        sections.forEach(section => {
+          section.classList.remove('active');
+          if (section.id === mode) {
+            section.classList.add('active');
+          }
+        });
+      });
+    });
+
+    // Expandir/contraer pasos
+    document.querySelectorAll('.step-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const stepBox = header.parentElement;
+        stepBox.classList.toggle('open');
+      });
+    });
+
+    // Botón volver
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = './temario.html';
+      }
+    });
+  </script>
+</body>
+</html>

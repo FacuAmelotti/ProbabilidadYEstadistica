@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juegos - Probabilidad y Estadística</title>
+  <link rel="icon" type="image/png" href="../src/img/logo.png">
+  <link rel="stylesheet" href="./css/base.css">
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+  
+<style>
+/* ====== CONFIGURACIÓN GLOBAL ====== */
+.exercises-container {
+  min-height: 100vh;
+  padding: 120px 40px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.exercises-header {
+  text-align: center;
+  margin-bottom: 90px;
+}
+
+.exercises-title {
+  font-size: clamp(3rem, 6vw, 5rem);
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #ffffff, #9ea8ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(150, 160, 255, 0.25);
+}
+
+.exercises-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+/* ====== UNIDADES ====== */
+.unit-section {
+  margin-bottom: 100px;
+  position: relative;
+}
+
+.unit-title {
+  font-size: 2.3rem;
+  font-weight: 400;
+  margin-bottom: 40px;
+  text-align: center;
+  background: linear-gradient(90deg, #ffffff, #c9c9c9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.5px;
+  position: relative;
+}
+
+.unit-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, #8f9eff, #ffffff, #8f9eff);
+  margin: 16px auto 0;
+  border-radius: 3px;
+  opacity: 0.6;
+}
+
+/* ====== GRID GENERAL DE JUEGOS ====== */
+.promo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+  gap: 40px;
+  margin-top: 60px;
+  align-items: start;
+}
+
+/* ====== TARJETAS DE JUEGOS ====== */
+.promo-card {
+  display: flex;
+  min-height: 280px;
+  max-height: 280px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(14px);
+  overflow: hidden;
+  transition: all 0.35s ease;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  position: relative;
+}
+
+.promo-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255,255,255,0.25);
+  box-shadow: 0 15px 45px rgba(150,160,255,0.25);
+}
+
+/* ====== TEXTO IZQUIERDA ====== */
+.promo-text {
+  flex: 1;
+  padding: 35px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 2;
+  min-width: 0; /* Permite que el flex-shrink funcione correctamente */
+}
+
+.promo-text h2 {
+  font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+  font-weight: 400;
+  margin-bottom: 16px;
+  background: linear-gradient(90deg, #ffffff, #b5bdff);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  line-height: 1.3;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.promo-text p {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+/* ====== IMAGEN DERECHA ====== */
+.promo-image {
+  width: 280px;
+  min-width: 280px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.promo-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease, opacity 1s ease;      
+  margin: 12px;
+}
+
+.promo-image img.fade-out {
+  opacity: 0;
+}
+
+.promo-card:hover .promo-image img {
+  transform: scale(1.05);
+}
+
+/* ====== BOTÓN ====== */
+.btn-primary {
+  align-self: flex-start;
+  padding: 12px 32px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 40px;
+  background: linear-gradient(135deg, #ffffff, #bfc3ff);
+  color: #000;
+  text-decoration: none;
+  box-shadow: 0 8px 25px rgba(180,180,255,0.2);
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #ffffff, #9ea8ff);
+  box-shadow: 0 15px 35px rgba(150,160,255,0.35);
+}
+
+/* ====== TARJETAS DE EJERCICIOS (PARA MANTENER COMPATIBILIDAD) ====== */
+.ex-grid {
+  display: grid;
+  gap: 35px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  align-items: stretch;
+}
+
+.exercise-card {
+  position: relative;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 26px;
+  padding: 40px 35px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  transition: all 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 0;
+}
+
+.exercise-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.exercise-card:hover::before {
+  opacity: 1;
+}
+
+.exercise-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 15px 50px rgba(150, 160, 255, 0.25);
+}
+
+.exercise-info {
+  flex: 1;
+}
+
+.exercise-title {
+  font-size: 1.5rem;
+  color: #ffffff;
+  font-weight: 400;
+  margin-bottom: 12px;
+  text-shadow: 0 0 10px rgba(255,255,255,0.05);
+}
+
+.exercise-desc {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
+  margin-bottom: 25px;
+}
+
+.exercise-btn {
+  align-self: flex-start;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  color: #000000;
+  background: linear-gradient(135deg, #ffffff, #bfc3ff);
+  box-shadow: 0 8px 25px rgba(180, 180, 255, 0.2);
+  transition: all 0.3s ease;
+  border: none;
+  position: relative;
+  z-index: 1;
+}
+
+.exercise-btn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #ffffff, #9ea8ff);
+  box-shadow: 0 15px 35px rgba(150, 160, 255, 0.35);
+}
+
+.exercise-card.locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-style: dashed;
+  border-color: rgba(255,255,255,0.1);
+  transition: none;
+  box-shadow: none;
+}
+
+.exercise-card.locked:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: rgba(255,255,255,0.1);
+}
+
+.exercise-card.locked .exercise-btn {
+  pointer-events: none;
+  background: transparent;
+  border: 2px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.5);
+  box-shadow: none;
+}
+
+.mark-reviewed-btn {
+  position: relative;
+  padding: 10px 34px 10px 46px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6px;
+  gap: 8px;
+}
+
+.mark-reviewed-btn::before {
+  content: "✓";
+  position: absolute;
+  left: 18px;
+  font-size: 1.1rem;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.3s ease;
+}
+
+.mark-reviewed-btn:hover {
+  border-color: rgba(255,255,255,0.25);
+  color: #fff;
+}
+
+.mark-reviewed-btn.active {
+  color: rgb(120,255,150);
+  text-shadow: 0 0 4px rgba(120,255,150,0.4);
+}
+
+.mark-reviewed-btn.active::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.mark-reviewed-btn.active:hover {
+  background: rgba(120,255,150,0.25);
+  box-shadow: 0 0 15px rgba(120,255,150,0.25);
+}
+
+.exercise-card.reviewed {
+  border-color: rgba(120,255,150,0.35);
+  box-shadow: 0 10px 40px rgba(120,255,150,0.15);
+  background: rgba(120,255,150,0.05);
+  transition: all 0.5s ease;
+}
+
+.exercise-card.reviewed .exercise-title {
+  color: rgb(120,255,150);
+  text-shadow: 0 0 6px rgba(120,255,150,0.4);
+}
+
+.exercise-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.exercise-card .exercise-btn,
+.exercise-card .mark-reviewed-btn {
+  align-self: center;
+}
+
+/* ====== RESPONSIVE ====== */
+@media (max-width: 1200px) {
+  .promo-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .exercises-container {
+    padding: 100px 25px 60px;
+  }
+  
+  .exercise-card {
+    padding: 30px 25px;
+  }
+  
+  .promo-card {
+    min-height: 240px;
+    max-height: 240px;
+  }
+  
+  .promo-text {
+    padding: 25px 30px;
+  }
+  
+  .promo-image {
+    width: 220px;
+    min-width: 220px;
+  }
+}
+
+@media (max-width: 700px) {
+  .promo-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .promo-card {
+    flex-direction: column;
+    min-height: auto;
+    max-height: none;
+  }
+  
+  .promo-text {
+    width: 100%;
+    padding: 30px 25px;
+  }
+  
+  .promo-text h2 {
+    font-size: 1.6rem;
+  }
+  
+  .promo-image {
+    width: 100%;
+    height: 220px;
+    order: -1;
+  }
+  
+  .exercises-title {
+    font-size: 2.8rem;
+  }
+  
+  .unit-title {
+    font-size: 1.8rem;
+  }
+  
+  .ex-grid {
+    gap: 25px;
+  }
+  
+  .exercise-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .promo-text p {
+    font-size: 0.95rem;
+  }
+  
+  .btn-primary {
+    width: 100%;
+    text-align: center;
+  }
+}
+  </style>
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div class="animated-bg"></div>
+  <div class="floating-elements">
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+    <div class="floating-dot"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="../index.html" class="logo">
+        <img src="../src/img/logo.png" alt="PyE Logo">PyE
+      </a>
+      <ul class="nav-menu">
+        <li><a id="back-btn" class="nav-link">Volver</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="exercises-container">
+    <div class="exercises-header">
+      <h1 class="exercises-title">Juegos</h1>
+      <p class="exercises-subtitle">Refuerza tus conocimientos de una manera mas divertida!</p>
+    </div>
+    
+    <div class="promo-grid">
+      <div class="promo-card">
+        <div class="promo-text">
+          <h2>🎲 Batalla de Probabilidad</h2>
+          <p>Batalla de preguntas y respuestas.</p>
+          <a href="./games/batallaProbabilistica.html" class="btn-primary">¡Jugar ahora!</a>
+        </div>
+        <div class="promo-image">
+          <img id="batallaImage" src="../src/img/visuales/pj_2.jpg" alt="Personajes Batalla de Probabilidad">
+        </div>
+      </div>
+
+      <div class="promo-card">
+        <div class="promo-text">
+          <h2>🎲 Cartas de Distribución</h2>
+          <p>Elegí qué carta emplear al problema que se presenta!</p>
+          <a href="./games/cartasDeDistribucion.html" class="btn-primary">¡Jugar ahora!</a>
+        </div>
+        <div class="promo-image">
+          <img src="../src/img/juegoDistrib.jpg" alt="Cartas de Distribución">
+        </div>
+      </div>
+
+      <div class="promo-card">
+        <div class="promo-text">
+          <h2>🎲 ¿Una preguntita?</h2>
+          <p>Responde preguntas aleatorias y pone a prueba tus conocimientos.</p>
+          <a href="./randomPreg.html" class="btn-primary">¡Jugar ahora!</a>
+        </div>
+        <div class="promo-image">
+          <img src="../src/img/logo.png" alt="Preguntas Aleatorias">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const reviewedList = JSON.parse(localStorage.getItem("reviewedExercises") || "[]");
+
+      reviewedList.forEach(id => {
+        const card = document.querySelector(`.mark-reviewed-btn[data-id="${id}"]`)?.closest(".exercise-card");
+        const btn = document.querySelector(`.mark-reviewed-btn[data-id="${id}"]`);
+        if (card) card.classList.add("reviewed");
+        if (btn) {
+          btn.classList.add("active");
+          btn.textContent = "Revisado";
+        }
+      });
+
+      document.querySelectorAll(".mark-reviewed-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const id = btn.dataset.id;
+          const card = btn.closest(".exercise-card");
+          let reviewedList = JSON.parse(localStorage.getItem("reviewedExercises") || "[]");
+
+          if (reviewedList.includes(id)) {
+            reviewedList = reviewedList.filter(e => e !== id);
+            localStorage.setItem("reviewedExercises", JSON.stringify(reviewedList));
+            card.classList.remove("reviewed");
+            btn.classList.remove("active");
+            btn.textContent = "Marcar como revisado";
+          } else {
+            reviewedList.push(id);
+            localStorage.setItem("reviewedExercises", JSON.stringify(reviewedList));
+            card.classList.add("reviewed");
+            btn.classList.add("active");
+            btn.textContent = "Revisado";
+          }
+        });
+      });
+    });
+
+    document.getElementById('back-btn').addEventListener('click', () => {
+      if (document.referrer && document.referrer !== window.location.href) {
+        history.back();
+      } else {
+        window.location.href = './temario.html';
+      }
+    });
+
+    const batallaImage = document.getElementById("batallaImage");
+    const imagePaths = [
+      "../src/img/visuales/pj_2.jpg",
+      "../src/img/visuales/pj_3.jpg",
+      "../src/img/visuales/pj_4.jpg",
+      "../src/img/visuales/pj_5.jpg",
+      "../src/img/visuales/pj_6.jpg",
+      "../src/img/visuales/pj_7.jpg",
+    ];
+    let currentIndex = 0;
+
+    setInterval(() => {
+      batallaImage.classList.add("fade-out");
+
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % imagePaths.length;
+        batallaImage.src = imagePaths[currentIndex];
+        batallaImage.classList.remove("fade-out");
+      }, 1000);
+    }, 5000);
+  </script>
+</body>
+</html>

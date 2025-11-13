@@ -437,6 +437,224 @@
         height: 100%;
       }
     }
+
+    /* Botón de ayuda flotante */
+.help-button {
+  position: fixed;
+  top: 250px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #7877c6, #6564b5);
+  border: 2px solid rgba(255,255,255,0.3);
+  color: white;
+  font-size: 2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 5px 20px rgba(120,119,198,0.5);
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.help-button:hover {
+  transform: translateY(-5px) scale(1.1);
+  box-shadow: 0 8px 30px rgba(120,119,198,0.7);
+}
+
+/* Panel de ayuda con todas las distribuciones */
+.help-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  animation: fadeIn 0.3s ease;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.help-panel-content {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 25px;
+  padding: 40px;
+  max-width: 1500px;
+  width: 100%;
+  backdrop-filter: blur(15px);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.help-panel-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 30px;
+  background: linear-gradient(135deg, #fff, #a8b5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 2rem;
+  color: rgba(255,255,255,0.7);
+  cursor: pointer;
+  background: none;
+  border: none;
+  transition: all 0.3s;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.close-btn:hover {
+  color: white;
+  background: rgba(255,255,255,0.1);
+  transform: rotate(90deg);
+}
+
+.help-distributions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.help-dist-card {
+  background: rgba(255,255,255,0.05);
+  border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 15px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.help-dist-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(168,181,255,0.5);
+  box-shadow: 0 8px 25px rgba(168,181,255,0.3);
+  background: rgba(255,255,255,0.1);
+}
+
+.help-dist-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: fill;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.help-dist-card h3 {
+  font-size: 1.1rem;
+  margin: 0;
+  color: white;
+}
+
+/* Panel de explicación de distribución */
+.explanation-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 300;
+  animation: fadeIn 0.3s ease;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.explanation-content {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 25px;
+  padding: 40px;
+  max-width: 700px;
+  width: 100%;
+  backdrop-filter: blur(15px);
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.explanation-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.explanation-header img {
+  width: 100%;
+  max-width: 300px;
+  height: 200px;
+  object-fit: fill;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.explanation-header h2 {
+  font-size: 2rem;
+  background: linear-gradient(135deg, #fff, #a8b5ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+
+.explanation-text {
+  color: rgba(255,255,255,0.9);
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.explanation-text p {
+  margin-bottom: 15px;
+}
+
+.explanation-text strong {
+  color: #a8b5ff;
+}
+
+@media (max-width: 768px) {
+  .help-button {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+
+  .help-panel-content,
+  .explanation-content {
+    padding: 25px;
+  }
+
+  .help-distributions-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 15px;
+  }
+
+  .help-dist-card img {
+    height: 120px;
+  }
+}
   </style>
 </head>
 <body>
@@ -448,7 +666,36 @@
     <ul class="nav-menu">
       <li><a id="back-btn" class="nav-link">Volver</a></li>
     </ul>
+    
   </nav>
+
+<button class="help-button" id="helpButton" title="Ver todas las distribuciones">?</button>
+
+<!-- Panel de ayuda con todas las distribuciones -->
+<div class="help-panel" id="helpPanel">
+  <div class="help-panel-content">
+    <button class="close-btn" id="closeHelpPanel">×</button>
+    <h2 class="help-panel-title">📚 Todas las Distribuciones</h2>
+    <p style="text-align: center; color: rgba(255,255,255,0.7); margin-bottom: 20px;">
+      Haz click en cualquier distribución para ver su explicación
+    </p>
+    <div class="help-distributions-grid" id="helpDistGrid">
+      <!-- Se generará dinámicamente -->
+    </div>
+  </div>
+</div>
+
+<!-- Panel de explicación individual -->
+<div class="explanation-panel" id="explanationPanel">
+  <div class="explanation-content">
+    <button class="close-btn" id="closeExplanationPanel">×</button>
+    <div class="explanation-header">
+      <img id="explImg" src="" alt="">
+      <h2 id="explTitle"></h2>
+    </div>
+    <div class="explanation-text" id="explText"></div>
+  </div>
+</div>
 
   <!-- HUD -->
   <div class="hud-container">
@@ -865,6 +1112,97 @@
         window.location.href = '../../temario.html'; // fallback si se abre directo
       }
     });
+</script>
+
+<script>
+  // ==============================
+// 📚 Sistema de ayuda con explicaciones
+// ==============================
+
+// Explicaciones detalladas de cada distribución
+const distributionExplanations = {
+  "Bernoulli": "La distribución de Bernoulli modela experimentos con solo dos posibles resultados: éxito o fracaso. <strong>Se utiliza cuando:</strong> Queremos analizar un único ensayo con probabilidad p de éxito. <strong>Ejemplos:</strong> Lanzar una moneda una vez, verificar si un producto es defectuoso, determinar si un estudiante aprueba un examen.",
+  
+  "Binomial": "La distribución Binomial cuenta el número de éxitos en n ensayos independientes de Bernoulli. <strong>Se utiliza cuando:</strong> Realizamos múltiples ensayos independientes con la misma probabilidad de éxito. <strong>Ejemplos:</strong> Número de caras en 10 lanzamientos de moneda, cantidad de productos defectuosos en una muestra de 100, estudiantes que aprueban en un grupo de 30.",
+  
+  "Geométrica": "La distribución Geométrica modela el número de ensayos necesarios hasta obtener el primer éxito. <strong>Se utiliza cuando:</strong> Queremos saber cuántos intentos necesitamos hasta lograr el primer resultado positivo. <strong>Ejemplos:</strong> Número de lanzamientos hasta obtener la primera cara, llamadas hasta conseguir la primera venta, intentos hasta aprobar un examen.",
+  
+  "Poisson": "La distribución de Poisson modela el número de eventos que ocurren en un intervalo fijo de tiempo o espacio. <strong>Se utiliza cuando:</strong> Los eventos ocurren de forma independiente y con una tasa promedio constante. <strong>Ejemplos:</strong> Número de llamadas recibidas por hora, accidentes en una intersección por mes, clientes que llegan a una tienda por minuto.",
+  
+  "Hipergeométrica": "La distribución Hipergeométrica modela muestreo sin reemplazo de una población finita con dos tipos de elementos. <strong>Se utiliza cuando:</strong> Extraemos elementos sin devolverlos y la población es relativamente pequeña. <strong>Ejemplos:</strong> Número de ases al sacar 5 cartas de un mazo, productos defectuosos en una muestra sin reemplazo, estudiantes aprobados en un comité seleccionado.",
+  
+  "Uniforme": "La distribución Uniforme asigna la misma probabilidad a todos los valores en un intervalo. <strong>Se utiliza cuando:</strong> Todos los valores dentro de un rango son igualmente probables. <strong>Ejemplos:</strong> Resultado de lanzar un dado equilibrado, elegir un número al azar entre 1 y 100, tiempo de espera en un intervalo desconocido.",
+  
+  "Exponencial": "La distribución Exponencial modela el tiempo entre eventos en un proceso de Poisson. <strong>Se utiliza cuando:</strong> Queremos analizar tiempos de espera o duración de eventos independientes. <strong>Ejemplos:</strong> Tiempo entre llamadas telefónicas, duración de una bombilla, tiempo hasta la próxima falla de una máquina.",
+  
+  "Normal": "La distribución Normal (o Gaussiana) es la distribución más importante en estadística, con forma de campana. <strong>Se utiliza cuando:</strong> Los datos se concentran alrededor de un valor medio y siguen un patrón simétrico. <strong>Ejemplos:</strong> Alturas de personas, errores de medición, puntuaciones en exámenes estandarizados, presión arterial.",
+  
+  "Chi-Cuadrado": "La distribución Chi-Cuadrado se usa principalmente en pruebas de hipótesis sobre varianzas. <strong>Se utiliza cuando:</strong> Queremos probar bondad de ajuste, independencia entre variables categóricas, o hacer inferencias sobre varianzas. <strong>Ejemplos:</strong> Probar si un dado es justo, verificar independencia entre género y preferencia política, comparar varianzas observadas vs esperadas.",
+  
+  "t de Student": "La distribución t de Student se usa para inferencia sobre medias cuando la desviación estándar poblacional es desconocida. <strong>Se utiliza cuando:</strong> Trabajamos con muestras pequeñas y no conocemos la desviación estándar poblacional. <strong>Ejemplos:</strong> Comparar medias de dos grupos pequeños, construir intervalos de confianza para la media, pruebas de hipótesis con muestras menores a 30.",
+  
+  "F de Fisher": "La distribución F se usa para comparar varianzas de dos poblaciones. <strong>Se utiliza cuando:</strong> Queremos comparar la variabilidad de dos grupos o probar igualdad de varianzas. <strong>Ejemplos:</strong> ANOVA (comparar medias de múltiples grupos), pruebas de homogeneidad de varianzas, regresión lineal múltiple."
+};
+
+// Crear grid de ayuda con todas las distribuciones
+function createHelpGrid() {
+  const grid = document.getElementById('helpDistGrid');
+  grid.innerHTML = '';
+  
+  allDistributions.forEach(dist => {
+    const card = document.createElement('div');
+    card.className = 'help-dist-card';
+    
+    const img = document.createElement('img');
+    img.src = distributionImages[dist];
+    img.alt = dist;
+    
+    const title = document.createElement('h3');
+    title.textContent = dist;
+    
+    card.appendChild(img);
+    card.appendChild(title);
+    
+    card.onclick = () => showExplanation(dist);
+    
+    grid.appendChild(card);
+  });
+}
+
+// Mostrar explicación de una distribución
+function showExplanation(distribution) {
+  document.getElementById('explImg').src = distributionImages[distribution];
+  document.getElementById('explTitle').textContent = distribution;
+  document.getElementById('explText').innerHTML = `<p>${distributionExplanations[distribution]}</p>`;
+  document.getElementById('explanationPanel').style.display = 'flex';
+}
+
+// Event listeners para los paneles de ayuda
+document.getElementById('helpButton').addEventListener('click', () => {
+  createHelpGrid();
+  document.getElementById('helpPanel').style.display = 'flex';
+});
+
+document.getElementById('closeHelpPanel').addEventListener('click', () => {
+  document.getElementById('helpPanel').style.display = 'none';
+});
+
+document.getElementById('closeExplanationPanel').addEventListener('click', () => {
+  document.getElementById('explanationPanel').style.display = 'none';
+});
+
+// Cerrar paneles al hacer click fuera
+document.getElementById('helpPanel').addEventListener('click', (e) => {
+  if (e.target.id === 'helpPanel') {
+    document.getElementById('helpPanel').style.display = 'none';
+  }
+});
+
+document.getElementById('explanationPanel').addEventListener('click', (e) => {
+  if (e.target.id === 'explanationPanel') {
+    document.getElementById('explanationPanel').style.display = 'none';
+  }
+});
 </script>
 </body>
 </html>

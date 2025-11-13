@@ -429,7 +429,496 @@
         </div>
       </div>
 
+
+      <!-- PASO 2: Dibujar la situación -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">2️⃣</span>
+          <span class="step-title">Dibujar / Visualizar la situación</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <p><strong>Un buen dibujo vale más que mil fórmulas. Representá el problema visualmente.</strong></p>
+          
+          <table class="reference-table">
+            <thead>
+              <tr>
+                <th>Tipo de ejercicio</th>
+                <th>Qué dibujar</th>
+                <th>Ejemplo mental</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Espacio muestral finito</td>
+                <td>Lista de resultados o diagrama</td>
+                <td>Dado: {1, 2, 3, 4, 5, 6}</td>
+              </tr>
+              <tr>
+                <td>Eventos A, B, A∪B, A∩B</td>
+                <td>Diagrama de Venn</td>
+                <td>Dos círculos superpuestos</td>
+              </tr>
+              <tr>
+                <td>Binomial</td>
+                <td>Árbol de éxito/fracaso</td>
+                <td>S→S→F→S (ramificaciones)</td>
+              </tr>
+              <tr>
+                <td>Hipergeométrica</td>
+                <td>Urna con dos grupos</td>
+                <td>Caja dividida: buenos | malos</td>
+              </tr>
+              <tr>
+                <td>Geométrica</td>
+                <td>Línea de intentos</td>
+                <td>❌ ❌ ❌ ✅</td>
+              </tr>
+              <tr>
+                <td>Poisson</td>
+                <td>Línea de tiempo con eventos</td>
+                <td>• • • • • (eventos raros)</td>
+              </tr>
+              <tr>
+                <td>Uniforme U(a,b)</td>
+                <td>Segmento del intervalo [a, b]</td>
+                <td>Recta horizontal entre dos puntos</td>
+              </tr>
+              <tr>
+                <td>Normal</td>
+                <td>Curva de campana + área</td>
+                <td>Curva simétrica con zona sombreada</td>
+              </tr>
+              <tr>
+                <td>Exponencial</td>
+                <td>Curva descendente rápida</td>
+                <td>Baja rápido desde x=0</td>
+              </tr>
+              <tr>
+                <td>Probabilidad condicional</td>
+                <td>Árbol con ramas</td>
+                <td>A → B y A → Bᶜ</td>
+              </tr>
+              <tr>
+                <td>Bayes</td>
+                <td>Árbol invertido</td>
+                <td>Causas → Efectos observables</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="visual-diagram">
+            <div class="diagram-title">Ejemplo: Diagrama de Venn para P(A∪B)</div>
+            <svg viewBox="0 0 400 250" style="max-width: 500px; margin: 0 auto;">
+              <circle cx="140" cy="125" r="80" fill="rgba(160, 255, 100, 0.3)" stroke="#a0ff66" stroke-width="2"/>
+              <circle cx="260" cy="125" r="80" fill="rgba(102, 255, 204, 0.3)" stroke="#66ffcc" stroke-width="2"/>
+              <text x="110" y="130" fill="#fff" font-size="24" font-weight="bold">A</text>
+              <text x="280" y="130" fill="#fff" font-size="24" font-weight="bold">B</text>
+              <text x="190" y="130" fill="#fff" font-size="20">A∩B</text>
+            </svg>
+          </div>
+
+          <div class="hint-box">
+            💡 <strong>Pro tip:</strong> Dibujá aunque sea un esquema simple. Te ayuda a no confundir "al menos" con "exactamente", o "con reposición" vs "sin reposición".
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 3: Encontrar exactamente lo que piden -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">3️⃣</span>
+          <span class="step-title">Encontrar EXACTAMENTE lo que piden (CRÍTICO)</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <p><strong>La diferencia entre aprobar y desaprobar suele estar acá. Traducí las palabras a matemática.</strong></p>
+          
+          <div class="warning-box">
+            ⚠️ <strong>Errores comunes:</strong> Confundir "más de 3" (>3, o sea k≥4) con "al menos 3" (≥3). O confundir "antes de t" (<t) con "después de t" (>t).
+          </div>
+
+          <table class="reference-table">
+            <thead>
+              <tr>
+                <th>Frase en el enunciado</th>
+                <th>Traducción matemática</th>
+                <th>Interpretación visual</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>"Mayor que a"</td>
+                <td><code>P(X > a)</code></td>
+                <td>Todo lo que está a la derecha de a</td>
+              </tr>
+              <tr>
+                <td>"Mayor o igual que a"</td>
+                <td><code>P(X ≥ a)</code></td>
+                <td>Incluye el borde (a está adentro)</td>
+              </tr>
+              <tr>
+                <td>"Menor que a"</td>
+                <td><code>P(X < a)</code></td>
+                <td>Todo lo que está a la izquierda de a</td>
+              </tr>
+              <tr>
+                <td>"Menor o igual que a"</td>
+                <td><code>P(X ≤ a)</code></td>
+                <td>Incluye el borde</td>
+              </tr>
+              <tr>
+                <td>"Entre a y b"</td>
+                <td><code>P(a ≤ X ≤ b)</code></td>
+                <td>Región del medio</td>
+              </tr>
+              <tr>
+                <td>"A lo sumo a"</td>
+                <td><code>P(X ≤ a)</code></td>
+                <td>Máximo aceptable (hasta a)</td>
+              </tr>
+              <tr>
+                <td>"Al menos a"</td>
+                <td><code>P(X ≥ a)</code></td>
+                <td>Como mínimo eso (desde a)</td>
+              </tr>
+              <tr>
+                <td>"Exactamente k"</td>
+                <td><code>P(X = k)</code></td>
+                <td>Un solo valor puntual</td>
+              </tr>
+              <tr>
+                <td>"Más de k"</td>
+                <td><code>P(X > k)</code></td>
+                <td>k+1, k+2, k+3...</td>
+              </tr>
+              <tr>
+                <td>"Menos de k"</td>
+                <td><code>P(X < k)</code></td>
+                <td>0, 1, 2, ... hasta k−1</td>
+              </tr>
+              <tr>
+                <td>"Antes de tiempo t"</td>
+                <td><code>P(X < t)</code></td>
+                <td>Fallo temprano (exponencial)</td>
+              </tr>
+              <tr>
+                <td>"Después de t"</td>
+                <td><code>P(X > t)</code></td>
+                <td>Vida útil restante</td>
+              </tr>
+              <tr>
+                <td>"Complemento de A"</td>
+                <td><code>P(Aᶜ) = 1 − P(A)</code></td>
+                <td>Lo que NO ocurre</td>
+              </tr>
+              <tr>
+                <td>"Dado que B ocurrió"</td>
+                <td><code>P(A|B)</code></td>
+                <td>Probabilidad condicional</td>
+              </tr>
+              <tr>
+                <td>"A y B ocurren juntos"</td>
+                <td><code>P(A∩B)</code></td>
+                <td>Intersección (ambos a la vez)</td>
+              </tr>
+              <tr>
+                <td>"A o B ocurren"</td>
+                <td><code>P(A∪B)</code></td>
+                <td>Unión (al menos uno)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="hint-box">
+            💡 <strong>Estrategia:</strong> Subrayá las palabras clave en el enunciado. Escribilas en lenguaje matemático ANTES de aplicar fórmulas.
+          </div>
+        </div>
+      </div>
+
+      <!-- PASO 4: Qué distribución, qué fórmula, cómo calcular -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">4️⃣</span>
+          <span class="step-title">Aplicar la distribución correcta y calcular</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <h3 style="color: #a0ff66; margin-bottom: 20px;">📚 Guía de Distribuciones</h3>
+          
+          <!-- Espacio Muestral Finito -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(160, 255, 100, 0.08);">
+            <h4>🎲 ESPACIO MUESTRAL FINITO (Equiprobable)</h4>
+            <p><strong>Usar cuando:</strong> Dados, cartas, bolillas, combinatoria simple</p>
+            
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Situación</th>
+                  <th>Fórmula</th>
+                  <th>Nota</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Probabilidad básica</td>
+                  <td><code>P(A) = favorables / totales</code></td>
+                  <td>La más usada</td>
+                </tr>
+                <tr>
+                  <td>Unión de eventos</td>
+                  <td><code>P(A∪B) = P(A) + P(B) − P(A∩B)</code></td>
+                  <td>Evita doble conteo</td>
+                </tr>
+                <tr>
+                  <td>Complemento</td>
+                  <td><code>P(Aᶜ) = 1 − P(A)</code></td>
+                  <td>Muy útil siempre</td>
+                </tr>
+                <tr>
+                  <td>Condicional</td>
+                  <td><code>P(A|B) = P(A∩B) / P(B)</code></td>
+                  <td>Dado que B ocurrió</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Binomial -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 215, 100, 0.08);">
+            <h4>🔢 BINOMIAL → X ~ B(n, p)</h4>
+            <p><strong>Usar cuando:</strong> n ensayos independientes, 2 resultados (éxito/fracaso), probabilidad constante p</p>
+            <p><strong>Parámetros:</strong> n = número de ensayos, p = probabilidad de éxito, k = número de éxitos</p>
+            
+            <div class="formula-box">
+              P(X = k) = C(n,k) × p^k × (1−p)^(n−k)
+            </div>
+            
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Probabilidad pedida</th>
+                  <th>Cómo calcular</th>
+                  <th>Tip</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Exactamente k éxitos</td>
+                  <td><code>P(X = k)</code></td>
+                  <td>Aplicá la fórmula directa</td>
+                </tr>
+                <tr>
+                  <td>A lo sumo k</td>
+                  <td><code>P(X ≤ k) = Σ P(X=i) para i=0 hasta k</code></td>
+                  <td>Suma acumulada</td>
+                </tr>
+                <tr>
+                  <td>Al menos k</td>
+                  <td><code>P(X ≥ k) = 1 − P(X < k)</code></td>
+                  <td>Usá complemento (más fácil)</td>
+                </tr>
+                <tr>
+                  <td>Más de k</td>
+                  <td><code>P(X > k) = 1 − P(X ≤ k)</code></td>
+                  <td>Complemento también</td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <div class="hint-box">
+              💡 <strong>Media y Varianza:</strong> E[X] = n×p, Var(X) = n×p×(1−p)
+            </div>
+          </div>
+
+          <!-- Poisson -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 180, 100, 0.08);">
+            <h4>⚡ POISSON → X ~ Poisson(λ)</h4>
+            <p><strong>Usar cuando:</strong> Eventos raros en un intervalo (tiempo/espacio), tasa promedio constante</p>
+            <p><strong>Parámetro:</strong> λ = tasa promedio de eventos en el intervalo</p>
+            
+            <div class="formula-box">
+              P(X = k) = (e^(−λ) × λ^k) / k!
+            </div>
+            
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Situación</th>
+                  <th>Cómo ajustar λ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Tasa: λ₀ = 0.1 defectos/m²<br>Área: 1 m²</td>
+                  <td>λ = 0.1 × 1 = 0.1</td>
+                </tr>
+                <tr>
+                  <td>Tasa: λ₀ = 0.1 defectos/m²<br>Área: 10 m²</td>
+                  <td>λ = 0.1 × 10 = 1.0</td>
+                </tr>
+                <tr>
+                  <td>Tasa: 5 llamadas/hora<br>Tiempo: 30 min</td>
+                  <td>λ = 5 × 0.5 = 2.5</td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <div class="hint-box">
+              💡 <strong>Propiedad:</strong> Si X~Poisson(λ₁) y Y~Poisson(λ₂), entonces X+Y~Poisson(λ₁+λ₂)
+            </div>
+          </div>
+
+          <!-- Geométrica -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(102, 255, 204, 0.08);">
+            <h4>🎯 GEOMÉTRICA → X ~ Geom(p)</h4>
+            <p><strong>Usar cuando:</strong> Número de ensayos hasta el primer éxito</p>
+            <p><strong>Parámetro:</strong> p = probabilidad de éxito en cada ensayo</p>
+            
+            <div class="formula-box">
+              P(X = k) = (1−p)^(k−1) × p
+            </div>
+            
+            <p><strong>Interpretación:</strong> k−1 fracasos seguidos del éxito en el intento k</p>
+            
+            <div class="hint-box">
+              💡 <strong>Media:</strong> E[X] = 1/p (promedio de intentos necesarios)
+            </div>
+          </div>
+
+          <!-- Hipergeométrica -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 150, 200, 0.08);">
+            <h4>🎁 HIPERGEOMÉTRICA → X ~ H(N, K, n)</h4>
+            <p><strong>Usar cuando:</strong> Extracción SIN reposición de una población finita</p>
+            <p><strong>Parámetros:</strong></p>
+            <ul>
+              <li>N = tamaño población total</li>
+              <li>K = número de éxitos en la población</li>
+              <li>n = tamaño de la muestra extraída</li>
+            </ul>
+            
+            <div class="formula-box">
+              P(X = k) = [C(K,k) × C(N−K, n−k)] / C(N,n)
+            </div>
+            
+            <div class="warning-box">
+              ⚠️ <strong>Diferencia con Binomial:</strong> Binomial = CON reposición, Hipergeométrica = SIN reposición
+            </div>
+          </div>
+
+          <!-- Normal -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(160, 200, 255, 0.08);">
+            <h4>📊 NORMAL → X ~ N(μ, σ²)</h4>
+            <p><strong>Usar cuando:</strong> Datos que se distribuyen simétricamente alrededor de un promedio</p>
+            <p><strong>Parámetros:</strong> μ = media, σ = desviación estándar</p>
+            
+            <div class="formula-box">
+              Z = (X − μ) / σ<br>
+              Luego buscás P(Z) en tabla
+            </div>
+            
+            <table class="reference-table">
+              <thead>
+                <tr>
+                  <th>Querés calcular</th>
+                  <th>Procedimiento</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>P(X < a)</td>
+                  <td>Z = (a−μ)/σ → Buscá Φ(Z) en tabla</td>
+                </tr>
+                <tr>
+                  <td>P(X > a)</td>
+                  <td>1 − P(X < a) = 1 − Φ(Z)</td>
+                </tr>
+                <tr>
+                  <td>P(a < X < b)</td>
+                  <td>Φ(Zb) − Φ(Za)</td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <div class="hint-box">
+              💡 <strong>Regla 68-95-99.7:</strong> 68% dentro de ±1σ, 95% dentro de ±2σ, 99.7% dentro de ±3σ
+            </div>
+          </div>
+
+          <!-- Uniforme -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 255, 150, 0.08);">
+            <h4>📏 UNIFORME → X ~ U(a, b)</h4>
+            <p><strong>Usar cuando:</strong> Todos los valores en [a, b] son igualmente probables</p>
+            
+            <div class="formula-box">
+              P(c < X < d) = (d − c) / (b − a)<br>
+              f(x) = 1/(b−a) para x ∈ [a,b]
+            </div>
+            
+            <div class="hint-box">
+              💡 <strong>Media:</strong> E[X] = (a+b)/2, <strong>Varianza:</strong> Var(X) = (b−a)²/12
+            </div>
+          </div>
+
+          <!-- Exponencial -->
+          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 120, 120, 0.08);">
+            <h4>⏱️ EXPONENCIAL → X ~ Exp(λ)</h4>
+            <p><strong>Usar cuando:</strong> Tiempo entre eventos en un proceso de Poisson</p>
+            <p><strong>Parámetro:</strong> λ = tasa de ocurrencia</p>
+            
+            <div class="formula-box">
+              P(X > t) = e^(−λt)<br>
+              P(X ≤ t) = 1 − e^(−λt)
+            </div>
+            
+            <div class="hint-box">
+              💡 <strong>Propiedad sin memoria:</strong> P(X > s+t | X > s) = P(X > t)
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PASO 5: Interpretar resultado -->
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">5️⃣</span>
+          <span class="step-title">Interpretar el resultado</span>
+          <span class="step-icon">▼</span>
+        </div>
+        <div class="step-content">
+          <p><strong>Un número sin contexto no sirve. Siempre preguntate:</strong></p>
+          
+          <div class="quick-reference">
+            <h3>✅ Checklist de interpretación</h3>
+            <ul style="list-style: none; padding: 0;">
+              <li style="margin-bottom: 15px;">
+                <strong style="color: #a0ff66;">🔢 ¿Tiene sentido el número?</strong>
+                <p>Si te da P = 1.5 o P = −0.2, algo está mal. Las probabilidades van de 0 a 1.</p>
+              </li>
+              <li style="margin-bottom: 15px;">
+                <strong style="color: #a0ff66;">📊 ¿Es un valor razonable?</strong>
+                <p>Si calculás P(defecto) = 0.95 en un proceso de alta calidad, revisá los cálculos.</p>
+              </li>
+              <li style="margin-bottom: 15px;">
+                <strong style="color: #a0ff66;">📖 ¿Podés explicarlo en palabras simples?</strong>
+                <p>Ejemplo: "Hay un 13.5% de probabilidad de no encontrar defectos en 20 m²"</p>
+              </li>
+              <li style="margin-bottom: 15px;">
+                <strong style="color: #a0ff66;">🎯 ¿Responde exactamente lo que pedían?</strong>
+                <p>Si pedían P(X > 5) y calculaste P(X ≥ 5), no es lo mismo.</p>
+              </li>
+              <li style="margin-bottom: 15px;">
+                <strong style="color: #a0ff66;">💡 ¿Qué implica para la situación real?</strong>
+                <p>¿Es un evento raro? ¿Frecuente? ¿Requiere acción?</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
+
+
 
     <!-- SECCIÓN ESTADÍSTICA -->
     <div id="estadistica" class="content-section">
@@ -969,534 +1458,48 @@
 
     </div>
 
+  </div>
+  
+    <script>
+      // Toggle entre Probabilidad y Estadística
+      const modeButtons = document.querySelectorAll('.mode-btn');
+      const sections = document.querySelectorAll('.content-section');
 
-
-      <!-- PASO 2: Dibujar la situación -->
-      <div class="step-box">
-        <div class="step-header">
-          <span class="step-number">2️⃣</span>
-          <span class="step-title">Dibujar / Visualizar la situación</span>
-          <span class="step-icon">▼</span>
-        </div>
-        <div class="step-content">
-          <p><strong>Un buen dibujo vale más que mil fórmulas. Representá el problema visualmente.</strong></p>
+      modeButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const mode = btn.dataset.mode;
           
-          <table class="reference-table">
-            <thead>
-              <tr>
-                <th>Tipo de ejercicio</th>
-                <th>Qué dibujar</th>
-                <th>Ejemplo mental</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Espacio muestral finito</td>
-                <td>Lista de resultados o diagrama</td>
-                <td>Dado: {1, 2, 3, 4, 5, 6}</td>
-              </tr>
-              <tr>
-                <td>Eventos A, B, A∪B, A∩B</td>
-                <td>Diagrama de Venn</td>
-                <td>Dos círculos superpuestos</td>
-              </tr>
-              <tr>
-                <td>Binomial</td>
-                <td>Árbol de éxito/fracaso</td>
-                <td>S→S→F→S (ramificaciones)</td>
-              </tr>
-              <tr>
-                <td>Hipergeométrica</td>
-                <td>Urna con dos grupos</td>
-                <td>Caja dividida: buenos | malos</td>
-              </tr>
-              <tr>
-                <td>Geométrica</td>
-                <td>Línea de intentos</td>
-                <td>❌ ❌ ❌ ✅</td>
-              </tr>
-              <tr>
-                <td>Poisson</td>
-                <td>Línea de tiempo con eventos</td>
-                <td>• • • • • (eventos raros)</td>
-              </tr>
-              <tr>
-                <td>Uniforme U(a,b)</td>
-                <td>Segmento del intervalo [a, b]</td>
-                <td>Recta horizontal entre dos puntos</td>
-              </tr>
-              <tr>
-                <td>Normal</td>
-                <td>Curva de campana + área</td>
-                <td>Curva simétrica con zona sombreada</td>
-              </tr>
-              <tr>
-                <td>Exponencial</td>
-                <td>Curva descendente rápida</td>
-                <td>Baja rápido desde x=0</td>
-              </tr>
-              <tr>
-                <td>Probabilidad condicional</td>
-                <td>Árbol con ramas</td>
-                <td>A → B y A → Bᶜ</td>
-              </tr>
-              <tr>
-                <td>Bayes</td>
-                <td>Árbol invertido</td>
-                <td>Causas → Efectos observables</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="visual-diagram">
-            <div class="diagram-title">Ejemplo: Diagrama de Venn para P(A∪B)</div>
-            <svg viewBox="0 0 400 250" style="max-width: 500px; margin: 0 auto;">
-              <circle cx="140" cy="125" r="80" fill="rgba(160, 255, 100, 0.3)" stroke="#a0ff66" stroke-width="2"/>
-              <circle cx="260" cy="125" r="80" fill="rgba(102, 255, 204, 0.3)" stroke="#66ffcc" stroke-width="2"/>
-              <text x="110" y="130" fill="#fff" font-size="24" font-weight="bold">A</text>
-              <text x="280" y="130" fill="#fff" font-size="24" font-weight="bold">B</text>
-              <text x="190" y="130" fill="#fff" font-size="20">A∩B</text>
-            </svg>
-          </div>
-
-          <div class="hint-box">
-            💡 <strong>Pro tip:</strong> Dibujá aunque sea un esquema simple. Te ayuda a no confundir "al menos" con "exactamente", o "con reposición" vs "sin reposición".
-          </div>
-        </div>
-      </div>
-
-      <!-- PASO 3: Encontrar exactamente lo que piden -->
-      <div class="step-box">
-        <div class="step-header">
-          <span class="step-number">3️⃣</span>
-          <span class="step-title">Encontrar EXACTAMENTE lo que piden (CRÍTICO)</span>
-          <span class="step-icon">▼</span>
-        </div>
-        <div class="step-content">
-          <p><strong>La diferencia entre aprobar y desaprobar suele estar acá. Traducí las palabras a matemática.</strong></p>
+          // Actualizar botones
+          modeButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
           
-          <div class="warning-box">
-            ⚠️ <strong>Errores comunes:</strong> Confundir "más de 3" (>3, o sea k≥4) con "al menos 3" (≥3). O confundir "antes de t" (<t) con "después de t" (>t).
-          </div>
-
-          <table class="reference-table">
-            <thead>
-              <tr>
-                <th>Frase en el enunciado</th>
-                <th>Traducción matemática</th>
-                <th>Interpretación visual</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>"Mayor que a"</td>
-                <td><code>P(X > a)</code></td>
-                <td>Todo lo que está a la derecha de a</td>
-              </tr>
-              <tr>
-                <td>"Mayor o igual que a"</td>
-                <td><code>P(X ≥ a)</code></td>
-                <td>Incluye el borde (a está adentro)</td>
-              </tr>
-              <tr>
-                <td>"Menor que a"</td>
-                <td><code>P(X < a)</code></td>
-                <td>Todo lo que está a la izquierda de a</td>
-              </tr>
-              <tr>
-                <td>"Menor o igual que a"</td>
-                <td><code>P(X ≤ a)</code></td>
-                <td>Incluye el borde</td>
-              </tr>
-              <tr>
-                <td>"Entre a y b"</td>
-                <td><code>P(a ≤ X ≤ b)</code></td>
-                <td>Región del medio</td>
-              </tr>
-              <tr>
-                <td>"A lo sumo a"</td>
-                <td><code>P(X ≤ a)</code></td>
-                <td>Máximo aceptable (hasta a)</td>
-              </tr>
-              <tr>
-                <td>"Al menos a"</td>
-                <td><code>P(X ≥ a)</code></td>
-                <td>Como mínimo eso (desde a)</td>
-              </tr>
-              <tr>
-                <td>"Exactamente k"</td>
-                <td><code>P(X = k)</code></td>
-                <td>Un solo valor puntual</td>
-              </tr>
-              <tr>
-                <td>"Más de k"</td>
-                <td><code>P(X > k)</code></td>
-                <td>k+1, k+2, k+3...</td>
-              </tr>
-              <tr>
-                <td>"Menos de k"</td>
-                <td><code>P(X < k)</code></td>
-                <td>0, 1, 2, ... hasta k−1</td>
-              </tr>
-              <tr>
-                <td>"Antes de tiempo t"</td>
-                <td><code>P(X < t)</code></td>
-                <td>Fallo temprano (exponencial)</td>
-              </tr>
-              <tr>
-                <td>"Después de t"</td>
-                <td><code>P(X > t)</code></td>
-                <td>Vida útil restante</td>
-              </tr>
-              <tr>
-                <td>"Complemento de A"</td>
-                <td><code>P(Aᶜ) = 1 − P(A)</code></td>
-                <td>Lo que NO ocurre</td>
-              </tr>
-              <tr>
-                <td>"Dado que B ocurrió"</td>
-                <td><code>P(A|B)</code></td>
-                <td>Probabilidad condicional</td>
-              </tr>
-              <tr>
-                <td>"A y B ocurren juntos"</td>
-                <td><code>P(A∩B)</code></td>
-                <td>Intersección (ambos a la vez)</td>
-              </tr>
-              <tr>
-                <td>"A o B ocurren"</td>
-                <td><code>P(A∪B)</code></td>
-                <td>Unión (al menos uno)</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="hint-box">
-            💡 <strong>Estrategia:</strong> Subrayá las palabras clave en el enunciado. Escribilas en lenguaje matemático ANTES de aplicar fórmulas.
-          </div>
-        </div>
-      </div>
-
-      <!-- PASO 4: Qué distribución, qué fórmula, cómo calcular -->
-      <div class="step-box">
-        <div class="step-header">
-          <span class="step-number">4️⃣</span>
-          <span class="step-title">Aplicar la distribución correcta y calcular</span>
-          <span class="step-icon">▼</span>
-        </div>
-        <div class="step-content">
-          <h3 style="color: #a0ff66; margin-bottom: 20px;">📚 Guía de Distribuciones</h3>
-          
-          <!-- Espacio Muestral Finito -->
-          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(160, 255, 100, 0.08);">
-            <h4>🎲 ESPACIO MUESTRAL FINITO (Equiprobable)</h4>
-            <p><strong>Usar cuando:</strong> Dados, cartas, bolillas, combinatoria simple</p>
-            
-            <table class="reference-table">
-              <thead>
-                <tr>
-                  <th>Situación</th>
-                  <th>Fórmula</th>
-                  <th>Nota</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Probabilidad básica</td>
-                  <td><code>P(A) = favorables / totales</code></td>
-                  <td>La más usada</td>
-                </tr>
-                <tr>
-                  <td>Unión de eventos</td>
-                  <td><code>P(A∪B) = P(A) + P(B) − P(A∩B)</code></td>
-                  <td>Evita doble conteo</td>
-                </tr>
-                <tr>
-                  <td>Complemento</td>
-                  <td><code>P(Aᶜ) = 1 − P(A)</code></td>
-                  <td>Muy útil siempre</td>
-                </tr>
-                <tr>
-                  <td>Condicional</td>
-                  <td><code>P(A|B) = P(A∩B) / P(B)</code></td>
-                  <td>Dado que B ocurrió</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <!-- Binomial -->
-          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 215, 100, 0.08);">
-            <h4>🔢 BINOMIAL → X ~ B(n, p)</h4>
-            <p><strong>Usar cuando:</strong> n ensayos independientes, 2 resultados (éxito/fracaso), probabilidad constante p</p>
-            <p><strong>Parámetros:</strong> n = número de ensayos, p = probabilidad de éxito, k = número de éxitos</p>
-            
-            <div class="formula-box">
-              P(X = k) = C(n,k) × p^k × (1−p)^(n−k)
-            </div>
-            
-            <table class="reference-table">
-              <thead>
-                <tr>
-                  <th>Probabilidad pedida</th>
-                  <th>Cómo calcular</th>
-                  <th>Tip</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Exactamente k éxitos</td>
-                  <td><code>P(X = k)</code></td>
-                  <td>Aplicá la fórmula directa</td>
-                </tr>
-                <tr>
-                  <td>A lo sumo k</td>
-                  <td><code>P(X ≤ k) = Σ P(X=i) para i=0 hasta k</code></td>
-                  <td>Suma acumulada</td>
-                </tr>
-                <tr>
-                  <td>Al menos k</td>
-                  <td><code>P(X ≥ k) = 1 − P(X < k)</code></td>
-                  <td>Usá complemento (más fácil)</td>
-                </tr>
-                <tr>
-                  <td>Más de k</td>
-                  <td><code>P(X > k) = 1 − P(X ≤ k)</code></td>
-                  <td>Complemento también</td>
-                </tr>
-              </tbody>
-            </table>
-            
-            <div class="hint-box">
-              💡 <strong>Media y Varianza:</strong> E[X] = n×p, Var(X) = n×p×(1−p)
-            </div>
-          </div>
-
-          <!-- Poisson -->
-          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 180, 100, 0.08);">
-            <h4>⚡ POISSON → X ~ Poisson(λ)</h4>
-            <p><strong>Usar cuando:</strong> Eventos raros en un intervalo (tiempo/espacio), tasa promedio constante</p>
-            <p><strong>Parámetro:</strong> λ = tasa promedio de eventos en el intervalo</p>
-            
-            <div class="formula-box">
-              P(X = k) = (e^(−λ) × λ^k) / k!
-            </div>
-            
-            <table class="reference-table">
-              <thead>
-                <tr>
-                  <th>Situación</th>
-                  <th>Cómo ajustar λ</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Tasa: λ₀ = 0.1 defectos/m²<br>Área: 1 m²</td>
-                  <td>λ = 0.1 × 1 = 0.1</td>
-                </tr>
-                <tr>
-                  <td>Tasa: λ₀ = 0.1 defectos/m²<br>Área: 10 m²</td>
-                  <td>λ = 0.1 × 10 = 1.0</td>
-                </tr>
-                <tr>
-                  <td>Tasa: 5 llamadas/hora<br>Tiempo: 30 min</td>
-                  <td>λ = 5 × 0.5 = 2.5</td>
-                </tr>
-              </tbody>
-            </table>
-            
-            <div class="hint-box">
-              💡 <strong>Propiedad:</strong> Si X~Poisson(λ₁) y Y~Poisson(λ₂), entonces X+Y~Poisson(λ₁+λ₂)
-            </div>
-          </div>
-
-          <!-- Geométrica -->
-          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(102, 255, 204, 0.08);">
-            <h4>🎯 GEOMÉTRICA → X ~ Geom(p)</h4>
-            <p><strong>Usar cuando:</strong> Número de ensayos hasta el primer éxito</p>
-            <p><strong>Parámetro:</strong> p = probabilidad de éxito en cada ensayo</p>
-            
-            <div class="formula-box">
-              P(X = k) = (1−p)^(k−1) × p
-            </div>
-            
-            <p><strong>Interpretación:</strong> k−1 fracasos seguidos del éxito en el intento k</p>
-            
-            <div class="hint-box">
-              💡 <strong>Media:</strong> E[X] = 1/p (promedio de intentos necesarios)
-            </div>
-          </div>
-
-          <!-- Hipergeométrica -->
-          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 150, 200, 0.08);">
-            <h4>🎁 HIPERGEOMÉTRICA → X ~ H(N, K, n)</h4>
-            <p><strong>Usar cuando:</strong> Extracción SIN reposición de una población finita</p>
-            <p><strong>Parámetros:</strong></p>
-            <ul>
-              <li>N = tamaño población total</li>
-              <li>K = número de éxitos en la población</li>
-              <li>n = tamaño de la muestra extraída</li>
-            </ul>
-            
-            <div class="formula-box">
-              P(X = k) = [C(K,k) × C(N−K, n−k)] / C(N,n)
-            </div>
-            
-            <div class="warning-box">
-              ⚠️ <strong>Diferencia con Binomial:</strong> Binomial = CON reposición, Hipergeométrica = SIN reposición
-            </div>
-          </div>
-
-          <!-- Normal -->
-          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(160, 200, 255, 0.08);">
-            <h4>📊 NORMAL → X ~ N(μ, σ²)</h4>
-            <p><strong>Usar cuando:</strong> Datos que se distribuyen simétricamente alrededor de un promedio</p>
-            <p><strong>Parámetros:</strong> μ = media, σ = desviación estándar</p>
-            
-            <div class="formula-box">
-              Z = (X − μ) / σ<br>
-              Luego buscás P(Z) en tabla
-            </div>
-            
-            <table class="reference-table">
-              <thead>
-                <tr>
-                  <th>Querés calcular</th>
-                  <th>Procedimiento</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>P(X < a)</td>
-                  <td>Z = (a−μ)/σ → Buscá Φ(Z) en tabla</td>
-                </tr>
-                <tr>
-                  <td>P(X > a)</td>
-                  <td>1 − P(X < a) = 1 − Φ(Z)</td>
-                </tr>
-                <tr>
-                  <td>P(a < X < b)</td>
-                  <td>Φ(Zb) − Φ(Za)</td>
-                </tr>
-              </tbody>
-            </table>
-            
-            <div class="hint-box">
-              💡 <strong>Regla 68-95-99.7:</strong> 68% dentro de ±1σ, 95% dentro de ±2σ, 99.7% dentro de ±3σ
-            </div>
-          </div>
-
-          <!-- Uniforme -->
-          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 255, 150, 0.08);">
-            <h4>📏 UNIFORME → X ~ U(a, b)</h4>
-            <p><strong>Usar cuando:</strong> Todos los valores en [a, b] son igualmente probables</p>
-            
-            <div class="formula-box">
-              P(c < X < d) = (d − c) / (b − a)<br>
-              f(x) = 1/(b−a) para x ∈ [a,b]
-            </div>
-            
-            <div class="hint-box">
-              💡 <strong>Media:</strong> E[X] = (a+b)/2, <strong>Varianza:</strong> Var(X) = (b−a)²/12
-            </div>
-          </div>
-
-          <!-- Exponencial -->
-          <div class="distribution-card" style="margin-bottom: 30px; background: rgba(255, 120, 120, 0.08);">
-            <h4>⏱️ EXPONENCIAL → X ~ Exp(λ)</h4>
-            <p><strong>Usar cuando:</strong> Tiempo entre eventos en un proceso de Poisson</p>
-            <p><strong>Parámetro:</strong> λ = tasa de ocurrencia</p>
-            
-            <div class="formula-box">
-              P(X > t) = e^(−λt)<br>
-              P(X ≤ t) = 1 − e^(−λt)
-            </div>
-            
-            <div class="hint-box">
-              💡 <strong>Propiedad sin memoria:</strong> P(X > s+t | X > s) = P(X > t)
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- PASO 5: Interpretar resultado -->
-      <div class="step-box">
-        <div class="step-header">
-          <span class="step-number">5️⃣</span>
-          <span class="step-title">Interpretar el resultado</span>
-          <span class="step-icon">▼</span>
-        </div>
-        <div class="step-content">
-          <p><strong>Un número sin contexto no sirve. Siempre preguntate:</strong></p>
-          
-          <div class="quick-reference">
-            <h3>✅ Checklist de interpretación</h3>
-            <ul style="list-style: none; padding: 0;">
-              <li style="margin-bottom: 15px;">
-                <strong style="color: #a0ff66;">🔢 ¿Tiene sentido el número?</strong>
-                <p>Si te da P = 1.5 o P = −0.2, algo está mal. Las probabilidades van de 0 a 1.</p>
-              </li>
-              <li style="margin-bottom: 15px;">
-                <strong style="color: #a0ff66;">📊 ¿Es un valor razonable?</strong>
-                <p>Si calculás P(defecto) = 0.95 en un proceso de alta calidad, revisá los cálculos.</p>
-              </li>
-              <li style="margin-bottom: 15px;">
-                <strong style="color: #a0ff66;">📖 ¿Podés explicarlo en palabras simples?</strong>
-                <p>Ejemplo: "Hay un 13.5% de probabilidad de no encontrar defectos en 20 m²"</p>
-              </li>
-              <li style="margin-bottom: 15px;">
-                <strong style="color: #a0ff66;">🎯 ¿Responde exactamente lo que pedían?</strong>
-                <p>Si pedían P(X > 5) y calculaste P(X ≥ 5), no es lo mismo.</p>
-              </li>
-              <li style="margin-bottom: 15px;">
-                <strong style="color: #a0ff66;">💡 ¿Qué implica para la situación real?</strong>
-                <p>¿Es un evento raro? ¿Frecuente? ¿Requiere acción?</p>
-              </li>
-            </ul>
-          </div>
-        </div>
-    </div>
-
-  <script>
-    // Toggle entre Probabilidad y Estadística
-    const modeButtons = document.querySelectorAll('.mode-btn');
-    const sections = document.querySelectorAll('.content-section');
-
-    modeButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const mode = btn.dataset.mode;
-        
-        // Actualizar botones
-        modeButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        // Mostrar sección correspondiente
-        sections.forEach(section => {
-          section.classList.remove('active');
-          if (section.id === mode) {
-            section.classList.add('active');
-          }
+          // Mostrar sección correspondiente
+          sections.forEach(section => {
+            section.classList.remove('active');
+            if (section.id === mode) {
+              section.classList.add('active');
+            }
+          });
         });
       });
-    });
 
-    // Expandir/contraer pasos
-    document.querySelectorAll('.step-header').forEach(header => {
-      header.addEventListener('click', () => {
-        const stepBox = header.parentElement;
-        stepBox.classList.toggle('open');
+      // Expandir/contraer pasos
+      document.querySelectorAll('.step-header').forEach(header => {
+        header.addEventListener('click', () => {
+          const stepBox = header.parentElement;
+          stepBox.classList.toggle('open');
+        });
       });
-    });
 
-    // Botón volver
-    document.getElementById('back-btn').addEventListener('click', () => {
-      if (document.referrer && document.referrer !== window.location.href) {
-        history.back();
-      } else {
-        window.location.href = './temario.html';
-      }
-    });
-  </script>
+      // Botón volver
+      document.getElementById('back-btn').addEventListener('click', () => {
+        if (document.referrer && document.referrer !== window.location.href) {
+          history.back();
+        } else {
+          window.location.href = './temario.html';
+        }
+      });
+    </script>
+
 </body>
 </html>

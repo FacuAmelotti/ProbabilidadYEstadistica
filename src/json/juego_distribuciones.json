@@ -1,0 +1,1104 @@
+[
+  {
+    "id": 1,
+    "pregunta": "Se lanza una moneda 3 veces. ¿Cuál distribución usarías para calcular la probabilidad de obtener exactamente 2 caras?",
+    "descripcion": "Experimento con resultados binarios (cara/cruz) repetido un número fijo de veces",
+    "respuestaCorrecta": "Binomial",
+    "explicacion": "La distribución Binomial es ideal cuando tienes un número fijo de ensayos independientes, cada uno con dos posibles resultados (éxito/fracaso).",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 2,
+    "pregunta": "En una fábrica, los defectos siguen una tasa promedio de 0.5 defectos por hora. ¿Qué distribución modela mejor la probabilidad de defectos en un período dado?",
+    "descripcion": "Eventos que ocurren en intervalos de tiempo o espacio con una tasa constante promedio",
+    "respuestaCorrecta": "Poisson",
+    "explicacion": "La distribución Poisson se usa para modelar el número de eventos que ocurren en un intervalo de tiempo o espacio fijo, cuando los eventos ocurren con una tasa constante conocida.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 3,
+    "pregunta": "¿Qué distribución seguiría la vida útil de un componente electrónico antes de fallar?",
+    "descripcion": "Tiempo hasta que ocurre un evento específico (fallo, muerte, etc.)",
+    "respuestaCorrecta": "Exponencial",
+    "explicacion": "La distribución Exponencial modela el tiempo hasta que ocurre un evento en un proceso de Poisson. Es común en análisis de supervivencia y confiabilidad.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 4,
+    "pregunta": "¿Qué distribución tiene la altura de los estudiantes universitarios?",
+    "descripcion": "Variable continua que resulta de la suma de múltiples factores independientes",
+    "respuestaCorrecta": "Normal",
+    "explicacion": "La distribución Normal es la más importante en estadística. Muchas variables en la naturaleza siguen esta distribución debido al Teorema del Límite Central.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Unifirme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 5,
+    "pregunta": "Se extraen cartas de una baraja sin reemplazo. ¿Qué distribución usarías para el número de Ases obtenidos en 5 extracciones?",
+    "descripcion": "Muestras tomadas sin reemplazo de una población finita con dos tipos de elementos",
+    "respuestaCorrecta": "Hipergeométrica",
+    "explicacion": "La distribución Hipergeométrica se usa cuando se muestrea sin reemplazo de una población finita que contiene exactamente dos tipos de elementos.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 6,
+    "pregunta": "¿En cuántos ensayos occurirá el primer éxito si cada ensayo tiene probabilidad de éxito p = 0.3?",
+    "descripcion": "Número de ensayos requeridos hasta obtener el primer éxito",
+    "respuestaCorrecta": "Geométrica",
+    "explicacion": "La distribución Geométrica modela el número de ensayos necesarios hasta obtener el primer éxito en una secuencia de ensayos de Bernoulli independientes.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 7,
+    "pregunta": "¿Qué distribución seguiría un dado justo?",
+    "descripcion": "Todos los resultados tienen la misma probabilidad",
+    "respuestaCorrecta": "Uniforme",
+    "explicacion": "La distribución Uniforme discreta ocurre cuando todos los resultados posibles tienen la misma probabilidad de ocurrir.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 8,
+    "pregunta": "¿Qué distribución usarías para analizar si las frecuencias observadas de un experimento coinciden con las frecuencias esperadas?",
+    "descripcion": "Prueba de bondad de ajuste para comparar frecuencias observadas vs esperadas",
+    "respuestaCorrecta": "Chi-Cuadrado",
+    "explicacion": "La distribución Chi-Cuadrado se usa principalmente en pruebas de hipótesis para comparar frecuencias observadas con frecuencias esperadas bajo una hipótesis nula.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 9,
+    "pregunta": "Con una muestra pequeña (n < 30) de una población con varianza desconocida, ¿qué distribución usarías para intervalos de confianza de la media?",
+    "descripcion": "Inferencia estadística con muestras pequeñas y varianza poblacional desconocida",
+    "respuestaCorrecta": "t de Student",
+    "explicacion": "La distribución t de Student se usa cuando tenemos una muestra pequeña y la varianza poblacional es desconocida. Es fundamental en inferencia estadística.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 10,
+    "pregunta": "¿Qué distribución usarías para comparar las varianzas de dos poblaciones normales independientes?",
+    "descripcion": "Prueba de hipótesis para comparar dos varianzas poblacionales",
+    "respuestaCorrecta": "F de Fisher",
+    "explicacion": "La distribución F de Fisher se usa principalmente para comparar varianzas de dos o más poblaciones normales y en análisis de varianza (ANOVA).",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 11,
+    "pregunta": "Un jugador de básquet tiene una probabilidad de 0.75 de anotar un tiro libre. ¿Qué distribución modela el resultado de un único tiro?",
+    "descripcion": "Un solo ensayo con dos posibles resultados (éxito o fracaso)",
+    "respuestaCorrecta": "Bernoulli",
+    "explicacion": "La distribución Bernoulli modela un experimento aleatorio con exactamente un ensayo que tiene dos resultados posibles: éxito (con probabilidad p) o fracaso (con probabilidad 1-p).",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 12,
+    "pregunta": "Una central telefónica recibe en promedio 2 llamadas por minuto. ¿Qué distribución usarías para calcular la probabilidad de recibir exactamente 5 llamadas en 3 minutos?",
+    "descripcion": "Conteo de eventos raros en un intervalo de tiempo con tasa constante",
+    "respuestaCorrecta": "Poisson",
+    "explicacion": "La distribución Poisson es apropiada cuando se cuenta el número de eventos que ocurren en un intervalo fijo con una tasa promedio conocida y constante.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 13,
+    "pregunta": "¿Cuántos lanzamientos de un dado necesitas hasta obtener el primer 6?",
+    "descripcion": "Conteo de intentos hasta el primer éxito en ensayos independientes",
+    "respuestaCorrecta": "Geométrica",
+    "explicacion": "La distribución Geométrica cuenta cuántos ensayos independientes se necesitan hasta lograr el primer éxito, donde cada ensayo tiene la misma probabilidad de éxito.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 14,
+    "pregunta": "El tiempo entre llegadas de clientes a un banco sigue una distribución específica. Si los clientes llegan según un proceso de Poisson, ¿qué distribución modela el tiempo entre dos llegadas consecutivas?",
+    "descripcion": "Tiempo de espera entre eventos en un proceso de Poisson",
+    "respuestaCorrecta": "Exponencial",
+    "explicacion": "Si los eventos ocurren según un proceso de Poisson, el tiempo entre eventos consecutivos sigue una distribución Exponencial. Es la contraparte continua de la distribución Geométrica.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 15,
+    "pregunta": "Un examen tiene 20 preguntas de verdadero/falso. Si un estudiante adivina todas las respuestas, ¿qué distribución modela el número de respuestas correctas?",
+    "descripcion": "Número de éxitos en un número fijo de ensayos independientes",
+    "respuestaCorrecta": "Binomial",
+    "explicacion": "Con un número fijo de ensayos (20 preguntas), cada uno con dos resultados posibles y probabilidad constante (0.5), usamos la distribución Binomial para modelar el número total de éxitos.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 16,
+    "pregunta": "Una urna contiene 10 bolas rojas y 15 azules. Extraes 8 bolas sin reemplazo. ¿Qué distribución modela el número de bolas rojas obtenidas?",
+    "descripcion": "Muestreo sin reemplazo de una población finita con dos categorías",
+    "respuestaCorrecta": "Hipergeométrica",
+    "explicacion": "Cuando se muestrea sin reemplazo de una población finita dividida en dos tipos, la distribución Hipergeométrica modela el número de elementos de un tipo específico en la muestra.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 17,
+    "pregunta": "Los errores de medición en un instrumento de precisión siguen una distribución simétrica con media cero. ¿Qué distribución es más apropiada?",
+    "descripcion": "Variable continua simétrica resultante de múltiples factores aleatorios",
+    "respuestaCorrecta": "Normal",
+    "explicacion": "Los errores de medición generalmente siguen una distribución Normal debido al Teorema del Límite Central, ya que son el resultado de muchas pequeñas perturbaciones aleatorias independientes.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 18,
+    "pregunta": "Un generador de números aleatorios produce valores entre 0 y 1 donde cada valor tiene la misma probabilidad. ¿Qué distribución sigue?",
+    "descripcion": "Variable continua donde todos los valores en un intervalo son equiprobables",
+    "respuestaCorrecta": "Uniforme",
+    "explicacion": "La distribución Uniforme continua asigna la misma densidad de probabilidad a todos los valores dentro de un intervalo [a, b]. Es fundamental en simulación y generación de números aleatorios.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 19,
+    "pregunta": "Quieres probar si la proporción de votos para diferentes candidatos difiere de lo esperado. ¿Qué distribución usarías para esta prueba?",
+    "descripcion": "Prueba de independencia o bondad de ajuste con datos categóricos",
+    "respuestaCorrecta": "Chi-Cuadrado",
+    "explicacion": "La prueba Chi-Cuadrado de bondad de ajuste o independencia se usa para analizar datos categóricos y determinar si las frecuencias observadas difieren significativamente de las esperadas.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 20,
+    "pregunta": "Tienes dos muestras de 15 estudiantes cada una y quieres comparar sus promedios de calificaciones. La varianza poblacional es desconocida. ¿Qué distribución usarías?",
+    "descripcion": "Comparación de medias con muestras pequeñas y varianza desconocida",
+    "respuestaCorrecta": "t de Student",
+    "explicacion": "La prueba t de Student es apropiada para comparar medias cuando las muestras son pequeñas y la varianza poblacional es desconocida. Se usa tanto para una muestra, dos muestras independientes o pareadas.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 21,
+    "pregunta": "Un investigador quiere determinar si tres grupos de tratamiento tienen varianzas significativamente diferentes. ¿Qué distribución usa en ANOVA?",
+    "descripcion": "Análisis de varianza para comparar múltiples grupos",
+    "respuestaCorrecta": "F de Fisher",
+    "explicacion": "La distribución F de Fisher es fundamental en ANOVA (Análisis de Varianza) para comparar las varianzas entre grupos y dentro de grupos, determinando si las medias de múltiples grupos difieren significativamente.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 22,
+    "pregunta": "El número de accidentes en una autopista es en promedio 3 por semana. ¿Qué distribución modela la probabilidad de que ocurran exactamente 2 accidentes esta semana?",
+    "descripcion": "Eventos raros con tasa promedio conocida en un período fijo",
+    "respuestaCorrecta": "Poisson",
+    "explicacion": "Para eventos raros que ocurren independientemente con una tasa promedio constante en un período de tiempo fijo, la distribución Poisson es el modelo apropiado.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 23,
+    "pregunta": "Una máquina tiene una tasa de fallas de 0.1 por hora. ¿Qué distribución modela el tiempo hasta la primera falla?",
+    "descripcion": "Tiempo continuo hasta que ocurre el primer evento en un proceso de Poisson",
+    "respuestaCorrecta": "Exponencial",
+    "explicacion": "La distribución Exponencial modela el tiempo de espera hasta el primer evento en un proceso de Poisson. Es memoryless: la probabilidad de falla futura no depende del tiempo ya transcurrido.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 24,
+    "pregunta": "Quieres estimar el intervalo de confianza para la media poblacional usando una muestra de 8 observaciones. La población es normal pero su varianza es desconocida. ¿Qué distribución usas?",
+    "descripcion": "Inferencia con muestra pequeña de población normal con varianza desconocida",
+    "respuestaCorrecta": "t de Student",
+    "explicacion": "Con muestras pequeñas (n < 30) de una población normal y varianza desconocida, se usa la distribución t de Student en lugar de la Normal para construcción de intervalos de confianza y pruebas de hipótesis.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 25,
+    "pregunta": "En una lotería hay 100 boletos: 5 ganadores y 95 perdedores. Compras 10 boletos. ¿Qué distribución modela el número de boletos ganadores que obtienes?",
+    "descripcion": "Extracción sin reemplazo de población finita con dos tipos de elementos",
+    "respuestaCorrecta": "Hipergeométrica",
+    "explicacion": "La distribución Hipergeométrica es apropiada porque estás muestreando sin reemplazo de una población finita (100 boletos) que contiene dos tipos de elementos (ganadores y perdedores).",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  }
+  ,
+  {
+    "id": 26,
+    "pregunta": "Un vendedor hace llamadas de ventas con probabilidad de éxito 0.2. ¿Qué distribución modela si la próxima llamada será exitosa o no?",
+    "descripcion": "Resultado de un único experimento aleatorio con dos resultados posibles",
+    "respuestaCorrecta": "Bernoulli",
+    "explicacion": "La distribución Bernoulli modela un único ensayo con exactamente dos resultados posibles. Es el caso más simple de variable aleatoria discreta.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 27,
+    "pregunta": "Los pesos de los recién nacidos en un hospital tienen media 3.3 kg y desviación estándar 0.5 kg. ¿Qué distribución siguen estos pesos?",
+    "descripcion": "Característica biológica continua influenciada por múltiples factores genéticos y ambientales",
+    "respuestaCorrecta": "Normal",
+    "explicacion": "Las características biológicas como peso, altura, presión arterial, etc., generalmente siguen una distribución Normal debido a que son el resultado de múltiples factores independientes.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 28,
+    "pregunta": "Un control de calidad inspecciona 50 productos de un lote grande. Cada producto tiene probabilidad 0.05 de ser defectuoso. ¿Qué distribución modela el número de defectuosos encontrados?",
+    "descripcion": "Número fijo de ensayos independientes con probabilidad constante de éxito",
+    "respuestaCorrecta": "Binomial",
+    "explicacion": "Con n ensayos independientes, cada uno con la misma probabilidad p de éxito, y contando el número total de éxitos, usamos la distribución Binomial.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 29,
+    "pregunta": "El número de errores tipográficos en un libro de 500 páginas sigue una tasa promedio de 0.8 errores por página. ¿Qué distribución modela los errores en todo el libro?",
+    "descripcion": "Conteo de eventos dispersos en un espacio o tiempo con densidad constante",
+    "respuestaCorrecta": "Poisson",
+    "explicacion": "La distribución Poisson modela el conteo de eventos raros distribuidos en un espacio o tiempo cuando la tasa promedio es constante. Aplica tanto para intervalos de tiempo como de espacio (páginas, áreas, etc.).",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 30,
+    "pregunta": "Un jugador lanza dardos hasta acertar en el centro. Cada lanzamiento tiene probabilidad 0.15 de acertar. ¿Qué distribución modela el número de lanzamientos necesarios?",
+    "descripcion": "Número de intentos hasta lograr el primer éxito en ensayos independientes",
+    "respuestaCorrecta": "Geométrica",
+    "explicacion": "La distribución Geométrica modela el número de ensayos necesarios para obtener el primer éxito cuando los ensayos son independientes y tienen probabilidad constante de éxito.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 31,
+    "pregunta": "Una estación de servicio tiene tiempos de llegada de clientes que siguen un proceso de Poisson. ¿Qué distribución modela el tiempo que transcurre hasta que llega el próximo cliente?",
+    "descripcion": "Tiempo de espera hasta el próximo evento en un proceso memoryless",
+    "respuestaCorrecta": "Exponencial",
+    "explicacion": "En un proceso de Poisson, los tiempos entre eventos consecutivos siguen una distribución Exponencial. Esta distribución tiene la propiedad de no tener memoria (memoryless).",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 32,
+    "pregunta": "Un comité de 5 personas se selecciona de un grupo de 12 hombres y 8 mujeres. ¿Qué distribución modela el número de mujeres en el comité?",
+    "descripcion": "Selección sin reemplazo de subgrupo de población finita dividida en categorías",
+    "respuestaCorrecta": "Hipergeométrica",
+    "explicacion": "Al seleccionar sin reemplazo de una población finita con dos tipos de elementos (hombres y mujeres), el número de elementos de un tipo en la muestra sigue una distribución Hipergeométrica.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 33,
+    "pregunta": "Un simulador genera números aleatorios entre 5 y 15, donde cada número tiene la misma probabilidad de aparecer. ¿Qué distribución sigue?",
+    "descripcion": "Valores continuos equiprobables en un rango definido",
+    "respuestaCorrecta": "Uniforme",
+    "explicacion": "La distribución Uniforme continua asigna igual probabilidad a todos los valores en un intervalo. Es la distribución de máxima entropía cuando solo conocemos los límites del rango.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 34,
+    "pregunta": "Quieres probar si hay asociación entre el género y la preferencia política usando una tabla de contingencia. ¿Qué distribución usarías?",
+    "descripcion": "Prueba de independencia entre dos variables categóricas",
+    "respuestaCorrecta": "Chi-Cuadrado",
+    "explicacion": "La prueba Chi-Cuadrado de independencia se usa para determinar si existe asociación significativa entre dos variables categóricas mediante el análisis de una tabla de contingencia.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 35,
+    "pregunta": "Tienes una muestra de 12 pacientes y quieres probar si su presión arterial promedio difiere de 120 mmHg. La varianza poblacional es desconocida. ¿Qué distribución usas?",
+    "descripcion": "Prueba de hipótesis para la media con muestra pequeña y varianza desconocida",
+    "respuestaCorrecta": "t de Student",
+    "explicacion": "Con muestras pequeñas y varianza poblacional desconocida, la estadística de prueba para la media sigue una distribución t de Student. A medida que n aumenta, se aproxima a la Normal.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 36,
+    "pregunta": "Quieres comparar la efectividad de 4 métodos de enseñanza diferentes analizando las varianzas entre grupos. ¿Qué distribución usa el estadístico de prueba?",
+    "descripcion": "Comparación de múltiples grupos mediante análisis de varianza",
+    "respuestaCorrecta": "F de Fisher",
+    "explicacion": "En ANOVA, el estadístico F compara la varianza entre grupos con la varianza dentro de grupos. Sigue una distribución F de Fisher bajo la hipótesis nula de igualdad de medias.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 37,
+    "pregunta": "Un sitio web recibe en promedio 100 visitas por hora. ¿Qué distribución modela el número de visitas en los próximos 30 minutos?",
+    "descripcion": "Conteo de eventos en intervalo de tiempo con tasa promedio conocida",
+    "respuestaCorrecta": "Poisson",
+    "explicacion": "La distribución Poisson es apropiada para modelar el número de eventos (visitas) en un intervalo de tiempo fijo cuando ocurren con una tasa promedio constante y son independientes.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 38,
+    "pregunta": "Los tiempos de servicio en un cajero automático tienen una media de 2 minutos. Asumiendo distribución exponencial, ¿qué distribución modela este tiempo?",
+    "descripcion": "Duración de servicio o tiempo de espera en sistemas de colas",
+    "respuestaCorrecta": "Exponencial",
+    "explicacion": "Los tiempos de servicio en teoría de colas frecuentemente se modelan con distribución Exponencial. Esta distribución es apropiada cuando la tasa de servicio es constante y el proceso no tiene memoria.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 39,
+    "pregunta": "Los coeficientes intelectuales (CI) en una población tienen media 100 y desviación estándar 15. ¿Qué distribución siguen estos valores?",
+    "descripcion": "Variable psicométrica estandarizada con forma de campana",
+    "respuestaCorrecta": "Normal",
+    "explicacion": "Los tests de CI están diseñados específicamente para producir distribuciones Normales con media 100 y desviación estándar 15. Muchas variables psicométricas siguen aproximadamente esta distribución.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 40,
+    "pregunta": "Quieres determinar si la variabilidad en los tiempos de reacción es mayor en un grupo experimental que en el grupo control. ¿Qué distribución usas para comparar las varianzas?",
+    "descripcion": "Comparación de dos varianzas poblacionales de grupos independientes",
+    "respuestaCorrecta": "F de Fisher",
+    "explicacion": "Para comparar dos varianzas poblacionales, se usa el cociente de varianzas muestrales, que sigue una distribución F de Fisher cuando ambas poblaciones son normales e independientes.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  }
+  ,
+  {
+    "id": 41,
+    "pregunta": "Una app de delivery tiene una tasa promedio de 0.02 cancelaciones por orden. En 1000 órdenes, ¿qué distribución modela el número de cancelaciones?",
+    "descripcion": "Eventos raros en un gran número de ensayos con probabilidad pequeña",
+    "respuestaCorrecta": "Poisson",
+    "explicacion": "Cuando n es grande y p es pequeña (np < 10), la distribución Binomial se aproxima muy bien por una Poisson. Este es el caso típico de eventos raros en muchos ensayos.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 42,
+    "pregunta": "Un sensor decide si una pieza pasa o no pasa el control de calidad. ¿Qué distribución modela esta única decisión?",
+    "descripcion": "Variable aleatoria dicotómica con un solo ensayo",
+    "respuestaCorrecta": "Bernoulli",
+    "explicacion": "Cualquier variable que tome solo dos valores (pasa/no pasa, éxito/fracaso, 0/1) en un único ensayo sigue una distribución Bernoulli. Es la distribución discreta más simple.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 43,
+    "pregunta": "Los tiempos de respuesta de un servidor web siguen una distribución con cola larga donde la mayoría son rápidos pero algunos son muy lentos. Si los eventos llegan según Poisson, ¿qué distribución modela estos tiempos?",
+    "descripcion": "Tiempos de respuesta o duración entre eventos en sistemas computacionales",
+    "respuestaCorrecta": "Exponencial",
+    "explicacion": "La distribución Exponencial modela tiempos de espera y duraciones en sistemas donde los eventos ocurren aleatoriamente. Tiene la característica de cola larga (algunos valores muy altos).",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 44,
+    "pregunta": "Las calificaciones finales de un curso con 200 estudiantes forman una curva de campana simétrica. ¿Qué distribución siguen?",
+    "descripcion": "Agregación de múltiples factores que produce distribución simétrica en forma de campana",
+    "respuestaCorrecta": "Normal",
+    "explicacion": "Las calificaciones son el resultado de múltiples factores (estudio, habilidad, suerte, etc.). Por el Teorema del Límite Central, la suma de muchas variables aleatorias independientes tiende a una distribución Normal.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 45,
+    "pregunta": "Lanzas una moneda repetidamente hasta obtener la primera cara. ¿Qué distribución modela cuántos lanzamientos necesitas?",
+    "descripcion": "Ensayos repetidos hasta el primer éxito en experimento binario",
+    "respuestaCorrecta": "Geométrica",
+    "explicacion": "La distribución Geométrica es el modelo natural para el número de ensayos hasta el primer éxito. Es la versión discreta de la distribución Exponencial.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 46,
+    "pregunta": "Un equipo de fútbol tiene 25 jugadores: 15 nacionales y 10 extranjeros. El entrenador selecciona 11 jugadores al azar para el partido. ¿Qué distribución modela el número de jugadores extranjeros seleccionados?",
+    "descripcion": "Selección aleatoria sin reemplazo de grupo heterogéneo finito",
+    "respuestaCorrecta": "Hipergeométrica",
+    "explicacion": "Al seleccionar una muestra sin reemplazo de una población finita con dos categorías conocidas, usamos la distribución Hipergeométrica. Es crucial que sea sin reemplazo y población finita.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 47,
+    "pregunta": "Una ruleta tiene números del 1 al 36 más el 0. ¿Qué distribución sigue el resultado de un único giro?",
+    "descripcion": "Selección aleatoria equiprobable de valores discretos",
+    "respuestaCorrecta": "Uniforme",
+    "explicacion": "La distribución Uniforme discreta aplica cuando hay un número finito de resultados posibles, cada uno con la misma probabilidad. Es el principio de equiprobabilidad.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 48,
+    "pregunta": "Estás probando si un dado es justo comparando las frecuencias observadas de cada cara con la frecuencia esperada de 1/6. ¿Qué distribución usa la prueba?",
+    "descripcion": "Prueba de equidad o bondad de ajuste para distribución categórica",
+    "respuestaCorrecta": "Chi-Cuadrado",
+    "explicacion": "La prueba Chi-Cuadrado de bondad de ajuste compara frecuencias observadas con las esperadas bajo una hipótesis nula. Es perfecta para probar si un dado es justo o si datos siguen una distribución específica.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 49,
+    "pregunta": "Tienes dos muestras independientes de tamaños 10 y 12, ambas de poblaciones normales. Quieres probar si sus medias son iguales con varianzas desconocidas. ¿Qué distribución usas?",
+    "descripcion": "Comparación de medias de dos muestras pequeñas independientes",
+    "respuestaCorrecta": "t de Student",
+    "explicacion": "La prueba t para dos muestras independientes se usa cuando comparamos medias de dos grupos con muestras pequeñas y varianzas poblacionales desconocidas. El estadístico sigue una distribución t.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 50,
+    "pregunta": "Quieres comparar la variabilidad en rendimiento de tres algoritmos diferentes. ¿Qué distribución usas para el análisis?",
+    "descripcion": "Comparación de varianzas o medias entre múltiples grupos",
+    "respuestaCorrecta": "F de Fisher",
+    "explicacion": "Para comparar tres o más grupos simultáneamente, se usa ANOVA que emplea la distribución F de Fisher. Esta compara la variabilidad entre grupos con la variabilidad dentro de grupos.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 51,
+    "pregunta": "Un centro de atención telefónica recibe llamadas con una tasa de 5 por minuto. ¿Qué distribución modela el tiempo que pasa hasta recibir la próxima llamada?",
+    "descripcion": "Tiempo continuo hasta el siguiente evento en proceso con tasa constante",
+    "respuestaCorrecta": "Exponencial",
+    "explicacion": "Si los eventos (llamadas) siguen un proceso de Poisson con tasa λ, entonces el tiempo entre eventos consecutivos sigue una distribución Exponencial con parámetro λ.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 52,
+    "pregunta": "Realizas 100 lanzamientos de moneda y quieres saber cuántas caras obtendrás. ¿Qué distribución usas?",
+    "descripcion": "Suma de ensayos independientes idénticos de Bernoulli",
+    "respuestaCorrecta": "Binomial",
+    "explicacion": "La distribución Binomial es la suma de n variables Bernoulli independientes e idénticamente distribuidas. Modela el número total de éxitos en n ensayos.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 53,
+    "pregunta": "Los tiempos de vida de bombillas LED tienen una distribución sesgada a la derecha con media 50,000 horas. Si tomas una muestra grande de 100 bombillas, ¿qué distribución sigue el promedio muestral?",
+    "descripcion": "Distribución de la media muestral con muestra grande por Teorema del Límite Central",
+    "respuestaCorrecta": "Normal",
+    "explicacion": "Por el Teorema del Límite Central, la media muestral de una muestra grande tiende a seguir una distribución Normal, independientemente de la distribución original de los datos.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 54,
+    "pregunta": "El número de mutaciones genéticas en un segmento de ADN sigue una tasa de 2 mutaciones por cada millón de bases. ¿Qué distribución modela las mutaciones en un segmento específico?",
+    "descripcion": "Eventos raros distribuidos en un espacio con densidad constante conocida",
+    "respuestaCorrecta": "Poisson",
+    "explicacion": "La distribución Poisson modela eventos raros en espacio o tiempo. Es aplicable a mutaciones genéticas, errores de impresión, defectos en manufactura, etc., cuando hay una tasa promedio constante.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  },
+  {
+    "id": 55,
+    "pregunta": "Quieres estimar la varianza poblacional usando una muestra de una población normal. ¿Qué distribución sigue el estadístico (n-1)S²/σ²?",
+    "descripcion": "Distribución muestral de la varianza de población normal",
+    "respuestaCorrecta": "Chi-Cuadrado",
+    "explicacion": "Cuando se muestrea de una población normal, el estadístico (n-1)S²/σ² sigue una distribución Chi-Cuadrado con (n-1) grados de libertad. Esto es fundamental para hacer inferencia sobre varianzas.",
+    "distribuciones": [
+      "Bernoulli",
+      "Binomial",
+      "Geométrica",
+      "Poisson",
+      "Hipergeométrica",
+      "Uniforme",
+      "Exponencial",
+      "Normal",
+      "Chi-Cuadrado",
+      "t de Student",
+      "F de Fisher"
+    ]
+  }
+]
